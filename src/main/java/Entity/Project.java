@@ -55,7 +55,7 @@ public class Project {
      * Parse in the employee's name and the new total number of hours
      * The method will update the total hours in either employee1Hours or employee2Hours and 
      * monthlyHours for tracking. Use ProjectDAO to reflect changes in the database
-     * Returns if update to the Project object was executed
+     * Returns boolean if update to the Project object was executed
      * @param employee
      * @param newTotalHours 
      * @return  
@@ -120,7 +120,7 @@ public class Project {
                 employee2Hours = newTotalHours;
             }
             
-            // Update monthlyHours
+            // Update monthlyHours, substring to remove {} from the .toString() of a hashmap
             monthlyHours = hours.toString().substring(1, hours.toString().length() - 1);
             
             return true;

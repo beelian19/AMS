@@ -118,7 +118,7 @@ public class ClientDAO {
     }
 
     public static ArrayList<Client> getAllClient() {
-        ArrayList<Client> clientList = new ArrayList();
+        ArrayList<Client> clientList = new ArrayList<>();
 
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(getAllClientsStatement);

@@ -423,15 +423,6 @@ public class Excel {
     }
     
     /**
-     * Initializes an empty Excel object
-     */
-    public Excel(){
-        workbook = null;
-        isValid = false;
-        initialized = false;
-    }
-    
-    /**
      * Initializes an Excel object and setting the isValid Boolean attribute
      * @param workbook 
      */
