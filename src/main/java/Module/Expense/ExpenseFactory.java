@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
@@ -53,26 +54,128 @@ public class ExpenseFactory {
 
             // Get company UEN
             UEN = getStringValue(cell);
-            
+            if (UEN == null) {
+                messages.add("UEN not detected");
+            }
+
             // Get charged account name
             cell = sh.getRow(1).getCell(11);
             chargedAccountName = getStringValue(cell);
-            
+            if (chargedAccountName == null) {
+                messages.add("Charged account name not detected");
+            }
+
             // Get charged account number
             cell = sh.getRow(2).getCell(11);
-            chargedAccountNumber = (getStringValue(cell)!=null) ? Integer.valueOf(getStringValue(cell).trim()) : 0;
-            
+            chargedAccountNumber = (getStringValue(cell) != null) ? Integer.valueOf(getStringValue(cell).trim()) : 0;
+            if (chargedAccountNumber == 0) {
+                messages.add("Charged account name not detected");
+            }
+
             // Init expenses
             expenses = new ArrayList<>();
-            
+
+            int xlRowNumber;
+            Row row;
+            String strValue;
             // Create Expense objects
             for (int i = 0; i < 200; i++) {
+                xlRowNumber = i + 5;
+                row = sh.getRow(xlRowNumber);
+
+                if (row == null) {
+                    messages.add("Unexpected row number encountered: " + xlRowNumber);
+                    break;
+                }
+
+                // Initialize a new expense object
                 Expense expense = new Expense();
+
+                // Set charged account numebr
+                if (chargedAccountNumber != 0) expense.setChargedAccountNumber(chargedAccountNumber);
                 
                 // Set the row number
-                expense.setRowNumber(i);
+                expense.setRowNumber(i + 1);
+
+                // Set the transaction date
+                Date date = getDate(row.getCell(1));
+                if (date != null) {
+                    expense.setDate(date);
+                }
+
+                // Set charged account number
+                strValue = getStringValue(row.getCell(3));
+                if (strValue != null) {
+                    expense.setAccountNumber(Integer.valueOf(strValue));
+                }
+
+                // Set charged account name
+                strValue = getStringValue(row.getCell(5));
+                if (strValue != null) {
+                    expense.setAccountName(strValue);
+                }
+
+                // Set description
+                strValue = getStringValue(row.getCell(7));
+                if (strValue != null) {
+                    expense.setDescription(strValue);
+                }
+
+                // Set vendor
+                strValue = getStringValue(row.getCell(11));
+                if (strValue != null) {
+                    expense.setVendor(strValue);
+                }
+
+                // Set reference number
+                strValue = getStringValue(row.getCell(13));
+                if (strValue != null) {
+                    expense.setReference(strValue);
+                }
+
+                // Set location
+                strValue = getStringValue(row.getCell(15));
+                if (strValue != null) {
+                    expense.setLocation(strValue);
+                }
+
+                // Set payment method
+                strValue = getStringValue(row.getCell(17));
+                if (strValue != null) {
+                    expense.setPaymentMethod(strValue);
+                }
+                
+                // Set tax code
+                strValue = getStringValue(row.getCell(21));
+                if (strValue != null) {
+                    expense.setTax(strValue);
+                }
+
+                try {
+                    // Set amount excluding tax
+                    strValue = getStringValue(row.getCell(19));
+                    if (strValue != null) {
+                        expense.setExTaxAmount(Double.valueOf(strValue.trim()));
+                    }
+
+                    // Set amount including tax
+                    strValue = getStringValue(row.getCell(23));
+                    if (strValue != null) {
+                        expense.setIncTaxAmount(Double.valueOf(strValue.trim()));
+                    }
+                } catch (NumberFormatException nfe) {
+                    messages.add("NumberFormatException found at xl row " + (xlRowNumber + 1));
+                }
+                
+                // Set memo
+                strValue = getStringValue(row.getCell(25));
+                if (strValue != null) {
+                    expense.setMemo(strValue);
+                }
+                
+                if (!expense.checkComplete()) messages.add("Incomplete expense at xl row " + (xlRowNumber + 1));
             }
-            
+
         } catch (NullPointerException npe) {
             messages.add("NullPointerException found: " + npe.getMessage());
         } catch (Exception e) {
@@ -117,9 +220,9 @@ public class ExpenseFactory {
 
     /**
      * Gets the date value of the cell. Utilizes excel double to date feature
-     * 
+     *
      * @param cell
-     * @return 
+     * @return
      */
     public Date getDate(Cell cell) {
         if (cell != null && cell.getCellTypeEnum() == CellType.NUMERIC) {
@@ -178,6 +281,7 @@ public class ExpenseFactory {
 
     /**
      * Getter method for the UEN number
+     *
      * @return String
      */
     public String getUEN() {
@@ -186,12 +290,11 @@ public class ExpenseFactory {
 
     /**
      * Getter method for the charged account name
-     * @return 
+     *
+     * @return
      */
     public String getChargedAccountName() {
         return chargedAccountName;
     }
-    
-    
 
 }
