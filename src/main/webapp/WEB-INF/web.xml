@@ -4,9 +4,17 @@
         <servlet-name>ProcessExcelFile</servlet-name>
         <servlet-class>Module.Expense.ProcessExcelFile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReadExcelFile</servlet-name>
+        <servlet-class>Module.Expense.ReadExcelFile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReadExcelFile</servlet-name>
+        <url-pattern>/ReadExcelFile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

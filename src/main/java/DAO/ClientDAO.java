@@ -26,7 +26,9 @@ public class ClientDAO {
     private static String getAllClientProjectStatement = "SELECT * FROM project WHERE companyName='%s'";
     private static String getClientRealmidStatement = "SELECT realmid FROM client where companyName = ?";
     private static String getClientByCompanyNameStatement = "SELECT * FROM CLIENT WHERE companyName = ?";
-
+    private static String checkClientExist = "SELECT EXISTS(SELECT * FROM client WHERE UENNumber = ?) ";
+    
+    
     public boolean addNewClient(String businessType, String companyName, String incorporation, String UenNumber, String officeContact, String emailAddress, String officeAddress, String financialYearEnd, String gst, String director, String secretary,String accountant, String mgmtAcc) {
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(createNewClientStatement);
@@ -136,6 +138,21 @@ public class ClientDAO {
 
     }
 
+    public static Boolean clientExist(String UEN) {
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(checkClientExist);
+            stmt.setString(1, UEN);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                return rs.getBoolean(1);
+            }
+
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+    
     public static Client getClientById(String id) {
         Client client = null;
         try (Connection conn = ConnectionManager.getConnection()) {

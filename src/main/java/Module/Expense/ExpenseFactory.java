@@ -24,20 +24,23 @@ public class ExpenseFactory {
 
     private Workbook workbook;
     private List<Expense> expenses;
+    private List<String> messages;
     private String UEN;
     private String chargedAccountName;
     private int chargedAccountNumber;
 
     /**
      * Initializes all the required information for expenses and returns a List
-     * of Strings for status and error handling
+     * of Strings for status and error handling. Returns boolean on proper initialization of key information
      *
-     * @return
+     * @return 
      */
-    public List<String> init() {
+    public Boolean init() {
         //Version 1.0 only support xlsx file. Change here with more wrapper methods and
         //Switch statements to add in more file types
-        return xlsxInit();
+        xlsxInit();
+        
+        return UEN != null && expenses != null && chargedAccountNumber !=0;
     }
 
     /**
@@ -46,8 +49,8 @@ public class ExpenseFactory {
      *
      * @return
      */
-    private List<String> xlsxInit() {
-        List<String> messages = new ArrayList<>();
+    private void xlsxInit() {
+        messages = new ArrayList<>();
         try {
             Sheet sh = workbook.getSheetAt(0);
             Cell cell = sh.getRow(0).getCell(0);
@@ -92,8 +95,10 @@ public class ExpenseFactory {
                 Expense expense = new Expense();
 
                 // Set charged account numebr
-                if (chargedAccountNumber != 0) expense.setChargedAccountNumber(chargedAccountNumber);
-                
+                if (chargedAccountNumber != 0) {
+                    expense.setChargedAccountNumber(chargedAccountNumber);
+                }
+
                 // Set the row number
                 expense.setRowNumber(i + 1);
 
@@ -144,7 +149,7 @@ public class ExpenseFactory {
                 if (strValue != null) {
                     expense.setPaymentMethod(strValue);
                 }
-                
+
                 // Set tax code
                 strValue = getStringValue(row.getCell(21));
                 if (strValue != null) {
@@ -166,14 +171,16 @@ public class ExpenseFactory {
                 } catch (NumberFormatException nfe) {
                     messages.add("NumberFormatException found at xl row " + (xlRowNumber + 1));
                 }
-                
+
                 // Set memo
                 strValue = getStringValue(row.getCell(25));
                 if (strValue != null) {
                     expense.setMemo(strValue);
                 }
-                
-                if (!expense.checkComplete()) messages.add("Incomplete expense at xl row " + (xlRowNumber + 1));
+
+                if (!expense.checkComplete()) {
+                    messages.add("Incomplete expense at xl row " + (xlRowNumber + 1));
+                }
             }
 
         } catch (NullPointerException npe) {
@@ -187,7 +194,6 @@ public class ExpenseFactory {
                 messages.add("IOException found: " + IOE.getMessage());
             }
         }
-        return messages;
     }
 
     /**
@@ -297,4 +303,22 @@ public class ExpenseFactory {
         return chargedAccountName;
     }
 
+    /**
+     * Getter method for init() messages
+     * @return 
+     */
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    /**
+     * Getter method for the charged account number
+     * @return 
+     */
+    public int getChargedAccountNumber() {
+        return chargedAccountNumber;
+    }
+
+    
+    
 }
