@@ -74,7 +74,7 @@
         <dependency>
             <groupId>com.xero</groupId>
             <artifactId>xero-java-sdk</artifactId>
-            <version>0.4.7</version>
+            <version>0.6.2</version>
         </dependency>
     </dependencies>
 

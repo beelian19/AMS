@@ -31,16 +31,17 @@ public class ExpenseFactory {
 
     /**
      * Initializes all the required information for expenses and returns a List
-     * of Strings for status and error handling. Returns boolean on proper initialization of key information
+     * of Strings for status and error handling. Returns boolean on proper
+     * initialization of key information
      *
-     * @return 
+     * @return
      */
     public Boolean init() {
         //Version 1.0 only support xlsx file. Change here with more wrapper methods and
         //Switch statements to add in more file types
         xlsxInit();
-        
-        return UEN != null && expenses != null && chargedAccountNumber !=0;
+
+        return UEN != null && expenses != null && chargedAccountNumber != 0;
     }
 
     /**
@@ -83,103 +84,108 @@ public class ExpenseFactory {
             String strValue;
             // Create Expense objects
             for (int i = 0; i < 200; i++) {
-                xlRowNumber = i + 5;
-                row = sh.getRow(xlRowNumber);
-
-                if (row == null) {
-                    messages.add("Unexpected row number encountered: " + xlRowNumber);
-                    break;
-                }
-
-                // Initialize a new expense object
-                Expense expense = new Expense();
-
-                // Set charged account numebr
-                if (chargedAccountNumber != 0) {
-                    expense.setChargedAccountNumber(chargedAccountNumber);
-                }
-
-                // Set the row number
-                expense.setRowNumber(i + 1);
-
-                // Set the transaction date
-                Date date = getDate(row.getCell(1));
-                if (date != null) {
-                    expense.setDate(date);
-                }
-
-                // Set charged account number
-                strValue = getStringValue(row.getCell(3));
-                if (strValue != null) {
-                    expense.setAccountNumber(Integer.valueOf(strValue));
-                }
-
-                // Set charged account name
-                strValue = getStringValue(row.getCell(5));
-                if (strValue != null) {
-                    expense.setAccountName(strValue);
-                }
-
-                // Set description
-                strValue = getStringValue(row.getCell(7));
-                if (strValue != null) {
-                    expense.setDescription(strValue);
-                }
-
-                // Set vendor
-                strValue = getStringValue(row.getCell(11));
-                if (strValue != null) {
-                    expense.setVendor(strValue);
-                }
-
-                // Set reference number
-                strValue = getStringValue(row.getCell(13));
-                if (strValue != null) {
-                    expense.setReference(strValue);
-                }
-
-                // Set location
-                strValue = getStringValue(row.getCell(15));
-                if (strValue != null) {
-                    expense.setLocation(strValue);
-                }
-
-                // Set payment method
-                strValue = getStringValue(row.getCell(17));
-                if (strValue != null) {
-                    expense.setPaymentMethod(strValue);
-                }
-
-                // Set tax code
-                strValue = getStringValue(row.getCell(21));
-                if (strValue != null) {
-                    expense.setTax(strValue);
-                }
 
                 try {
-                    // Set amount excluding tax
-                    strValue = getStringValue(row.getCell(19));
-                    if (strValue != null) {
-                        expense.setExTaxAmount(Double.valueOf(strValue.trim()));
+                    xlRowNumber = i + 5;
+                    row = sh.getRow(xlRowNumber);
+
+                    if (row == null) {
+                        messages.add("Unexpected row number encountered: " + xlRowNumber);
+                        break;
                     }
 
-                    // Set amount including tax
-                    strValue = getStringValue(row.getCell(23));
-                    if (strValue != null) {
-                        expense.setIncTaxAmount(Double.valueOf(strValue.trim()));
+                    // Initialize a new expense object
+                    Expense expense = new Expense();
+
+                    // Set charged account numebr
+                    if (chargedAccountNumber != 0) {
+                        expense.setChargedAccountNumber(chargedAccountNumber);
                     }
-                } catch (NumberFormatException nfe) {
-                    messages.add("NumberFormatException found at xl row " + (xlRowNumber + 1));
-                }
 
-                // Set memo
-                strValue = getStringValue(row.getCell(25));
-                if (strValue != null) {
-                    expense.setMemo(strValue);
-                }
+                    // Set the row number
+                    expense.setRowNumber(i + 1);
 
-                if (!expense.checkComplete()) {
-                    messages.add("Incomplete expense at xl row " + (xlRowNumber + 1));
+                    // Set the transaction date
+                    Date date = getDate(row.getCell(1));
+                    if (date != null) {
+                        expense.setDate(date);
+                    }
+
+                    // Set charged account number
+                    strValue = getStringValue(row.getCell(3));
+                    if (strValue != null) {
+                        expense.setAccountNumber(Integer.valueOf(strValue));
+                    }
+
+                    // Set charged account name
+                    strValue = getStringValue(row.getCell(5));
+                    if (strValue != null) {
+                        expense.setAccountName(strValue);
+                    }
+
+                    // Set description
+                    strValue = getStringValue(row.getCell(7));
+                    if (strValue != null) {
+                        expense.setDescription(strValue);
+                    }
+
+                    // Set vendor
+                    strValue = getStringValue(row.getCell(11));
+                    if (strValue != null) {
+                        expense.setVendor(strValue);
+                    }
+
+                    // Set reference number
+                    strValue = getStringValue(row.getCell(13));
+                    if (strValue != null) {
+                        expense.setReference(strValue);
+                    }
+
+                    // Set location
+                    strValue = getStringValue(row.getCell(15));
+                    if (strValue != null) {
+                        expense.setLocation(strValue);
+                    }
+
+                    // Set payment method
+                    strValue = getStringValue(row.getCell(17));
+                    if (strValue != null) {
+                        expense.setPaymentMethod(strValue);
+                    }
+
+                    // Set tax code
+                    strValue = getStringValue(row.getCell(21));
+                    if (strValue != null) {
+                        expense.setTax(strValue);
+                    }
+
+                    try {
+                        // Set amount excluding tax
+                        strValue = getStringValue(row.getCell(19));
+                        if (strValue != null) {
+                            expense.setExTaxAmount(Double.valueOf(strValue.trim()));
+                        }
+
+                        // Set amount including tax
+                        strValue = getStringValue(row.getCell(23));
+                        if (strValue != null) {
+                            expense.setIncTaxAmount(Double.valueOf(strValue.trim()));
+                        }
+                    } catch (NumberFormatException nfe) {
+                        messages.add("NumberFormatException found at xl row " + (xlRowNumber + 1));
+                    }
+
+                    // Set memo
+                    strValue = getStringValue(row.getCell(25));
+                    if (strValue != null) {
+                        expense.setMemo(strValue);
+                    }
+
+                    if (!expense.checkComplete()) {
+                        messages.add("Incomplete expense at xl row " + (xlRowNumber + 1));
+                    }
+                } catch (IndexOutOfBoundsException ibe) {
+                    messages.add("Out of bounds error: " + ibe.getMessage());
                 }
             }
 
@@ -305,7 +311,8 @@ public class ExpenseFactory {
 
     /**
      * Getter method for init() messages
-     * @return 
+     *
+     * @return
      */
     public List<String> getMessages() {
         return messages;
@@ -313,12 +320,11 @@ public class ExpenseFactory {
 
     /**
      * Getter method for the charged account number
-     * @return 
+     *
+     * @return
      */
     public int getChargedAccountNumber() {
         return chargedAccountNumber;
     }
 
-    
-    
 }

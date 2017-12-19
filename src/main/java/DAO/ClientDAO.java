@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import Utility.ConnectionManager;
 
-
 public class ClientDAO {
 
     private static String createNewClientStatement = "Insert into client values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -27,9 +26,8 @@ public class ClientDAO {
     private static String getClientRealmidStatement = "SELECT realmid FROM client where companyName = ?";
     private static String getClientByCompanyNameStatement = "SELECT * FROM CLIENT WHERE companyName = ?";
     private static String checkClientExist = "SELECT EXISTS(SELECT * FROM client WHERE UENNumber = ?) ";
-    
-    
-    public boolean addNewClient(String businessType, String companyName, String incorporation, String UenNumber, String officeContact, String emailAddress, String officeAddress, String financialYearEnd, String gst, String director, String secretary,String accountant, String mgmtAcc) {
+
+    public boolean addNewClient(String businessType, String companyName, String incorporation, String UenNumber, String officeContact, String emailAddress, String officeAddress, String financialYearEnd, String gst, String director, String secretary, String accountant, String mgmtAcc) {
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(createNewClientStatement);
 
@@ -45,7 +43,7 @@ public class ClientDAO {
             stmt.setString(10, gst);
             stmt.setString(11, director);
             stmt.setString(12, secretary);
-            stmt.setString(13,accountant);
+            stmt.setString(13, accountant);
             stmt.setString(14, "NA");
             stmt.setString(15, mgmtAcc);
 
@@ -64,7 +62,6 @@ public class ClientDAO {
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(updateClientStatement);
 
-            
             stmt.setString(1, client.getBusinessType());
             stmt.setString(2, client.getCompanyName());
             stmt.setString(3, client.getIncorporation());
@@ -76,7 +73,7 @@ public class ClientDAO {
             stmt.setString(9, client.getDirector());
             stmt.setString(10, client.getSecretary());
             stmt.setString(11, client.getAccountant());
-            stmt.setString(12,client.getRealmid());
+            stmt.setString(12, client.getRealmid());
             stmt.setString(13, client.getMgmtAcc());
             stmt.setString(14, client.getUENNumber());
             int rowsAffected = stmt.executeUpdate();
@@ -152,7 +149,7 @@ public class ClientDAO {
         }
         return null;
     }
-    
+
     public static Client getClientById(String id) {
         Client client = null;
         try (Connection conn = ConnectionManager.getConnection()) {
@@ -202,25 +199,24 @@ public class ClientDAO {
         return companyNameList;
     }
 
-
     public static ArrayList<ArrayList<Project>> getAllClientProjectFiltered(String name) {
         return ProjectDAO.getAllProjectsByCompanyName(name);
     }
 
-    public boolean updateClientProfile(String UenNumber, String officeContact, String emailAddress, String director, String secretary,String accountant, String realmid, String officeAddress, String gstSubmission, String mgmtAcc) {
+    public boolean updateClientProfile(String UenNumber, String officeContact, String emailAddress, String director, String secretary, String accountant, String realmid, String officeAddress, String gstSubmission, String mgmtAcc) {
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("UPDATE client SET officeContact=?, contactEmailAddress=?, director=?, secretary=?, accountant=?,realmid=?, officeAddress=?, gstSubmission=?,mgmtAcc=? WHERE UENNumber=?");
 
             stmt.setString(1, officeContact);
-            stmt.setString(2,emailAddress);
+            stmt.setString(2, emailAddress);
             stmt.setString(3, director);
             stmt.setString(4, secretary);
-            stmt.setString(5,accountant);
+            stmt.setString(5, accountant);
             stmt.setString(6, realmid);
-             stmt.setString(7, officeAddress);
-              stmt.setString(8, gstSubmission);
-               stmt.setString(9, mgmtAcc);
-            stmt.setString( 10, UenNumber);
+            stmt.setString(7, officeAddress);
+            stmt.setString(8, gstSubmission);
+            stmt.setString(9, mgmtAcc);
+            stmt.setString(10, UenNumber);
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 1) {
                 return true;
@@ -241,7 +237,7 @@ public class ClientDAO {
             while (rs.next()) {
                 int clientId = rs.getInt(1);
                 String businessType = rs.getString(2);
-                
+
                 String incorporation = rs.getString(4);
                 String UenNumber = rs.getString(5);
                 String officeContact = rs.getString(6);
@@ -256,15 +252,12 @@ public class ClientDAO {
                 String mgmtAcc = rs.getString(15);
                 client = new Client(clientId, businessType, companyName, incorporation, UenNumber, officeContact, emailAddress, officeAddress, financialYearEnd, gst, director, secretary, accountant, realmid, mgmtAcc);
             }
-            
+
             return client;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return null;
     }
-    
+
 }
-
-
-
