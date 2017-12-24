@@ -5,14 +5,12 @@
  */
 package Module.Resource;
 
-import DAO.ClientDAO;
-import DAO.ProjectDAO;
-import Entity.Client;
-import Entity.Project;
+import DAO.EmployeeDAO;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jagdishps.2014
  */
-public class viewClientServlet extends HttpServlet {
+@WebServlet(name = "DeleteEmployeeServlet", urlPatterns = {"/DeleteEmployeeServlet"})
+public class DeleteEmployeeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,44 +34,21 @@ public class viewClientServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
 
-        Client client = null;
-        ArrayList<Project> incompleteProjList = new ArrayList<>();
-        ArrayList<Project> completeProjList = new ArrayList<>();
-        ArrayList<ArrayList<Project>> all;
-        //Ensure that attribute is there and of instance String
-
-        if (request.getAttribute("clientID") == null) {
-            request.setAttribute("client", client);
-        } else {
-            String client_id = (String) request.getAttribute("clientID");
-            client = ClientDAO.getClientById(client_id);
-            request.setAttribute("client", client);
-        }
-        if (client == null) {
-            // add status message
-            RequestDispatcher rd = request.getRequestDispatcher("ViewAllClient.jsp");
-            rd.forward(request, response);
-        } else {
-            all = ClientDAO.getAllClientProjectFiltered(client.getCompanyName());
-
-            if (all != null && all.size() == 2) {
-                completeProjList = all.get(0);
-
-                incompleteProjList = all.get(1);
-
+            String name = request.getParameter("name");
+            
+            
+            EmployeeDAO empDAO = new EmployeeDAO();
+            if (empDAO.deleteEmployeeByEmployeeName(name)) {
+                request.setAttribute("deleteStatus", "Deleted Successfully");
+            } else {
+                request.setAttribute("deleteStatus", "Unsuccessful");
             }
-        }
-        Double sum_hours = 0.0;
-        if (completeProjList != null) {
-            sum_hours = ProjectDAO.getTotalHours(completeProjList);
-        }
-        request.setAttribute("incompletedProject", incompleteProjList);
-        request.setAttribute("completedProject", completeProjList);
-        request.setAttribute("total_complete_hours", sum_hours);
-        RequestDispatcher rd = request.getRequestDispatcher("ClientProfile.jsp");
-        rd.forward(request, response);
-
+            RequestDispatcher rd = request.getRequestDispatcher("ViewEmployee.jsp");
+            rd.forward(request, response);
+        } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
