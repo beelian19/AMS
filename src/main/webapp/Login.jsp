@@ -27,7 +27,7 @@
                             <input type="text" name='UserId' id="UserId" class="form-control" placeholder="Username" required autofocus>
                             <input type="password" name='Password' id="Password" class="form-control" placeholder="Password" required>
                             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit"><font color="#034C75">Sign in</font></button>
-                            <center><a href="forgotPassword.jsp"><font color="#F5C904">Forgot/Change Password?</font></a></center>
+                            <center><a href="ForgotPassword.jsp"><font color="#F5C904">Forgot/Change Password?</font></a></center>
                         </form><!-- /form -->
                     </div><!-- /card-container -->
                 </div>

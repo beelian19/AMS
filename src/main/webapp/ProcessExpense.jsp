@@ -96,10 +96,10 @@
         </script>
     </head>
     <body width="100%" style='background-color: #F0F8FF;'>
-        <%            // Ensure that the workbook is there, if not redirect to InvoiceManagement.jsp
+        <%            // Ensure that the workbook is there, if not redirect to UploadExpense.jsp
             if (request.getSession().getAttribute("excel") == null) {
-                request.setAttribute("UploadExcelResponse", "Missing excel attribute at process-invoice.jsp");
-                RequestDispatcher rd = request.getRequestDispatcher("InvoiceManagement.jsp");
+                request.setAttribute("UploadExcelResponse", "Missing excel attribute at ProcessExpense.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
                 rd.forward(request, response);
             }
             Excel excel = (Excel) request.getSession().getAttribute("excel");
@@ -111,8 +111,8 @@
             String projectId = "";
             Project project = null;
             if (request.getSession().getAttribute("invoiceProjectId") == null) {
-                request.setAttribute("UploadExcelResponse", "Missing project attribute at process-invoice.jsp");
-                RequestDispatcher rd = request.getRequestDispatcher("InvoiceManagement.jsp");
+                request.setAttribute("UploadExcelResponse", "Missing project attribute at ProcessExpense.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
                 rd.forward(request, response);
             } else {
                 projectId = (String) request.getSession().getAttribute("invoiceProjectId");
@@ -143,13 +143,13 @@
 
             if (token == null) {
                 request.setAttribute("UploadExcelResponse", "Token is not found for project id: " + projectId);
-                RequestDispatcher rd = request.getRequestDispatcher("InvoiceManagement.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
                 rd.forward(request, response);
             }
 
             if (token.getInUse()) {
                 request.setAttribute("UploadExcelResponse", "Access token QBO is in use. Only one user may use is at one time");
-                RequestDispatcher rd = request.getRequestDispatcher("InvoiceManagement.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
                 rd.forward(request, response);
                 return;
             }
@@ -371,7 +371,7 @@
                                 &nbsp
                             </td>
                             <td>
-                                <form action="InvoiceManagement.jsp" method="post">
+                                <form action="UploadExpense.jsp" method="post">
                                     <button class="btn btn-lg btn-primary btn-block" type="submit">Back</button>
                                 </form>
                             </td>
@@ -383,13 +383,13 @@
                                     if (canProceed) {
                                 %>
                                 <form action = "QBOExecutePurchase" method = "post">
-                                    <button name="process-invoice" value="Submit" class="btn btn-lg btn-primary btn-block btn-success" type="submit">Confirm</button>
+                                    <button name="ProcessExpense" value="Submit" class="btn btn-lg btn-primary btn-block btn-success" type="submit">Confirm</button>
                                 </form>
                                 <%
                                 } else {
                                 %>
                                 <form action = "Dank memes" method = "post">
-                                    <button name="process-invoice" value="Submit" class="btn btn-lg btn-primary btn-block btn-success" type="submit" disabled>Confirm</button>
+                                    <button name="ProcessExpense" value="Submit" class="btn btn-lg btn-primary btn-block btn-success" type="submit" disabled>Confirm</button>
                                 </form>
                                 <%
                                     }

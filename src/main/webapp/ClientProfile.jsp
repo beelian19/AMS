@@ -24,11 +24,11 @@
                 return;
             } else if (request.getAttribute("client") == null) {
                 session.setAttribute("status", "Error: No client parsed at client profile page");
-                response.sendRedirect("StaffProfile.jsp");
+                response.sendRedirect("EmployeeProfile.jsp");
                 return;
             } else if (request.getAttribute("incompletedProject") == null || request.getAttribute("completedProject") == null) {
                 session.setAttribute("status", "Error: No projects parsed at client profile page");
-                response.sendRedirect("StaffProfile.jsp");
+                response.sendRedirect("EmployeeProfile.jsp");
                 return;
             }
             ArrayList<Project> incompletedProjectList = (ArrayList<Project>) request.getAttribute("incompletedProject");
@@ -78,7 +78,7 @@
             }
             String profileUrl = "ProjectProfile.jsp?projectID=";
             String profileUrl2 = "";
-            String assignedEmployeeURL = "StaffProfile.jsp?profileName=";;
+            String assignedEmployeeURL = "EmployeeProfile.jsp?profileName=";;
             String assignedEmployeeURL2 = "";
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

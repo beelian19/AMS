@@ -27,8 +27,8 @@
         <%            // Ensure that the workbook is there, if not redirect to upload-excel.jsp
             
             if (request.getSession().getAttribute("excel") == null) {
-                request.setAttribute("UploadExcelResponse", "Missing excel attribute at process-result.jsp");
-                RequestDispatcher rd = request.getRequestDispatcher("InvoiceManagement.jsp");
+                request.setAttribute("UploadExcelResponse", "Missing excel attribute at ExpenseResult.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
                 rd.forward(request, response);
             }
             Excel excel = (Excel) request.getSession().getAttribute("excel");
@@ -40,8 +40,8 @@
             String actualError = results[0][2];
             
             if (request.getSession().getAttribute("invoiceProjectId") == null) {
-                request.setAttribute("UploadExcelResponse", "Missing project id process-result.jsp");
-                RequestDispatcher rd = request.getRequestDispatcher("InvoiceManagement.jsp");
+                request.setAttribute("UploadExcelResponse", "Missing project id ExpenseResult.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
                 rd.forward(request, response);
             }
             String projectId = (String) request.getSession().getAttribute("invoiceProjectId");

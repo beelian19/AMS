@@ -233,7 +233,7 @@
                             <td align="right bottom">
                                 <% if (sessionUserIsAdmin.equals("no")) {
                                 %>
-                                <a href="Calendar_Employee.jsp" class="dashboard-header">
+                                <a href="EmployeeHome.jsp" class="dashboard-header">
                                     <table>
                                         <tr>
                                             <td>
@@ -246,7 +246,7 @@
                                     </table>
                                 </a>
                                 <%} else {%>
-                                <a href="Calendar_Admin.jsp" class="dashboard-header">
+                                <a href="AdminHome.jsp" class="dashboard-header">
                                     <table>
                                         <tr>
                                             <td>
@@ -261,7 +261,7 @@
                                 <%}%>
                             </td>
                             <td>
-                                <a href="StaffProfile.jsp" class="dashboard-header">
+                                <a href="EmployeeProfile.jsp" class="dashboard-header">
                                     <table>
                                         <tr>
                                             <td>
@@ -309,9 +309,9 @@
                                 <i class="fa fa-caret-down" style='color: black;'></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="InvoiceManagement.jsp">QuickBooks</a></li>
-                                <!--<li><a href="InvoiceManagement.jsp">Xero</a></li>-->
-                                <li><a href="resetToken.jsp">Reset Token</a></li>
+                                <li><a href="UploadExpense.jsp">QuickBooks</a></li>
+                                <!--<li><a href="UploadExpense.jsp">Xero</a></li>-->
+                                <li><a href="ResetToken.jsp">Reset Token</a></li>
                             </ul>
                         </div>
                     </td>
@@ -327,7 +327,7 @@
                             <ul class="dropdown-menu">
                                 <!--<li><a href="ViewTaskServlet">View My Projects</a></li>
                                 <li><a href="TaskAssignedTableServlet">View All Tasks</a></li>-->
-                                <li><a href="ProjectView.jsp">View All Projects</a></li>
+                                <li><a href="ProjectAdminOverview.jsp">View All Projects</a></li>
                                     <%
                                         if (sessionUserIsAdmin.equals("yes")) {
                                     %> 
@@ -349,13 +349,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="CreateClient.jsp">Add New Client</a></li>
-                                <li><a href="ViewAllClient.jsp">View All Clients</a></li>
+                                <li><a href="ClientOverview.jsp">View All Clients</a></li>
                                 <!--<li><a href="Timesheet.jsp">Manage Timesheet</a></li>-->
                                 <%
                                     if (sessionUserIsAdmin.equals("yes")) {
                                 %> 
                                 <li><a href="CreateUser.jsp">Add New Employee</a></li>
-                                <li><a href="ViewEmployee.jsp">View All Employees</a></li>
+                                <li><a href="EmployeeOverview.jsp">View All Employees</a></li>
                                 <!--<li><a href="ViewAllTimesheet.jsp">View All Timesheets</a></li>-->
                                 <%
                                     }

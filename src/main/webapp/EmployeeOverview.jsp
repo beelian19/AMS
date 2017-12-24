@@ -50,7 +50,7 @@
         adminAccessList = (ArrayList<String>)request.getAttribute("isAdminList");
         idList = (ArrayList<String>) request.getAttribute("idList");
         
-        String profileUrl = "StaffProfile.jsp?profileName=";
+        String profileUrl = "EmployeeProfile.jsp?profileName=";
         String profileUrl2 = "";
 
         boolean listErrors = false;
