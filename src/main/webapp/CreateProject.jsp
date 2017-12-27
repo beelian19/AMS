@@ -94,7 +94,7 @@
                                             <option value="tax">Tax</option>
                                             <option value="eci">ECI</option>
                                             <option value="gst">GST</option>
-                                            <option value="mgt">Management</option>
+                                            <option value="management">Management</option>
                                             <option value="final">Final Accounting</option>
                                             <option value="secretarial">Secretarial</option>
                                         </select> 
