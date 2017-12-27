@@ -4,7 +4,7 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="dao.DashboardDAO"%>
+<%@page import="DAO.DashboardDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="Protect.jsp"%>

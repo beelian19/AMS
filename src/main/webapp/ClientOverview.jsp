@@ -4,10 +4,10 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="entity.Employee"%>
-<%@page import="dao.EmployeeDAO"%>
-<%@page import="entity.Client"%>
-<%@page import="dao.ClientDAO"%>
+<%@page import="Entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
+<%@page import="Entity.Client"%>
+<%@page import="DAO.ClientDAO"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.Date"%>

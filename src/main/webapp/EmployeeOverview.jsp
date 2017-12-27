@@ -5,8 +5,8 @@
 --%>
 
 <%@page import="java.util.ArrayList"%>
-<%@page import="entity.Employee"%>
-<%@page import="dao.EmployeeDAO"%>
+<%@page import="Entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page autoFlush="true" buffer="1094kb"%>

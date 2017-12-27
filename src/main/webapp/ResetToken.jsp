@@ -4,9 +4,9 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="entity.Client"%>
+<%@page import="Entity.Client"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="dao.ClientDAO"%>
+<%@page import="DAO.ClientDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

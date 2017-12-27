@@ -4,11 +4,11 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="dao.EmployeeDAO"%>
+<%@page import="DAO.EmployeeDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="entity.Client"%>
+<%@page import="Entity.Client"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

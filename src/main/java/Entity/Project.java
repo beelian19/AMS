@@ -176,6 +176,30 @@ public class Project {
         return year + month;
     }
 
+    public Project(int projectID, String projectTitle, String companyName, String businessType, Date start, Date end, String projectRemarks, String projectStatus, Date actualDeadline, String frequency, String projectType, String employee1, String employee2, Double employee1Hours, Double employee2Hours, String projectReviewer, String projectReviewStatus, int dateCompleted, String monthlyHours) {
+        this.projectID = projectID;
+        this.projectTitle = projectTitle;
+        this.companyName = companyName;
+        this.businessType = businessType;
+        this.start = start;
+        this.end = end;
+        this.projectRemarks = projectRemarks;
+        this.projectStatus = projectStatus;
+        this.actualDeadline = actualDeadline;
+        this.frequency = frequency;
+        this.projectType = projectType;
+        this.employee1 = employee1;
+        this.employee2 = employee2;
+        this.employee1Hours = employee1Hours;
+        this.employee2Hours = employee2Hours;
+        this.projectReviewer = projectReviewer;
+        this.projectReviewStatus = projectReviewStatus;
+        this.dateCompleted = dateCompleted;
+        this.monthlyHours = monthlyHours;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "Project{" + "projectID=" + projectID + ", projectTitle=" + projectTitle + ", companyName=" + companyName + ", businessType=" + businessType + ", start=" + start + ", end=" + end + ", projectRemarks=" + projectRemarks + ", projectStatus=" + projectStatus + ", actualDeadline=" + actualDeadline + ", frequency=" + frequency + ", projectType=" + projectType + ", employee1=" + employee1 + ", employee2=" + employee2 + ", employee1Hours=" + employee1Hours + ", employee2Hours=" + employee2Hours + ", projectReviewer=" + projectReviewer + ", projectReviewStatus=" + projectReviewStatus + ", dateCompleted=" + dateCompleted + ", monthlyHours=" + monthlyHours + '}';

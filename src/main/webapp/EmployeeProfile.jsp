@@ -4,13 +4,13 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="dao.ProjectDAO"%>
-<%@page import="entity.Client"%>
-<%@page import="dao.ClientDAO"%>
+<%@page import="DAO.ProjectDAO"%>
+<%@page import="Entity.Client"%>
+<%@page import="DAO.ClientDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="entity.Project"%>
-<%@page import="entity.Employee"%>
-<%@page import="dao.EmployeeDAO"%>
+<%@page import="Entity.Project"%>
+<%@page import="Entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page autoFlush="true" buffer="1094kb"%>
 <%@include file="Protect.jsp"%>

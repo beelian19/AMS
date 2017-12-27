@@ -5,13 +5,13 @@
 --%>
 
 <%@page import="java.util.Collections"%>
-<%@page import="entity.Project"%>
-<%@page import="dao.ProjectDAO"%>
+<%@page import="Entity.Project"%>
+<%@page import="DAO.ProjectDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="entity.Employee"%>
-<%@page import="dao.EmployeeDAO"%>
-<%@page import="entity.Client"%>
-<%@page import="dao.ClientDAO"%>
+<%@page import="Entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
+<%@page import="Entity.Client"%>
+<%@page import="DAO.ClientDAO"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="Protect.jsp" %>

@@ -9,11 +9,11 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
 <%@page import="org.json.simple.JSONObject"%>
-<%@page import="entity.Client"%>
-<%@page import="dao.ClientDAO"%>
-<%@page import="entity.Project"%>
+<%@page import="Entity.Client"%>
+<%@page import="DAO.ClientDAO"%>
+<%@page import="Entity.Project"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="dao.ProjectDAO"%>
+<%@page import="DAO.ProjectDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="AdminAccessOnly.jsp"%>
 <%@include file="Protect.jsp"%>

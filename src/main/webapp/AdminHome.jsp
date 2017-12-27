@@ -4,17 +4,17 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="entity.Client"%>
+<%@page import="Entity.Client"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="entity.Project"%>
-<%@page import="dao.ProjectDAO"%>
-<%@page import="dao.ClientDAO"%>
+<%@page import="Entity.Project"%>
+<%@page import="DAO.ProjectDAO"%>
+<%@page import="DAO.ClientDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.google.gson.JsonArray"%>
-<%@page import="entity.Employee"%>
-<%@page import="dao.EmployeeDAO"%>
+<%@page import="Entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="Protect.jsp"%>
 <%@include file="AdminAccessOnly.jsp"%>
@@ -624,7 +624,7 @@
                             }
                         },
                         fixedWeekCount: false,
-                        events: "DisplayForAdmin",
+                        events: "DisplayProjectForAdminHome",
                         eventAfterRender: function (event, element, view) {
                             //when project first created yellow color
                             var taskStatus = event.taskStatus;
@@ -853,7 +853,7 @@
                                 type: 'POST',
                                 data: 'uniqueTaskID=' + selectedEvent.uniqueTaskID + '&' + 'title=' + title + '&' + 'start=' + start + '&' + 'end=' + end + '&' + 'assignEmployee=' + selectedEvent.assignedEmployee1 + '&' + 'assignEmployee1=' + selectedEvent.assignedEmployee2 + '&' + 'reviewer=' + reviewer + '&' + 'remarks=' + remarks + '&' + 'projectID=' + selectedEvent.projectID +
                                         '&' + 'taskID=' + taskID + '&' + 'taskStatus=' + selectedEvent.taskStatus + '&' + 'reviewStatus=' + selectedEvent.reviewStatus + '&' + 'companyName=' + companyName,
-                                url: 'UpdateTaskOrAdhoc',
+                                url: 'UpdateAdHocAdmin',
                                 success: function () {
                                     $('#calendar').fullCalendar('refetchEvents');
                                     alert('Info Updated');
@@ -872,7 +872,7 @@
                             $.ajax({
                                 type: 'POST',
                                 data: 'projectID=' + selectedEvent.projectID + '&' + 'taskID=' + selectedEvent.taskID,
-                                url: 'DeleteTaskOrAdhoc',
+                                url: 'DeleteAdHocAdmin',
                                 success: function () {
                                     //Refresh Calendar
                                     //console.log("IT's a SUCCESS");
@@ -904,7 +904,7 @@
                                     $.ajax({
                                         type: 'POST',
                                         data: 'projectID=' + selectedEvent.projectID + '&' + 'taskID=' + taskID + '&' + 'taskStatus=' + status,
-                                        url: 'UpdateTaskOrAdhocCompleteStatus',
+                                        url: 'UpdateAdHocCompletionStatus',
                                         success: function () {
                                             $('#calendar').fullCalendar('refetchEvents');
                                             alert('Task completion status updated');
@@ -926,7 +926,7 @@
                                     $.ajax({
                                         type: 'POST',
                                         data: 'projectID=' + selectedEvent.projectID + '&' + 'taskID=' + taskID + '&' + 'projectStatus=' + status,
-                                        url: 'UpdateTaskOrAdhocCompleteStatus',
+                                        url: 'UpdateAdHocCompletionStatus',
                                         success: function () {
                                             $('#calendar').fullCalendar('refetchEvents');
                                             alert('Project completion status updated');
@@ -959,7 +959,7 @@
                                     $.ajax({
                                         type: 'POST',
                                         data: 'projectID=' + selectedEvent.projectID + '&' + 'taskID=' + taskID,
-                                        url: 'UpdateTaskOrAdhocReviewStatus',
+                                        url: 'UpdateAdHocReviewStatus',
                                         success: function () {
                                             $('#calendar').fullCalendar('refetchEvents');
                                             alert('Task review status updated');
@@ -981,7 +981,7 @@
                                     $.ajax({
                                         type: 'POST',
                                         data: 'projectID=' + selectedEvent.projectID + '&' + 'taskID=' + taskID,
-                                        url: 'UpdateTaskOrAdhocReviewStatus',
+                                        url: 'UpdateAdHocReviewStatus',
                                         success: function () {
                                             $('#calendar').fullCalendar('refetchEvents');
                                             alert('Project review status updated');
@@ -1057,7 +1057,7 @@
                         return;
                     } else {
                         $.ajax({
-                            url: 'AddTaskForAdhoc',
+                            url: 'CreateTaskAdmin',
                             data: 'companyName=' + companyName + '&' + 'project=' + project + '&' + 'title=' + taskTitle + '&' + 'start=' + start + '&' + 'end=' + end + '&' + 'remarks=' + taskRemarks + '&' + 'reviewer=' + taskReviewer,
                             type: 'POST',
                             success: function () {
@@ -1130,7 +1130,7 @@
                         return;
                     } else {
                         $.ajax({
-                            url: 'AddAdHocProject',
+                            url: 'CreateAdHocProjectAdmin',
                             data: 'companyName=' + companyName + '&' + 'title=' + projectTitle + '&' + 'start=' + start + '&' + 'end=' + end + '&' + 'emp=' + assignEmployee + '&' + 'emp1=' + assignEmployee1 + '&' + 'remarks=' + projectRemarks + '&' + 'reviewer=' + projectReviewer,
                             type: 'POST',
                             success: function () {

@@ -5,11 +5,11 @@
 --%>
 
 <%@page import="java.util.ArrayList"%>
-<%@page import="entity.Project"%>
-<%@page import="entity.Employee"%>
-<%@page import="dao.EmployeeDAO"%>
-<%@page import="entity.Client"%>
-<%@page import="dao.ClientDAO"%>
+<%@page import="Entity.Project"%>
+<%@page import="Entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
+<%@page import="Entity.Client"%>
+<%@page import="DAO.ClientDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="Protect.jsp"%>
 

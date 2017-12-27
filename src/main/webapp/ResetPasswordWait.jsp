@@ -5,8 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="dao.EmployeeDAO"%>
-<%@page import="entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
+<%@page import="Entity.Employee"%>
 
 <!DOCTYPE html>
 <html>

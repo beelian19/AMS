@@ -4,8 +4,8 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="dao.EmployeeDAO"%>
-<%@page import="entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
+<%@page import="Entity.Employee"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

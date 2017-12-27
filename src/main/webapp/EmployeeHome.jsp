@@ -5,13 +5,13 @@
 --%>
 
 <%@page import="java.util.HashMap"%>
-<%@page import="entity.Project"%>
-<%@page import="dao.ProjectDAO"%>
-<%@page import="dao.ClientDAO"%>
+<%@page import="Entity.Project"%>
+<%@page import="DAO.ProjectDAO"%>
+<%@page import="DAO.ClientDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.google.gson.JsonArray"%>
-<%@page import="entity.Employee"%>
-<%@page import="dao.EmployeeDAO"%>
+<%@page import="Entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="Protect.jsp"%>
 <!DOCTYPE html>
@@ -183,7 +183,7 @@
                         editable: false,
                         eventLimit: true,
                         fixedWeekCount: false,
-                        events: "DisplayForEmployee",
+                        events: "DisplayProjectForEmpHome",
 
                         eventAfterRender: function (event, element, view) {
                             //when project first created yellow color
@@ -380,7 +380,7 @@
                                 type: 'POST',
                                 data: 'uniqueTaskID=' + selectedEvent.uniqueTaskID + '&' + 'remarks=' + remarks + '&' + 'projectID=' + selectedEvent.projectID +
                                         '&' + 'taskID=' + selectedEvent.taskID,
-                                url: 'UpdateTaskOrAdhocRemarks',
+                                url: 'UpdateAdHocRemarksEmp',
                                 success: function () {
                                     $('#calendar').fullCalendar('refetchEvents');
                                     alert('Remarks Updated');
@@ -411,7 +411,7 @@
                                     $.ajax({
                                         type: 'POST',
                                         data: 'projectID=' + selectedEvent.projectID + '&' + 'taskID=' + taskID + '&' + 'taskStatus=' + status,
-                                        url: 'UpdateTaskOrAdhocCompleteStatus',
+                                        url: 'UpdateAdHocCompletionStatus',
                                         success: function () {
                                             $('#calendar').fullCalendar('refetchEvents');
                                             alert('Task completion status updated');
@@ -433,7 +433,7 @@
                                     $.ajax({
                                         type: 'POST',
                                         data: 'projectID=' + selectedEvent.projectID + '&' + 'taskID=' + taskID + '&' + 'projectStatus=' + status,
-                                        url: 'UpdateTaskOrAdhocCompleteStatus',
+                                        url: 'UpdateAdHocCompletionStatus',
                                         success: function () {
                                             $('#calendar').fullCalendar('refetchEvents');
                                             alert('Project completion status updated');
@@ -466,7 +466,7 @@
                                     $.ajax({
                                         type: 'POST',
                                         data: 'projectID=' + selectedEvent.projectID + '&' + 'taskID=' + taskID,
-                                        url: 'UpdateTaskOrAdhocReviewStatus',
+                                        url: 'UpdateAdHocReviewStatus',
                                         success: function () {
                                             $('#calendar').fullCalendar('refetchEvents');
                                             alert('Task review status updated');
@@ -488,7 +488,7 @@
                                     $.ajax({
                                         type: 'POST',
                                         data: 'projectID=' + selectedEvent.projectID + '&' + 'taskID=' + taskID,
-                                        url: 'UpdateTaskOrAdhocReviewStatus',
+                                        url: 'UpdateAdHocReviewStatus',
                                         success: function () {
                                             $('#calendar').fullCalendar('refetchEvents');
                                             alert('Project review status updated');

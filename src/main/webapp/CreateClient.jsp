@@ -4,8 +4,8 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="entity.Employee"%>
-<%@page import="dao.EmployeeDAO"%>
+<%@page import="Entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="Protect.jsp"%>
 <!DOCTYPE html>

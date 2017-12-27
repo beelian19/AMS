@@ -8,8 +8,8 @@
 <!DOCTYPE html>
 <%@include file="Protect.jsp"%>
 <%@include file="AdminAccessOnly.jsp"%>
-<%@page import="dao.EmployeeDAO"%>
-<%@page import="entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
+<%@page import="Entity.Employee"%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
