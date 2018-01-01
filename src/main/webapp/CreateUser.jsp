@@ -5,11 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<%@include file="Protect.jsp"%>
-<%@include file="AdminAccessOnly.jsp"%>
 <%@page import="DAO.EmployeeDAO"%>
 <%@page import="Entity.Employee"%>
+<%@include file="Protect.jsp"%>
+<%@include file="AdminAccessOnly.jsp"%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -24,11 +23,17 @@
                 <jsp:include page="StatusMessage.jsp"/>
                 <div class="container-fluid" style="text-align: center; margin-top: <%=session.getAttribute("margin")%>" width="100%" height='100%'>
                     <h1>Create User</h1>
+                    <br/>
                     <div class="container-fluid">
                         <form action="AddEmployee" method="post">
                             <table width="100%" height="100%" style="text-align: left">
+                                <tr bgcolor="#034C75" rowspan="8">
+                                    <td colspan="7">
+                                        <h4><font color="white">&emsp; Basic Information</font></h4>
+                                    </td>
+                                </tr>
                                 <tr>
-                                    <td colspan="10">
+                                    <td colspan="7">
                                         <br/>
                                     </td>
                                 </tr>
@@ -41,7 +46,7 @@
                                     <td>
                                         <input type="text" name='employeeName' id="employeeName" placeholder="Employee's Name" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                     </td>
-                                    <td width="1%">
+                                    <td width="15%">
                                     </td>
                                     <td>
                                         <label>Employee NRIC&nbsp;<font color="red">*</font></label>
@@ -51,22 +56,22 @@
                                     </td>
                                     <td width="1%">
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="1%">
+                                    </td>
                                     <td>
                                         <label>Employee Email&nbsp;<font color="red">*</font></label>
                                     </td>
                                     <td>
                                         <input type="email" name='employeeEmail' id="employeeEmail" placeholder="Employee's Email" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                     </td>
-                                    <td width="1%">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="10">
-                                        <br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="1%">
+                                    <td width="15%">
                                     </td>
                                     <td>
                                         <label>Employee Mobile Number&nbsp;<font color="red">*</font></label>
@@ -76,12 +81,13 @@
                                     </td>
                                     <td width="1%">
                                     </td>
-                                    <td>
-                                        <label>Employee Bank Account&nbsp;<font color="red">*</font></label>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
                                     </td>
-                                    <td>
-                                        <input type="text" name='employeeBankAccount' id="employeeBankAccount" placeholder="Employee's Bank Account" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
-                                    </td>
+                                </tr>
+                                <tr>
                                     <td width="1%">
                                     </td>
                                     <td>
@@ -95,17 +101,61 @@
                                             <option value="foreigner">Foreigner</option>
                                         </Select>
                                     </td>
+                                    <td width="15%">
+                                    </td>
+                                    <td>
+                                        <label>Date of Birth&nbsp;<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="date" name='dob' id="dob" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                    </td> 
                                     <td width="1%">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="10">
+                                    <td colspan="7">
                                         <br/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="1%">
                                     </td>
+                                    <td>
+                                        <label>Employee Bank Account&nbsp;<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name='employeeBankAccount' id="employeeBankAccount" placeholder="Employee's Bank Account" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                    </td>
+                                    <td width="15%">
+                                    </td>
+                                    <td>
+                                        <label>Temporary Password&nbsp;<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name='tempPassword' id="tempPassword" placeholder="Temporary Password" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                    </td>
+                                    <td width="1%">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr bgcolor="#034C75" rowspan="8">
+                                    <td colspan="7">
+                                        <h4><font color="white">&emsp; Company Information</font></h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="1%">
+                                    </td>  
                                     <td>
                                         <label>Employee Position&nbsp;</label>
                                     </td>
@@ -118,56 +168,7 @@
                                             <option value="Contract Employee">Contract Employee</option>
                                         </select>
                                     </td>
-                                    <td width="1%">
-                                    </td>
-                                    <td>
-                                        <label>Supervisor&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td>
-                                        <select name='supervisor' id="supervisor" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
-                                            <option disabled selected value> -- select an option -- </option>
-                                            <option value="yes">yes</option>
-                                            <option value="no">no</option>
-                                        </select>
-                                    </td>
-                                    <td width="1%">
-                                    </td>
-                                    <td>
-                                        <label>Salary&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td>
-                                        <input type="text" name='employeeSalary' id="employeeSalary" placeholder="Employee's Salary" onkeypress="return numbersonly(event)" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
-                                    </td>
-                                    <td width="1%">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="10">
-                                        <br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="1%">
-                                    </td>
-                                    <td>
-                                        <label>Has Admin Access&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td>
-                                        <Select name='isAdmin' id="isAdmin" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
-                                            <option disabled selected value> -- select an option -- </option>
-                                            <option value="yes">yes</option>
-                                            <option value="no">no</option>
-                                        </Select>
-                                    </td> 
-                                    <td width="1%">
-                                    </td>
-                                    <td>
-                                        <label>Temporary Password&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td>
-                                        <input type="text" name='tempPassword' id="tempPassword" placeholder="Temporary Password" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
-                                    </td>
-                                    <td width="1%">
+                                    <td width="15%">
                                     </td>
                                     <td>
                                         <label>Date Joined&nbsp;<font color="red">*</font></label>
@@ -179,29 +180,63 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="10">
+                                    <td colspan="7">
                                         <br/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="1%">
+                                    </td>  
+                                    <td>
+                                        <label>Supervisor&nbsp;<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <label>Date of Birth&nbsp;<font color="red">*</font></label>
+                                        <select name='supervisor' id="supervisor" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                            <option disabled selected value> -- select an option -- </option>
+                                            <option value="yes">yes</option>
+                                            <option value="no">no</option>
+                                        </select>
+                                    </td>
+                                    <td width="15%">
                                     </td>
                                     <td>
-                                        <input type="date" name='dob' id="dob" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                        <label>Salary&nbsp;<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name='employeeSalary' id="employeeSalary" placeholder="Employee's Salary" onkeypress="return numbersonly(event)" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                    </td>
+                                    <td width="1%">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="1%">
                                     </td> 
-                                    <td colspan="8">
+                                    <td>
+                                        <label>Has Admin Access&nbsp;<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <Select name='isAdmin' id="isAdmin" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                            <option disabled selected value> -- select an option -- </option>
+                                            <option value="yes">yes</option>
+                                            <option value="no">no</option>
+                                        </Select>
+                                    </td> 
+                                    <td colspan="4">
+                                    </td>
+                                </tr>
+                                <tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
                                     </td>
                                 </tr>
                             </table>
                             <table style="width: 100%">
-                                <tr>
-                                    <td colspan="4">
-                                        <br/>
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td style="width: 66.666%">
                                         &nbsp;
@@ -213,7 +248,7 @@
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">Create New User</button>
+                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">Create</button>
                                     </td>
                                 </tr>
                             </table>

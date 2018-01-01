@@ -183,6 +183,29 @@
                 pointer-events: all;
             }
 
+            #topBtn {
+                display: none;
+                position: fixed;
+                bottom: 20px;
+                right: 30px;
+                z-index: 99;
+                border: none;
+                outline: none;
+                background-color: grey;
+                color: white;
+                cursor: pointer;
+                padding: 15px;
+            }
+
+            #topBtn:hover {
+                background-color: #555;
+            }
+
+            #topBtn:hover span {display:none}
+
+            #topBtn:hover:before {
+                content:"Back To Top"
+            }
         </style>
 
         <script type="text/javascript">
@@ -234,6 +257,9 @@
             }
         %>
         <!-- start of header -->
+        <button onclick="backToTopFunction()" id="topBtn">
+            <span>Top</span>
+        </button>
         <div class="navbar-head container-fluid" width="100%">
             <table width="100%">
                 <tr width="100%">
