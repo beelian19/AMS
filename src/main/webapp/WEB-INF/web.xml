@@ -9,10 +9,10 @@
         <servlet-class>Module.Expense.ReadExcelFile</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< HEAD
         <servlet-name>ExecuteExpenses</servlet-name>
         <servlet-class>Module.Expense.ExecuteExpenses</servlet-class>
-=======
+    </servlet>
+    <servlet>
         <servlet-name>CreateAdHocProjectAdmin</servlet-name>
         <servlet-class>Module.ProjectManagment.CreateAdHocProjectAdmin</servlet-class>
     </servlet>
@@ -99,7 +99,6 @@
     <servlet>
         <servlet-name>ViewAllProjectAdmin</servlet-name>
         <servlet-class>Module.ProjectManagement.ViewAllProjectAdmin</servlet-class>
->>>>>>> ebc5bbccd7e53694b70aaf7eaad25045ab8185ea
     </servlet>
     <servlet>
         <servlet-name>GetClientObject</servlet-name>
@@ -114,10 +113,10 @@
         <url-pattern>/ReadExcelFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< HEAD
         <servlet-name>ExecuteExpenses</servlet-name>
         <url-pattern>/ExecuteExpenses</url-pattern>
-=======
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CreateAdHocProjectAdmin</servlet-name>
         <url-pattern>/CreateAdHocProjectAdmin</url-pattern>
     </servlet-mapping>
@@ -204,7 +203,6 @@
     <servlet-mapping>
         <servlet-name>ViewAllProjectAdmin</servlet-name>
         <url-pattern>/ViewAllProjectAdmin</url-pattern>
->>>>>>> ebc5bbccd7e53694b70aaf7eaad25045ab8185ea
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetClientObject</servlet-name>
