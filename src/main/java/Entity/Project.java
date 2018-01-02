@@ -53,19 +53,20 @@ public class Project {
     }
 
     /**
-     * Returns a list of Integer yearMonths from which the project has ran
-     * If the project was created in 1701 and the current month is 1704, the list
-     * [1701, 1702, 1703, 1704] is returned not in any specific order
-     * sample monthlyHours 1701=0.0-0.0, 1702=1.0-0.0, 1703=2.0-2.0, 1704=4.0-2.0
-     * @return 
+     * Returns a list of Integer yearMonths from which the project has ran If
+     * the project was created in 1701 and the current month is 1704, the list
+     * [1701, 1702, 1703, 1704] is returned not in any specific order sample
+     * monthlyHours 1701=0.0-0.0, 1702=1.0-0.0, 1703=2.0-2.0, 1704=4.0-2.0
+     *
+     * @return
      */
-    public List<Integer> getYearMonths(){
+    public List<Integer> getYearMonths() {
         List<Integer> yearMonthList = Arrays.stream(monthlyHours.split(","))
                 .map((String value) -> Integer.valueOf(value.substring(0, value.indexOf("=")).trim()))
                 .collect(Collectors.toList());
         return yearMonthList;
     }
-    
+
     /**
      * Parse in the employee's name and the new total number of hours The method
      * will update the total hours in either employee1Hours or employee2Hours
@@ -141,6 +142,34 @@ public class Project {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Returns the number of hours the employee worked for the parsed yearMonth
+     * 
+     * @param yearMonth
+     * @param employeeName
+     * @return 
+     */
+    public Double getEmployeeHoursInYearMonth(int yearMonth, String employeeName) {
+        int empNumber = getEmployeeNumber(employeeName);
+        Map<Integer, String> hours = Arrays.stream(monthlyHours.split(","))
+                .collect(
+                        Collectors.toMap(
+                                (String key) -> Integer.valueOf(key.substring(0, key.indexOf("=")).trim()),
+                                (String value) -> value.substring(value.indexOf("=") + 1).trim()
+                        )
+                );
+        String yearMonthHours = hours.get(yearMonth);
+        List<Double> values = Arrays.stream(yearMonthHours.split("-")).map(Double::valueOf).collect(Collectors.toList());
+        switch (empNumber) {
+            case 1:
+                return values.get(0);
+            case 2:
+                return values.get(1);
+            default:
+                return null;
+        }
     }
 
     /**
@@ -223,8 +252,8 @@ public class Project {
     public int getProjectID() {
         return projectID;
     }
-    
-    public String getProjectIDString(){
+
+    public String getProjectIDString() {
         return String.valueOf(projectID).trim();
     }
 

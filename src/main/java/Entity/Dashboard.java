@@ -10,11 +10,22 @@ import java.util.Map;
 
 public class Dashboard {
 
-    private HashMap<String, Entity.Project> allProjectsMap;
+    // Key is the project's id and value is the Project with the respective ID
+    private HashMap<String, Project> allProjectsMap;
+
+    // Key if the yearMonth and value is the list of projects that have one of the months in the yearMonth
     private HashMap<Integer, List<Project>> yearMonthMap;
+
+    // Key is the employee's name as listed in a project. Value is a list of the projects that the employee was part of
     private HashMap<String, List<Project>> employeeNameMap;
+
+    // Key is the yearMonth and value is all the remarks by employees that have given a remark for that specific yearMonth. 
     private HashMap<Integer, Map<String, String>> yearMonthEmployeeRemarks;
+
+    // Error message for any failed initializaion. Ignore if not errors
     private String initErrorMessage;
+
+    // boolean to check if the initilization is correct
     private boolean initSuccess;
 
     public Dashboard() {
@@ -68,38 +79,53 @@ public class Dashboard {
             });
 
             yearMonthEmployeeRemarks = MRDAO.getAllMonthlyRemarksMap();
-            
+
             initSuccess = true;
         } catch (Exception e) {
             initSuccess = false;
             initErrorMessage = e.getMessage();
         }
     }
+
+    public List<Project> filterByCompanyName(String companyName) {
+        List<Project> returnList = new ArrayList<>();
+        allProjectsMap.entrySet().stream().map((entry) -> entry.getValue()).forEach((Project p) -> {
+            if (p.getCompanyName().toLowerCase().equals(companyName.toLowerCase())) {
+                returnList.add(p);
+            }
+        });
+        return returnList;
+    }
     
-    public List<Project> filterByYearMonthAndEmployeeName(Integer yearMonth, String employeeName){
+
+    public List<Project> filterByYearMonthAndEmployeeName(Integer yearMonth, String employeeName) {
         List<Project> returnList = new ArrayList<>();
         List<String> yearMonthProjects = new ArrayList<>();
         List<String> employeeProjects = new ArrayList<>();
-        
-        if (yearMonthMap.get(yearMonth) == null) return returnList;
-        
+
+        if (yearMonthMap.get(yearMonth) == null) {
+            return returnList;
+        }
+
         yearMonthMap.get(yearMonth).stream().forEach((p) -> {
             yearMonthProjects.add(p.getProjectIDString());
         });
-        
-        if (employeeNameMap.get(employeeName) == null) return returnList;
+
+        if (employeeNameMap.get(employeeName) == null) {
+            return returnList;
+        }
 
         employeeNameMap.get(employeeName).stream().forEach((p) -> {
             employeeProjects.add(p.getProjectIDString());
         });
-        
+
         // Get all common projects
         yearMonthProjects.retainAll(employeeProjects);
-        
+
         yearMonthProjects.stream().forEach((s) -> {
             returnList.add(allProjectsMap.get(s));
         });
-        
+
         return returnList;
     }
 
