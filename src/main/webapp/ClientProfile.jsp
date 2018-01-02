@@ -16,8 +16,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%            
-            if (request.getParameter("profileId") != null && request.getAttribute("client") == null) {
+        <%            if (request.getParameter("profileId") != null && request.getAttribute("client") == null) {
                 request.setAttribute("clientID", request.getParameter("profileId"));
                 RequestDispatcher rd = request.getRequestDispatcher("ViewClientServlet");
                 rd.forward(request, response);
@@ -216,7 +215,6 @@
                                             <td colspan="2">
                                                 &nbsp;
                                             </td>
-
                                         </tr>
                                     </table>
                                 </div>
@@ -334,8 +332,8 @@
                                                     <%
 
                                                         if (!p.getEmployee1().equals("NA")) {
-                                                            assignedEmployeeURL2 = assignedEmployeeURL +EmployeeDAO.getEmployee(p.getEmployee1()).getEmployeeID();
-                                                            
+                                                            assignedEmployeeURL2 = assignedEmployeeURL + EmployeeDAO.getEmployee(p.getEmployee1()).getEmployeeID();
+
                                                     %>
 
                                                     <a href='<%=assignedEmployeeURL2%>'>

@@ -14,16 +14,13 @@
 <html>
     <head>
         <title>Create Project | Abundant Accounting Management System</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <%
+        <%            
             Client client = (Client) request.getAttribute("client");
             HashMap<String, String> alltimeLines = (HashMap<String, String>) request.getAttribute("allTimeLines");
             EmployeeDAO empDAO = new EmployeeDAO();
             ArrayList<String> supList = empDAO.getAllSupervisor();
             String clientName = client.getCompanyName();
             int profileId = client.getClientID();
-            //System.out.println("Client ID: "+profileId);
         %>
     </head>
     <body width="100%" style='background-color: #F0F8FF;'>
@@ -107,7 +104,7 @@
                                     <td width="1%">
                                     </td>
                                     <td>
-                                        <label style='display: block; width:100%'>Project Type&nbsp<font color="red">*</font></label> 
+                                        <label style='display: block; width:100%'>Project Type&nbsp;<font color="red">*</font></label> 
                                     </td>
                                     <td>
                                         <select name='projectTypeCreate' id="projectTypeCreate" class="form-control" autofocus style='display: block; width:100%' required>
@@ -338,7 +335,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4">
+                                    <td colspan="5">
                                         <br/>
                                     </td>
                                 </tr>
@@ -385,15 +382,15 @@
 
                 if (title === "") {
                     alert("Project Title required");
-                }else if(companyName === "") {
+                } else if (companyName === "") {
                     alert("Company Name required");
-                }else if(emp1 === "") {
+                } else if (emp1 === "") {
                     alert("Assigned Employee required");
-                }else if(emp2 === "") {
+                } else if (emp2 === "") {
                     alert("Second Employee required");
-                }else if(reviewer === "") {
+                } else if (reviewer === "") {
                     alert("Reviewer required");
-                }else if(remarks === "") {
+                } else if (remarks === "") {
                     alert("Remarks required");
                 } else {
                     $.ajax({

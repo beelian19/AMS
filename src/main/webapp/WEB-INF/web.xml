@@ -108,6 +108,18 @@
         <servlet-name>PrepareDashboardData</servlet-name>
         <servlet-class>Module.Dashboard.PrepareDashboardData</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutProcess</servlet-name>
+        <servlet-class>Module.Resource.LogoutProcess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProjectCompletionStatus</servlet-name>
+        <servlet-class>Module.ProjectManagement.UpdateProjectCompletionStatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProjectHours</servlet-name>
+        <servlet-class>Module.ProjectManagement.UpdateProjectHours</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
@@ -215,6 +227,18 @@
     <servlet-mapping>
         <servlet-name>PrepareDashboardData</servlet-name>
         <url-pattern>/PrepareDashboardData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutProcess</servlet-name>
+        <url-pattern>/LogoutProcess</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProjectCompletionStatus</servlet-name>
+        <url-pattern>/UpdateProjectCompletionStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProjectHours</servlet-name>
+        <url-pattern>/UpdateProjectHours</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
