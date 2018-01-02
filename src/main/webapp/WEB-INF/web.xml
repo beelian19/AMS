@@ -80,6 +80,18 @@
         <servlet-name>loginServlet</servlet-name>
         <servlet-class>Module.Resource.loginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmployeeOwnProfileUpdate</servlet-name>
+        <servlet-class>Module.Resource.EmployeeOwnProfileUpdate</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeeProfileUpdate</servlet-name>
+        <servlet-class>Module.Resource.EmployeeProfileUpdate</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffProfileServlet</servlet-name>
+        <servlet-class>Module.Resource.StaffProfileServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
@@ -159,6 +171,18 @@
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeOwnProfileUpdate</servlet-name>
+        <url-pattern>/EmployeeOwnProfileUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeProfileUpdate</servlet-name>
+        <url-pattern>/EmployeeProfileUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffProfileServlet</servlet-name>
+        <url-pattern>/StaffProfileServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

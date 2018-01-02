@@ -71,7 +71,7 @@ public class AddEmployee extends HttpServlet {
             HttpSession session = request.getSession();
             if(empDAO.createEmployee(employeeID, tempPassword, employeeEmail, isAdminValue, employeeSalary, employeePosition, supervisor, employeeBankAccount, employeeNRIC, employeeName, employeeNumber,dJoined,dOfBirth, nationality)) {
                 session.setAttribute("status", "Success: Employee added");
-                response.sendRedirect("ViewEmployee.jsp");
+                response.sendRedirect("EmployeeOverview.jsp");
             } else {
                 session.setAttribute("status", "Error: Unable to add employee. Please try again.");
                 response.sendRedirect("CreateUser.jsp");
