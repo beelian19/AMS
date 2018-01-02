@@ -19,7 +19,7 @@
         <%            
             if (request.getParameter("profileId") != null && request.getAttribute("client") == null) {
                 request.setAttribute("clientID", request.getParameter("profileId"));
-                RequestDispatcher rd = request.getRequestDispatcher("viewClientServlet");
+                RequestDispatcher rd = request.getRequestDispatcher("ViewClientServlet");
                 rd.forward(request, response);
                 return;
             } else if (request.getAttribute("client") == null) {

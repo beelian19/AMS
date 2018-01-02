@@ -51,7 +51,7 @@ public class ViewClientServlet extends HttpServlet {
         }
         if (client == null) {
             // add status message
-            RequestDispatcher rd = request.getRequestDispatcher("ViewAllClient.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("ClientOverview.jsp");
             rd.forward(request, response);
         } else {
             all = ClientDAO.getAllClientProjectFiltered(client.getCompanyName());
