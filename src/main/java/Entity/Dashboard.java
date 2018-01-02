@@ -2,6 +2,7 @@ package Entity;
 
 import DAO.MRDAO;
 import DAO.ProjectDAO;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,33 @@ public class Dashboard {
             initSuccess = false;
             initErrorMessage = e.getMessage();
         }
+    }
+    
+    public List<Project> filterByYearMonthAndEmployeeName(Integer yearMonth, String employeeName){
+        List<Project> returnList = new ArrayList<>();
+        List<String> yearMonthProjects = new ArrayList<>();
+        List<String> employeeProjects = new ArrayList<>();
+        
+        if (yearMonthMap.get(yearMonth) == null) return returnList;
+        
+        yearMonthMap.get(yearMonth).stream().forEach((p) -> {
+            yearMonthProjects.add(p.getProjectIDString());
+        });
+        
+        if (employeeNameMap.get(employeeName) == null) return returnList;
+
+        employeeNameMap.get(employeeName).stream().forEach((p) -> {
+            employeeProjects.add(p.getProjectIDString());
+        });
+        
+        // Get all common projects
+        yearMonthProjects.retainAll(employeeProjects);
+        
+        yearMonthProjects.stream().forEach((s) -> {
+            returnList.add(allProjectsMap.get(s));
+        });
+        
+        return returnList;
     }
 
     public HashMap<String, Project> getAllProjectsMap() {
