@@ -67,7 +67,7 @@ public class AddClientServlet extends HttpServlet {
 
             if (added) {
                 request.setAttribute("createClientStatus", "Success");
-                RequestDispatcher rd = request.getRequestDispatcher("ViewAllClient.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("ClientOverview.jsp");
                 rd.forward(request, response);
                 //response.sendRedirect("ViewAllClient.jsp");
                 

@@ -35,7 +35,20 @@ import Utility.ConnectionManager;
 public class DisplayProjectForAdminHome extends HttpServlet {
 
     //private static String viewAll = "select title, start, end, 'NA' as assignedEmployee1, 'NA' as assignedEmployee2, reviewer, remarks, companyName, 'NA' as taskStatus, reviewStatus from project union select taskTitle, start, end, assignedEmployee1, assignedEmployee2, 'NA' as reviewer, taskRemarks, companyName, taskStatus, 'NA' as reviewStatus from task";
-    private static String viewAll = "select task.projectID,taskID,task.title,task.start,task.end,task.taskRemarks,project.assignedEmployee1, project.assignedEmployee2,taskStatus,reviewer,reviewStatus,uniqueTaskID, project.companyName, project.projectRemarks,project.projectStatus, project.projectType, project.projectReviewer, project.projectReviewStatus from task inner join project ON task.projectID = project.projectID where projectType = 'adhoc' Union select projectID,'NA' as taskID, title, start, end,'NA' as taskRemarks, assignedEmployee1, assignedEmployee2,'NA' as taskStatus, 'NA' as reviewer, 'NA' as reviewStatus, null as uniqueTaskID, companyName, projectRemarks, projectStatus, projectType, projectReviewer, projectReviewStatus from project where projectType <> 'adhoc'";
+    private static String viewAll = "select task.projectID,taskID,task.title,task.start,task.end,task.taskRemarks,project.employee1, project.employee2,taskStatus,reviewer,reviewStatus,uniqueTaskID, project.companyName, project.projectRemarks,project.projectStatus, project.projectType, project.projectReviewer, project.projectReviewStatus \n"
+            + "from \n"
+            + "task \n"
+            + "inner join \n"
+            + "project\n"
+            + " ON \n"
+            + "task.projectID = project.projectID where projectType = 'adhoc' \n"
+            + "Union \n"
+            + "select \n"
+            + "projectID,'NA' as taskID, title, start, end,'NA' as taskRemarks, employee1, employee2,'NA' as taskStatus, 'NA' as reviewer, 'NA' as reviewStatus, null as uniqueTaskID, companyName, projectRemarks, projectStatus, projectType, projectReviewer, projectReviewStatus \n"
+            + "from \n"
+            + "project\n"
+            + " where \n"
+            + "projectType <> 'adhoc'";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

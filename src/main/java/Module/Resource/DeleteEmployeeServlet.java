@@ -46,7 +46,7 @@ public class DeleteEmployeeServlet extends HttpServlet {
             } else {
                 request.setAttribute("deleteStatus", "Unsuccessful");
             }
-            RequestDispatcher rd = request.getRequestDispatcher("ViewEmployee.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("EmployeeOverview.jsp");
             rd.forward(request, response);
         } 
     }

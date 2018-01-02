@@ -6,22 +6,28 @@
 package Module.Resource;
 
 import DAO.EmployeeDAO;
+import DAO.ProjectDAO;
 import Entity.Employee;
+import Entity.Project;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 
 /**
  *
- * @author yemin
+ * @author jagdishps.2014
  */
-public class ViewEmployeeServlet extends HttpServlet {
+@WebServlet(name = "StaffProfileServlet", urlPatterns = {"/StaffProfileServlet"})
+public class StaffProfileServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,60 +41,50 @@ public class ViewEmployeeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ArrayList<String> nameList = new ArrayList();
-        ArrayList<String> emailList = new ArrayList();
-        ArrayList<String> positionList = new ArrayList();
-        ArrayList<String> isAdminList = new ArrayList();
-        ArrayList<String> numberList = new ArrayList();
-        ArrayList<String> idList = new ArrayList();
-        
-
-        ArrayList<String> returnNameList = new ArrayList();
-        ArrayList<String> returnEmailList = new ArrayList();
-        ArrayList<String> returnPositionList = new ArrayList();
-        ArrayList<String> returnIsAdminList = new ArrayList();
-        ArrayList<String> returnNumberList = new ArrayList();
-        ArrayList<String> returnIdList = new ArrayList();
-
+        Calendar deadline;
         try (PrintWriter out = response.getWriter()) {
             
+            HttpSession session = request.getSession();
+            
+            //String employeeID = (String)session.getAttribute("userId");
+            String employeeID = (String) request.getAttribute("id");
+        
             EmployeeDAO empDAO = new EmployeeDAO();
-            ArrayList<Employee> empList = empDAO.getAllEmployees();
-
-            for (int i = 0; i < empList.size(); i++) {
-                Employee emp = empList.get(i);
-                nameList.add(emp.getName());
-                emailList.add(emp.getEmail());
-                positionList.add(emp.getPosition());
-                isAdminList.add(emp.getIsAdmin());
-                numberList.add(emp.getNumber());
-                idList.add(emp.getEmployeeID());
-            }
-            for (int i = 0; i < nameList.size(); i++) {
-                returnNameList.add(nameList.get(i));
-                returnEmailList.add(emailList.get(i));
-                returnPositionList.add(positionList.get(i));
-                returnNumberList.add(numberList.get(i));
-                String isAdmin = isAdminList.get(i);
-                returnIdList.add(idList.get(i));
-                if (isAdmin.equals("no")) {
-                    returnIsAdminList.add("No");
+            Employee emp = empDAO.getEmployeeByID(employeeID);
+            String checkingName = emp.getName();
+            //System.out.println("Name check: "+checkingName);
+            ArrayList<ArrayList<Project>> both = ProjectDAO.getAllProjectsByEmployee(checkingName);
+            ArrayList<Project> incompleteProjList = both.get(1);
+            ArrayList<Project> incomProjList = new ArrayList<>();
+            ArrayList<Project> overdueProjList = new ArrayList<>();
+            for (Project p: incompleteProjList){
+                deadline = Calendar.getInstance();
+                deadline.setTime(p.getEnd());
+                if(Calendar.getInstance().before(deadline)){
+                    incomProjList.add(p);
                 } else {
-                    returnIsAdminList.add("Yes");
+                    overdueProjList.add(p);
                 }
             }
-          
-            request.setAttribute("nameList", returnNameList);
-            request.setAttribute("emailList", returnEmailList);
-            request.setAttribute("positionList", returnPositionList);
-            request.setAttribute("isAdminList", returnIsAdminList);
-            request.setAttribute("numberList",returnNumberList);
-            request.setAttribute("idList",returnIdList);
-           
-
-            RequestDispatcher rd = request.getRequestDispatcher("EmployeeOverview.jsp");
+            ArrayList<Project> completeProjList = both.get(0);
+            request.setAttribute("name", emp.getName());
+            request.setAttribute("email", emp.getEmail());
+            request.setAttribute("id", emp.getEmployeeID());
+            request.setAttribute("number", emp.getNumber());
+            request.setAttribute("position", emp.getPosition());
+            request.setAttribute("dateJoined", emp.getDateJoined());
+            request.setAttribute("overdueProject", overdueProjList);
+            request.setAttribute("incompletedProject", incomProjList);
+            request.setAttribute("completedProject", completeProjList);
+            request.setAttribute("dob",emp.getDob());
+            //request.setAttribute("nationality", emp.getNationality());
+            //request.setAttribute("nric",emp.getNric());
+            //request.setAttribute("bankAccount",emp.getBankAccount());
+            
+            RequestDispatcher rd = request.getRequestDispatcher("EmployeeProfile.jsp");
             rd.forward(request, response);
-        } 
+//            response.sendRedirect("StaffProfile.jsp");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
