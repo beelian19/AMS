@@ -16,8 +16,7 @@
         <title>Create Project | Abundant Accounting Management System</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <%
-            Client client = (Client) request.getAttribute("client");
+        <%            Client client = (Client) request.getAttribute("client");
             HashMap<String, String> alltimeLines = (HashMap<String, String>) request.getAttribute("allTimeLines");
             EmployeeDAO empDAO = new EmployeeDAO();
             ArrayList<String> supList = empDAO.getAllSupervisor();
@@ -238,6 +237,11 @@
                                         <textarea name="remarksCreate" id="remarksCreate" class="text ui-widget-content ui-corner-all" cols="22" rows="3" style='display: block; width:100%' required></textarea>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                    </td>
+                                </tr>
                                 <tr bgcolor="#034C75" rowspan="8">
                                     <td colspan="7">
                                         <h4><font color="white">&emsp;Employees Assigned Information</font></h4>
@@ -379,15 +383,15 @@
 
                 if (title === "") {
                     alert("Project Title required");
-                }else if(companyName === "") {
+                } else if (companyName === "") {
                     alert("Company Name required");
-                }else if(emp1 === "") {
+                } else if (emp1 === "") {
                     alert("Assigned Employee required");
-                }else if(emp2 === "") {
+                } else if (emp2 === "") {
                     alert("Second Employee required");
-                }else if(reviewer === "") {
+                } else if (reviewer === "") {
                     alert("Reviewer required");
-                }else if(remarks === "") {
+                } else if (remarks === "") {
                     alert("Remarks required");
                 } else {
                     $.ajax({
