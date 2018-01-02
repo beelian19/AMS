@@ -197,6 +197,9 @@ public class Project {
         this.dateCompleted = dateCompleted;
         this.monthlyHours = monthlyHours;
     }
+
+    public Project() {
+    }
     
     
 
