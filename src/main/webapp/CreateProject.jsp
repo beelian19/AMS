@@ -241,7 +241,7 @@
                                 </tr>
                                 <tr bgcolor="#034C75" rowspan="8">
                                     <td colspan="7">
-                                        <label>&emsp; Employee Information<font color="red">*</font></label>
+                                        <h4><font color="white">&emsp;Employees Assigned Information</font></h4>
                                     </td>
                                 </tr>
                                 <tr>
