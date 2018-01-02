@@ -9,8 +9,8 @@
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="Entity.Client"%>
+<%@include file="Protect.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
     <head>
         <title>Create Project | Abundant Accounting Management System</title>
@@ -35,60 +35,81 @@
                 <jsp:include page="StatusMessage.jsp"/>
                 <div class="container-fluid" style="text-align: center; width: 100%; height: 100%; margin-top: <%=session.getAttribute("margin")%>">
                     <h1>Create Project for <%=clientName%></h1>
+                    <br/>
                     <div class="container-fluid" align="center" style='width: 100%; display: inline-block'>
                         <form>
-                            <table style="width:100%; text-align: left">
-                                <tr>
-                                    <td colspan="9">
-                                        <br/><br/>
+                            <table width="100%" height="100%" style="text-align: left">
+                                <tr bgcolor="#034C75" rowspan="8">
+                                    <td colspan="7">
+                                        <h4><font color="white">&emsp; Basic Information</font></h4>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <!--Project Title (Input)-->
-                                    <td width="1%">
-                                    </td>
-                                    <td width="16.167%">
-                                        <label>Project Title&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td width="16.167%">
-                                        <input type="text" name="projectTitleCreate" id="projectTitleCreate" class="text ui-widget-content ui-corner-all" style='display: block; width:100%' required>
-                                        <input type="hidden" name="profileId" id="profileId" value="<%=profileId%>"/>
-                                    </td>
-                                    <td width="1%">
-                                        &nbsp;
-                                    </td>
-                                    <!--Company Name (DropDown List)-->
-                                    <td width="16.167%">
-                                        <label>Company Name&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td width="16.167%">
-                                        <input type="text" name="compName" value="<%=client.getCompanyName()%>" id="compName" class="text ui-widget-content ui-corner-all" readonly style='display: block; width:100%' required>  
-                                        <input type='hidden' name='companyNameCreate' value='<%=client.getCompanyName()%>' id='companyNameCreate'>
-                                    </td>
-                                    <td width="1%">
-                                        &nbsp;
-                                    </td>
-                                    <!--Financial Year End-->
-                                    <td width="16.167%">
-                                        <label>Financial Year End&nbsp<font color="red">*</font></label>
-                                    </td>
-                                    <td width="16.167%">
-                                        <input type="text" name="financialYearEndCreate" value="<%=client.getFinancialYearEnd()%>" id="financialYearEndCreate" class="text ui-widget-content ui-corner-all" readonly style='display: block; width:100%' required/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="9">
+                                    <td colspan="7">
                                         <br/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <!--Project Type (DropDown List)-->
                                     <td width="1%">
                                     </td>
-                                    <td width="16.167%">
+                                    <td>
+                                        <label>Project Title&nbsp;<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="projectTitleCreate" id="projectTitleCreate" class="text ui-widget-content ui-corner-all" style='display: block; width:100%' required>
+                                        <input type="hidden" name="profileId" id="profileId" value="<%=profileId%>"/>
+                                    </td>
+                                    <td width="15%">
+                                    </td>
+                                    <td>
+                                        <label>Company Name&nbsp;<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="compName" value="<%=client.getCompanyName()%>" id="compName" class="text ui-widget-content ui-corner-all" readonly style='display: block; width:100%' required>  
+                                        <input type='hidden' name='companyNameCreate' value='<%=client.getCompanyName()%>' id='companyNameCreate'>
+                                    </td>
+                                    <td width="1%">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="1%">
+                                    </td>
+                                    <td>
+                                        <label>Financial Year End&nbsp<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="financialYearEndCreate" value="<%=client.getFinancialYearEnd()%>" id="financialYearEndCreate" class="text ui-widget-content ui-corner-all" readonly style='display: block; width:100%' required/>
+                                    </td>
+                                    <td colspan="4">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr bgcolor="#034C75" rowspan="8">
+                                    <td colspan="7">
+                                        <h4><font color="white">&emsp; Project Information</font></h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="1%">
+                                    </td>
+                                    <td>
                                         <label style='display: block; width:100%'>Project Type&nbsp<font color="red">*</font></label> 
                                     </td>
-                                    <td width="16.167%">
+                                    <td>
                                         <select name='projectTypeCreate' id="projectTypeCreate" class="form-control" autofocus style='display: block; width:100%' required>
                                             <option disabled selected value> — select an option — </option>
                                             <option value="tax">Tax</option>
@@ -99,14 +120,12 @@
                                             <option value="secretarial">Secretarial</option>
                                         </select> 
                                     </td>
-                                    <td width="1%">
-                                        &nbsp;
+                                    <td width="15%">
                                     </td>
-                                    <!--Deadline (Compute Based on Project Type Selection)-->
-                                    <td width="16.167%">
+                                    <td>
                                         <label>Recommended Internal Deadline&nbsp<font color="red">*</font></label>
                                     </td>
-                                    <td width="16.167%">
+                                    <td>
                                         <select name='recommendedInternalDeadline' id="recommendedInternalDeadline" class="form-control" autofocus style='display: block; width:100%' required>
 
                                             <%
@@ -141,28 +160,28 @@
                                         </select> 
                                     </td>
                                     <td width="1%">
-                                        &nbsp;
-                                    </td>
-                                    <td width="16.167%">
-                                        <label>Internal Deadline&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td width="16.167%">
-                                        <input type="date" name="internalDeadlineCreate" id="internalDeadlineCreate" class="text ui-widget-content ui-corner-all" style='display: block; width:100%' required>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="9">
+                                    <td colspan="7">
                                         <br/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <!--Deadline (Compute Based on Project Type Selection)-->
                                     <td width="1%">
                                     </td>
-                                    <td width="16.167%">
+                                    <td>
+                                        <label>Internal Deadline&nbsp;<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="date" name="internalDeadlineCreate" id="internalDeadlineCreate" class="text ui-widget-content ui-corner-all" style='display: block; width:100%' required>
+                                    </td>
+                                    <td width="15%">
+                                    </td>
+                                    <td>
                                         <label>Recommended External Deadline&nbsp;<font color="red">*</font></label>
                                     </td>
-                                    <td width="16.167%">
+                                    <td>
                                         <select name='recommendedExternalDeadline' id="recommendedExternalDeadline" class="form-control" autofocus style='display: block; width:100%' required>
 
                                             <%
@@ -196,23 +215,47 @@
                                             %>
                                         </select>
                                     </td>
-                                    <td width="1%">
-                                        &nbsp;
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
                                     </td>
-                                    <td width="16.167%">
+                                </tr>
+                                <tr>
+                                    <td width="1%">
+                                    </td>
+                                    <td>
                                         <label>External Deadline&nbsp<font color="red">*</font></label>
                                     </td>
-                                    <td width="16.167%">
+                                    <td>
                                         <input type="date" name="externalDeadlineCreate" id="externalDeadlineCreate" class="text ui-widget-content ui-corner-all"  style='display: block; width:100%' required>
                                     </td>
-                                    <td width="1%">
-                                        &nbsp;
+                                    <td width="15%">
                                     </td>
-                                    <!--Emp1 DropDown List-->
-                                    <td width="16.167%">
+                                    <td>
+                                        <label>Remarks&nbsp<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <textarea name="remarksCreate" id="remarksCreate" class="text ui-widget-content ui-corner-all" cols="22" rows="3" style='display: block; width:100%' required></textarea>
+                                    </td>
+                                </tr>
+                                <tr bgcolor="#034C75" rowspan="8">
+                                    <td colspan="7">
+                                        <label>&emsp; Employee Information<font color="red">*</font></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="1%">
+                                    </td>
+                                    <td>
                                         <label>Assigned Employee 1<font color="red">*</font></label>
                                     </td>
-                                    <td width="16.167%">
+                                    <td>
                                         <select name='assignedEmployee1' id="assignedEmployee1" class="form-control" autofocus style='display: block; width:100%' required>
                                             <option disabled selected value> — select an option — </option>
                                             <%
@@ -222,20 +265,12 @@
                                             %>
                                         </select>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="9">
-                                        <br/>
+                                    <td width="15%">
                                     </td>
-                                </tr>
-                                <tr>
-                                    <!--Emp2 DropDown List-->
-                                    <td width="1%">
-                                    </td>
-                                    <td width="16.167%">
+                                    <td>
                                         <label>Assigned Employee 2<font color="red">*</font></label>
                                     </td>
-                                    <td width="16.167%">
+                                    <td>
                                         <select name='assignedEmployee2' id="assignedEmployee2" class="form-control" autofocus style='display: block; width:100%' required>
                                             <option disabled selected value> — select an option — </option>
                                             <%
@@ -247,13 +282,20 @@
                                         </select>
                                     </td>
                                     <td width="1%">
-                                        &nbsp;
                                     </td>
-                                    <!--Reviewer DropDown List-->
-                                    <td width="16.167%">
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="1%">
+                                    </td>
+                                    <td>
                                         <label>Reviewer&nbsp<font color="red">*</font></label>
                                     </td>
-                                    <td width="16.167%"> 
+                                    <td>
                                         <select name='reviewer' id="reviewer" class="form-control" autofocus style='display: block; width:100%' required>
                                             <option disabled selected value> — select an option — </option>
                                             <%
@@ -263,66 +305,40 @@
                                             %>
                                         </select>
                                     </td>
-                                    <!--<td width="1%">
-                                        &nbsp;
+                                    <td colspan="4">
                                     </td>
-                                    <td width="16.167%">
-                                        <label>Recurring Frequency&nbsp<font color="red">*</font></label> 
-                                    </td>
-                                    <td width="16.167%">
-                                        <select name='frequency' id="frequency" class="form-control" required autofocus style='display: block; width:100%'>
-                                            <option disabled selected value> — select an option — </option>
-                                            <option value="na">NA</option>
-                                            <option value="m">monthly</option>
-                                            <option value="q">quarterly</option>
-                                            <option value="s">semi annual</option>
-                                        </select> 
-                                    </td>-->
                                 </tr>
                                 <tr>
-                                    <td colspan="9">
+                                    <td colspan="7">
                                         <br/>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <!--Remarks (Input)-->
-                                    <td width="1%">
-                                    </td>
-                                    <td width="16.167%">
-                                        <label>Remarks&nbsp<font color="red">*</font></label>
-                                    </td>
-                                    <td width="16.167%">
-                                        <textarea name="remarksCreate" id="remarksCreate" class="text ui-widget-content ui-corner-all" cols="22" rows="3" style='display: block; width:100%' required></textarea>
-                                    </td>
-                                    <td colspan="6">
-                                        &nbsp;
-                                    </td>
-                                </tr>
+                                </tr>   
                             </table>
-
-
                             <table style="width: 100%">
                                 <tr>
-                                    <td colspan="4">
-                                        <br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 66.666%">
+                                    <td style="width: 61%">
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
                                         <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
                                     </td>
-                                    </form>
                                     <td style="width: 1%">
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
-                                        <button id="btnCreateProject" class="btn btn-lg btn-primary btn-block btn-success" type="submit">Create Project</button>
+                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">Create</button>
+                                    </td>
+                                    <td style="width: 5.666%">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <br/>
                                     </td>
                                 </tr>
                             </table>
+                        </form>
                     </div>
                 </div>
             </div>

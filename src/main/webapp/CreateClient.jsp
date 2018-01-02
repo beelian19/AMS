@@ -319,7 +319,7 @@
                             </table>   
                             <table style="width: 100%">
                                 <tr>
-                                    <td style="width: 66.666%">
+                                    <td style="width: 61%">
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
@@ -330,6 +330,14 @@
                                     </td>
                                     <td style="width: 16.167%">
                                         <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">Create</button>
+                                    </td>
+                                    <td style="width: 5.666%">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <br/>
                                     </td>
                                 </tr>
                             </table>

@@ -200,7 +200,7 @@
                                     <td width="15%">
                                     </td>
                                     <td>
-                                        <label>Salary&nbsp;<font color="red">*</font></label>
+                                        <label>Monthly Overhead&nbsp;<font color="red">*</font></label>
                                     </td>
                                     <td>
                                         <input type="text" name='employeeSalary' id="employeeSalary" placeholder="Employee's Salary" onkeypress="return numbersonly(event)" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
@@ -238,7 +238,7 @@
                             </table>
                             <table style="width: 100%">
                                 <tr>
-                                    <td style="width: 66.666%">
+                                    <td style="width: 61%">
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
@@ -249,6 +249,14 @@
                                     </td>
                                     <td style="width: 16.167%">
                                         <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">Create</button>
+                                    </td>
+                                    <td style="width: 5.666%">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <br/>
                                     </td>
                                 </tr>
                             </table>
