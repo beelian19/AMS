@@ -53,13 +53,13 @@ public class loginServlet extends HttpServlet {
             if (employee.getIsAdmin().equals("no")) {
                 session.setAttribute("userId", employee.getEmployeeID());
                 session.setAttribute("sessionUserIsAdmin", "no");
-                response.sendRedirect("Calendar_Employee.jsp");
+                response.sendRedirect("EmployeeHome.jsp");
                 return;
             } else {
                 //if user is an admin
                 session.setAttribute("userId", employee.getEmployeeID());
                 session.setAttribute("sessionUserIsAdmin", "yes");
-                response.sendRedirect("Calendar_Admin.jsp");
+                response.sendRedirect("AdminHome.jsp");
                 return;
             }
 
