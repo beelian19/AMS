@@ -9,9 +9,11 @@
 package Module.Expense;
 
 import Entity.Expense;
+import Entity.Token;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
@@ -23,11 +25,16 @@ import org.apache.poi.ss.usermodel.Workbook;
 public class ExpenseFactory {
 
     private Workbook workbook;
+    private String clientName;
+    private String realmid;
+    private Calendar created;
     private List<Expense> expenses;
     private List<String> messages;
+    private List<String> processMessages;
     private String UEN;
     private String chargedAccountName;
     private int chargedAccountNumber;
+    private Token token;
 
     /**
      * Initializes all the required information for expenses and returns a List
@@ -40,6 +47,7 @@ public class ExpenseFactory {
         //Version 1.0 only support xlsx file. Change here with more wrapper methods and
         //Switch statements to add in more file types
         xlsxInit();
+        created = Calendar.getInstance();
 
         return UEN != null && expenses != null && chargedAccountNumber != 0;
     }
@@ -219,7 +227,7 @@ public class ExpenseFactory {
                     return cell.getStringCellValue(); //returns String
                 case NUMERIC:
                     double d = cell.getNumericCellValue(); //returns double
-                    return (d % 1 == 0)
+                    return (d % 1 == 0.0)
                             ? String.format("%.0f", d) : String.valueOf(d);
                 case BOOLEAN:
                     return String.valueOf(cell.getBooleanCellValue()); //returns boolean
@@ -292,6 +300,15 @@ public class ExpenseFactory {
     }
 
     /**
+     * Setter method for the list of expenses after execution
+     *
+     * @param expenses
+     */
+    public void setExpenses(List<Expense> expenses) {
+        this.expenses = expenses;
+    }
+
+    /**
      * Getter method for the UEN number
      *
      * @return String
@@ -327,4 +344,59 @@ public class ExpenseFactory {
         return chargedAccountNumber;
     }
 
+    /**
+     * Getter method for the the date the expense factory was initialized
+     *
+     * @return
+     */
+    public Calendar getCreated() {
+        return created;
+    }
+
+    /**
+     * Getter method for the client name
+     *
+     * @return
+     */
+    public String getClientName() {
+        return clientName;
+    }
+
+    /**
+     * Setter method for the client name
+     *
+     * @param clientName
+     */
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
+    }
+
+    public List<String> getProcessMessages() {
+        return processMessages;
+    }
+
+    public void setProcessMessages(List<String> processMessages) {
+        this.processMessages = processMessages;
+    }
+
+    public String getRealmid() {
+        return realmid;
+    }
+
+    public void setRealmid(String realmid) {
+        this.realmid = realmid;
+    }
+    
+    
+
+    
+    
 }

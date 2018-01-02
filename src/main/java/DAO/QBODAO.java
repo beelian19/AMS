@@ -7,6 +7,7 @@
  */
 package DAO;
 
+import Entity.Expense;
 import com.intuit.ipp.core.IEntity;
 import com.intuit.ipp.data.Account;
 import com.intuit.ipp.data.AccountBasedExpenseLineDetail;
@@ -281,6 +282,35 @@ public class QBODAO {
         return imReference != null && txReference != null && nrReference != null;
     }
 
+    public List<Expense> submitListOfExpenses(List<Expense> expenses) {
+        List<Expense> processedExpenses = new ArrayList<>();
+        
+        if (!initializeTaxcodeReferences()) {
+            processedExpenses.add(new Expense("Tax Code init failed"));
+        }
+        
+        ReferenceType bankReference;
+        
+        Expense e = expenses.get(0);
+        bankReference = getBankReference(String.valueOf(e.getChargedAccountNumber()));
+        
+        if (bankReference == null) {
+            processedExpenses.add(new Expense("No bank reference with account number: " + e.getChargedAccountNumber()));
+        }
+        
+        // if there are errors
+        if (!processedExpenses.isEmpty()) {
+            return processedExpenses;
+        }
+        
+        for (Expense ex : expenses) {
+            
+        
+        }
+        
+        return processedExpenses;
+    }
+    
     /**
      * PaymentTypeEnum is hard coded for now Returns a multi dimension array of
      * 3 0 - row number 1 - 0 for failed, non 0 for success 2 - Reasons, if any,

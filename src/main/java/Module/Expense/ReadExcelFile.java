@@ -1,6 +1,9 @@
 package Module.Expense;
 
 import DAO.ClientDAO;
+import DAO.TokenDAO;
+import Entity.Client;
+import Entity.Token;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -65,13 +68,24 @@ public class ReadExcelFile extends HttpServlet {
                         throw new IllegalArgumentException("Excel file was not initialized correctly");
                     }
 
-                    // Ensure that a client exist with the UEN number
-                    if (!ClientDAO.clientExist(ef.getUEN().trim())) {
+                    // Get client associated with the UEN number
+                    Client client = ClientDAO.getClientByUEN(ef.getUEN().trim());
+                    if (client == null) {
                         throw new IllegalArgumentException("No client in database with UEN: " + ef.getUEN());
+                    } else {
+                        ef.setClientName(client.getCompanyName());
+                        ef.setRealmid(client.getRealmid().trim());
                     }
 
-                    request.getSession().setAttribute("ExpenseFactory", ef);
-                    request.setAttribute("messages", messages);
+                    Token token = TokenDAO.getToken(client.getClientID());
+                    if (token == null) {
+                        throw new IllegalArgumentException("No token in database with company id " + client.getClientID());
+                    }
+
+                    
+                    request.getSession().setAttribute("expenseFactory", ef);
+                    request.setAttribute("expenseClient", client);
+                    request.setAttribute("expenseToken", token);
                     request.getRequestDispatcher("process-invoice.jsp").forward(request, response);
 
                 }
@@ -83,10 +97,10 @@ public class ReadExcelFile extends HttpServlet {
             } catch (RuntimeException re) {
                 messages.add("RuntimeException found: " + re.getMessage());
             }
-            
+
             request.setAttribute("messages", messages);
             request.getRequestDispatcher("upload.jsp").forward(request, response);
-            
+
         }
     }
 
