@@ -31,6 +31,7 @@ public class Project {
     private String projectReviewer;
     private String projectReviewStatus;
     private int dateCompleted;
+    // sample monthlyHours 1709=0.0-0.0, 1710=1.0-0.0, 1711=2.0-2.0, 1712=4.0-2.0
     private String monthlyHours;
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -51,6 +52,20 @@ public class Project {
         }
     }
 
+    /**
+     * Returns a list of Integer yearMonths from which the project has ran
+     * If the project was created in 1701 and the current month is 1704, the list
+     * [1701, 1702, 1703, 1704] is returned not in any specific order
+     * sample monthlyHours 1701=0.0-0.0, 1702=1.0-0.0, 1703=2.0-2.0, 1704=4.0-2.0
+     * @return 
+     */
+    public List<Integer> getYearMonths(){
+        List<Integer> yearMonthList = Arrays.stream(monthlyHours.split(","))
+                .map((String value) -> Integer.valueOf(value.substring(0, value.indexOf("=")).trim()))
+                .collect(Collectors.toList());
+        return yearMonthList;
+    }
+    
     /**
      * Parse in the employee's name and the new total number of hours The method
      * will update the total hours in either employee1Hours or employee2Hours
@@ -138,7 +153,6 @@ public class Project {
         Calendar now = Calendar.getInstance();
         int month = now.get(Calendar.MONTH) + 1;
         int year = now.get(Calendar.YEAR) % 1000 * 100;
-        System.out.println(year + month);
         return year + month;
     }
 
@@ -208,6 +222,10 @@ public class Project {
 
     public int getProjectID() {
         return projectID;
+    }
+    
+    public String getProjectIDString(){
+        return String.valueOf(projectID).trim();
     }
 
     public void setProjectID(int projectID) {

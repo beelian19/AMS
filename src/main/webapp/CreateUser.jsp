@@ -140,7 +140,6 @@
                                 <tr>
                                     <td colspan="7">
                                         <br/>
-                                        <br/>
                                     </td>
                                 </tr>
                                 <tr bgcolor="#034C75" rowspan="8">
@@ -255,7 +254,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4">
+                                    <td colspan="5">
                                         <br/>
                                     </td>
                                 </tr>
