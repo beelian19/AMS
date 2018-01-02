@@ -96,6 +96,10 @@
         <servlet-name>ViewAllProjectAdmin</servlet-name>
         <servlet-class>Module.ProjectManagement.ViewAllProjectAdmin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetClientObject</servlet-name>
+        <servlet-class>Module.ProjectManagement.GetClientObject</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
@@ -191,6 +195,10 @@
     <servlet-mapping>
         <servlet-name>ViewAllProjectAdmin</servlet-name>
         <url-pattern>/ViewAllProjectAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetClientObject</servlet-name>
+        <url-pattern>/GetClientObject</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

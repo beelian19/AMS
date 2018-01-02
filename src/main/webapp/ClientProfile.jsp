@@ -127,7 +127,7 @@
                         </div>
 
                         <div style="text-align: center; padding-bottom: 1%">
-                            <form action='RetrieveClientObject' method='post'>
+                            <form action='GetClientObject' method='post'>
                                 <input type='hidden' id='companyName' value='<%=companyName%>' name='companyName'/>
                                 <button style="font-size: 10.5px;">Create Project</button>
                             </form>
