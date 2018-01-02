@@ -27,6 +27,10 @@ public class Expense {
 
     public Expense() {
     }
+    
+    public Expense(String status){
+        this.status = status;
+    }
 
     /**
      * Checks if the expense object has all the necessary information for being

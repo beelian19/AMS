@@ -52,32 +52,33 @@ public class Project {
     }
 
     /**
-     * Parse in the employee's name and the new total number of hours
-     * The method will update the total hours in either employee1Hours or employee2Hours and 
-     * monthlyHours for tracking. Use ProjectDAO to reflect changes in the database
-     * Returns boolean if update to the Project object was executed
+     * Parse in the employee's name and the new total number of hours The method
+     * will update the total hours in either employee1Hours or employee2Hours
+     * and monthlyHours for tracking. Use ProjectDAO to reflect changes in the
+     * database Returns boolean if update to the Project object was executed
+     *
      * @param employee
-     * @param newTotalHours 
-     * @return  
+     * @param newTotalHours
+     * @return
      */
     public boolean updateHours(String employee, Double newTotalHours) {
         // Ensure that newTotalHours is in 1 decimal placing
         BigDecimal bd = new BigDecimal(newTotalHours);
         bd = bd.setScale(1, BigDecimal.ROUND_DOWN);
         newTotalHours = bd.doubleValue();
-        
+
         // Get the index of the employee
         int empIndex = getEmployeeNumber(employee);
-        
+
         // Ensure that monthlyHours is initialized
-        if (empIndex > 0 && monthlyHours != null && !monthlyHours.trim().equals("") ) {
-            
+        if (empIndex > 0 && monthlyHours != null && !monthlyHours.trim().equals("")) {
+
             // This is to access the correct emplyee's hours in a 0-based list
             empIndex -= 1;
-            
+
             // Get the current year and month
             int yearMonth = getYearMonth();
-            
+
             // Convert current monthlyHours into a hashmap
             Map<Integer, String> hours = Arrays.stream(monthlyHours.split(","))
                     .collect(
@@ -88,41 +89,40 @@ public class Project {
                     );
             // Get all the month's hour entries for this project
             Set<Integer> entries = hours.keySet();
-            
-            
+
             Double totalPreviousMonthHours = 0.0;
             int otherEmpIndex = (empIndex == 0) ? 1 : 0;
             Double otherEmpHours = 0.0;
             //The hour to inpute for the current months hour is newTotalHours - totalPreviousMonthHours
             //Sum up all the previous months hours
-            for (Integer yrMth : entries){
-                
+            for (Integer yrMth : entries) {
+
                 String value = hours.get(yrMth);
-                List<Double> values = Arrays.stream(value.split("-")).map(Double::valueOf).collect(Collectors.toList());   
-                if(yrMth!=yearMonth){
+                List<Double> values = Arrays.stream(value.split("-")).map(Double::valueOf).collect(Collectors.toList());
+                if (yrMth != yearMonth) {
                     totalPreviousMonthHours += values.get(empIndex);
                 } else {
                     otherEmpHours = values.get(otherEmpIndex);
                 }
             }
             Double newMonthHours = newTotalHours - totalPreviousMonthHours;
-            
+
             // Depending if employee is employee1 or employee2
-            String newMonthValue = (empIndex == 0) ? newMonthHours+"-"+otherEmpHours : otherEmpHours+"-"+newMonthHours;
-            
+            String newMonthValue = (empIndex == 0) ? newMonthHours + "-" + otherEmpHours : otherEmpHours + "-" + newMonthHours;
+
             // Update the hashmap
             hours.put(yearMonth, newMonthValue);
-                    
+
             // Update either employee1Hours or employee2Hours to newTotalHours
             if (empIndex == 0) {
                 employee1Hours = newTotalHours;
             } else {
                 employee2Hours = newTotalHours;
             }
-            
+
             // Update monthlyHours, substring to remove {} from the .toString() of a hashmap
             monthlyHours = hours.toString().substring(1, hours.toString().length() - 1);
-            
+
             return true;
         }
         return false;
@@ -200,8 +200,6 @@ public class Project {
 
     public Project() {
     }
-    
-    
 
     @Override
     public String toString() {

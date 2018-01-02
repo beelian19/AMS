@@ -21,6 +21,7 @@ public class ClientDAO {
     private static String deleteClientByIDStatement = "DELETE from client WHERE clientID=? ";
     private static String getAllClientsStatement = "SELECT * FROM CLIENT order by companyName asc";
     private static String getClientByIDStatement = "SELECT * FROM CLIENT where clientID = ?";
+    private static String getClientByUENStatement = "SELECT * FROM CLIENT where UENNumber = ?";
     private static String getAllClientNameStatement = "SELECT companyName FROM CLIENT";
     private static String getAllClientProjectStatement = "SELECT * FROM project WHERE companyName='%s'";
     private static String getClientRealmidStatement = "SELECT realmid FROM client where companyName = ?";
@@ -163,6 +164,22 @@ public class ClientDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Client getClientByUEN(String UEN) {
+        
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(getClientByUENStatement);
+            stmt.setString(1, UEN);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                return new Client(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15));
+            }
+
+        } catch (SQLException e) {
         }
         return null;
     }

@@ -24,8 +24,12 @@
 <html>
     <head>
         <title>Process Invoice | Abundant Accounting Management System</title>
-        <%            // Ensure that the workbook is there, if not redirect to upload-excel.jsp
-            
+        <%            /**
+             * Check if future "expensefuture" exist, if not, display no job submitted message 
+             * if exist, check if done. If not, display still ongoing with info from request session ef
+             * if done, display resutls and clear ef and future from session using future.get()
+             *
+             */
             if (request.getSession().getAttribute("excel") == null) {
                 request.setAttribute("UploadExcelResponse", "Missing excel attribute at ExpenseResult.jsp");
                 RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
@@ -38,7 +42,7 @@
             int numberOfItems = results.length;
             String actualProccessed = results[0][1];
             String actualError = results[0][2];
-            
+
             if (request.getSession().getAttribute("invoiceProjectId") == null) {
                 request.setAttribute("UploadExcelResponse", "Missing project id ExpenseResult.jsp");
                 RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
@@ -51,14 +55,12 @@
             //Boolean canProceed = true;
             request.getSession().removeAttribute("realmid");
             request.getSession().removeAttribute("invoiceProjectId");
-             request.getSession().removeAttribute("excel");
+            request.getSession().removeAttribute("excel");
             // Rows below are for debugging
             int numInvoice = Integer.parseInt(actualProccessed);
             numInvoice += p.getNumberOfInvoices();
             p.setNumberOfInvoices(numInvoice);
             ProjectDAO.updateProject(p);
-            
-            
 
             // Get all the data 
             // These are the new stuff
