@@ -105,6 +105,10 @@
         <servlet-class>Module.ProjectManagement.GetClientObject</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>PrepareDashboardData</servlet-name>
+        <servlet-class>Module.Dashboard.PrepareDashboardData</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LogoutProcess</servlet-name>
         <servlet-class>Module.Resource.LogoutProcess</servlet-class>
     </servlet>
@@ -223,6 +227,10 @@
     <servlet-mapping>
         <servlet-name>GetClientObject</servlet-name>
         <url-pattern>/GetClientObject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrepareDashboardData</servlet-name>
+        <url-pattern>/PrepareDashboardData</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogoutProcess</servlet-name>
