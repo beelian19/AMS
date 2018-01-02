@@ -34,7 +34,7 @@
         <%            if (request.getAttribute("completedProject") == null) {
                 //RequestDispatcher rd = request.getRequestDispatcher("AdminProjectServlet");
                 //rd.forward(request, response);
-                response.sendRedirect("AdminProjectServlet");
+                response.sendRedirect("ViewAllProjectAdmin");
                 return;
             }
 
