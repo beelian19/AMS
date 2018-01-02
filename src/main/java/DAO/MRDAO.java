@@ -22,9 +22,10 @@ import java.util.Map;
 public class MRDAO {
 
     /**
-     * Returns a hashmap of a hashmap
-     * The first map's key is the yearMonth, with a Map of all employees and their remarks
-     * @return 
+     * Returns a hashmap of a hashmap The first map's key is the yearMonth, with
+     * a Map of all employees and their remarks
+     *
+     * @return
      */
     public static HashMap<Integer, Map<String, String>> getAllMonthlyRemarksMap() {
 
@@ -106,13 +107,21 @@ public class MRDAO {
         return createMonthlyRemarks(mr);
     }
 
+    /**
+     * Method to update the employee remark
+     *
+     * @param yearMonth
+     * @param employeeName
+     * @param employeeRemarks
+     * @return
+     */
     public static Boolean updateEmployeeMonthlyRemarks(int yearMonth, String employeeName, String employeeRemarks) {
         MonthlyRemarks mr = getMonthlyRemarks(yearMonth);
         // If there are no existing remarks for this year month
         if (mr == null) {
             return createMR(yearMonth, employeeName, employeeRemarks);
-        
-        // Else update existing Monthly Remark
+
+            // Else update existing Monthly Remark
         } else {
             Map<String, String> remarksMap = mr.getRemarksMap();
             remarksMap.put(employeeName, replaceValues(employeeRemarks));
