@@ -64,6 +64,9 @@ public class UpdateProjectCompletionStatus extends HttpServlet {
             if (request.getParameter("review") != null && isAssignedRev
                     && p.getProjectReviewStatus().equals("incomplete")) {
                 p.setProjectReviewStatus("complete");
+                //call method to do recurring 
+                ProjectDAO.performRecur(pID);
+                
             } else if (request.getParameter("complete") != null && isAssignedEmp
                     && p.getProjectStatus().equals("incomplete")) {
                 p.setProjectStatus("complete");

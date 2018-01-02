@@ -14,8 +14,7 @@
 <html>
     <head>
         <title>Create Project | Abundant Accounting Management System</title>
-        <%            
-            Client client = (Client) request.getAttribute("client");
+        <%            Client client = (Client) request.getAttribute("client");
             HashMap<String, String> alltimeLines = (HashMap<String, String>) request.getAttribute("allTimeLines");
             EmployeeDAO empDAO = new EmployeeDAO();
             ArrayList<String> supList = empDAO.getAllSupervisor();
@@ -152,7 +151,7 @@
                                                         out.print("<option value='Secretarial'>" + str + "</option>");
                                                     }
                                                 }
-                                                //System.out.println("Check======== : " + companyNameList.size() + " : " + projectList.size());
+                                                
                                             %>
                                         </select> 
                                     </td>
@@ -168,10 +167,10 @@
                                     <td width="1%">
                                     </td>
                                     <td>
-                                        <label>Internal Deadline&nbsp;<font color="red">*</font></label>
+                                        <label>Internal Deadline&nbsp;</label>
                                     </td>
                                     <td>
-                                        <input type="date" name="internalDeadlineCreate" id="internalDeadlineCreate" class="text ui-widget-content ui-corner-all" style='display: block; width:100%' required>
+                                        <input type="date" name="internalDeadlineCreate" id="internalDeadlineCreate" class="text ui-widget-content ui-corner-all" style='display: block; width:100%'>
                                     </td>
                                     <td width="15%">
                                     </td>
@@ -208,7 +207,7 @@
                                                         out.print("<option value='Secretarial'>" + str + "</option>");
                                                     }
                                                 }
-                                                //System.out.println("Check======== : " + companyNameList.size() + " : " + projectList.size());
+                                                
                                             %>
                                         </select>
                                     </td>
@@ -222,10 +221,10 @@
                                     <td width="1%">
                                     </td>
                                     <td>
-                                        <label>External Deadline&nbsp<font color="red">*</font></label>
+                                        <label>External Deadline&nbsp</label>
                                     </td>
                                     <td>
-                                        <input type="date" name="externalDeadlineCreate" id="externalDeadlineCreate" class="text ui-widget-content ui-corner-all"  style='display: block; width:100%' required>
+                                        <input type="date" name="externalDeadlineCreate" id="externalDeadlineCreate" class="text ui-widget-content ui-corner-all"  style='display: block; width:100%'>
                                     </td>
                                     <td width="15%">
                                     </td>
@@ -316,6 +315,7 @@
                                     </td>
                                 </tr>   
                             </table>
+
                             <table style="width: 100%">
                                 <tr>
                                     <td style="width: 61%">
@@ -324,11 +324,12 @@
                                     <td style="width: 16.167%">
                                         <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
                                     </td>
+                                    </form>
                                     <td style="width: 1%">
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">Create</button>
+                                        <button id="btnCreateProject" class="btn btn-lg btn-primary btn-block btn-success" type="submit">Create</button>
                                     </td>
                                     <td style="width: 5.666%">
                                         &nbsp;
@@ -340,7 +341,6 @@
                                     </td>
                                 </tr>
                             </table>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -394,17 +394,17 @@
                     alert("Remarks required");
                 } else {
                     $.ajax({
-                        url: 'AddProject',
+                        url: 'CreateProject',
                         data: 'title=' + title + '&' + 'companyName=' + companyName + '&' + 'remarks=' + remarks + '&' + 'projectType=' + projectType + '&' + 'recommendedInternal=' + recommendedInternal
                                 + '&' + 'internal=' + internal + '&' + 'recommendedExternal=' + recommendedExternal + '&' + 'external=' + external
                                 + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer,
                         type: 'POST',
                         success: function () {
-                            var string = "/ams-1.0/ClientProfile.jsp?profileId=" + clientID;
+                            var string = "/AMS/ClientProfile.jsp?profileId=" + clientID;
                             window.location.href = string;
                         },
                         error: function () {
-                            var string = "/ams-1.0/ClientProfile.jsp?profileId=" + clientID;
+                            var string = "/AMS/ClientProfile.jsp?profileId=" + clientID;
                             window.location.href = string;
                         }
                     });

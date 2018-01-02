@@ -1017,4 +1017,75 @@ public class ProjectDAO {
         return 0.0;
     }
     
+    public static void performRecur(String projectID){
+        Project project;
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("Select * from project wheere projectID=?");
+            stmt.setInt(1, Integer.parseInt(projectID));
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                project = new Project();
+                String frequency = rs.getString("frequency");
+                Date startDate = rs.getDate("start");
+                Date endDate = rs.getDate("end");
+                Date actualDeadline = rs.getDate("actualDeadline");
+                
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(startDate);
+                Calendar cal2 = Calendar.getInstance();
+                cal2.setTime(endDate);
+                Calendar cal3 = Calendar.getInstance();
+                cal3.setTime(actualDeadline);
+                
+                switch(frequency){
+                    case "m":
+                        cal.add(Calendar.MONTH, +1);
+                        cal2.add(Calendar.MONTH, +1);
+                        cal3.add(Calendar.MONTH, +1);
+                    case "q":
+                        cal.add(Calendar.MONTH, +3);
+                        cal2.add(Calendar.MONTH, +3);
+                        cal3.add(Calendar.MONTH, +3);
+                    case "s":
+                        cal.add(Calendar.MONTH, +6);
+                        cal2.add(Calendar.MONTH, +6);
+                        cal3.add(Calendar.MONTH, +6);
+                    case "y":
+                        cal.add(Calendar.MONTH, +12);
+                        cal2.add(Calendar.MONTH, +12);
+                        cal3.add(Calendar.MONTH, +12);
+                }
+                
+                project.setProjectID(rs.getInt("projectID"));
+                project.setProjectTitle(rs.getString("title"));
+                project.setCompanyName(rs.getString("companyName"));
+                project.setBusinessType(rs.getString("businessType"));
+                project.setStart(cal.getTime());
+                project.setEnd(cal2.getTime());
+                project.setProjectRemarks(rs.getString("projectRemarks"));
+                project.setProjectStatus("incomplete");
+                project.setActualDeadline(cal3.getTime());
+                project.setFrequency(rs.getString("frequency"));
+                project.setProjectType(rs.getString("projectType"));
+                project.setEmployee1(rs.getString("employee1"));
+                project.setEmployee2(rs.getString("employee2"));
+                project.setEmployee1Hours(0.0);
+                project.setEmployee2Hours(0.0);
+                project.setProjectReviewer(rs.getString("projectReviewer"));
+                project.setProjectReviewStatus("incomplete");
+                project.setDateCompleted(0000);
+                project.setMonthlyHours("0");
+                
+                boolean status = createProject(project);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        
+    }
+    
 }
