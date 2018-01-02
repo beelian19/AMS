@@ -4,13 +4,13 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="entity.Client"%>
-<%@page import="dao.ClientDAO"%>
-<%@page import="entity.Employee"%>
-<%@page import="dao.EmployeeDAO"%>
-<%@page import="dao.ProjectDAO"%>
-<%@page import="entity.Project"%>
-<%@page import="entity.Task"%>
+<%@page import="Entity.Client"%>
+<%@page import="DAO.ClientDAO"%>
+<%@page import="Entity.Employee"%>
+<%@page import="DAO.EmployeeDAO"%>
+<%@page import="DAO.ProjectDAO"%>
+<%@page import="Entity.Project"%>
+<%@page import="Entity.Task"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -38,8 +38,8 @@
             if (p.getProjectStatus().equals("incomplete") && !p.getProjectReviewer().equals(name)) {
                 canComplete = true;
             }
-            if (p.getProjectStatus().equals("complete") && p.getProjectReviewStatus().equals("incomplete") && !(p.getAssignedEmployee1().equals(name)
-                    || p.getAssignedEmployee2().equals(name))) {
+            if (p.getProjectStatus().equals("complete") && p.getProjectReviewStatus().equals("incomplete") && !(p.getEmployee1().equals(name)
+                    || p.getEmployee2().equals(name))) {
                 canReview = true;
             }
             if (p.getProjectStatus().equals("incomplete") && isAdmin) {
@@ -49,8 +49,8 @@
                 canReview = true;
             }
 
-            Employee emp1 = EmployeeDAO.getEmployee(p.getAssignedEmployee1());
-            Employee emp2 = EmployeeDAO.getEmployee(p.getAssignedEmployee2());
+            Employee emp1 = EmployeeDAO.getEmployee(p.getEmployee1());
+            Employee emp2 = EmployeeDAO.getEmployee(p.getEmployee2());
             Employee rev = EmployeeDAO.getEmployee(p.getProjectReviewer());
             String clientProfileUrl = "ClientProfile.jsp?profileId=";
             String clientProfileUrl2 = "";
@@ -251,7 +251,8 @@
                                         <label>No. of Invoices</label>
                                     </td>
                                     <td>
-                                        <%=p.getNumberOfInvoices()%>
+                                        <!--<=%p.getNumberOfInvoices()%>-->
+                                        Wait for Yumai for Number of Invoices
                                     </td>
                                 </tr>
                                 <tr>
@@ -313,18 +314,18 @@
                                         <td>
                                             <%
 
-                                                if (!p.getAssignedEmployee1().equals("NA")) {
+                                                if (!p.getEmployee1().equals("NA")) {
                                                     assignedEmployee1ProfileUrl = assignedEmployee1ProfileUrl + emp1.getEmployeeID();
                                             %>
 
                                             <a href='<%=assignedEmployee1ProfileUrl%>'>
-                                                <%=p.getAssignedEmployee1()%>
+                                                <%=p.getEmployee1()%>
                                             </a>
                                             <%
                                             } else {
                                             %>
 
-                                            <label> <%=p.getAssignedEmployee1()%> </label>
+                                            <label> <%=p.getEmployee1()%> </label>
 
                                             <%
                                                 }
@@ -337,17 +338,17 @@
                                         </td>
                                         <td>
                                             <%
-                                                if (emp2 != null && !p.getAssignedEmployee2().equals("NA")) {
+                                                if (emp2 != null && !p.getEmployee2().equals("NA")) {
                                                     assignedEmployee2ProfileUrl = assignedEmployee2ProfileUrl + emp2.getEmployeeID();
                                             %>
                                             <a href='<%=assignedEmployee2ProfileUrl%>'>
-                                                <%=p.getAssignedEmployee2()%>
+                                                <%=p.getEmployee2()%>
                                             </a>
                                             <%
                                             } else {
                                             %>
 
-                                            <label> <%=p.getAssignedEmployee2()%> </label>
+                                            <label> <%=p.getEmployee2()%> </label>
 
                                             <%
                                                 }
@@ -366,7 +367,7 @@
                                         <td>
                                             <label>Employee 2 Hours Spent:: </label>
                                         </td>
-                                        <% if (p.getAssignedEmployee2().toLowerCase().contains("na")) {
+                                        <% if (p.getEmployee2().toLowerCase().contains("na")) {
 
                                         %>
                                         <td>
@@ -738,11 +739,11 @@
                                 </td>
                                 <td>
                                     <select name='emp1Edit' id="emp1Edit" class="form-control" required autofocus>
-                                        <option value="<%=p.getAssignedEmployee1()%>"><%=p.getAssignedEmployee1()%></option>
+                                        <option value="<%=p.getEmployee1()%>"><%=p.getEmployee1()%></option>
                                         <%
                                             //System.out.println(nameList);
                                             for (int i = 0; i < supList.size(); i++) {
-                                                if (!supList.get(i).equals(p.getAssignedEmployee1())) {
+                                                if (!supList.get(i).equals(p.getEmployee1())) {
                                                     out.println("<option value='" + supList.get(i) + "'>" + supList.get(i) + "</option>");
                                                 }
                                             }
@@ -764,11 +765,11 @@
                                 </td>
                                 <td>
                                     <select name='emp2Edit' id="emp2Edit" class="form-control" required autofocus>
-                                        <option value="<%=p.getAssignedEmployee2()%>"><%=p.getAssignedEmployee2()%></option>
+                                        <option value="<%=p.getEmployee2()%>"><%=p.getEmployee2()%></option>
                                         <%
                                             //System.out.println(nameList);
                                             for (int i = 0; i < supList.size(); i++) {
-                                                if (!supList.get(i).equals(p.getAssignedEmployee2())) {
+                                                if (!supList.get(i).equals(p.getEmployee2())) {
                                                     out.println("<option value='" + supList.get(i) + "'>" + supList.get(i) + "</option>");
                                                 }
                                             }
