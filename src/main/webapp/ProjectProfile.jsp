@@ -142,7 +142,7 @@
                                     <%
                                         if (canReview || canComplete) {
                                     %>
-                                    <form action="UpdateProjectStatusServlet" method="post">
+                                    <form action="UpdateProjectCompletionStatus" method="post">
                                         <tr>
                                             <td>
                                                 <%
