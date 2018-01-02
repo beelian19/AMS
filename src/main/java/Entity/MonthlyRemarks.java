@@ -9,6 +9,7 @@ public class MonthlyRemarks {
     private Integer yearMonth;
     private String remarks;
     private Map<String, String> remarksMap;
+    
 
     public MonthlyRemarks(Integer yearMonth, String remarks) {
         this.yearMonth = yearMonth;

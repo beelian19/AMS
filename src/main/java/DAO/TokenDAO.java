@@ -49,7 +49,7 @@ public class TokenDAO {
         Token token = null;
         
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROOM tokens");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM tokens");
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {

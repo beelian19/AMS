@@ -21,6 +21,11 @@ import java.util.Map;
  */
 public class MRDAO {
 
+    /**
+     * Returns a hashmap of a hashmap
+     * The first map's key is the yearMonth, with a Map of all employees and their remarks
+     * @return 
+     */
     public static HashMap<Integer, Map<String, String>> getAllMonthlyRemarksMap() {
 
         HashMap<Integer, Map<String, String>> yearMonthEmployeeRemarksMap = new HashMap<>();
@@ -47,7 +52,7 @@ public class MRDAO {
         return yearMonthEmployeeRemarksMap;
     }
 
-    public static MonthlyRemarks getMonthlyRemarks(int yearMonth) {
+    private static MonthlyRemarks getMonthlyRemarks(int yearMonth) {
         MonthlyRemarks monthlyremarks;
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM monthlyremarks WHERE yearMonth = '%s'");
@@ -63,12 +68,56 @@ public class MRDAO {
         return null;
     }
 
+    private static String replaceValues(String remarks) {
+        if (remarks == null) {
+            return null;
+        }
+        remarks = remarks.replaceAll(",", ".");
+        return remarks.replaceAll("=", ".");
+    }
+
+    private static Boolean updateMonthlyRemarks(MonthlyRemarks mr) {
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE monthlyremarks SET remarks = ? WHERE yearMonth = ?");
+            stmt.setString(1, mr.getRemarks());
+            stmt.setInt(2, mr.getYearMonth());
+            return stmt.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+
+    private static Boolean createMonthlyRemarks(MonthlyRemarks mr) {
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO monthlyremarks VALUES (?,?)");
+            stmt.setString(1, mr.getRemarks());
+            stmt.setInt(2, mr.getYearMonth());
+            return stmt.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+
+    private static Boolean createMR(Integer yearMonth, String employeeName, String employeeRemarks) {
+        String remarks = replaceValues(employeeRemarks);
+        MonthlyRemarks mr = new MonthlyRemarks(yearMonth, employeeName + "=" + remarks);
+        return createMonthlyRemarks(mr);
+    }
+
     public static Boolean updateEmployeeMonthlyRemarks(int yearMonth, String employeeName, String employeeRemarks) {
         MonthlyRemarks mr = getMonthlyRemarks(yearMonth);
-        Map<String, String> remarksMap = mr.getRemarksMap();
-        remarksMap.put(employeeName, employeeRemarks);
-        mr.setRemarks(remarksMap.toString().substring(1,  remarksMap.toString().length() - 1));
+        // If there are no existing remarks for this year month
+        if (mr == null) {
+            return createMR(yearMonth, employeeName, employeeRemarks);
         
-        return false;
+        // Else update existing Monthly Remark
+        } else {
+            Map<String, String> remarksMap = mr.getRemarksMap();
+            remarksMap.put(employeeName, replaceValues(employeeRemarks));
+            mr.setRemarks(remarksMap.toString().substring(1, remarksMap.toString().length() - 1));
+        }
+        return updateMonthlyRemarks(mr);
     }
 }
