@@ -44,7 +44,7 @@ public class loginServlet extends HttpServlet {
 
         if (employee == null) {
             session.setAttribute("status", "Error: Login failed! Please try again.");
-            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
             rd.forward(request, response);
         } else if (employee.getPassword().equals(password) && !employee.getPosition().equals("Ex-Employee")) {
             //this means that the user is not an admin
@@ -65,15 +65,15 @@ public class loginServlet extends HttpServlet {
 
         } else if (employee.getPosition().equals("Ex-Employee")) {
             session.setAttribute("status", "Error: User Access Denied");
-            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
             rd.forward(request, response);
         } else if (!employee.getPassword().equals(password) && !employee.getPosition().equals("Former Staff")) {
             session.setAttribute("status", "Error: Username/Password is invalid");
-            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
             rd.forward(request, response);
         } else {
             session.setAttribute("status", "Error: Username/Password is invalid*");
-            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
             rd.forward(request, response);
         }
     }
