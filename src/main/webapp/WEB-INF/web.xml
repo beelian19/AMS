@@ -9,8 +9,97 @@
         <servlet-class>Module.Expense.ReadExcelFile</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
         <servlet-name>ExecuteExpenses</servlet-name>
         <servlet-class>Module.Expense.ExecuteExpenses</servlet-class>
+=======
+        <servlet-name>CreateAdHocProjectAdmin</servlet-name>
+        <servlet-class>Module.ProjectManagment.CreateAdHocProjectAdmin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateTaskAdmin</servlet-name>
+        <servlet-class>Module.ProjectManagment.CreateTaskAdmin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteAdHocAdmin</servlet-name>
+        <servlet-class>Module.ProjectManagement.DeleteAdHocAdmin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayProjectForAdminHome</servlet-name>
+        <servlet-class>Module.ProjectManagement.DisplayProjectForAdminHome</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayProjectForEmpHome</servlet-name>
+        <servlet-class>Module.ProjectManagement.DisplayProjectForEmpHome</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateAdHocAdmin</servlet-name>
+        <servlet-class>Module.ProjectManagement.UpdateAdHocAdmin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateAdHocCompletionStatus</servlet-name>
+        <servlet-class>Module.ProjectManagement.UpdateAdHocCompletionStatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateAdHocRemarksEmp</servlet-name>
+        <servlet-class>Module.ProjectManagement.UpdateAdHocRemarksEmp</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateAdHocReviewStatus</servlet-name>
+        <servlet-class>Module.ProjectManagement.UpdateAdHocReviewStatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddClientServlet</servlet-name>
+        <servlet-class>Module.Resource.AddClientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddEmployee</servlet-name>
+        <servlet-class>Module.Resource.AddEmployee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteClient</servlet-name>
+        <servlet-class>Module.Resource.DeleteClient</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteEmployeeServlet</servlet-name>
+        <servlet-class>Module.Resource.DeleteEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateClientServlet</servlet-name>
+        <servlet-class>Module.Resource.UpdateClientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateEmployeeInfoServlet</servlet-name>
+        <servlet-class>Module.Resource.UpdateEmployeeInfoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewClientServlet</servlet-name>
+        <servlet-class>Module.Resource.ViewClientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewEmployeeServlet</servlet-name>
+        <servlet-class>Module.Resource.ViewEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loginServlet</servlet-name>
+        <servlet-class>Module.Resource.loginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeeOwnProfileUpdate</servlet-name>
+        <servlet-class>Module.Resource.EmployeeOwnProfileUpdate</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeeProfileUpdate</servlet-name>
+        <servlet-class>Module.Resource.EmployeeProfileUpdate</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffProfileServlet</servlet-name>
+        <servlet-class>Module.Resource.StaffProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAllProjectAdmin</servlet-name>
+        <servlet-class>Module.ProjectManagement.ViewAllProjectAdmin</servlet-class>
+>>>>>>> ebc5bbccd7e53694b70aaf7eaad25045ab8185ea
     </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
@@ -21,8 +110,97 @@
         <url-pattern>/ReadExcelFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
         <servlet-name>ExecuteExpenses</servlet-name>
         <url-pattern>/ExecuteExpenses</url-pattern>
+=======
+        <servlet-name>CreateAdHocProjectAdmin</servlet-name>
+        <url-pattern>/CreateAdHocProjectAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTaskAdmin</servlet-name>
+        <url-pattern>/CreateTaskAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAdHocAdmin</servlet-name>
+        <url-pattern>/DeleteAdHocAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisplayProjectForAdminHome</servlet-name>
+        <url-pattern>/DisplayProjectForAdminHome</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisplayProjectForEmpHome</servlet-name>
+        <url-pattern>/DisplayProjectForEmpHome</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateAdHocAdmin</servlet-name>
+        <url-pattern>/UpdateAdHocAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateAdHocCompletionStatus</servlet-name>
+        <url-pattern>/UpdateAdHocCompletionStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateAdHocRemarksEmp</servlet-name>
+        <url-pattern>/UpdateAdHocRemarksEmp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateAdHocReviewStatus</servlet-name>
+        <url-pattern>/UpdateAdHocReviewStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddClientServlet</servlet-name>
+        <url-pattern>/AddClientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddEmployee</servlet-name>
+        <url-pattern>/AddEmployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteClient</servlet-name>
+        <url-pattern>/DeleteClient</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteEmployeeServlet</servlet-name>
+        <url-pattern>/DeleteEmployeeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateClientServlet</servlet-name>
+        <url-pattern>/UpdateClientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateEmployeeInfoServlet</servlet-name>
+        <url-pattern>/UpdateEmployeeInfoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewClientServlet</servlet-name>
+        <url-pattern>/ViewClientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewEmployeeServlet</servlet-name>
+        <url-pattern>/ViewEmployeeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginServlet</servlet-name>
+        <url-pattern>/loginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeOwnProfileUpdate</servlet-name>
+        <url-pattern>/EmployeeOwnProfileUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeProfileUpdate</servlet-name>
+        <url-pattern>/EmployeeProfileUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffProfileServlet</servlet-name>
+        <url-pattern>/StaffProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllProjectAdmin</servlet-name>
+        <url-pattern>/ViewAllProjectAdmin</url-pattern>
+>>>>>>> ebc5bbccd7e53694b70aaf7eaad25045ab8185ea
     </servlet-mapping>
     <session-config>
         <session-timeout>

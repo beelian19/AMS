@@ -50,7 +50,7 @@ public class DeleteClient extends HttpServlet {
             
             //RequestDispatcher rd = request.getRequestDispatcher("UpdateDeleteClient.jsp");
             //rd.forward(request,response);
-            RequestDispatcher rd = request.getRequestDispatcher("ViewAllClient.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("ClientOverview.jsp");
             rd.forward(request, response);
         }
     }

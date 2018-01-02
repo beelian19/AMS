@@ -3,24 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Module.Resource;
+package Module.ProjectManagement;
 
 import DAO.EmployeeDAO;
+import DAO.ProjectDAO;
+import Entity.Employee;
+import Entity.Project;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author jagdishps.2014
+ * @author Lin
  */
-@WebServlet(name = "DeleteEmployeeServlet", urlPatterns = {"/DeleteEmployeeServlet"})
-public class DeleteEmployeeServlet extends HttpServlet {
+public class ViewAllProjectAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,22 +37,34 @@ public class DeleteEmployeeServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        Calendar deadline;
 
-            String name = request.getParameter("name");
-            
-            
-            EmployeeDAO empDAO = new EmployeeDAO();
-            if (empDAO.deleteEmployeeByEmployeeName(name)) {
-                request.setAttribute("deleteStatus", "Deleted Successfully");
+        //String employeeID = (String)session.getAttribute("userId");
+        String employeeID = (String) request.getAttribute("id");
+        Employee emp = EmployeeDAO.getEmployeeByID(employeeID);
+
+        //System.out.println("Name check: "+checkingName);
+        ArrayList<ArrayList<Project>> both = ProjectDAO.getAllProjectsFiltered();
+        ArrayList<Project> incompleteProjList = both.get(1);
+        ArrayList<Project> incomProjList = new ArrayList<>();
+        ArrayList<Project> overdueProjList = new ArrayList<>();
+        for (Project p : incompleteProjList) {
+            deadline = Calendar.getInstance();
+            deadline.setTime(p.getEnd());
+            if (Calendar.getInstance().before(deadline)) {
+                incomProjList.add(p);
             } else {
-                request.setAttribute("deleteStatus", "Unsuccessful");
+                overdueProjList.add(p);
             }
-            RequestDispatcher rd = request.getRequestDispatcher("EmployeeOverview.jsp");
-            rd.forward(request, response);
-        } 
+        }
+        ArrayList<Project> completeProjList = both.get(0);
+
+        request.setAttribute("overdueProject", overdueProjList);
+        request.setAttribute("incompleteProject", incomProjList);
+        request.setAttribute("completedProject", completeProjList);
+        RequestDispatcher rd = request.getRequestDispatcher("ProjectAdminOverview.jsp");
+        rd.forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -161,7 +161,7 @@
                                         <%
                                             if (viewAllID.equals(sessionID) || employee.getIsAdmin().equals("yes")) {
                                         %>
-                                        <%=employee.getCurrentSalary()%>
+                                        <%=employee.getMonthlyOverhead()%>
                                         <%
                                         } else {
                                         %>
@@ -668,7 +668,7 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" name="salaryEdit" id="salaryEdit" value="<%=employee.getCurrentSalary()%>" class="text ui-widget-content ui-corner-all" required>
+                                    <input type="text" name="salaryEdit" id="salaryEdit" value="<%=employee.getMonthlyOverhead()%>" class="text ui-widget-content ui-corner-all" required>
                                 </td>
                             </tr>
                             <tr>

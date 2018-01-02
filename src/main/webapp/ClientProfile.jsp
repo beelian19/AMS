@@ -19,7 +19,7 @@
         <%            
             if (request.getParameter("profileId") != null && request.getAttribute("client") == null) {
                 request.setAttribute("clientID", request.getParameter("profileId"));
-                RequestDispatcher rd = request.getRequestDispatcher("viewClientServlet");
+                RequestDispatcher rd = request.getRequestDispatcher("ViewClientServlet");
                 rd.forward(request, response);
                 return;
             } else if (request.getAttribute("client") == null) {
@@ -333,19 +333,19 @@
                                                 <td>
                                                     <%
 
-                                                        if (!p.getAssignedEmployee1().equals("NA")) {
-                                                            assignedEmployeeURL2 = assignedEmployeeURL +EmployeeDAO.getEmployee(p.getAssignedEmployee1()).getEmployeeID();
+                                                        if (!p.getEmployee1().equals("NA")) {
+                                                            assignedEmployeeURL2 = assignedEmployeeURL +EmployeeDAO.getEmployee(p.getEmployee1()).getEmployeeID();
                                                             
                                                     %>
 
                                                     <a href='<%=assignedEmployeeURL2%>'>
-                                                        <%=p.getAssignedEmployee1()%>
+                                                        <%=p.getEmployee1()%>
                                                     </a>
                                                     <%
                                                     } else {
                                                     %>
 
-                                                    <label><%=p.getAssignedEmployee1()%></label>
+                                                    <label><%=p.getEmployee1()%></label>
 
                                                     <%
                                                         }

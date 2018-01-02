@@ -6,15 +6,8 @@
 package Module.Resource;
 
 import DAO.EmployeeDAO;
-import Entity.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jagdishps.2014
  */
-@WebServlet(name = "UpdateEmployeeInfoServlet", urlPatterns = {"/UpdateEmployeeInfoServlet"})
-public class UpdateEmployeeInfoServlet extends HttpServlet {
+@WebServlet(name = "EmployeeOwnProfileUpdate", urlPatterns = {"/EmployeeOwnProfileUpdate"})
+public class EmployeeOwnProfileUpdate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,46 +33,26 @@ public class UpdateEmployeeInfoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String employeeID = request.getParameter("employeeID");
-            String password = request.getParameter("password");
-            String email = request.getParameter("email");
-            String isAdmin = request.getParameter("isAdmin");
-            String currentSalary = request.getParameter("currentSalary");
-            String position = request.getParameter("position");
-            String supervisor = request.getParameter("supervisor");
-            String bankAcct = request.getParameter("bankAccount");
-            String nric = request.getParameter("NRIC");
-            String name = request.getParameter("name");
-            String number = request.getParameter("number");
-            String date1 = request.getParameter("dateJoined");
-            Date dateJoined=new SimpleDateFormat("yyyy-MM-dd").parse(date1);
-            String date2 = request.getParameter("dob");
-            Date dateOfBirth =new SimpleDateFormat("yyyy-MM-dd").parse(date2);
-            String nationality = request.getParameter("nationality");
-            
-            EmployeeDAO employeeDao = new EmployeeDAO();
-            Employee toUpdate = new Employee(employeeID, password, email,isAdmin,currentSalary,position,supervisor,bankAcct,nric,name,number,dateJoined,dateOfBirth,nationality);
-            
-            boolean status = employeeDao.updateEmployeeDetails(toUpdate);
-            if (status == true) {
+        
+        EmployeeDAO empDAO = new EmployeeDAO(); 
+        
+        String mobileNumber = request.getParameter("empMobileNumber");
+      
+        String emailAddress = request.getParameter("empEmailAddress");
+        String bankAccount = request.getParameter("empBankAccount");
+        String password = request.getParameter("password");
+        String employeeID = request.getParameter("empid");
+        
+        System.out.println("CHECK OWN UPDATE");
+        boolean status = empDAO.updateOwnEmployeeProfile(employeeID,emailAddress,mobileNumber, bankAccount,password);
+        
+           if (status == true) {
                 System.out.println("UPDATE IS SUCCESSFUL");
                 request.setAttribute("updateStatus", "Successful");
             } else {
                 System.out.println("UPDATE IS UNSUCCESSFUL");
                 request.setAttribute("updateStatus", "Unsuccessful");
             }
-
-//            RequestDispatcher rd = request.getRequestDispatcher("ViewEmployee.jsp");
-//            request.setAttribute("status", status);
-//            rd.forward(request, response);
-            // will forward status of "true" or "false", if false means there's some sort of error
-            RequestDispatcher rd = request.getRequestDispatcher("EmployeeOverview.jsp");
-            rd.forward(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(UpdateEmployeeInfoServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -6,9 +6,8 @@
 package Module.Resource;
 
 import DAO.EmployeeDAO;
-import Entity.Employee;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +17,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author yemin
+ * @author jagdishps.2014
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
+@WebServlet(name = "EmployeeProfileUpdate", urlPatterns = {"/EmployeeProfileUpdate"})
+public class EmployeeProfileUpdate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,47 +34,32 @@ public class loginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String userId = request.getParameter("UserId");
-        String password = request.getParameter("Password");
-
-        Employee employee = EmployeeDAO.getEmployeebyIDandPassword(userId, password);
-
+        
         HttpSession session = request.getSession();
-
-        if (employee == null) {
-            session.setAttribute("status", "Error: Login failed! Please try again.");
-            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-            rd.forward(request, response);
-        } else if (employee.getPassword().equals(password) && !employee.getPosition().equals("Ex-Employee")) {
-            //this means that the user is not an admin
-            //standardized the session attributes
-            session.setAttribute("employeeName", employee.getName());
-            if (employee.getIsAdmin().equals("no")) {
-                session.setAttribute("userId", employee.getEmployeeID());
-                session.setAttribute("sessionUserIsAdmin", "no");
-                response.sendRedirect("EmployeeHome.jsp");
-                return;
+            
+        //String employeeID = (String)session.getAttribute("userId");
+        EmployeeDAO empDAO = new EmployeeDAO(); 
+        
+        String mobileNumber = request.getParameter("mobileNumber");
+        String emailAddress = request.getParameter("emailAddress");
+        String bankAccount = request.getParameter("bankAccount");
+        String nationality = request.getParameter("nationality");
+        String salary = request.getParameter("currentSalary");
+        String employeeID = request.getParameter("id");
+        String isAdmin = request.getParameter("isAdmin");
+        String position = request.getParameter("position");
+        String supervisor = request.getParameter("supervisor");
+        
+        boolean status = empDAO.updateEmployeeProfile(employeeID,emailAddress,mobileNumber, bankAccount, nationality,salary,isAdmin,position,supervisor);
+        
+           if (status == true) {
+                System.out.println("UPDATE IS SUCCESSFUL");
+                request.setAttribute("updateStatus", "Successful");
             } else {
-                //if user is an admin
-                session.setAttribute("userId", employee.getEmployeeID());
-                session.setAttribute("sessionUserIsAdmin", "yes");
-                response.sendRedirect("AdminHome.jsp");
-                return;
+                System.out.println("UPDATE IS UNSUCCESSFUL");
+                request.setAttribute("updateStatus", "Unsuccessful");
             }
-
-        } else if (employee.getPosition().equals("Ex-Employee")) {
-            session.setAttribute("status", "Error: User Access Denied");
-            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-            rd.forward(request, response);
-        } else if (!employee.getPassword().equals(password) && !employee.getPosition().equals("Former Staff")) {
-            session.setAttribute("status", "Error: Username/Password is invalid");
-            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-            rd.forward(request, response);
-        } else {
-            session.setAttribute("status", "Error: Username/Password is invalid*");
-            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-            rd.forward(request, response);
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
