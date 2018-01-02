@@ -23,7 +23,6 @@
             ArrayList<String> supList = empDAO.getAllSupervisor();
             String clientName = client.getCompanyName();
             int profileId = client.getClientID();
-            //System.out.println("Client ID: "+profileId);
         %>
     </head>
     <body width="100%" style='background-color: #F0F8FF;'>

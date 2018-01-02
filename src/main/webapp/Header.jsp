@@ -405,6 +405,8 @@
                                 <li><a href="CreateUser.jsp">Add New Employee</a></li>
                                 <li><a href="EmployeeOverview.jsp">View All Employees</a></li>
                                 <!--<li><a href="ViewAllTimesheet.jsp">View All Timesheets</a></li>-->
+                                <li><a href="CreateAdHocProject.jsp">Create Ad Hoc Project</a></li>
+                                <li><a href="CreateTask.jsp">Create Task</a></li>
                                 <%
                                     }
                                 %>
