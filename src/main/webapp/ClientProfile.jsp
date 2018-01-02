@@ -333,19 +333,19 @@
                                                 <td>
                                                     <%
 
-                                                        if (!p.getAssignedEmployee1().equals("NA")) {
-                                                            assignedEmployeeURL2 = assignedEmployeeURL +EmployeeDAO.getEmployee(p.getAssignedEmployee1()).getEmployeeID();
+                                                        if (!p.getEmployee1().equals("NA")) {
+                                                            assignedEmployeeURL2 = assignedEmployeeURL +EmployeeDAO.getEmployee(p.getEmployee1()).getEmployeeID();
                                                             
                                                     %>
 
                                                     <a href='<%=assignedEmployeeURL2%>'>
-                                                        <%=p.getAssignedEmployee1()%>
+                                                        <%=p.getEmployee1()%>
                                                     </a>
                                                     <%
                                                     } else {
                                                     %>
 
-                                                    <label><%=p.getAssignedEmployee1()%></label>
+                                                    <label><%=p.getEmployee1()%></label>
 
                                                     <%
                                                         }
