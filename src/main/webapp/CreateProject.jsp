@@ -239,6 +239,11 @@
                                         <textarea name="remarksCreate" id="remarksCreate" class="text ui-widget-content ui-corner-all" cols="22" rows="3" style='display: block; width:100%' required></textarea>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <br/>
+                                    </td>
+                                </tr>
                                 <tr bgcolor="#034C75" rowspan="8">
                                     <td colspan="7">
                                         <h4><font color="white">&emsp;Employees Assigned Information</font></h4>
