@@ -14,8 +14,8 @@
 <html>
     <head>
         <title>Create Project | Abundant Accounting Management System</title>
-        <%            Client client = (Client) request.getAttribute("client");
-            HashMap<String, String> alltimeLines = (HashMap<String, String>) request.getAttribute("allTimeLines");
+        <%            Client client = (Client) session.getAttribute("client");
+            HashMap<String, String> alltimeLines = (HashMap<String, String>) session.getAttribute("allTimeLines");
             EmployeeDAO empDAO = new EmployeeDAO();
             ArrayList<String> supList = empDAO.getAllSupervisor();
             String clientName = client.getCompanyName();
@@ -151,7 +151,7 @@
                                                         out.print("<option value='Secretarial'>" + str + "</option>");
                                                     }
                                                 }
-                                                
+
                                             %>
                                         </select> 
                                     </td>
@@ -180,8 +180,7 @@
                                     <td>
                                         <select name='recommendedExternalDeadline' id="recommendedExternalDeadline" class="form-control" autofocus style='display: block; width:100%' required>
 
-                                            <%
-                                                for (String key : alltimeLines.keySet()) {
+                                            <%                                                for (String key : alltimeLines.keySet()) {
                                                     if (key.equals("actualEciTimeline")) {
                                                         String str = alltimeLines.get(key);
                                                         out.print("<option value='ECI'>" + str + "</option>");
@@ -207,7 +206,7 @@
                                                         out.print("<option value='Secretarial'>" + str + "</option>");
                                                     }
                                                 }
-                                                
+
                                             %>
                                         </select>
                                     </td>
@@ -259,8 +258,7 @@
                                     <td>
                                         <select name='assignedEmployee1' id="assignedEmployee1" class="form-control" autofocus style='display: block; width:100%' required>
                                             <option disabled selected value> — select an option — </option>
-                                            <%
-                                                for (int i = 0; i < supList.size(); i++) {
+                                            <%                                                for (int i = 0; i < supList.size(); i++) {
                                                     out.println("<option value='" + supList.get(i) + "'>" + supList.get(i) + "</option>");
                                                 }
                                             %>
@@ -351,7 +349,6 @@
                 $("#projectTypeCreate").change(function (e) {
                     var text = $("#projectTypeCreate :selected").text();
                     $("#recommendedInternalDeadline").html(options);
-                    //console.log($('#recommendedExternalDeadline :not([value^="' + text.substr(0, text.indexOf(" "))+ '"])'));
                     $('#recommendedInternalDeadline :not([value^="' + text + '"])').remove();
                 });
 
@@ -365,7 +362,6 @@
 
         </script>
         <script>
-            //console.log(projectType);
             $('#btnCreateProject').click(function () {
                 var clientID = document.getElementById("profileId").value;
                 var title = document.getElementById("projectTitleCreate").value;
@@ -394,10 +390,10 @@
                     alert("Remarks required");
                 } else {
                     $.ajax({
-                        url: 'CreateProject',
+                        url: 'CreateNewProject',
                         data: 'title=' + title + '&' + 'companyName=' + companyName + '&' + 'remarks=' + remarks + '&' + 'projectType=' + projectType + '&' + 'recommendedInternal=' + recommendedInternal
                                 + '&' + 'internal=' + internal + '&' + 'recommendedExternal=' + recommendedExternal + '&' + 'external=' + external
-                                + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer,
+                                + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer + '&' + 'clientID=' + clientID,
                         type: 'POST',
                         success: function () {
                             var string = "/AMS/ClientProfile.jsp?profileId=" + clientID;

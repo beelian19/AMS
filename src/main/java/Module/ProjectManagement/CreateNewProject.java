@@ -31,8 +31,8 @@ import Utility.ConnectionManager;
  *
  * @author jagdishps.2014
  */
-@WebServlet(name = "AddProject", urlPatterns = {"/AddProject"})
-public class CreateProject extends HttpServlet {
+@WebServlet(name = "CreateNewProject", urlPatterns = {"/CreateNewProject"})
+public class CreateNewProject extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -169,7 +169,7 @@ public class CreateProject extends HttpServlet {
             }
 
         } catch (ParseException e) {
-            System.out.println("AddProject: Error- " + e.getMessage());
+            System.out.println("CreateNewProject: Error- " + e.getMessage());
         }
 
     }

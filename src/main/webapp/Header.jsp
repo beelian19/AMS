@@ -233,12 +233,12 @@
         <link href="css/fullcalendar.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-        <script src="lib/jquery.min.js"></script>
+        <script src="js/jquery.min.js"></script>
         <script src='css/bootstrap.min.css' rel="stylesheet" type="text/css"/>
-        <script src="lib/bootstrap.min.js"></script>     
+        <script src="js/bootstrap.min.js"></script>     
 
-        <script src='lib/moment.min.js'></script>
-        <script src='lib/fullcalendar.min.js'></script>
+        <script src='js/moment.min.js'></script>
+        <script src='js/fullcalendar.min.js'></script>
 
     </head>
     <body width="100%" cellpadding="0%">

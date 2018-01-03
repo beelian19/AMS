@@ -216,9 +216,9 @@
 
 
         <script src='css/bootstrap.min.css' rel="stylesheet" type="text/css"/>
-        <script src="lib/bootstrap.min.js"></script>     
+        <script src="js/bootstrap.min.js"></script>     
 
-        <script src='lib/moment.min.js'></script>
+        <script src='js/moment.min.js'></script>
     </head>
     <body width="100%" cellpadding="0%">
         <%
