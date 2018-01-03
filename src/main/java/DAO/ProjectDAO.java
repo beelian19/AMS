@@ -1020,7 +1020,7 @@ public class ProjectDAO {
     public static void performRecur(String projectID){
         Project project;
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("Select * from project wheere projectID=?");
+            PreparedStatement stmt = conn.prepareStatement("Select * from project where projectID=?");
             stmt.setInt(1, Integer.parseInt(projectID));
             ResultSet rs = stmt.executeQuery();
 
