@@ -1020,16 +1020,20 @@ public class ProjectDAO {
     public static void performRecur(String projectID){
         Project project;
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("Select * from project wheere projectID=?");
+            PreparedStatement stmt = conn.prepareStatement("Select * from project where projectID=?");
             stmt.setInt(1, Integer.parseInt(projectID));
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 project = new Project();
                 String frequency = rs.getString("frequency");
+                System.out.println("Frequency---" + frequency);
                 Date startDate = rs.getDate("start");
+                System.out.println("Initial StartDate---" + startDate);
                 Date endDate = rs.getDate("end");
+                System.out.println("Initial EndDate---" + endDate);
                 Date actualDeadline = rs.getDate("actualDeadline");
+                System.out.println("Initial deadline---" + actualDeadline);
                 
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(startDate);
@@ -1040,22 +1044,30 @@ public class ProjectDAO {
                 
                 switch(frequency){
                     case "m":
-                        cal.add(Calendar.MONTH, +1);
-                        cal2.add(Calendar.MONTH, +1);
-                        cal3.add(Calendar.MONTH, +1);
+                        cal.add(Calendar.MONTH, 1);
+                        cal2.add(Calendar.MONTH, 1);
+                        cal3.add(Calendar.MONTH, 1);
+                        break;
                     case "q":
-                        cal.add(Calendar.MONTH, +3);
-                        cal2.add(Calendar.MONTH, +3);
-                        cal3.add(Calendar.MONTH, +3);
+                        cal.add(Calendar.MONTH, 3);
+                        cal2.add(Calendar.MONTH, 3);
+                        cal3.add(Calendar.MONTH, 3);
+                        break;
                     case "s":
-                        cal.add(Calendar.MONTH, +6);
-                        cal2.add(Calendar.MONTH, +6);
-                        cal3.add(Calendar.MONTH, +6);
+                        cal.add(Calendar.MONTH, 6);
+                        cal2.add(Calendar.MONTH, 6);
+                        cal3.add(Calendar.MONTH, 6);
+                        break;
                     case "y":
-                        cal.add(Calendar.MONTH, +12);
-                        cal2.add(Calendar.MONTH, +12);
-                        cal3.add(Calendar.MONTH, +12);
+                        cal.add(Calendar.MONTH, 12);
+                        cal2.add(Calendar.MONTH, 12);
+                        cal3.add(Calendar.MONTH, 12);
+                        break;
                 }
+                
+                System.out.println("StartDate---" + cal.getTime());
+                System.out.println("endDate---" + cal2.getTime());
+                System.out.println("deadline---" + cal3.getTime());
                 
                 project.setProjectID(rs.getInt("projectID"));
                 project.setProjectTitle(rs.getString("title"));
