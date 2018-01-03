@@ -58,11 +58,16 @@ public class GetClientObject extends HttpServlet {
 
         JSONObject json = timeline.getAllTimelinesJSONObject();
 
-        request.setAttribute("json", json);
-        request.setAttribute("client", client);
-        request.setAttribute("allTimeLines", allTimeLines);
-        RequestDispatcher rd = request.getRequestDispatcher("CreateProject.jsp");
-        rd.forward(request, response);
+//        request.setAttribute("json", json);
+//        request.setAttribute("client", client);
+//        request.setAttribute("allTimeLines", allTimeLines);
+//        RequestDispatcher rd = request.getRequestDispatcher("CreateProject.jsp");
+//        rd.forward(request, response);
+
+        request.getSession().setAttribute("json", json);
+        request.getSession().setAttribute("client", client);
+        request.getSession().setAttribute("allTimeLines", allTimeLines);
+        response.sendRedirect("CreateProject.jsp");
 
     }
 

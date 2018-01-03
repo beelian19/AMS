@@ -122,7 +122,7 @@
     </servlet>
     <servlet>
         <servlet-name>CreateProject</servlet-name>
-        <servlet-class>Module.ProjectManagement.CreateProject</servlet-class>
+        <servlet-class>Module.ProjectManagement.CreateNewProject</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
