@@ -1027,13 +1027,9 @@ public class ProjectDAO {
             while (rs.next()) {
                 project = new Project();
                 String frequency = rs.getString("frequency");
-                System.out.println("Frequency---" + frequency);
                 Date startDate = rs.getDate("start");
-                System.out.println("Initial StartDate---" + startDate);
                 Date endDate = rs.getDate("end");
-                System.out.println("Initial EndDate---" + endDate);
                 Date actualDeadline = rs.getDate("actualDeadline");
-                System.out.println("Initial deadline---" + actualDeadline);
                 
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(startDate);
@@ -1064,11 +1060,7 @@ public class ProjectDAO {
                         cal3.add(Calendar.MONTH, 12);
                         break;
                 }
-                
-                System.out.println("StartDate---" + cal.getTime());
-                System.out.println("endDate---" + cal2.getTime());
-                System.out.println("deadline---" + cal3.getTime());
-                
+               
                 project.setProjectID(rs.getInt("projectID"));
                 project.setProjectTitle(rs.getString("title"));
                 project.setCompanyName(rs.getString("companyName"));
