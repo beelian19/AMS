@@ -4,6 +4,8 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.util.HashSet"%>
+<%@page import="java.util.Set"%>
 <%@page import="Entity.Client"%>
 <%@page import="DAO.ClientDAO"%>
 <%@page import="Entity.Employee"%>
@@ -32,9 +34,13 @@
             Employee e = EmployeeDAO.getEmployeeByID((String) request.getSession().getAttribute("userId"));
             String name = e.getName();
 
-            Boolean canComplete = false;
-            Boolean canReview = false;
-            Boolean isAdmin = e.getIsAdmin().equals("yes");
+            ProjectDAO projectDAO = new ProjectDAO();
+            ArrayList<Project> projectList = projectDAO.getAllIncompleteAdhocProjects();
+
+            boolean canComplete = false;
+            boolean canReview = false;
+            boolean isAdHoc = false;
+            boolean isAdmin = e.getIsAdmin().equals("yes");
             if (p.getProjectStatus().equals("incomplete") && !p.getProjectReviewer().equals(name)) {
                 canComplete = true;
             }
@@ -47,6 +53,9 @@
             }
             if (p.getProjectReviewStatus().equals("incomplete") && isAdmin && p.getProjectStatus().equals("complete")) {
                 canReview = true;
+            }
+            if (p.getProjectType().equals("adhoc")) {
+                isAdHoc = true;
             }
 
             Employee emp1 = EmployeeDAO.getEmployee(p.getEmployee1());
@@ -138,6 +147,26 @@
                                         <td colspan="3">
                                             &nbsp;
                                         </td>
+
+                                    </tr>
+                                    <!--Create Task is HERE!!!!!-->
+                                    <tr>
+                                        <td>
+                                            <%
+                                                if (isAdHoc) {
+                                            %>
+                                            <button id="create-task" style="font-size: 12px;">Create Task</button>
+                                            <%
+                                                }
+                                            %>
+                                        </td>
+                                    </tr>
+                                    <!--Create Task is HERE!!!!!-->
+                                    <tr>
+                                        <td colspan="3">
+                                            &nbsp;
+                                        </td>
+
                                     </tr>
                                     <%
                                         if (canReview || canComplete) {
@@ -149,7 +178,7 @@
                                                     if (canReview) {
                                                 %>
 
-                                                <input type="submit" name="review" value="review"/>
+                                                <input type="submit" name="review" value="Review"/>
                                                 <%
                                                     }
                                                 %>
@@ -161,7 +190,7 @@
                                                 <%
                                                     if (canComplete) {
                                                 %>
-                                                <input type="submit" name="complete" value="complete"/>
+                                                <input type="submit" name="complete" value="Complete"/>
                                                 <%
                                                     }
                                                 %>
@@ -263,11 +292,10 @@
                                         <%
                                             reviewerProfileUrl2 = reviewerProfileUrl1 + rev.getEmployeeID();
                                             //System.out.println(reviewerProfileUrl2);
-                                        %>
+%>
                                         <a href='<%=reviewerProfileUrl2%>'>
                                             <%=p.getProjectReviewer()%>
                                         </a>
-                                    </td>
                                     </td>
                                     <td width="1%">
                                     </td>
@@ -305,7 +333,7 @@
                 <tr>
                     <td>
                         <div id="projectHourscollapsible" class="collapse in">
-                            <form action="UpdateProjectHoursServlet" method="post" id="my_form">
+                            <form action="UpdateProjectHours" method="post" id="my_form">
                                 <table width="100%" style="cellpadding: 1%">
                                     <tr>
                                         <td>
@@ -825,7 +853,270 @@
         </div>
     </div>
 </div>
+
+<!--Task Modal-->
+<div id="myModalTask" class="modal fade" role="dialog">
+    <!-- Modal content -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <span id="eventTitle">Add New Task</span>
+                </h4>
+            </div>
+            <div class="modal-body" align="left">
+                <form>
+                    <fieldset>
+                        <table>
+                            <!--companyName-->
+                            <!--<tr>
+                                <td>
+                                    <label for="companyName">Company Name&nbsp<font color="red">*</font></label>
+                                </td>
+                                <td width="1%">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <select name='companyNameCreate' id="companyNameCreate" class="form-control" required autofocus>
+
+                                        <
+                                            if (projectList != null && projectList.size() != 0) {
+                                                ArrayList<String> compNameList = new ArrayList<>();
+                                                for (int i = 0; i < projectList.size(); i++) {
+                                                    String companyName = projectList.get(i).getCompanyName();
+                                                    //System.out.println("JSP companyName: "+companyName+"-"+companyName.length());
+                                                    compNameList.add(companyName);
+                                                }
+
+                                                Set<String> compNames = new HashSet<>(compNameList);
+                                                //System.out.println("Set size: " + compNames.size());
+                                                for (String company : compNames) {
+                                                    //System.out.println(name);
+                                        %>                                                             
+                                        <option value='<=company%>'><=company%></option>
+                            <
+                                }
+                            }
+                            %>
+                        </select>
+                    </td
+                     m>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        &nbsp;
+                    </td>
+                </tr>
+                            <!--companyName-->
+
+                            <!--Ad Hoc Projects-->
+                            <!--<tr>
+                                <td>
+                                    <label for="projects">Projects&nbsp<font color="red">*</font></label>
+                                </td>
+                                <td width="1%">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <select name='projectCreate' id="projectCreate" class="form-control" required autofocus>
+
+                                        <
+                                            if (projectList != null && projectList.size() != 0) {
+                                                for (int i = 0; i < projectList.size(); i++) {
+                                                    String projTitle = projectList.get(i).getProjectTitle();
+                                                    String companyName = projectList.get(i).getCompanyName();
+                                        %>
+
+                                        <option value='<=companyName%>'><=projTitle%></option>
+                                        <
+                                                }
+                                            }
+                                        %>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!--Ad Hoc Projects-->
+
+                            <!--Task title-->
+                            <tr>
+                                <td>
+                                    <label for="title">Task Title&nbsp<font color="red">*</font></label>
+                                </td>
+                                <td width="1%">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input type="text" name="titleCreate" id="titleCreate" class="text ui-widget-content ui-corner-all" required>
+                                    <input type="hidden" name="projectIDCreate" id="projectIDCreate" value="<%=p.getProjectID()%>"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!--Task title-->
+
+                            <!--Start Date-->
+                            <tr>
+                                <td>
+                                    <label for="startDate">Start Date&nbsp<font color="red">*</font></label>
+                                </td>
+                                <td width="1%">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input type="date" name="startDateCreate" id="startDateCreate" class="text ui-widget-content ui-corner-all" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!--Start Date-->
+
+                            <!--End Date-->
+                            <tr>
+                                <td>
+                                    <label for="endDate">End Date&nbsp<font color="red">*</font></label>
+                                </td>
+                                <td width="1%">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input type="date" name="endDateCreate" id="endDateCreate" class="text ui-widget-content ui-corner-all" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!--End Date-->
+
+                            <!--Task Reviewer-->
+                            <tr>
+                                <td>
+                                    <label for="reviewer">Task Reviewer&nbsp<font color="red">*</font></label>
+                                </td>
+                                <td width="1%">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <select name='reviewerCreate' id="reviewerCreate" class="form-control" required autofocus>
+                                        <option disabled selected value> — select an option — </option>
+                                        <%
+                                            for (int i = 0; i < supList.size(); i++) {
+                                                out.println("<option value='" + supList.get(i) + "'>" + supList.get(i) + "</option>");
+                                            }
+                                        %>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!--Task Reviewer-->
+
+                            <!--remarks-->
+                            <tr>
+                                <td>
+                                    <label for="remarks">Task Remarks</label>
+                                </td>
+                                <td width="1%">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <textarea name="remarkCreate" id="remarkCreate" class="text ui-widget-content ui-corner-all" cols="40" rows="5"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!--remarks-->
+
+                            <tr>
+                                <td width="1%" colspan="2">
+                                    &nbsp;
+                                </td>
+                                <td style="text-align: right">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" id="btnSaveTask" class="btn btn-success">Submit</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>                                    
 <script>
+    $("#create-task").click(function () {
+        $('#myModalTask').modal();
+    });
+    $('#btnSaveTask').click(function () {
+        //var companyName = document.getElementById("companyNameCreate").value;
+        //var project = $("#projectCreate option:selected").html();
+        var projectId = document.getElementById("projectIDCreate").value;
+        var taskTitle = document.getElementById("titleCreate").value;
+        var start = document.getElementById("startDateCreate").value;
+        var end = document.getElementById("endDateCreate").value;
+        var taskReviewer = document.getElementById("reviewerCreate").value;
+        var taskRemarks = document.getElementById("remarkCreate").value;
+
+        //if (project == "") {
+            //alert("Project Field Required");
+            //return;
+        //}
+        if (taskTitle == "") {
+            alert("Title Field Required");
+            return;
+        }
+        if (start == "") {
+            alert("Start Date Required");
+            return;
+        }
+        if (end == "") {
+            alert("End Date Required");
+            return;
+        }
+        if (start > end) {
+            alert('Invalid End Date');
+            return;
+        }
+        if (taskReviewer == "") {
+            alert("Reviewer Required");
+            return;
+        }
+        if (taskRemarks == "") {
+            alert("Remarks Required (NA if not applicable)");
+            return;
+        } else {
+            $.ajax({
+                url: 'CreateTaskAdmin',
+                data: 'projectId=' + projectId + '&' + 'title=' + taskTitle + '&' + 'start=' + start + '&' + 'end=' + end + '&' + 'remarks=' + taskRemarks + '&' + 'reviewer=' + taskReviewer,
+                type: 'POST',
+                success: function () {
+                    //$('#calendar').fullCalendar('refetchEvents');
+                    alert('Task Added');
+                    $('#myModalTask').modal('hide');
+                }
+            });
+        }
+    }
+    );
     $('#btnSave').click(function () {
         if ($('#projectTitleEdit').val().trim() == "") {
             alert("Project Title Required");

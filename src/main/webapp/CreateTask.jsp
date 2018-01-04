@@ -33,7 +33,7 @@
                     <h1>Create Task</h1>
                     <br/>
                     <div class="container-fluid" align="center" style='width: 100%; display: inline-block'>
-                        <form>
+                        <form action="CreateTaskAdmin" method="post">
                             <table width="100%" height="100%" style="text-align: left">
                                 <tr bgcolor="#034C75" rowspan="8">
                                     <td colspan="7">

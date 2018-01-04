@@ -14,11 +14,11 @@
     </servlet>
     <servlet>
         <servlet-name>CreateAdHocProjectAdmin</servlet-name>
-        <servlet-class>Module.ProjectManagment.CreateAdHocProjectAdmin</servlet-class>
+        <servlet-class>Module.ProjectManagement.CreateAdHocProjectAdmin</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateTaskAdmin</servlet-name>
-        <servlet-class>Module.ProjectManagment.CreateTaskAdmin</servlet-class>
+        <servlet-class>Module.ProjectManagement.CreateTaskAdmin</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteAdHocAdmin</servlet-name>

@@ -6,12 +6,9 @@
 package Module.ProjectManagement;
 
 import DAO.ProjectDAO;
-import DAO.TaskDAO;
 import Entity.Project;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Utility.ConnectionManager;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
@@ -47,12 +45,12 @@ public class CreateAdHocProjectAdmin extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
 
             //common fields in task and adhoc project
-            String companyName = request.getParameter("companyName");
-            String title = request.getParameter("title");
-            String start = request.getParameter("start");
-            String end = request.getParameter("end");
-            String remarks = request.getParameter("remarks");
-            String reviewer = request.getParameter("reviewer");
+            String companyName = request.getParameter("companyProjectCreate");
+            String title = request.getParameter("titleProjectCreate");
+            String start = request.getParameter("startDateProjectCreate");
+            String end = request.getParameter("endDateProjectCreate");
+            String remarks = request.getParameter("remarkProjectCreate");
+            String reviewer = request.getParameter("reviewerProjectCreate");
             //common fields in task and adhoc project
 
             //convert String to date
@@ -60,33 +58,43 @@ public class CreateAdHocProjectAdmin extends HttpServlet {
             Date startDate = df.parse(start);
             Date endDate = df.parse(end);
 
-            //convert String to date
-            String assignedEmployee1 = request.getParameter("emp");
-            String assignedEmployee2 = request.getParameter("emp1");
+            String assignedEmployee1 = request.getParameter("assignEmployeeProjectCreate");
+            String assignedEmployee2 = request.getParameter("assignEmployee1ProjectCreate");
 
-            Project addProject = new Project(0, title, companyName, "NA", startDate, endDate, remarks, "incomplete", endDate, "NA", "adhoc", assignedEmployee1, assignedEmployee2, 0.0, 0.0, reviewer, "incomplete", 0, "NA");
-            ProjectDAO.createProject(addProject);
-            
+            ProjectDAO projectDAO = new ProjectDAO();
+            int projectId = projectDAO.getTotalNumberOfProjects() + 1;
+            Project addProject = new Project(projectId, title, companyName, "NA", startDate, endDate, remarks, "incomplete", endDate, "NA", "adhoc", assignedEmployee1, assignedEmployee2, 0.0, 0.0, reviewer, "incomplete", 0, "NA");
+            boolean check = ProjectDAO.createProject(addProject);
+            if (check) {
+                request.getSession().setAttribute("status", "Success: AdHoc Project " + title + " Created.");
+                request.setAttribute("projectID", projectId);
+                RequestDispatcher rd = request.getRequestDispatcher("ProjectProfile.jsp");
+                rd.forward(request, response);
+                //response.sendRedirect("/AMS/ProjectProfile.jsp?projectId=" + projectId);
+            } else {
+                request.getSession().setAttribute("status", "Error: Failed to create adhoc project " + title);
+                response.sendRedirect("CreateAdHocProject.jsp");
+            }
+
             //response.sendRedirect("ProjectView.jsp");
         } catch (SQLException | ParseException e) {
             e.printStackTrace();
         }
     }
 
-    public int getCounter(int projectID) throws SQLException {
-
-        Connection conn = ConnectionManager.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("Select max(taskID) from task where projectID = ?");
-        stmt.setInt(1, projectID);
-        ResultSet rs = stmt.executeQuery();
-        rs.last();
-        int temp = rs.getInt("max(taskID)");
-        //Integer tempCount = Integer.parseInt(temp);
-        int counter = temp + 1;
-
-        return counter;
-    }
-
+//    public int getCounter(int projectID) throws SQLException {
+//
+//        Connection conn = ConnectionManager.getConnection();
+//        PreparedStatement stmt = conn.prepareStatement("Select max(taskID) from task where projectID = ?");
+//        stmt.setInt(1, projectID);
+//        ResultSet rs = stmt.executeQuery();
+//        rs.last();
+//        int temp = rs.getInt("max(taskID)");
+//        //Integer tempCount = Integer.parseInt(temp);
+//        int counter = temp + 1;
+//
+//        return counter;
+//    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

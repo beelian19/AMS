@@ -9,7 +9,6 @@ import DAO.ProjectDAO;
 import DAO.TaskDAO;
 import Entity.Project;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +45,8 @@ public class CreateTaskAdmin extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (Connection conn = ConnectionManager.getConnection()) {
             /* TODO output your page here. You may use following sample code. */
-            String companyName = request.getParameter("companyName");
+            //String companyName = request.getParameter("companyName");
+            int projectId = Integer.parseInt(request.getParameter("projectId"));
             String title = request.getParameter("title");
             String start = request.getParameter("start");
             String end = request.getParameter("end");
@@ -59,11 +59,11 @@ public class CreateTaskAdmin extends HttpServlet {
             Date endDate = df.parse(end);
 
             //convert String to date
-            String project = request.getParameter("project");
-            Project thisProject = ProjectDAO.getProjectByTitleAndCompanyName(project, companyName);
-            int projectID = thisProject.getProjectID();
+            //String project = request.getParameter("project");
+//            Project thisProject = ProjectDAO.getProjectByTitleAndCompanyName(project, companyName);
+//            int projectID = thisProject.getProjectID();
             TaskDAO taskDAO = new TaskDAO();
-            taskDAO.addTask(projectID, (getCounter(projectID)), title, startDate, endDate, remarks, reviewer);
+            taskDAO.addTask(projectId, (getCounter(projectId)), title, startDate, endDate, remarks, reviewer);
         } catch (SQLException | ParseException e) {
             e.printStackTrace();
         }

@@ -40,10 +40,10 @@
                 <div class="container-fluid" style="text-align: center; width: 100%; height: 100%; margin-top: <%=session.getAttribute("margin")%>; margin-bottom: 5%">
                     <nav class="container-fluid" width="100%" height="100%">
                         <div class="container-fluid" align="center" style="width: 80%; height: 80%">
-                            <div align="right" style="margin-bottom: 1%">
+                            <!--<div align="right" style="margin-bottom: 1%">
                                 <button id="create-task" style="font-size: 12px;">Create Task</button>
                                 <button id="create-adhoc" style="font-size: 12px;">Create Ad hoc Project</button>
-                            </div>
+                            </div>-->
                             <!-- insert calendar here -->
                             <div id='calendar' align="center"></div>
                             <div style="text-align: center; padding-top: 1%">
