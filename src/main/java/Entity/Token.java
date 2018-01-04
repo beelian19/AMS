@@ -8,6 +8,9 @@ public class Token {
     private String ClientSecret;
     private String redirectUri; 
     private String refreshToken;
+    private String xeroToken;
+    private String xeroTokenSecret;
+    private String xeroTokenHandle;
     private String inUse;
     private int companyId;
 
@@ -20,6 +23,20 @@ public class Token {
         this.inUse = inUse;
         this.companyId = companyId;
     }
+
+    public Token(String accType, String ClientId, String ClientSecret, String redirectUri, String refreshToken, String xeroToken, String xeroTokenSecret, String xeroTokenHandle, String inUse, int companyId) {
+        this.accType = accType;
+        this.ClientId = ClientId;
+        this.ClientSecret = ClientSecret;
+        this.redirectUri = redirectUri;
+        this.refreshToken = refreshToken;
+        this.xeroToken = xeroToken;
+        this.xeroTokenSecret = xeroTokenSecret;
+        this.xeroTokenHandle = xeroTokenHandle;
+        this.inUse = inUse;
+        this.companyId = companyId;
+    }
+
     
     public String getAccType() {
         return accType;
@@ -59,6 +76,30 @@ public class Token {
 
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
+    }
+
+    public String getXeroToken() {
+        return xeroToken;
+    }
+
+    public void setXeroToken(String xeroToken) {
+        this.xeroToken = xeroToken;
+    }
+
+    public String getXeroTokenSecret() {
+        return xeroTokenSecret;
+    }
+
+    public void setXeroTokenSecret(String xeroTokenSecret) {
+        this.xeroTokenSecret = xeroTokenSecret;
+    }
+
+    public String getXeroTokenHandle() {
+        return xeroTokenHandle;
+    }
+
+    public void setXeroTokenHandle(String xeroTokenHandle) {
+        this.xeroTokenHandle = xeroTokenHandle;
     }
     
     

@@ -81,7 +81,7 @@ public class ExpenseFactory {
             cell = sh.getRow(2).getCell(11);
             chargedAccountNumber = (getStringValue(cell) != null) ? Integer.valueOf(getStringValue(cell).trim()) : 0;
             if (chargedAccountNumber == 0) {
-                messages.add("Charged account name not detected");
+                messages.add("Charged account number not detected");
             }
 
             // Init expenses
@@ -192,6 +192,9 @@ public class ExpenseFactory {
                     if (!expense.checkComplete()) {
                         messages.add("Incomplete expense at xl row " + (xlRowNumber + 1));
                     }
+                    
+                    expenses.add(expense);
+                    
                 } catch (IndexOutOfBoundsException ibe) {
                     messages.add("Out of bounds error: " + ibe.getMessage());
                 }
@@ -395,8 +398,5 @@ public class ExpenseFactory {
         this.realmid = realmid;
     }
     
-    
 
-    
-    
 }

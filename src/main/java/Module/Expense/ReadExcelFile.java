@@ -86,7 +86,7 @@ public class ReadExcelFile extends HttpServlet {
                     request.getSession().setAttribute("expenseFactory", ef);
                     request.setAttribute("expenseClient", client);
                     request.setAttribute("expenseToken", token);
-                    request.getRequestDispatcher("process-invoice.jsp").forward(request, response);
+                    request.getRequestDispatcher("ProcessExpense.jsp").forward(request, response);
 
                 }
 
@@ -99,7 +99,7 @@ public class ReadExcelFile extends HttpServlet {
             }
 
             request.setAttribute("messages", messages);
-            request.getRequestDispatcher("upload.jsp").forward(request, response);
+            request.getRequestDispatcher("UploadExpenses.jsp").forward(request, response);
 
         }
     }

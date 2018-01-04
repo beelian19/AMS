@@ -124,6 +124,18 @@
         <servlet-name>CreateProject</servlet-name>
         <servlet-class>Module.ProjectManagement.CreateNewProject</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetToken</servlet-name>
+        <servlet-class>Module.Expense.ResetToken</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QBOredirect</servlet-name>
+        <servlet-class>Module.Expense.QBOredirect</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>XERORedirect</servlet-name>
+        <servlet-class>Module.Expense.XERORedirect</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
@@ -247,6 +259,18 @@
     <servlet-mapping>
         <servlet-name>CreateProject</servlet-name>
         <url-pattern>/CreateProject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetToken</servlet-name>
+        <url-pattern>/ResetToken</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QBOredirect</servlet-name>
+        <url-pattern>/QBOredirect</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>XERORedirect</servlet-name>
+        <url-pattern>/XERORedirect</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
