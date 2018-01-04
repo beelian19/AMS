@@ -1112,6 +1112,7 @@
                     //$('#calendar').fullCalendar('refetchEvents');
                     alert('Task Added');
                     $('#myModalTask').modal('hide');
+                    location.reload();
                 }
             });
         }
