@@ -63,7 +63,7 @@ public class CreateAdHocProjectAdmin extends HttpServlet {
 
             ProjectDAO projectDAO = new ProjectDAO();
             int projectId = projectDAO.getTotalNumberOfProjects() + 1;
-            Project addProject = new Project(projectId, title, companyName, "NA", startDate, endDate, remarks, "incomplete", endDate, "NA", "adhoc", assignedEmployee1, assignedEmployee2, 0.0, 0.0, reviewer, "incomplete", 0, "NA");
+            Project addProject = new Project(projectId, title, companyName, "NA", startDate, endDate, remarks, "incomplete", endDate, "NA", "adhoc", assignedEmployee1, assignedEmployee2, 0.0, 0.0, reviewer, "incomplete", 0, "NA", 0.0);
             boolean check = ProjectDAO.createProject(addProject);
             if (check) {
                 request.getSession().setAttribute("status", "Success: AdHoc Project " + title + " Created.");

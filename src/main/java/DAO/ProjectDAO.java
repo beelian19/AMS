@@ -25,6 +25,7 @@ package DAO;
 17.  projectReviewStatus - String
 18.  dateCompleted - int
 19.  monthlyHours - String
+20.  plannedHours - Double
  */
 import Entity.Project;
 import Entity.Task;
@@ -49,13 +50,13 @@ public class ProjectDAO {
     private static String updateRemarksbyIDStatement = "UPDATE project SET projectRemarks = ? WHERE projectID = ?";
     private static String updateProjectStatement = "UPDATE project SET title=?, companyName=?, businessType=?,start=?,end=?,projectRemarks=?,"
             + "projectStatus=?,actualDeadline=?,frequency=?,projectType=?,employee1=?,employee2=?,employee1Hours=?,employee2Hours=?,"
-            + "projectReviewer=?,projectReviewStatus=?,dateCompleted=?, monthlyHours=? WHERE projectID=?";
+            + "projectReviewer=?,projectReviewStatus=?,dateCompleted=?, monthlyHours=? , plannedHours = ? WHERE projectID=?";
     private static String updateProjectStatementWithSelectedFields = "UPDATE project SET title=?, start=?, end=?, projectRemarks=?, employee1=?,"
             + "employee2=?, projectReviewer=? WHERE projectID=?";
     private static String getAllIncompleteProjects = "SELECT * FROM project where projectStatus = 'incomplete' OR projectReviewStatus = 'incomplete'";
     private static String getAllIncompleteAdhocProjects = "SELECT * FROM project where ( projectStatus = 'incomplete' OR projectReviewStatus = 'incomplete'  ) AND projectType='adhoc'";
     private static String getProjectByTitleAndCompanyNameStatement = "SELECT projectID FROM project WHERE title=? AND companyName=?";
-    private static String createProjectStatement = "Insert into PROJECT values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static String createProjectStatement = "Insert into PROJECT values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static String getAllProjectByEmployee = "SELECT * FROM project WHERE employee1 = ? OR employee2 = ? or projectReviewer = ?";
     private static String getAllProjectByCompanyName = "SELECT * FROM project WHERE companyName = ?";
     private static String getAllProjectTaskStatement = "SELECT * FROM task WHERE projectID = ?";
@@ -184,6 +185,7 @@ public class ProjectDAO {
             stmt.setString(17, project.getProjectReviewStatus());
             stmt.setInt(18, project.getDateCompleted());
             stmt.setString(19,project.getMonthlyHours());
+            stmt.setDouble(20,project.getPlannedHours());
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
             System.out.println("SQLException at ProjectDAO: " + e.getMessage());
@@ -219,7 +221,7 @@ public class ProjectDAO {
             String projectRemarks, String projectStatus, Date actualDeadline, String frequency,
             String projectType, String employee1, String employee2,
             Double employee1Hours, Double employee2Hours, String projectReviewer,
-            String projectReviewStatus, int dateCompleted, String monthlyHours) {
+            String projectReviewStatus, int dateCompleted, String monthlyHours,Double plannedHours) {
         java.sql.Date sqlDate;
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(createProjectStatement);
@@ -246,6 +248,8 @@ public class ProjectDAO {
             stmt.setString(17, projectReviewStatus);
             stmt.setInt(18, dateCompleted);
             stmt.setString(19, monthlyHours);
+            stmt.setDouble(20, plannedHours);
+            
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
             System.out.println("SQLException at ProjectDAO: " + e.getMessage());
@@ -311,6 +315,7 @@ public class ProjectDAO {
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
                 project.setDateCompleted(rs.getInt("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
 
                 projectList.add(project);
             }
@@ -354,6 +359,7 @@ public class ProjectDAO {
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
                 project.setDateCompleted(rs.getInt("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
 
                 projectList.add(project);
             }
@@ -398,6 +404,7 @@ public class ProjectDAO {
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
                 project.setDateCompleted(rs.getInt("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
 
                 projectList.add(project);
             }
@@ -450,6 +457,7 @@ public class ProjectDAO {
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
                 project.setDateCompleted(rs.getInt("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
 
                 projectList.add(project);
             }
@@ -516,6 +524,7 @@ public class ProjectDAO {
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
                 project.setDateCompleted(rs.getInt("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
 
                 projectList.add(project);
             }
@@ -604,6 +613,7 @@ public class ProjectDAO {
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
                 project.setDateCompleted(rs.getInt("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
 
                 return project;
             }
@@ -651,6 +661,7 @@ public class ProjectDAO {
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
                 project.setDateCompleted(rs.getInt("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
                 return project;
             }
         } catch (SQLException e) {
@@ -696,7 +707,9 @@ public class ProjectDAO {
             stmt.setString(16, project.getProjectReviewStatus());
             stmt.setInt(17, project.getDateCompleted());
             stmt.setString(18, project.getMonthlyHours());
-            stmt.setInt(19, project.getProjectID());
+            stmt.setInt(20, project.getProjectID());
+            stmt.setDouble(19, project.getPlannedHours());
+            
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
             System.out.println("SQLException at ProjectDAO: " + e.getMessage());
@@ -1080,6 +1093,7 @@ public class ProjectDAO {
                 project.setProjectReviewStatus("incomplete");
                 project.setDateCompleted(0000);
                 project.setMonthlyHours("0");
+                project.setPlannedHours(rs.getDouble("plannedHours"));
                 
                 boolean status = createProject(project);
             }

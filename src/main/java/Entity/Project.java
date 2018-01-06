@@ -33,6 +33,7 @@ public class Project {
     private int dateCompleted;
     // sample monthlyHours 1709=0.0-0.0, 1710=1.0-0.0, 1711=2.0-2.0, 1712=4.0-2.0
     private String monthlyHours;
+    private Double plannedHours;
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
@@ -219,7 +220,7 @@ public class Project {
         return year + month;
     }
 
-    public Project(int projectID, String projectTitle, String companyName, String businessType, Date start, Date end, String projectRemarks, String projectStatus, Date actualDeadline, String frequency, String projectType, String employee1, String employee2, Double employee1Hours, Double employee2Hours, String projectReviewer, String projectReviewStatus, int dateCompleted, String monthlyHours) {
+    public Project(int projectID, String projectTitle, String companyName, String businessType, Date start, Date end, String projectRemarks, String projectStatus, Date actualDeadline, String frequency, String projectType, String employee1, String employee2, Double employee1Hours, Double employee2Hours, String projectReviewer, String projectReviewStatus, int dateCompleted, String monthlyHours, Double plannedHours) {
         this.projectID = projectID;
         this.projectTitle = projectTitle;
         this.companyName = companyName;
@@ -239,6 +240,7 @@ public class Project {
         this.projectReviewStatus = projectReviewStatus;
         this.dateCompleted = dateCompleted;
         this.monthlyHours = monthlyHours;
+        this.plannedHours = plannedHours;
     }
 
     public Project() {
@@ -246,7 +248,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{" + "projectID=" + projectID + ", projectTitle=" + projectTitle + ", companyName=" + companyName + ", businessType=" + businessType + ", start=" + start + ", end=" + end + ", projectRemarks=" + projectRemarks + ", projectStatus=" + projectStatus + ", actualDeadline=" + actualDeadline + ", frequency=" + frequency + ", projectType=" + projectType + ", employee1=" + employee1 + ", employee2=" + employee2 + ", employee1Hours=" + employee1Hours + ", employee2Hours=" + employee2Hours + ", projectReviewer=" + projectReviewer + ", projectReviewStatus=" + projectReviewStatus + ", dateCompleted=" + dateCompleted + ", monthlyHours=" + monthlyHours + '}';
+        return "Project{" + "projectID=" + projectID + ", projectTitle=" + projectTitle + ", companyName=" + companyName + ", businessType=" + businessType + ", start=" + start + ", end=" + end + ", projectRemarks=" + projectRemarks + ", projectStatus=" + projectStatus + ", actualDeadline=" + actualDeadline + ", frequency=" + frequency + ", projectType=" + projectType + ", employee1=" + employee1 + ", employee2=" + employee2 + ", employee1Hours=" + employee1Hours + ", employee2Hours=" + employee2Hours + ", projectReviewer=" + projectReviewer + ", projectReviewStatus=" + projectReviewStatus + ", dateCompleted=" + dateCompleted + ", monthlyHours=" + monthlyHours + ", plannedHours =" + plannedHours + '}';
     }
 
     public int getProjectID() {
@@ -405,4 +407,13 @@ public class Project {
         this.monthlyHours = monthlyHours;
     }
 
+    public Double getPlannedHours() {
+        return plannedHours;
+    }
+
+    public void setPlannedHours(Double plannedHours) {
+        this.plannedHours = plannedHours;
+    }
+    
+    
 }
