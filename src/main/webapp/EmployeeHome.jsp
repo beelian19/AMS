@@ -185,7 +185,7 @@
                         fixedWeekCount: false,
                         events: "DisplayProjectForEmpHome",
 
-                        eventAfterRender: function (event, element, view) {
+                        eventRender: function (event, element, view) {
                             //when project first created yellow color
                             var taskStatus = event.taskStatus;
                             var taskReviewStatus = event.reviewStatus;
