@@ -105,6 +105,7 @@ public class CreateNewProject extends HttpServlet {
             project.setFrequency(frequency);
             project.setDateCompleted(0000);
             project.setMonthlyHours(Project.getYearMonth()+"=0.0-0.0");
+            project.setPlannedHours(0.0);
 
             //this is the method to get start date....minus 1 day logic
             if (internalDeadline.length() == 0) {
