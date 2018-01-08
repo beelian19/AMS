@@ -231,7 +231,7 @@
                                         <label>Remarks&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <textarea name="remarksCreate" id="remarksCreate" class="text ui-widget-content ui-corner-all" cols="22" rows="3" style='display: block; width:100%' required></textarea>
+                                        <textarea name="remarksCreate" id="remarksCreate" class="text ui-widget-content ui-corner-all" cols="20" rows="2" style='display: block; width:100%' required></textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -310,7 +310,7 @@
                                         <label>Assigned Hours&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <input type="number" name='plannedHours)' id="plannedHours" class="form-control" autofocus style='display: block; width:100%' required>
+                                        <input type="number" name='plannedHours' id="plannedHours" class="form-control" autofocus style='display: block; width:100%' required>
                                         </input>
                                     </td>
                                     <td width="1%">
@@ -318,7 +318,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="7">
-                                        <br/>
+                                        <br/><br/><br/>
                                     </td>
                                 </tr>   
                             </table>

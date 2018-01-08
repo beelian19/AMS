@@ -53,7 +53,7 @@
                                         <label for="companyNameProject">Company Name&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <select name='companyNameCreate' id="companyNameCreate" class="form-control" required autofocus>
+                                        <select name='companyNameCreate' id="companyNameCreate" class="form-control" required autofocus style="width: 100%; max-width: 300px;">
 
                                             <%
                                                 if (projectList != null && projectList.size() != 0) {
@@ -82,16 +82,14 @@
                                         <label for="projects">Projects&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <select name='projectCreate' id="projectCreate" class="form-control" required autofocus>
-
+                                        <select name='projectCreate' id="projectCreate" class="form-control" required autofocus style="width: 100%; max-width: 300px;">
                                             <%
                                                 if (projectList != null && projectList.size() != 0) {
                                                     for (int i = 0; i < projectList.size(); i++) {
                                                         String projTitle = projectList.get(i).getProjectTitle();
                                                         String companyName = projectList.get(i).getCompanyName();
                                             %>
-
-                                            <option value='<%=companyName%>'><%=projTitle%></option>
+                                                    <option value='<%=companyName%>'><%=projTitle%></option>
                                             <%
                                                     }
                                                 }
@@ -131,7 +129,7 @@
                                         <label for="startDate">Start Date&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <input type="date" name="startDateCreate" id="startDateCreate" class="text ui-widget-content ui-corner-all" required>
+                                        <input type="date" name="startDateCreate" id="startDateCreate" class="text ui-widget-content ui-corner-all" required style="width: 100%; max-width: 300px;">
                                     </td>
                                     <td width="1%">
                                     </td>
@@ -156,7 +154,7 @@
                                         <label for="remarks">Task Remarks</label>
                                     </td>
                                     <td>
-                                        <textarea name="remarkCreate" id="remarkCreate" class="text ui-widget-content ui-corner-all" cols="40" rows="5"></textarea>
+                                        <textarea name="remarkCreate" id="remarkCreate" class="text ui-widget-content ui-corner-all" cols="40" rows="2"></textarea>
                                     </td>
                                     <td width="1%">
                                     </td>
@@ -200,7 +198,7 @@
                                         <label>Assigned Hours&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <input type="number" name='plannedHours)' id="plannedHours" class="form-control" autofocus style='display: block; width:100%' required>
+                                        <input type="number" name='plannedHours' id="plannedHours" class="form-control" autofocus style='width:100%; max-width: 300px' required>
                                         </input>
                                     </td>
                                     <td width="1%">
@@ -208,7 +206,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="7">
-                                        <br/>
+                                        <br/><br/><br/>
                                     </td>
                                 </tr>
                             </table>

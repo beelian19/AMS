@@ -49,7 +49,7 @@
                                         <label for="titleProject">Project Title&nbsp;<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <input type="text" name="titleProjectCreate" id="titleProjectCreate" class="text ui-widget-content ui-corner-all" required>
+                                        <input type="text" name="titleProjectCreate" id="titleProjectCreate" style="width: 100%; max-width: 300px;" class="text ui-widget-content ui-corner-all" required>
                                     </td>
                                     <td width="15%">
                                     </td>
@@ -57,7 +57,7 @@
                                         <label for="companyNameProject">Company Name&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <select name='companyProjectCreate' id="companyProjectCreate" class="form-control" required autofocus>
+                                        <select name='companyProjectCreate' id="companyProjectCreate" class="form-control" style="width: 100%; max-width: 300px;" required autofocus>
                                             <option disabled selected value> — select an option — </option>
                                             <%
                                                 for (int i = 0; i < clientList.size(); i++) {
@@ -92,7 +92,7 @@
                                         <label for="startDateProject">Start Date&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <input type="date" name="startDateProjectCreate" id="startDateProjectCreate" class="text ui-widget-content ui-corner-all" required>
+                                        <input type="date" name="startDateProjectCreate" id="startDateProjectCreate" style="width: 100%; max-width: 300px;" class="text ui-widget-content ui-corner-all" required>
                                     </td>
                                     <td width="15%">
                                     </td>
@@ -100,7 +100,7 @@
                                         <label for="endDateProject">End Date&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <input type="date" name="endDateProjectCreate" id="endDateProjectCreate" class="text ui-widget-content ui-corner-all" required>
+                                        <input type="date" name="endDateProjectCreate" id="endDateProjectCreate" style="width: 100%; max-width: 300px;" class="text ui-widget-content ui-corner-all" required>
                                     </td>
                                     <td width="1%">
                                     </td>
@@ -117,7 +117,7 @@
                                         <label for="remarksProject">Project Remarks</label>
                                     </td>
                                     <td>
-                                        <textarea name="remarkProjectCreate" id="remarkProjectCreate" class="text ui-widget-content ui-corner-all" cols="40" rows="5"></textarea>
+                                        <textarea name="remarkProjectCreate" id="remarkProjectCreate" class="text ui-widget-content ui-corner-all" cols="40" rows="2"></textarea>
                                     </td>
                                     <td colspan='4'>
                                     </td>
@@ -147,7 +147,7 @@
                                         <label for="assignEmployeeProject">Assign First Employee&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <select name='assignEmployeeProjectCreate' id="assignEmployeeProjectCreate" class="form-control" required autofocus>
+                                        <select name='assignEmployeeProjectCreate' id="assignEmployeeProjectCreate" style="width: 100%; max-width: 300px;" class="form-control" required autofocus>
                                             <option disabled selected value> — select an option — </option>
                                             <%
                                                 for (int i = 0; i < supList.size(); i++) {
@@ -163,7 +163,7 @@
                                         <label for="assignEmployee1Project">Assign Second Employee&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <select name='assignEmployee1ProjectCreate' id="assignEmployee1ProjectCreate" class="form-control" required autofocus>
+                                        <select name='assignEmployee1ProjectCreate' id="assignEmployee1ProjectCreate" class="form-control" style="width: 100%; max-width: 300px;" required autofocus>
                                             <option disabled selected value> — select an option — </option>
                                             <%
                                                 for (int i = 0; i < supList.size(); i++) {
@@ -188,7 +188,7 @@
                                         <label for="reviewerProject">Project Reviewer&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <select name='reviewerProjectCreate' id="reviewerProjectCreate" class="form-control" required autofocus>
+                                        <select name='reviewerProjectCreate' id="reviewerProjectCreate" class="form-control" style="width: 100%; max-width: 300px;" required autofocus>
                                             <option disabled selected value> — select an option — </option>
                                             <%
                                                     for (int j = 0; j < supList.size(); j++) {
@@ -204,7 +204,7 @@
                                         <label>Assigned Hours&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <input type="number" name='plannedHours)' id="plannedHours" class="form-control" autofocus style='display: block; width:100%' required>
+                                        <input type="number" name='plannedHours' id="plannedHours" class="form-control" autofocus style="width: 100%; max-width: 300px;" required>
                                         </input>
                                     </td>
                                     <td width="1%">
@@ -212,7 +212,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="7">
-                                        <br/>
+                                        <br/><br/><br/>
                                     </td>
                                 </tr>
                             </table>
