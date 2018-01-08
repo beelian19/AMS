@@ -304,7 +304,16 @@
                                             %>
                                         </select>
                                     </td>
-                                    <td colspan="4">
+                                    <td width="1%">
+                                    </td>
+                                    <td>
+                                        <label>Assigned Hours&nbsp<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="number" name='plannedHours)' id="plannedHours" class="form-control" autofocus style='display: block; width:100%' required>
+                                        </input>
+                                    </td>
+                                    <td width="1%">
                                     </td>
                                 </tr>
                                 <tr>
@@ -313,7 +322,6 @@
                                     </td>
                                 </tr>   
                             </table>
-
                             <table style="width: 100%">
                                 <tr>
                                     <td style="width: 61%">
