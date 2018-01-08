@@ -10,6 +10,7 @@
 <%@page import="DAO.ProjectDAO"%>
 <%@page import="Entity.Project"%>
 <%@page import="java.util.ArrayList"%>
+<%@include file="Protect.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -193,7 +194,16 @@
                                             %>
                                         </select>
                                     </td>
-                                    <td colspan='4'>
+                                    <td width="1%">
+                                    </td>
+                                    <td>
+                                        <label>Assigned Hours&nbsp<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="number" name='plannedHours)' id="plannedHours" class="form-control" autofocus style='display: block; width:100%' required>
+                                        </input>
+                                    </td>
+                                    <td width="1%">
                                     </td>
                                 </tr>
                                 <tr>
