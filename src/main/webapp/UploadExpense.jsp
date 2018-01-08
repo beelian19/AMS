@@ -62,22 +62,22 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        <input id="file-upload" type = "file" name = "file" value="Choose Files to Upload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required/>
+                                        <input id="file-upload" type = "file" name = "file" value="Choose Files to Upload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style='display: block; width:100%; height: 30px' required/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4">
+                                    <td colspan="2">
                                         <br/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
+                                    <td colspan="4">
                                         <Strong>Select Client</Strong>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
-                                        <select name="clientSelected" id="clientSelected" required>
+                                    <td colspan="4">
+                                        <select name="clientSelected" id="clientSelected" style='display: block; width:500px; height: 30px' required>
                                             <option disabled selected value> -- select an option -- </option>
                                             <%
                                                 if (idList.size() == nameList.size()) {
@@ -97,13 +97,13 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
+                                    <td colspan="4">
                                         <Strong>Select Project</Strong>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
-                                        <select name="projectSelected" id="projectSelected" required>
+                                    <td colspan="4">
+                                        <select name="projectSelected" id="projectSelected" style='display: block; width:500px; height: 30px' required>
                                             <option disabled selected value> -- select an option -- </option>
                                             <%
                                                 for (int i = 0; i < projectList.size(); i++) {
@@ -119,7 +119,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
+                                    <td colspan="4">
                                         <% if (request.getAttribute("UploadExcelSuccess") != null || request.getAttribute("UploadExcelResponse") != null) {%>
                                         <p><font color="green"><%=(request.getAttribute("UploadExcelSuccess") != null) ? request.getAttribute("UploadExcelSuccess") : ""%></font></p>
                                         <p><font color="red"><%=(request.getAttribute("UploadExcelResponse") != null) ? request.getAttribute("UploadExcelResponse") : ""%></font></p>
@@ -132,18 +132,17 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 66.666%">
+                                    <td style="width: 5%">
                                         &nbsp;
                                     </td>
-                                    <td style="width: 16.167%">
+                                    <td style="width: 15%">
                                         <button class="btn btn-lg btn-primary btn-block" type="reset">Cancel</button>
                                     </td>
-                                    </form>
                                     <td style="width: 1%">
                                         &nbsp;
                                     </td>
-                                    <td style="width: 16.167%">
-                                        <input class="btn btn-lg btn-primary btn-block btn-success" id="file-validate" type = "submit" value = "Validate Expense"/>
+                                    <td style="width: 15%">
+                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit" id="file-validate" value="Validate Expense">Validate Expense</button>
                                     </td>
                                 </tr>
                             </table>
