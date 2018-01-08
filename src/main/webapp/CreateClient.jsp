@@ -218,18 +218,18 @@
                                     <td width="1%">
                                     </td>
                                     <td>
-                                       <label>Director Name&nbsp;<font color="red">*</font></label>
+                                       <label>Director Name&nbsp;</label>
                                     </td>
                                     <td>
-                                        <input type="text" name='director' id="director" placeholder="Director Name" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%'>
+                                        <input type="text" name='director' id="director" placeholder="Director Name" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
                                     </td>
                                     <td width="15%">
                                     </td>
                                     <td>
-                                        <label>Director's Email&nbsp;<font color="red">*</font></label>
+                                        <label>Director's Email&nbsp;</label>
                                     </td>
                                     <td>
-                                        <input type="email" name='secretaryEmail' id="secretaryEmail" placeholder="Director's Email" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%'>
+                                        <input type="email" name='secretaryEmail' id="secretaryEmail" placeholder="Director's Email" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
                                     </td>
                                     <td width="1%">
                                     </td>
@@ -243,18 +243,18 @@
                                     <td width="1%">
                                     </td>
                                     <td>
-                                       <label>Director's Number&nbsp;<font color="red">*</font></label>
+                                       <label>Director's Number&nbsp;</label>
                                     </td>
                                     <td>
-                                        <input type="text" name='secretaryNumber' id="secretaryNumber" placeholder="Director's Number" onkeypress="return numbersonly(event)" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%'>
+                                        <input type="text" name='secretaryNumber' id="secretaryNumber" placeholder="Director's Number" onkeypress="return numbersonly(event)" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
                                     </td>
                                     <td width="15%">
                                     </td>
                                     <td>
-                                        <label>Secretary Name&nbsp;<font color="red">*</font></label>
+                                        <label>Secretary Name&nbsp;</label>
                                     </td>
                                     <td>
-                                        <input type="text" name='secretaryName' id="secretaryName" placeholder="Secretary Name" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%'>
+                                        <input type="text" name='secretaryName' id="secretaryName" placeholder="Secretary Name" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
                                     </td>
                                     <td width="1%">
                                     </td>
@@ -278,18 +278,18 @@
                                     <td width="1%">
                                     </td>
                                     <td>
-                                       <label>Accountant Name&nbsp;<font color="red">*</font></label>
+                                       <label>Accountant Name&nbsp;</label>
                                     </td>
                                     <td>
-                                        <input type="text" name='accountantName' id="accountantName" placeholder="Accountant Name" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%'>
+                                        <input type="text" name='accountantName' id="accountantName" placeholder="Accountant Name" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
                                     </td>
                                     <td width="15%">
                                     </td>
                                     <td>
-                                        <label>Accountant Email&nbsp;<font color="red">*</font></label>
+                                        <label>Accountant Email&nbsp;</label>
                                     </td>
                                     <td>
-                                        <input type="email" name='accountantEmail' id="accountantEmail" placeholder="Accountant Email" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%'>
+                                        <input type="email" name='accountantEmail' id="accountantEmail" placeholder="Accountant Email" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
                                     </td>
                                     <td width="1%">
                                     </td>
@@ -303,10 +303,10 @@
                                     <td width="1%">
                                     </td>
                                     <td>
-                                       <label>Accountant Number&nbsp;<font color="red">*</font></label>
+                                       <label>Accountant Number&nbsp;</label>
                                     </td>
                                     <td>
-                                        <input type="text" name='accountantNumber' id="accountantNumber" placeholder="Accountant Number" onkeypress="return numbersonly(event)" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%'>
+                                        <input type="text" name='accountantNumber' id="accountantNumber" placeholder="Accountant Number" onkeypress="return numbersonly(event)" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
                                     </td>
                                     <td colspan="4">
                                     </td>
