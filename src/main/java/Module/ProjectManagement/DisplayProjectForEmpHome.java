@@ -65,14 +65,14 @@ public class DisplayProjectForEmpHome extends HttpServlet {
 
             Connection conn = ConnectionManager.getConnection();
             String statement = "select \n"
-                    + "task.projectID,taskID,task.title,task.start,task.end,task.taskRemarks,project.employee1, project.employee2,taskStatus,reviewer,reviewStatus,uniqueTaskID, project.companyName, project.projectRemarks,project.projectStatus, project.projectType, project.projectReviewer, project.projectReviewStatus \n"
+                    + "task.projectID,taskID,task.title,task.start,task.end,task.taskRemarks,project.employee1, project.employee2,taskStatus,reviewer,reviewStatus,uniqueTaskID, project.companyName, project.projectRemarks,project.projectStatus, project.projectType, project.projectReviewer, project.projectReviewStatus, project.actualDeadline \n"
                     + "from task \n"
                     + "inner join project \n"
                     + "ON task.projectID = project.projectID and "
                     + "(employee1= ? OR employee2= ? OR reviewer= ?) and projectType = 'adhoc' \n"
                     + "Union \n"
                     + "select \n"
-                    + "projectID,'NA' as taskID, title, start, end,'NA' as taskRemarks, employee1, employee2,'NA' as taskStatus, 'NA' as reviewer, 'NA' as reviewStatus, null as uniqueTaskID, companyName, projectRemarks, projectStatus, projectType, projectReviewer, projectReviewStatus \n"
+                    + "projectID,'NA' as taskID, title, start, end,'NA' as taskRemarks, employee1, employee2,'NA' as taskStatus, 'NA' as reviewer, 'NA' as reviewStatus, null as uniqueTaskID, companyName, projectRemarks, projectStatus, projectType, projectReviewer, projectReviewStatus, actualDeadline \n"
                     + "from project \n"
                     + "where projectType <>'adhoc' AND (employee1= ? OR employee2= ? OR project.projectReviewer= ?)";
             PreparedStatement stmt = conn.prepareStatement(statement);
