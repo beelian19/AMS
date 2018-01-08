@@ -136,6 +136,14 @@
         <servlet-name>XERORedirect</servlet-name>
         <servlet-class>Module.Expense.XERORedirect</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StaffMonthlyReport</servlet-name>
+        <servlet-class>Module.Dashboard.StaffMonthlyReport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CompletedProjectMonthlyProfitability</servlet-name>
+        <servlet-class>Module.Dashboard.CompletedProjectMonthlyProfitability</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
@@ -271,6 +279,14 @@
     <servlet-mapping>
         <servlet-name>XERORedirect</servlet-name>
         <url-pattern>/XERORedirect</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffMonthlyReport</servlet-name>
+        <url-pattern>/StaffMonthlyReport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompletedProjectMonthlyProfitability</servlet-name>
+        <url-pattern>/CompletedProjectMonthlyProfitability</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
