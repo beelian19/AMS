@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import Utility.ConnectionManager;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  *
@@ -37,7 +40,7 @@ public class EmployeeDAO {
     private static String getAllSupervisorStatement = "SELECT name FROM EMPLOYEE WHERE supervisor = ? AND position <> 'Ex-Employee'";
 
     public static Employee getEmployee(String name) {
-       
+
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(getEmployeeFromNameStatement);
             stmt.setString(1, name);
@@ -64,11 +67,11 @@ public class EmployeeDAO {
             Date dateJoined = rs.getDate(12);
             Date dob = rs.getDate(13);
             String nationality = rs.getString(14);
-            
-            return new Employee(employeeID, password, email, isAdmin, monthlyOverhead, position, isSupervisor, bankAccount, nric, empName, phoneNum, dateJoined,dob,nationality);
+
+            return new Employee(employeeID, password, email, isAdmin, monthlyOverhead, position, isSupervisor, bankAccount, nric, empName, phoneNum, dateJoined, dob, nationality);
         } catch (SQLException e) {
             e.printStackTrace();
-            
+
             return null;
         }
     }
@@ -100,9 +103,7 @@ public class EmployeeDAO {
             Date dateJoined = rs.getDate(12);
             Date dob = rs.getDate(13);
             String nationality = rs.getString(14);
-            
 
-            
             return new Employee(employeeID, password, email, isAdmin, monthlyOverhead, position, isSupervisor, bankAccount, nric, empName, phoneNum, dateJoined, dob, nationality);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -127,7 +128,7 @@ public class EmployeeDAO {
             }
 
             // else returns result
-           String employeeID = rs.getString(1);
+            String employeeID = rs.getString(1);
             String password = rs.getString(2);
             String email = rs.getString(3);
             String isAdmin = rs.getString(4);
@@ -185,7 +186,7 @@ public class EmployeeDAO {
 
             //ArrayList<Job> currentJobs, ArrayList<Job> pastJobs, String department
             //return new Staff(email, pw, isAdmin);
-            return new Employee(employeeID, password, email, isAdmin, monthlyOverhead, position, isSupervisor, bankAccount, nric, empName, phoneNum,dateJoined,dob,nationality);
+            return new Employee(employeeID, password, email, isAdmin, monthlyOverhead, position, isSupervisor, bankAccount, nric, empName, phoneNum, dateJoined, dob, nationality);
         } catch (SQLException e) {
             e.printStackTrace();
             //Returns empty staff, so that add new job can determine that the staff does note exist and it's a database error
@@ -194,20 +195,19 @@ public class EmployeeDAO {
             return null;
         }
     }
-    
-    
+
     public static HashMap<String, String> getEmployeeEmails() {
         ArrayList<Employee> empList = getAllEmployees();
         HashMap<String, String> emailList = new HashMap<>();
-        if (empList == null || empList.isEmpty()){
+        if (empList == null || empList.isEmpty()) {
             return emailList;
         }
-        for (Employee e : empList){
-            if (emailList.get(e.getName()) == null){
+        for (Employee e : empList) {
+            if (emailList.get(e.getName()) == null) {
                 emailList.put(e.getName(), e.getEmail());
             }
         }
-        
+
         return emailList;
     }
 
@@ -223,9 +223,9 @@ public class EmployeeDAO {
             if (!rs.next()) {
                 return empList;
             }
-            empList.add(new Employee(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getDate(12),rs.getDate(13),rs.getString(14)));
+            empList.add(new Employee(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getDate(12), rs.getDate(13), rs.getString(14)));
             while (rs.next()) {
-                empList.add(new Employee(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getDate(12),rs.getDate(13),rs.getString(14)));
+                empList.add(new Employee(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getDate(12), rs.getDate(13), rs.getString(14)));
             }
             return empList;
         } catch (SQLException e) {
@@ -281,7 +281,7 @@ public class EmployeeDAO {
     }
 
     public boolean createEmployee(String employeeID, String password, String email, String isAdmin, String monthlyOverhead, String position, String supervisor, String bankAccount, String nric, String name, String phoneNum, Date dateJoined, Date dob, String nationality) {
-         java.sql.Date sqlDate;
+        java.sql.Date sqlDate;
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(insertEmployeeStatement);
             stmt.setString(1, employeeID);
@@ -297,9 +297,9 @@ public class EmployeeDAO {
             stmt.setString(11, phoneNum);
             sqlDate = new java.sql.Date(dateJoined.getTime());
             stmt.setDate(12, sqlDate);
-             sqlDate = new java.sql.Date(dob.getTime());
+            sqlDate = new java.sql.Date(dob.getTime());
             stmt.setDate(13, sqlDate);
-            stmt.setString(14,nationality);
+            stmt.setString(14, nationality);
 
             int rowsAffected = stmt.executeUpdate();
 
@@ -332,7 +332,7 @@ public class EmployeeDAO {
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(updateEmployeeStatement);
             stmt.setString(1, employee.getPassword());
-            stmt.setString(2,employee.getEmail());
+            stmt.setString(2, employee.getEmail());
             stmt.setString(3, employee.getIsAdmin());
             stmt.setString(4, employee.getMonthlyOverhead());
             stmt.setString(5, employee.getPosition());
@@ -342,10 +342,9 @@ public class EmployeeDAO {
             stmt.setString(9, employee.getNumber());
             stmt.setDate(10, (Date) employee.getDateJoined());
             stmt.setDate(11, (Date) employee.getDob());
-            stmt.setString(12,employee.getNationality());
+            stmt.setString(12, employee.getNationality());
             stmt.setString(13, employee.getNric());
-            
-            
+
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 1) {
                 return true;
@@ -402,9 +401,8 @@ public class EmployeeDAO {
         }
         return supList;
     }
-    
-     
-     public boolean updateEmployeeProfile(String userID, String email, String number, String bankAccount, String nationality, String monthlyOverhead, String isAdmin, String position, String supervisor) {
+
+    public boolean updateEmployeeProfile(String userID, String email, String number, String bankAccount, String nationality, String monthlyOverhead, String isAdmin, String position, String supervisor) {
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("UPDATE EMPLOYEE SET email= ?, number = ?, bankAccount=?, nationality=?, monthlyOverhead=?, isAdmin =?, position=?, supervisor=? WHERE employeeID=?");
             stmt.setString(1, email);
@@ -416,8 +414,7 @@ public class EmployeeDAO {
             stmt.setString(7, position);
             stmt.setString(8, supervisor);
             stmt.setString(9, userID);
-            
-            
+
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 1) {
                 return true;
@@ -426,9 +423,9 @@ public class EmployeeDAO {
             e.printStackTrace();
         }
         return false;
-    } 
-     
-     public boolean updateOwnEmployeeProfile(String userID, String email, String number, String bankAccount, String password) {
+    }
+
+    public boolean updateOwnEmployeeProfile(String userID, String email, String number, String bankAccount, String password) {
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("UPDATE EMPLOYEE SET email= ?, number = ?, bankAccount=?, password=? WHERE employeeID=?");
             stmt.setString(1, email);
@@ -436,8 +433,7 @@ public class EmployeeDAO {
             stmt.setString(3, bankAccount);
             stmt.setString(4, password);
             stmt.setString(5, userID);
-            
-            
+
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 1) {
                 return true;
@@ -446,7 +442,36 @@ public class EmployeeDAO {
             e.printStackTrace();
         }
         return false;
-    }  
-     
-}
+    }
 
+    public static HashMap<String, Double> getCostPerHourPerStaff() {
+        ArrayList<Employee> empList = getAllEmployees();
+
+        //To get cost per hour per Staff
+        // Key = Name, Value = Cost Per Hour Per Staff (MonthlyOverhead/ [20*8])
+        HashMap<String, Double> costPerHourPerStaff = new HashMap();
+
+        for (int i = 0; i < empList.size(); i++) {
+            Employee emp = empList.get(i);
+            String key = emp.getName();
+            Double monthlyOverhead = Double.parseDouble(emp.getMonthlyOverhead());
+            Double value = monthlyOverhead / (20 * 8);
+            costPerHourPerStaff.put(key, value);
+        }
+        return costPerHourPerStaff;
+    }
+
+    public static HashMap<String, ArrayList<Project>> getCompletedProjectList() {
+        //Key = EmpName, Value = Completed Projects
+        HashMap<String, ArrayList<Project>> projectList = new HashMap();
+
+        //Key = EmpName, Value = CostPerHourPerStaff
+        HashMap<String, Double> costPerHourPerStaffList = getCostPerHourPerStaff();
+
+        for (String empName : costPerHourPerStaffList.keySet()) {
+            ArrayList<ArrayList<Project>> list = ProjectDAO.getAllProjectsByEmployee(empName);
+            projectList.put(empName, list.get(0));
+        }
+        return projectList;
+    }
+}

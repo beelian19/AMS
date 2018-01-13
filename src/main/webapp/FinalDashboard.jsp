@@ -122,71 +122,160 @@
                     <div class="row">
                         <div class="col-xs-4 nav-toggle" href="#revenueTable">
                             <h2>Revenue</h2>
-                            <canvas id="RevenueChart" style="width: 100%; height: 100%;"></canvas>
+                            <canvas id="RevenueChart" style="width: 100%; height: 150%;"></canvas>
                         </div>
                         <div class="col-xs-4 nav-toggle" href="#ProfitAndLossTable">
                             <h2>Project P&L</h2>
-                            <canvas id="ProfitAndLossChart" style="width: 100%; height: 100%;"></canvas>
+                            <canvas id="ProfitAndLossChart" style="width: 100%; height: 150%;"></canvas>
                         </div>
                         <div class="col-xs-4 nav-toggle" href="#ProjectsOverdueChartTable">
                             <h2>Project Overdue</h2>
-                            <canvas id="ProjectsOverdueChart" style="width: 100%; height: 100%;"></canvas>
+                            <canvas id="ProjectsOverdueChart" style="width: 100%; height: 150%;"></canvas>
                         </div>
                     </div>
                     <div class="row">
                         <br/>
                         <div class="col-xs-12" id="revenueTable" style="display:none">
                             <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                <table id='datatable4' align="center">
+                                <table id='datatable4' align="center" style="text-align: left;">
                                     <thead>
                                         <tr>
-                                            <th width="16.67%">Client ID</th>
-                                            <th width="16.67%">Company Name</th>
-                                            <th width="16.67%">Business Type</th>
-                                            <th width="16.67%"># Ongoing Projects</th>
-                                            <th width="16.67%"># Completed Projects</th>
-                                            <th width="16.67%"></th>
+                                            <th width="10.00%">Completion Date</th>
+                                            <th width="10.00%">Company Name</th>
+                                            <th width="10.00%">Project Name</th>
+                                            <th width="10.00%">Hours Assigned</th>
+                                            <th width="10.00%">Hours Actual</th>
+                                            <th width="10.00%">Difference (%)</th>
+                                            <th width="10.00%">Sales</th>
+                                            <th width="10.00%">Total Actual Cost</th>
+                                            <th width="10.00%">Profit/Loss</th>
+                                            <th width="10.00%">Staff</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
                                     </tbody>
                                 </table>
+                                <br/>
                             </div>
                         </div>
                         <div class="col-xs-12" id="ProfitAndLossTable" style="display:none">
                             <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                <table id='datatable5' align="center">
+                                <table id='datatable5' align="center" style="text-align: left;">
                                     <thead>
                                         <tr>
-                                            <th width="16.67%">Client ID</th>
-                                            <th width="16.67%">Company Name</th>
-                                            <th width="16.67%">Business Type</th>
-                                            <th width="16.67%"># Ongoing Projects</th>
-                                            <th width="16.67%"># Completed Projects</th>
-                                            <th width="16.67%"></th>
+                                            <th width="10.00%">Completion Date</th>
+                                            <th width="10.00%">Company Name</th>
+                                            <th width="10.00%">Project Name</th>
+                                            <th width="10.00%">Hours Assigned</th>
+                                            <th width="10.00%">Hours Actual</th>
+                                            <th width="10.00%">Difference (%)</th>
+                                            <th width="10.00%">Sales</th>
+                                            <th width="10.00%">Total Actual Cost</th>
+                                            <th width="10.00%">Profit/Loss</th>
+                                            <th width="10.00%">Staff</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
                                     </tbody>
                                 </table>
+                                <br/>
                             </div>
                         </div>
                         <div class="col-xs-12" id="ProjectsOverdueChartTable" style="display:none">
                             <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                <table id='datatable6' align="center">
+                                <table id='datatable6' align="center" style="text-align: left;">
                                     <thead>
                                         <tr>
-                                            <th width="16.67%">Client ID</th>
+                                            <th width="16.67%">Completion Date</th>
                                             <th width="16.67%">Company Name</th>
-                                            <th width="16.67%">Business Type</th>
-                                            <th width="16.67%"># Ongoing Projects</th>
-                                            <th width="16.67%"># Completed Projects</th>
-                                            <th width="16.67%"></th>
+                                            <th width="16.67%">Project Name</th>
+                                            <th width="16.67%">Hours Assigned</th>
+                                            <th width="16.67%">Hours Actual</th>
+                                            <th width="16.67%">Staff </th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
                                     </tbody>
                                 </table>
+                                <br/>
                             </div>
                         </div>
                     </div>
@@ -198,7 +287,7 @@
                                     fillColor: 'rgba(255, 99, 132, 0.2)',
                                     strokeColor: 'rgba(220,180,0,1)',
                                     pointColor: 'rgba(220,180,0,1)',
-                                    data: [80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                    data: "SalesGraph",//[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)'
                                     ],
@@ -212,7 +301,7 @@
                                     fillColor: 'rgba(54, 162, 235, 0.2)',
                                     strokeColor: 'rgba(66,180,0,1)',
                                     pointColor: 'rgba(66,180,0,1)',
-                                    data: [20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
+                                    data: "ProfitGraph",//[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
                                     backgroundColor: [
                                         'rgba(153, 102, 255, 0.2)'
                                     ],
@@ -225,7 +314,7 @@
                                     fillColor: 'rgba(54, 162, 235, 0.2)',
                                     strokeColor: 'rgba(54, 162, 235, 0.2)',
                                     pointColor: 'rgba(54, 162, 235, 0.2)',
-                                    data: [60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
+                                    data: "CostGraph",//[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
                                     backgroundColor: [
                                         'rgba(54, 162, 235, 0.2)'
                                     ],
@@ -259,31 +348,31 @@
                                     data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)',
                                         'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)'
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)'
                                     ],
                                     borderColor: [
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)',
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)'
                                     ],
                                     borderWidth: 1
                                 },
@@ -291,32 +380,32 @@
                                     label: '# of Profits',
                                     data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                     backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)',
                                         'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)',
-                                        'rgba(255, 99, 132, 0.2)',
                                         'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)'
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)'
                                     ],
                                     borderColor: [
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)',
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)'
                                     ],
                                     borderWidth: 1
                                 },
@@ -324,32 +413,32 @@
                                     label: '# of Losses',
                                     data: [1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
                                     backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
                                         'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)',
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
                                         'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)'
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)'
                                     ],
                                     borderColor: [
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)',
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)'
                                     ],
                                     borderWidth: 1
                                 }
@@ -377,31 +466,31 @@
                                     data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)',
                                         'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)'
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)'
                                     ],
                                     borderColor: [
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)',
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)'
                                     ],
                                     borderWidth: 1
                                 },
@@ -409,32 +498,32 @@
                                     label: '# of Projects On Time',
                                     data: [1, 3, 4, 5, 2, 3, 1, 3, 4, 5, 2, 3],
                                     backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)',
                                         'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)',
-                                        'rgba(255, 99, 132, 0.2)',
                                         'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)'
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)'
                                     ],
                                     borderColor: [
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)',
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)'
                                     ],
                                     borderWidth: 1
                                 },
@@ -442,32 +531,32 @@
                                     label: '# of Overdue Projects',
                                     data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                     backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
                                         'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)',
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
                                         'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)'
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)'
                                     ],
                                     borderColor: [
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)',
-                                        'rgba(255,99,132,1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)'
                                     ],
                                     borderWidth: 1
                                 }

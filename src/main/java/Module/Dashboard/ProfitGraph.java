@@ -6,10 +6,12 @@
 package Module.Dashboard;
 
 import DAO.ProjectDAO;
+import static Utility.JsonFormatter.convertObjectToElement;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author jagdishps.2014
+ * @author yemin
  */
-public class OverdueProjectPerYear extends HttpServlet {
+public class ProfitGraph extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,20 +34,21 @@ public class OverdueProjectPerYear extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         
-        ArrayList<String> overdueList = new ArrayList();
-        if (request.getParameter("year") == null) {
-            
-        } else {
-            String year = (String) request.getParameter("year");
-            overdueList = ProjectDAO.getOverdueProjectPerYear(year);
-            
+        String selectedYear = "2017";
+        JsonArray events = new JsonArray();
+        PrintWriter out = response.getWriter();
+        JsonObject outputRequest = new JsonObject();
+        
+        HashMap<String, Double> profitList = ProjectDAO.getProfit(selectedYear);
+        for(String month : profitList.keySet()) {
+            double profit = profitList.get(month);
+            outputRequest.add(month, convertObjectToElement(profit));
         }
-        request.setAttribute("overdueList", overdueList);
-        RequestDispatcher rd = request.getRequestDispatcher("Dashboard.jsp");
-        rd.forward(request, response);
-    }
+        
+        events.add(outputRequest);
+        out.print(events);
+     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
