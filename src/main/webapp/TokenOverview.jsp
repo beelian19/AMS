@@ -216,39 +216,11 @@
             if ($('#secretaryEdit').val().trim() == "") {
                 alert("Secretary Information Required");
                 return;
-            }
-            if ($('#accountantEdit').val().trim() == "") {
-                alert("Accountant Information Required");
-                return;
-            }
-            if ($('#realmidEdit').val().trim() == "") {
-                alert("Real MID Required");
-                return;
-            }
-            if ($('#addressEdit').val().trim() == "") {
-                alert("Address Required");
-                return;
-            }
-            if ($('#gstSubmissionEdit').val().trim() == "") {
-                alert("GST Submission Required");
-                return;
-            }
-            if ($('#mgmtAccEdit').val().trim() == "") {
-                alert("Management Acct Required");
-                return;
             } else {
                 var number = $('#officeContactEdit').val();
                 var email = $('#emailEdit').val();
                 var director = $('#directorEdit').val();
                 var secretary = $('#secretaryEdit').val();
-                var accountant = $('#accountantEdit').val();
-                var uen = $('#uen').val();
-                var realmid = $('#realmidEdit').val();
-
-                var officeAddress = $('#addressEdit').val();
-                var gstSubmission = $('#gstSubmissionEdit').val();
-                var mgmtAcc = $('#mgmtAccEdit').val();
-
 
                 $.ajax({
                     type: 'POST',
@@ -257,14 +229,14 @@
                     success: function () {
                         location.reload();
                         alert('Details Updated');
-                        $('#editProfileModal').modal('hide');
+                        $('#editTokenModal').modal('hide');
                     },
                     error: function () {
                         alert('Fail to Edit Details');
                     }
                 })
             }
-            $('#editProfileModal').modal('hide');
+            $('#editTokenModal').modal('hide');
         });
     </script>
     </body>
