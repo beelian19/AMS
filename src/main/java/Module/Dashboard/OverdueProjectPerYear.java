@@ -35,10 +35,10 @@ public class OverdueProjectPerYear extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         ArrayList<String> overdueList = new ArrayList();
-        if (request.getAttribute("year") == null) {
+        if (request.getParameter("year") == null) {
             
         } else {
-            String year = (String) request.getAttribute("year");
+            String year = (String) request.getParameter("year");
             overdueList = ProjectDAO.getOverdueProjectPerYear(year);
             
         }
