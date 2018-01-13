@@ -1115,16 +1115,19 @@ public class ProjectDAO {
         
     }
     
-    public static ArrayList<ArrayList<Project>> getStaffMonthlyReport(String employeeName) {
+    public static ArrayList<Project> getStaffMonthlyReport(String employeeName,String month, String year) {
+        
         ArrayList<Project> projectList = new ArrayList<>();
-        ArrayList<Project> incomplete = new ArrayList<>();
+       ArrayList<Project> incomplete = new ArrayList<>();
         ArrayList<Project> complete = new ArrayList<>();
-        ArrayList<ArrayList<Project>> returnList = new ArrayList<>();
+        
         Project project;
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE (employee1 = ? OR employee2 = ?) and (end between ? and ?)"); 
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE employee1 = ? OR employee2 = ? and MONTH(end)=? and YEAR(end)=?"); 
             stmt.setString(1, employeeName);
             stmt.setString(2, employeeName);
+            stmt.setString(3, month);
+            stmt.setString(4, year);
             //date for start
             //date for end 
             ResultSet rs = stmt.executeQuery();
@@ -1161,9 +1164,7 @@ public class ProjectDAO {
         }
 
         if (projectList.isEmpty()) {
-            returnList.add(complete);
-            returnList.add(incomplete);
-            return returnList;
+           return projectList;
         } else {
             for (Project proj : projectList) {
                 if (proj.getProjectReviewStatus().equals("complete")) {
@@ -1173,9 +1174,8 @@ public class ProjectDAO {
                 }
 
             }
-            returnList.add(complete);
-            returnList.add(incomplete);
-            return returnList;
+            
+            return complete;
         }
     }
     
@@ -1595,4 +1595,60 @@ public class ProjectDAO {
      return profitList;
     }
     
+    public static ArrayList<String> getOverdueProjectPerStaff(String year, String name) {
+        
+        ArrayList<String> projectList = new ArrayList<>();
+        
+        
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted > end) and employee1=? or employee2= ? GROUP BY MONTH(end)"); 
+            stmt.setString(1, year);
+            stmt.setString(2,name);
+            stmt.setString(3,name);
+            //date for start
+            //date for end 
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                  String month = rs.getString("MONTH");
+                  String count = rs.getString("COUNT");
+                  projectList.add(month+","+count);
+                
+                
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        return projectList;
+    }
+    
+    
+    public static ArrayList<String> getTimeExceededPerStaff(String year, String name) {
+        
+        ArrayList<String> projectList = new ArrayList<>();
+        
+        
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (employee1Hours > (plannedHours)/2) and employee1=? or employee2 =? GROUP BY MONTH(end)" ); 
+            stmt.setString(1, year);
+            stmt.setString(2,name);
+            stmt.setString(3,name);
+            //date for start
+            //date for end 
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                  String month = rs.getString("MONTH");
+                  String count = rs.getString("COUNT");
+                  projectList.add(month+","+count);
+                
+                
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        return projectList;
+    }
 }

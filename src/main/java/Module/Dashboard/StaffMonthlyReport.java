@@ -37,17 +37,24 @@ public class StaffMonthlyReport extends HttpServlet {
             throws ServletException, IOException {
         
        Employee employee = null;
-       ArrayList<ArrayList<Project>> projectList = new ArrayList(); 
+       ArrayList<Project> projectList = new ArrayList(); 
+       ArrayList<String> overdueList = new ArrayList();
+       ArrayList<String> exceededList = new ArrayList();
        
-       if (request.getAttribute("employeeName") == null) {
+       if (request.getParameter("employeeName") == null || request.getParameter("Year") == null || request.getParameter("Month") == null ) {
             request.setAttribute("employee", employee);
         } else {
-            String employeeName = (String) request.getAttribute("employeeName");
-            String monthYear = (String) request.getAttribute("monthYear");
-            projectList = ProjectDAO.getStaffMonthlyReport(employeeName);
+            String employeeName = (String) request.getParameter("employeeName");
+            String year = (String) request.getParameter("Year");
+            String month = (String) request.getParameter("Month");
+            projectList = ProjectDAO.getStaffMonthlyReport(employeeName,month,year);
+            overdueList = ProjectDAO.getOverdueProjectPerStaff(year, employeeName);
+            exceededList = ProjectDAO.getTimeExceededPerStaff(year, employeeName);
             
         }
         request.setAttribute("employeeProjectList", projectList);
+        request.setAttribute("employeeOverdue", overdueList);
+        request.setAttribute("employeeTimeExceed", exceededList);
         RequestDispatcher rd = request.getRequestDispatcher("Dashboard.jsp");
         rd.forward(request, response);
     }
