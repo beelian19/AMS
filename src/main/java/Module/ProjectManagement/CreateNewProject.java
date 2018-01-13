@@ -88,7 +88,7 @@ public class CreateNewProject extends HttpServlet {
                     frequency = "y";
                     break;
             }
-            
+            Calendar cal4 = Calendar.getInstance();
             Project project = new Project();
             project.setProjectTitle(title);
             project.setCompanyName(companyName);
@@ -103,7 +103,7 @@ public class CreateNewProject extends HttpServlet {
             project.setEmployee2Hours(0.0);
             project.setProjectReviewer(reviewer);
             project.setFrequency(frequency);
-            project.setDateCompleted(0000);
+            project.setDateCompleted(cal4.getTime());
             project.setMonthlyHours(Project.getYearMonth()+"=0.0-0.0");
             project.setPlannedHours(0.0);
 

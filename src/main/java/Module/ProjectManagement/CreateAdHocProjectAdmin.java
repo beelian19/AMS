@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Utility.ConnectionManager;
+import java.util.Calendar;
 import javax.servlet.RequestDispatcher;
 
 /**
@@ -60,10 +61,12 @@ public class CreateAdHocProjectAdmin extends HttpServlet {
 
             String assignedEmployee1 = request.getParameter("assignEmployeeProjectCreate");
             String assignedEmployee2 = request.getParameter("assignEmployee1ProjectCreate");
+            
+            Calendar cal4 = Calendar.getInstance();
 
             ProjectDAO projectDAO = new ProjectDAO();
             int projectId = projectDAO.getTotalNumberOfProjects() + 1;
-            Project addProject = new Project(projectId, title, companyName, "NA", startDate, endDate, remarks, "incomplete", endDate, "NA", "adhoc", assignedEmployee1, assignedEmployee2, 0.0, 0.0, reviewer, "incomplete", 0, "NA", 0.0);
+            Project addProject = new Project(projectId, title, companyName, "NA", startDate, endDate, remarks, "incomplete", endDate, "NA", "adhoc", assignedEmployee1, assignedEmployee2, 0.0, 0.0, reviewer, "incomplete",cal4.getTime(), "NA", 0.0);
             boolean check = ProjectDAO.createProject(addProject);
             if (check) {
                 request.getSession().setAttribute("status", "Success: AdHoc Project " + title + " Created.");
