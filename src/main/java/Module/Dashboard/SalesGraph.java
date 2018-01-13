@@ -5,7 +5,7 @@
  */
 package Module.Dashboard;
 
-import DAO.EmployeeDAO;
+import DAO.ProjectDAO;
 import static Utility.JsonFormatter.convertObjectToElement;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -39,7 +39,7 @@ public class SalesGraph extends HttpServlet {
         PrintWriter out = response.getWriter();
         JsonObject outputRequest = new JsonObject();
         
-        HashMap<String, Double> salesList = EmployeeDAO.getSales(selectedYear);
+        HashMap<String, Double> salesList = ProjectDAO.getSales(selectedYear);
         for(String month : salesList.keySet()) {
             double profit = salesList.get(month);
             outputRequest.add(month, convertObjectToElement(profit));

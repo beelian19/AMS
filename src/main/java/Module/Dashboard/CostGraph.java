@@ -5,7 +5,7 @@
  */
 package Module.Dashboard;
 
-import DAO.EmployeeDAO;
+import DAO.ProjectDAO;
 import static Utility.JsonFormatter.convertObjectToElement;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -39,7 +39,7 @@ public class CostGraph extends HttpServlet {
         PrintWriter out = response.getWriter();
         JsonObject outputRequest = new JsonObject();
         
-        HashMap<String, Double> totalActualCostList = EmployeeDAO.getTotalActualCost(selectedYear);
+        HashMap<String, Double> totalActualCostList = ProjectDAO.getTotalActualCost(selectedYear);
         for(String month : totalActualCostList.keySet()) {
             double profit = totalActualCostList.get(month);
             outputRequest.add(month, convertObjectToElement(profit));
