@@ -5,8 +5,11 @@
  */
 package Module.Dashboard;
 
+import DAO.ProjectDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,15 +34,15 @@ public class OverdueProjectPerYear extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-       
+        ArrayList<String> overdueList = new ArrayList();
         if (request.getAttribute("year") == null) {
             
         } else {
             String year = (String) request.getAttribute("year");
-            
+            overdueList = ProjectDAO.getOverdueProjectPerYear(year);
             
         }
-        request.setAttribute("projectList", projectList);
+        request.setAttribute("overdueList", overdueList);
         RequestDispatcher rd = request.getRequestDispatcher("Dashboard.jsp");
         rd.forward(request, response);
     }

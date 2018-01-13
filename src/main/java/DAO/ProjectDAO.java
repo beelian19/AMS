@@ -1219,49 +1219,30 @@ public class ProjectDAO {
         return complete;
     }
     
-     public static ArrayList<Project> getAllProjectsByYear(String year) {
+     public static ArrayList<String> getOverdueProjectPerYear(String year) {
         
-        ArrayList<Project> projectList = new ArrayList<>();
+        ArrayList<String> projectList = new ArrayList<>();
         
-        Project project;
+        
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("select * from project where extract(YEAR from end) = ?"); 
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted > end) GROUP BY MONTH(end)"); 
             stmt.setString(1, year);
             //date for start
             //date for end 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-
-                project = new Project();
-                project.setProjectID(rs.getInt("projectID"));
-                project.setProjectTitle(rs.getString("title"));
-                project.setCompanyName(rs.getString("companyName"));
-                project.setBusinessType(rs.getString("businessType"));
-                project.setStart(rs.getDate("start"));
-                project.setEnd(rs.getDate("end"));
-                project.setProjectRemarks(rs.getString("projectRemarks"));
-                project.setProjectStatus(rs.getString("projectStatus"));
-                project.setActualDeadline(rs.getDate("actualDeadline"));
-                project.setFrequency(rs.getString("frequency"));
-                project.setProjectType(rs.getString("projectType"));
-                project.setEmployee1(rs.getString("employee1"));
-                project.setEmployee2(rs.getString("employee2"));
-                project.setEmployee1Hours(rs.getDouble("employee1Hours"));
-                project.setEmployee2Hours(rs.getDouble("employee2Hours"));
-                project.setProjectReviewer(rs.getString("projectReviewer"));
-                project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
-                project.setDateCompleted(rs.getDate("dateCompleted"));
-                project.setMonthlyHours(rs.getString("monthlyHours"));
-                project.setPlannedHours(rs.getDouble("plannedHours"));
-
-                complete.add(project);
+                  String month = rs.getString("MONTH");
+                  String count = rs.getString("COUNT");
+                  projectList.add(month+","+count);
+                
+                
             }
         } catch (SQLException e) {
             System.out.println("SQLException at ProjectDAO: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
-        return complete;
+        return projectList;
     }
     
 }
