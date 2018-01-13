@@ -145,8 +145,8 @@
         <servlet-class>Module.Dashboard.CompletedProjectMonthlyProfitability</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>OverdueProjectPerYear</servlet-name>
-        <servlet-class>Module.Dashboard.OverdueProjectPerYear</servlet-class>
+        <servlet-name>CreateToken</servlet-name>
+        <servlet-class>Module.Expense.CreateToken</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
@@ -293,8 +293,8 @@
         <url-pattern>/CompletedProjectMonthlyProfitability</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>OverdueProjectPerYear</servlet-name>
-        <url-pattern>/OverdueProjectPerYear</url-pattern>
+        <servlet-name>CreateToken</servlet-name>
+        <url-pattern>/CreateToken</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
