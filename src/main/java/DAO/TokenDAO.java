@@ -10,8 +10,6 @@ import Utility.ConnectionManager;
 
 public class TokenDAO {
 
-    private static String getTokenStatement = "SELECT * FROM tokens WHERE companyId = '%s'";
-
     public static Token getToken(int companyId) {
         String id = String.valueOf(companyId);
         return getToken(id);
@@ -19,6 +17,7 @@ public class TokenDAO {
 
     public static Token getToken(String companyId) {
         Token token = null;
+        String getTokenStatement = "SELECT * FROM tokens WHERE companyId = '%s'";
         String query = String.format(getTokenStatement, companyId);
 
         try (Connection conn = ConnectionManager.getConnection()) {
@@ -31,12 +30,13 @@ public class TokenDAO {
                 String ClientSecret = rs.getString(3);
                 String redirectUri = rs.getString(4);
                 String refreshToken = rs.getString(5);
-                String xToken = rs.getString(6);
-                String xTokenSecret = rs.getString(7);
-                String xTokenHandle = rs.getString(8);
-                String inUse = rs.getString(9);
-                int comId = rs.getInt(10);
-                token = new Token(accountType, ClientId, ClientSecret, redirectUri, refreshToken, xToken, xTokenSecret, xTokenHandle, inUse, comId);
+                String inUse = rs.getString(6);
+                int comId = rs.getInt(7);
+                String xToken = rs.getString(8);
+                String xTokenSecret = rs.getString(9);
+                String xTokenHandle = rs.getString(10);
+
+                token = new Token(accountType, ClientId, ClientSecret, redirectUri, refreshToken, inUse, comId, xToken, xTokenSecret, xTokenHandle);
                 return token;
             }
         } catch (SQLException ex) {
@@ -59,12 +59,14 @@ public class TokenDAO {
                 String ClientSecret = rs.getString(3);
                 String redirectUri = rs.getString(4);
                 String refreshToken = rs.getString(5);
-                String xToken = rs.getString(6);
-                String xTokenSecret = rs.getString(7);
-                String xTokenHandle = rs.getString(8);
-                String inUse = rs.getString(9);
-                int comId = rs.getInt(10);
-                token = new Token(accountType, ClientId, ClientSecret, redirectUri, refreshToken, xToken, xTokenSecret, xTokenHandle, inUse, comId);
+                String inUse = rs.getString(6);
+                int comId = rs.getInt(7);
+                String xToken = rs.getString(8);
+                String xTokenSecret = rs.getString(9);
+                String xTokenHandle = rs.getString(10);
+
+                token = new Token(accountType, ClientId, ClientSecret, redirectUri, refreshToken, inUse, comId, xToken, xTokenSecret, xTokenHandle);
+
                 tokenList.add(token);
             }
         } catch (SQLException ex) {
@@ -81,11 +83,12 @@ public class TokenDAO {
             stmt.setString(3, token.getClientSecret());
             stmt.setString(4, token.getRedirectUri());
             stmt.setString(5, token.getRefreshToken());
-            stmt.setString(6, token.getXeroToken());
-            stmt.setString(7, token.getXeroTokenSecret());
-            stmt.setString(8, token.getXeroTokenHandle());
-            stmt.setString(9, "0");
-            stmt.setInt(10, token.getCompanyId());
+            stmt.setString(6, "0");
+            stmt.setInt(7, token.getCompanyId());
+            stmt.setString(8, token.getXeroToken());
+            stmt.setString(9, token.getXeroTokenSecret());
+            stmt.setString(10, token.getXeroTokenHandle());
+
             return stmt.executeUpdate() == 1;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -116,7 +119,7 @@ public class TokenDAO {
 
     public boolean deleteToken(Token token) {
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("Delete from Tokens where companyId = ?");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FRO tokens WHERE companyId = ?");
             stmt.setInt(1, token.getCompanyId());
             return stmt.executeUpdate() == 1;
         } catch (SQLException ex) {
