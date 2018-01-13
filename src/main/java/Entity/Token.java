@@ -1,19 +1,55 @@
 package Entity;
 
-
 public class Token {
-    
+
     private String accType;
     private String ClientId;
     private String ClientSecret;
-    private String redirectUri; 
+    private String redirectUri;
     private String refreshToken;
+    private String inUse;
+    private int companyId;
     private String xeroToken;
     private String xeroTokenSecret;
     private String xeroTokenHandle;
-    private String inUse;
-    private int companyId;
 
+    /**
+     * Generic constructor. Only used for retrieving all tokens from database
+     * 
+     * @param accType
+     * @param ClientId
+     * @param ClientSecret
+     * @param redirectUri
+     * @param refreshToken
+     * @param inUse
+     * @param companyId
+     * @param xeroToken
+     * @param xeroTokenSecret
+     * @param xeroTokenHandle 
+     */
+    public Token(String accType, String ClientId, String ClientSecret, String redirectUri, String refreshToken, String inUse, int companyId, String xeroToken, String xeroTokenSecret, String xeroTokenHandle) {
+        this.accType = accType;
+        this.ClientId = ClientId;
+        this.ClientSecret = ClientSecret;
+        this.redirectUri = redirectUri;
+        this.refreshToken = refreshToken;
+        this.inUse = inUse;
+        this.companyId = companyId;
+        this.xeroToken = xeroToken;
+        this.xeroTokenSecret = xeroTokenSecret;
+        this.xeroTokenHandle = xeroTokenHandle;
+    }
+    
+    /**
+     * Constructor for QBO Token
+     * @param accType
+     * @param ClientId
+     * @param ClientSecret
+     * @param redirectUri
+     * @param refreshToken
+     * @param inUse
+     * @param companyId 
+     */
     public Token(String accType, String ClientId, String ClientSecret, String redirectUri, String refreshToken, String inUse, int companyId) {
         this.accType = accType;
         this.ClientId = ClientId;
@@ -22,22 +58,34 @@ public class Token {
         this.refreshToken = refreshToken;
         this.inUse = inUse;
         this.companyId = companyId;
+        this.xeroToken = "NA";
+        this.xeroTokenSecret = "NA";
+        this.xeroTokenSecret = "NA";
     }
 
-    public Token(String accType, String ClientId, String ClientSecret, String redirectUri, String refreshToken, String xeroToken, String xeroTokenSecret, String xeroTokenHandle, String inUse, int companyId) {
+    /**
+     * Constructor for XERO Token
+     * @param accType
+     * @param redirectUri
+     * @param inUse
+     * @param companyId
+     * @param xeroToken
+     * @param xeroTokenSecret
+     * @param xeroTokenHandle 
+     */
+    public Token(String accType, String redirectUri, String inUse, int companyId, String xeroToken, String xeroTokenSecret, String xeroTokenHandle) {
         this.accType = accType;
-        this.ClientId = ClientId;
-        this.ClientSecret = ClientSecret;
+        this.ClientId = "NA";
+        this.ClientSecret = "NA";
         this.redirectUri = redirectUri;
-        this.refreshToken = refreshToken;
+        this.refreshToken = "NA";
+        this.inUse = inUse;
+        this.companyId = companyId;
         this.xeroToken = xeroToken;
         this.xeroTokenSecret = xeroTokenSecret;
         this.xeroTokenHandle = xeroTokenHandle;
-        this.inUse = inUse;
-        this.companyId = companyId;
     }
 
-    
     public String getAccType() {
         return accType;
     }
@@ -62,8 +110,8 @@ public class Token {
         this.refreshToken = refreshToken;
     }
 
-    public void setInUse(String inUse){
-        if (inUse.equals("1")){
+    public void setInUse(String inUse) {
+        if (inUse.equals("1")) {
             this.inUse = "1";
         } else {
             this.inUse = "0";
@@ -101,8 +149,7 @@ public class Token {
     public void setXeroTokenHandle(String xeroTokenHandle) {
         this.xeroTokenHandle = xeroTokenHandle;
     }
-    
-    
+
     /**
      *
      * @return true if token is in use
@@ -110,11 +157,9 @@ public class Token {
     public Boolean getInUse() {
         return inUse.equals("1");
     }
-    
-    public String getInUseString(){
+
+    public String getInUseString() {
         return inUse;
     }
 
 }
-
-
