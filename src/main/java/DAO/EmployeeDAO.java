@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import Utility.ConnectionManager;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -480,8 +482,6 @@ public class EmployeeDAO {
         HashMap<String, Double> costPerHourPerStaffList = getCostPerHourPerStaff();
         HashMap<String, ArrayList<Project>> projectList = getCompletedProjectList();
 
-        String subStringSelectedYear = selectedYear.substring(2);
-
         for (String empName : projectList.keySet()) {
             ArrayList<Project> list = projectList.get(empName);
 
@@ -493,12 +493,13 @@ public class EmployeeDAO {
 
             for (int i = 0; i < list.size(); i++) {
                 Project p = list.get(i);
+                
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String dateCompleted = df.format(p.getDateCompleted());
+                String year = dateCompleted.substring(0, 4);
+                String month = dateCompleted.substring(5,7);
 
-                String dateCompleted = Integer.toString(p.getDateCompleted());
-                String year = dateCompleted.substring(0, 2);
-                String month = dateCompleted.substring(2);
-
-                if (year.equals(subStringSelectedYear)) {
+                if (year.equals(selectedYear)) {
                     switch (month) {
                         case "01":
                             key = "01";
@@ -645,8 +646,6 @@ public class EmployeeDAO {
         HashMap<String, Double> costPerHourPerStaffList = getCostPerHourPerStaff();
         HashMap<String, ArrayList<Project>> projectList = getCompletedProjectList();
 
-        String subStringSelectedYear = selectedYear.substring(2);
-
         for (String empName : projectList.keySet()) {
             ArrayList<Project> list = projectList.get(empName);
 
@@ -659,11 +658,12 @@ public class EmployeeDAO {
             for (int i = 0; i < list.size(); i++) {
                 Project p = list.get(i);
 
-                String dateCompleted = Integer.toString(p.getDateCompleted());
-                String year = dateCompleted.substring(0, 2);
-                String month = dateCompleted.substring(2);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String dateCompleted = df.format(p.getDateCompleted());
+                String year = dateCompleted.substring(0, 4);
+                String month = dateCompleted.substring(5,7);
 
-                if (year.equals(subStringSelectedYear)) {
+                if (year.equals(selectedYear)) {
                     switch (month) {
                         case "01":
                             key = "01";
