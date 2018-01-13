@@ -183,7 +183,8 @@ public class ProjectDAO {
             stmt.setDouble(15, project.getEmployee2Hours());
             stmt.setString(16, project.getProjectReviewer());
             stmt.setString(17, project.getProjectReviewStatus());
-            stmt.setInt(18, project.getDateCompleted());
+            sqlDate = new java.sql.Date(project.getDateCompleted().getTime());
+            stmt.setDate(18, sqlDate);
             stmt.setString(19,project.getMonthlyHours());
             stmt.setDouble(20,project.getPlannedHours());
             return (stmt.executeUpdate() == 1);
@@ -221,7 +222,7 @@ public class ProjectDAO {
             String projectRemarks, String projectStatus, Date actualDeadline, String frequency,
             String projectType, String employee1, String employee2,
             Double employee1Hours, Double employee2Hours, String projectReviewer,
-            String projectReviewStatus, int dateCompleted, String monthlyHours,Double plannedHours) {
+            String projectReviewStatus, Date dateCompleted, String monthlyHours,Double plannedHours) {
         java.sql.Date sqlDate;
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(createProjectStatement);
@@ -246,7 +247,8 @@ public class ProjectDAO {
             stmt.setDouble(15, employee2Hours);
             stmt.setString(16, projectReviewer);
             stmt.setString(17, projectReviewStatus);
-            stmt.setInt(18, dateCompleted);
+            sqlDate = new java.sql.Date(dateCompleted.getTime());
+            stmt.setDate(18, sqlDate);
             stmt.setString(19, monthlyHours);
             stmt.setDouble(20, plannedHours);
             
@@ -313,7 +315,7 @@ public class ProjectDAO {
                 project.setEmployee2Hours(rs.getDouble("employee2Hours"));
                 project.setProjectReviewer(rs.getString("projectReviewer"));
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
-                project.setDateCompleted(rs.getInt("dateCompleted"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
                 project.setPlannedHours(rs.getDouble("plannedHours"));
 
@@ -357,7 +359,7 @@ public class ProjectDAO {
                 project.setEmployee2Hours(rs.getDouble("employee2Hours"));
                 project.setProjectReviewer(rs.getString("projectReviewer"));
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
-                project.setDateCompleted(rs.getInt("dateCompleted"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
                 project.setPlannedHours(rs.getDouble("plannedHours"));
 
@@ -402,7 +404,7 @@ public class ProjectDAO {
                 project.setEmployee2Hours(rs.getDouble("employee2Hours"));
                 project.setProjectReviewer(rs.getString("projectReviewer"));
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
-                project.setDateCompleted(rs.getInt("dateCompleted"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
                 project.setPlannedHours(rs.getDouble("plannedHours"));
 
@@ -455,7 +457,7 @@ public class ProjectDAO {
                 project.setEmployee2Hours(rs.getDouble("employee2Hours"));
                 project.setProjectReviewer(rs.getString("projectReviewer"));
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
-                project.setDateCompleted(rs.getInt("dateCompleted"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
                 project.setPlannedHours(rs.getDouble("plannedHours"));
 
@@ -522,7 +524,7 @@ public class ProjectDAO {
                 project.setEmployee2Hours(rs.getDouble("employee2Hours"));
                 project.setProjectReviewer(rs.getString("projectReviewer"));
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
-                project.setDateCompleted(rs.getInt("dateCompleted"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
                 project.setPlannedHours(rs.getDouble("plannedHours"));
 
@@ -611,7 +613,7 @@ public class ProjectDAO {
                 project.setEmployee2Hours(rs.getDouble("employee2Hours"));
                 project.setProjectReviewer(rs.getString("projectReviewer"));
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
-                project.setDateCompleted(rs.getInt("dateCompleted"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
                 project.setPlannedHours(rs.getDouble("plannedHours"));
 
@@ -659,7 +661,7 @@ public class ProjectDAO {
                 project.setEmployee2Hours(rs.getDouble("employee2Hours"));
                 project.setProjectReviewer(rs.getString("projectReviewer"));
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
-                project.setDateCompleted(rs.getInt("dateCompleted"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
                 project.setPlannedHours(rs.getDouble("plannedHours"));
                 return project;
@@ -705,7 +707,8 @@ public class ProjectDAO {
             stmt.setDouble(14, project.getEmployee2Hours());
             stmt.setString(15, project.getProjectReviewer());
             stmt.setString(16, project.getProjectReviewStatus());
-            stmt.setInt(17, project.getDateCompleted());
+            sqlDate = new java.sql.Date(project.getDateCompleted().getTime());
+            stmt.setDate(17, sqlDate);
             stmt.setString(18, project.getMonthlyHours());
             stmt.setInt(20, project.getProjectID());
             stmt.setDouble(19, project.getPlannedHours());
@@ -1050,6 +1053,7 @@ public class ProjectDAO {
                 cal2.setTime(endDate);
                 Calendar cal3 = Calendar.getInstance();
                 cal3.setTime(actualDeadline);
+                Calendar cal4 = Calendar.getInstance();
                 
                 switch(frequency){
                     case "m":
@@ -1091,7 +1095,7 @@ public class ProjectDAO {
                 project.setEmployee2Hours(0.0);
                 project.setProjectReviewer(rs.getString("projectReviewer"));
                 project.setProjectReviewStatus("incomplete");
-                project.setDateCompleted(0000);
+                project.setDateCompleted(cal4.getTime());
                 project.setMonthlyHours("0");
                 project.setPlannedHours(rs.getDouble("plannedHours"));
                 
@@ -1139,7 +1143,7 @@ public class ProjectDAO {
                 project.setEmployee2Hours(rs.getDouble("employee2Hours"));
                 project.setProjectReviewer(rs.getString("projectReviewer"));
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
-                project.setDateCompleted(rs.getInt("dateCompleted"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
                 project.setPlannedHours(rs.getDouble("plannedHours"));
 
@@ -1201,7 +1205,52 @@ public class ProjectDAO {
                 project.setEmployee2Hours(rs.getDouble("employee2Hours"));
                 project.setProjectReviewer(rs.getString("projectReviewer"));
                 project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
-                project.setDateCompleted(rs.getInt("dateCompleted"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
+                project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
+
+                complete.add(project);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        return complete;
+    }
+    
+     public static ArrayList<Project> getAllProjectsByYear(String year) {
+        
+        ArrayList<Project> projectList = new ArrayList<>();
+        
+        Project project;
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("select * from project where extract(YEAR from end) = ?"); 
+            stmt.setString(1, year);
+            //date for start
+            //date for end 
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                project = new Project();
+                project.setProjectID(rs.getInt("projectID"));
+                project.setProjectTitle(rs.getString("title"));
+                project.setCompanyName(rs.getString("companyName"));
+                project.setBusinessType(rs.getString("businessType"));
+                project.setStart(rs.getDate("start"));
+                project.setEnd(rs.getDate("end"));
+                project.setProjectRemarks(rs.getString("projectRemarks"));
+                project.setProjectStatus(rs.getString("projectStatus"));
+                project.setActualDeadline(rs.getDate("actualDeadline"));
+                project.setFrequency(rs.getString("frequency"));
+                project.setProjectType(rs.getString("projectType"));
+                project.setEmployee1(rs.getString("employee1"));
+                project.setEmployee2(rs.getString("employee2"));
+                project.setEmployee1Hours(rs.getDouble("employee1Hours"));
+                project.setEmployee2Hours(rs.getDouble("employee2Hours"));
+                project.setProjectReviewer(rs.getString("projectReviewer"));
+                project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
                 project.setMonthlyHours(rs.getString("monthlyHours"));
                 project.setPlannedHours(rs.getDouble("plannedHours"));
 
