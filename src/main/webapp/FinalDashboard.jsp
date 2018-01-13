@@ -4,6 +4,9 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="DAO.ProjectDAO"%>
+<%@page import="Entity.Project"%>
 <%@page import="DAO.ClientDAO"%>
 <%@page import="Entity.Client"%>
 <%@page import="DAO.EmployeeDAO"%>
@@ -74,11 +77,25 @@
                 to {opacity: 1;}
             }
         </style>
-
-        <%            ArrayList<Employee> employeeList = new ArrayList<>();
+        <%            DecimalFormat df = new DecimalFormat("#.00");
+            ArrayList<Employee> employeeList = new ArrayList<>();
             employeeList = EmployeeDAO.getAllEmployees();
             ArrayList<Client> clientList = new ArrayList<>();
             clientList = ClientDAO.getAllClient();
+            ArrayList<Project> projectList = new ArrayList<>();
+            projectList = ProjectDAO.getAllProjects();
+            String profileUrl = "ProjectProfile.jsp?projectID=";
+            String profileUrl2 = "";
+            String clientProfileUrl = "ClientProfile.jsp?profileId=";
+            String clientProfileUrl2 = "";
+            String employee1ProfileUrl = "EmployeeProfile.jsp?profileId=";
+            String employee1ProfileUrl2 = "";
+            String employee2ProfileUrl = "EmployeeProfile.jsp?profileId=";
+            String employee2ProfileUrl2 = "";
+            ArrayList<ArrayList<Project>> clientProjectList = new ArrayList<>();
+            clientProjectList = ProjectDAO.getAllProjectsByCompanyName("");
+            ArrayList<ArrayList<Project>> employeeProjectList = new ArrayList<>();
+            employeeProjectList = ProjectDAO.getAllProjectsByEmployee("");
         %>
         <script>
             $(document).ready(function () {
@@ -88,6 +105,10 @@
                 $('#datatable4').DataTable();
                 $('#datatable5').DataTable();
                 $('#datatable6').DataTable();
+                $('#datatable7').DataTable();
+                $('#datatable8').DataTable();
+                $('#datatable9').DataTable();
+                $('#datatable10').DataTable();
             })
         </script>
     </head>
@@ -153,36 +174,82 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
+                                        <%
+                                            if (projectList != null && !projectList.isEmpty()) {
+                                                for (int i = 0; i < projectList.size(); i++) {
+                                                    Project p = projectList.get(i);
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <%=p.getDateCompleted()%>
+                                            </td>
+                                            <td>
+                                                <%
+                                                    Client c = ClientDAO.getClientByCompanyName(p.getCompanyName());
+
+                                                    if (c != null && !(p.getCompanyName()).isEmpty()) {
+                                                        clientProfileUrl2 = clientProfileUrl + c.getClientID();
+                                                %>
+                                                <a href='<%=clientProfileUrl2%>'>
+                                                    <%=p.getCompanyName()%>
+                                                </a>
+                                                <%
+                                                } else {
+                                                %>
+                                                <%=p.getCompanyName()%>
+                                                <%
+                                                    }
+                                                %>
+                                            </td>
+                                            <td>
+                                                <% profileUrl2 = profileUrl + p.getProjectID();%>
+                                                <a href=<%=profileUrl2%>>
+                                                    <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <%=p.getPlannedHours()%>
+                                            </td>
+                                            <td>
+                                                <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
+                                            </td>
+                                            <td>
+                                                <%
+                                                    out.println(df.format(((p.getEmployee1Hours() + p.getEmployee2Hours() - p.getPlannedHours()) / (p.getEmployee1Hours() + p.getEmployee2Hours())) * 100.00));
+                                                %>  
+                                            </td>
+                                            <td>
+                                                test
+                                            </td>
+                                            <td>
+                                                test
+                                            </td>
+                                            <td>
+                                                test
+                                            </td>
+                                            <td>
+                                                <% 
+                                                    employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
+                                                    employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
+                                                %>
+                                                <a href=<%=employee1ProfileUrl2%>>
+                                                    <%=p.getEmployee1()%>
+                                                </a>
+                                                <% if(!p.getEmployee2().toLowerCase().equals("na")){
+                                                    out.println(" and ");
+                                                %>
+                                                    <a href=<%=employee2ProfileUrl2%>>
+                                                        <%=p.getEmployee2()%>
+                                                    </a>
+                                                <%
+                                                    }
+                                                %>
+                                            </td>
+                                        </tr>
+                                        <%
+                                                }
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
                                 <br/>
@@ -206,36 +273,82 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
+                                        <%
+                                            if (projectList != null && !projectList.isEmpty()) {
+                                                for (int i = 0; i < projectList.size(); i++) {
+                                                    Project p = projectList.get(i);
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <%=p.getDateCompleted()%>
+                                            </td>
+                                            <td>
+                                                <%
+                                                    Client c = ClientDAO.getClientByCompanyName(p.getCompanyName());
+
+                                                    if (c != null && !(p.getCompanyName()).isEmpty()) {
+                                                        clientProfileUrl2 = clientProfileUrl + c.getClientID();
+                                                %>
+                                                <a href='<%=clientProfileUrl2%>'>
+                                                    <%=p.getCompanyName()%>
+                                                </a>
+                                                <%
+                                                } else {
+                                                %>
+                                                <%=p.getCompanyName()%>
+                                                <%
+                                                    }
+                                                %>
+                                            </td>
+                                            <td>
+                                                <% profileUrl2 = profileUrl + p.getProjectID();%>
+                                                <a href=<%=profileUrl2%>>
+                                                    <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <%=p.getPlannedHours()%>
+                                            </td>
+                                            <td>
+                                                <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
+                                            </td>
+                                            <td>
+                                                <%
+                                                    out.println(df.format(((p.getEmployee1Hours() + p.getEmployee2Hours() - p.getPlannedHours()) / (p.getEmployee1Hours() + p.getEmployee2Hours())) * 100.00));
+                                                %>  
+                                            </td>
+                                            <td>
+                                                test
+                                            </td>
+                                            <td>
+                                                test
+                                            </td>
+                                            <td>
+                                                test
+                                            </td>
+                                            <td>
+                                                <% 
+                                                    employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
+                                                    employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
+                                                %>
+                                                <a href=<%=employee1ProfileUrl2%>>
+                                                    <%=p.getEmployee1()%>
+                                                </a>
+                                                <% if(!p.getEmployee2().toLowerCase().equals("na")){
+                                                    out.println(" and ");
+                                                %>
+                                                    <a href=<%=employee2ProfileUrl2%>>
+                                                        <%=p.getEmployee2()%>
+                                                    </a>
+                                                <%
+                                                    }
+                                                %>
+                                            </td>
+                                        </tr>
+                                        <%
+                                                }
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
                                 <br/>
@@ -255,24 +368,68 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
+                                        <%
+                                            if (projectList != null && !projectList.isEmpty()) {
+                                                for (int i = 0; i < projectList.size(); i++) {
+                                                    Project p = projectList.get(i);
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <%=p.getDateCompleted()%>
+                                            </td>
+                                            <td>
+                                                <%
+                                                    Client c = ClientDAO.getClientByCompanyName(p.getCompanyName());
 
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-
-                                        </td>
+                                                    if (c != null && !(p.getCompanyName()).isEmpty()) {
+                                                        clientProfileUrl2 = clientProfileUrl + c.getClientID();
+                                                %>
+                                                <a href='<%=clientProfileUrl2%>'>
+                                                    <%=p.getCompanyName()%>
+                                                </a>
+                                                <%
+                                                } else {
+                                                %>
+                                                <%=p.getCompanyName()%>
+                                                <%
+                                                    }
+                                                %>
+                                            </td>
+                                            <td>
+                                                <% profileUrl2 = profileUrl + p.getProjectID();%>
+                                                <a href=<%=profileUrl2%>>
+                                                    <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <%=p.getPlannedHours()%>
+                                            </td>
+                                            <td>
+                                                <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
+                                            </td>
+                                            <td>
+                                                <% 
+                                                    employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
+                                                    employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
+                                                %>
+                                                <a href=<%=employee1ProfileUrl2%>>
+                                                    <%=p.getEmployee1()%>
+                                                </a>
+                                                <% if(!p.getEmployee2().toLowerCase().equals("na")){
+                                                    out.println(" and ");
+                                                %>
+                                                    <a href=<%=employee2ProfileUrl2%>>
+                                                        <%=p.getEmployee2()%>
+                                                    </a>
+                                                <%
+                                                    }
+                                                %>
+                                            </td>
+                                        </tr>
+                                        <%
+                                                }
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
                                 <br/>
@@ -287,7 +444,7 @@
                                     fillColor: 'rgba(255, 99, 132, 0.2)',
                                     strokeColor: 'rgba(220,180,0,1)',
                                     pointColor: 'rgba(220,180,0,1)',
-                                    data: "SalesGraph",//[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                    data: [80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40], //"SalesGraph", //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)'
                                     ],
@@ -301,7 +458,7 @@
                                     fillColor: 'rgba(54, 162, 235, 0.2)',
                                     strokeColor: 'rgba(66,180,0,1)',
                                     pointColor: 'rgba(66,180,0,1)',
-                                    data: "ProfitGraph",//[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
+                                    data: [20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10], //"ProfitGraph", //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
                                     backgroundColor: [
                                         'rgba(153, 102, 255, 0.2)'
                                     ],
@@ -314,7 +471,7 @@
                                     fillColor: 'rgba(54, 162, 235, 0.2)',
                                     strokeColor: 'rgba(54, 162, 235, 0.2)',
                                     pointColor: 'rgba(54, 162, 235, 0.2)',
-                                    data: "CostGraph",//[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
+                                    data: [60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30], //"CostGraph", //[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
                                     backgroundColor: [
                                         'rgba(54, 162, 235, 0.2)'
                                     ],

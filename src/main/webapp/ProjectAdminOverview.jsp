@@ -229,7 +229,7 @@
                                                 <td>
                                                     <%=p.getActualDeadline()%>
                                                 </td>
-                                                <td style=text-align:center>
+                                                <td style='text-align:center'>
                                                     <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
                                                 </td>
                                                 <td>
