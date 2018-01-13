@@ -338,7 +338,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="UploadExpense.jsp">QuickBooks</a></li>
                                 <!--<li><a href="UploadExpense.jsp">Xero</a></li>-->
-                                <li><a href="ResetToken.jsp">Reset Token</a></li>
+                                <li><a href="TokenOverview.jsp">Tokens</a></li>
                             </ul>
                         </div>
                     </td>

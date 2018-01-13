@@ -815,7 +815,7 @@
                         if (employeeList != null && !employeeList.isEmpty()) {
                     %>   
                     <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                        <form action="dashboardEmployeeServlet" method="post">
+                        <form action = "refreshTokenServlet" method = "post">
                             <table id='datatable2' align="center">
                                 <thead>
                                     <tr>
