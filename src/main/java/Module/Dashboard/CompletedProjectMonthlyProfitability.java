@@ -37,10 +37,10 @@ public class CompletedProjectMonthlyProfitability extends HttpServlet {
        
        ArrayList<Project> projectList = new ArrayList(); 
        
-       if (request.getAttribute("monthYear") == null) {
+       if (request.getParameter("monthYear") == null) {
             
         } else {
-            String monthYear = (String) request.getAttribute("monthYear");
+            String monthYear = (String) request.getParameter("monthYear");
             projectList = ProjectDAO.getCompletedProjectMonthlyProfitability(monthYear);
             
         }

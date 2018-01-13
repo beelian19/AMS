@@ -39,11 +39,11 @@ public class StaffMonthlyReport extends HttpServlet {
        Employee employee = null;
        ArrayList<ArrayList<Project>> projectList = new ArrayList(); 
        
-       if (request.getAttribute("employeeName") == null) {
+       if (request.getParameter("employeeName") == null || request.getParameter("monthYear") == null) {
             request.setAttribute("employee", employee);
         } else {
-            String employeeName = (String) request.getAttribute("employeeName");
-            String monthYear = (String) request.getAttribute("monthYear");
+            String employeeName = (String) request.getParameter("employeeName");
+            String monthYear = (String) request.getParameter("monthYear");
             projectList = ProjectDAO.getStaffMonthlyReport(employeeName);
             
         }
