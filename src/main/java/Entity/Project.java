@@ -30,7 +30,7 @@ public class Project {
     private Double employee2Hours;
     private String projectReviewer;
     private String projectReviewStatus;
-    private int dateCompleted;
+    private Date dateCompleted;
     // sample monthlyHours 1709=0.0-0.0, 1710=1.0-0.0, 1711=2.0-2.0, 1712=4.0-2.0
     private String monthlyHours;
     private Double plannedHours;
@@ -220,7 +220,7 @@ public class Project {
         return year + month;
     }
 
-    public Project(int projectID, String projectTitle, String companyName, String businessType, Date start, Date end, String projectRemarks, String projectStatus, Date actualDeadline, String frequency, String projectType, String employee1, String employee2, Double employee1Hours, Double employee2Hours, String projectReviewer, String projectReviewStatus, int dateCompleted, String monthlyHours, Double plannedHours) {
+    public Project(int projectID, String projectTitle, String companyName, String businessType, Date start, Date end, String projectRemarks, String projectStatus, Date actualDeadline, String frequency, String projectType, String employee1, String employee2, Double employee1Hours, Double employee2Hours, String projectReviewer, String projectReviewStatus, Date dateCompleted, String monthlyHours, Double plannedHours) {
         this.projectID = projectID;
         this.projectTitle = projectTitle;
         this.companyName = companyName;
@@ -391,11 +391,11 @@ public class Project {
         this.projectReviewStatus = projectReviewStatus;
     }
 
-    public int getDateCompleted() {
+    public Date getDateCompleted() {
         return dateCompleted;
     }
 
-    public void setDateCompleted(int dateCompleted) {
+    public void setDateCompleted(Date dateCompleted) {
         this.dateCompleted = dateCompleted;
     }
 
