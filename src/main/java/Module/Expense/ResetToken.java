@@ -15,10 +15,8 @@ import com.xero.api.JsonConfig;
 import com.xero.api.OAuthAuthorizeToken;
 import com.xero.api.OAuthRequestToken;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,24 +40,19 @@ public class ResetToken extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // get clientId from request parameter
-
-        if (request.getParameter("clientSelected") == null || ((String) request.getParameter("clientSelected")).isEmpty()) {
-            request.setAttribute("status", "Error: Missing client id");
-            request.getRequestDispatcher("ResetToken.jsp").forward(request, response);
+        if (request.getParameter("ClientId") == null || request.getParameter("ClientId").isEmpty()) {
+            request.getSession().setAttribute("status", "Error: Missing client id");
+            response.sendRedirect("viewAllTokens.jsp");
         }
 
         // check if token exist for this client id
-        String clientId = (String) request.getParameter("clientSelected");
+        String clientId = (String) request.getParameter("ClientId");
         Token token = TokenDAO.getToken(clientId);
 
         // check if token exist for the client
         if (token == null) {
-            request.setAttribute("status", "Error: Client id: " + clientId + " does not have a token.");
-            request.getRequestDispatcher("ResetToken.jsp").forward(request, response);
-            // ensure that the token is not in use
-        } else if (token.getInUse()) {
-            request.setAttribute("status", "Error: The token is in use. Please wait for it to be unlocked to refresh the token.");
-            request.getRequestDispatcher("ResetToken.jsp").forward(request, response);
+            request.getSession().setAttribute("status", "Error: Company id " + clientId + " does not have a token.");
+            response.sendRedirect("viewAllTokens.jsp");
             // if token type is QBO
         } else if (token.getAccType().equals("QBO")) {
             List<Scope> scopes = new ArrayList<>();
@@ -73,9 +66,8 @@ public class ResetToken extends HttpServlet {
                 String url = oauth2Config.prepareUrl(scopes, redirectUri, csrf);
                 response.sendRedirect(url);
             } catch (InvalidRequestException ex) {
-                request.setAttribute("status", "Failure at ResetToken: Invalid Request: " + ex.getErrorMessage());
-                RequestDispatcher rd = request.getRequestDispatcher("ResetToken.jsp");
-                rd.forward(request, response);
+                request.setAttribute("status", "Error: Failure at ResetToken: Invalid Request: " + ex.getErrorMessage());
+                response.sendRedirect("viewAllTokens.jsp");
             }
             // if token type is XERO
         } else if (token.getAccType().equals("XERO")) {
@@ -104,9 +96,8 @@ public class ResetToken extends HttpServlet {
 
             response.sendRedirect(authToken.getAuthUrl());
         } else {
-            request.setAttribute("status", "Token retreived has an unknown account type: " + token.getAccType());
-            RequestDispatcher rd = request.getRequestDispatcher("ResetToken.jsp");
-            rd.forward(request, response);
+            request.getSession().setAttribute("status", "Error: Token retreived has an unknown account type: " + token.getAccType());
+            response.sendRedirect("viewAllTokens.jsp");
         }
     }
 
