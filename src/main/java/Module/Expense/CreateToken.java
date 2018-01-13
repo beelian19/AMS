@@ -46,10 +46,10 @@ public class CreateToken extends HttpServlet {
         } finally {
             if (success) {
                 request.getSession().setAttribute("status", "Token created. Please reset the token for " + message);
-                response.sendRedirect("viewAllTokens.jsp");
+                response.sendRedirect("TokenOverview.jsp");
             } else {
                 request.getSession().setAttribute("status", "Error: Failed to create token " + message);
-                response.sendRedirect("viewAllTokens.jsp");
+                response.sendRedirect("TokenOverview.jsp");
             }
         }
     }
