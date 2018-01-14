@@ -11,8 +11,6 @@ public class PaymentLine {
     private String QBOLineClass;
     private String QBOLineCustomer;
 
-    private String status;
-
     /**
      * Check is this line has the required information to be processed
      *
@@ -86,12 +84,5 @@ public class PaymentLine {
         this.QBOLineCustomer = QBOLineCustomer;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
 }

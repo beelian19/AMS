@@ -20,6 +20,8 @@ public class Payment {
     private String vendor;
     private List<PaymentLine> lines;
     
+    private String status;
+    
     public boolean checkPayment(){
         // Multi-lined expenses has to have a reference number
         if (lines != null && lines.size() > 1) {
@@ -27,8 +29,11 @@ public class Payment {
         }
         return date != null && chargedAccountNumber != null  && vendor != null;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Payment{" + "date=" + date + ", referenceNumber=" + referenceNumber + ", chargedAccountNumber=" + chargedAccountNumber + ", memo=" + memo + ", paymentMethod=" + paymentMethod + ", vendor=" + vendor + ", lines=" + lines + ", status=" + status + '}';
+    }
 
     public Date getDate() {
         return date;
@@ -86,6 +91,15 @@ public class Payment {
         this.lines = lines;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    
     
     
 }
