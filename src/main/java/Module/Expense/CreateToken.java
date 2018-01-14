@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Module.Dashboard;
+package Module.Expense;
 
-import DAO.ProjectDAO;
+import DAO.ClientDAO;
+import DAO.TokenDAO;
+import Entity.Token;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author jagdishps.2014
+ * @author Lin
  */
-public class OverdueProjectPerYear extends HttpServlet {
+public class CreateToken extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,19 +31,27 @@ public class OverdueProjectPerYear extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        ArrayList<String> overdueList = new ArrayList();
-        if (request.getParameter("year") == null) {
-            
-        } else {
-            String year = (String) request.getParameter("year");
-            overdueList = ProjectDAO.getOverdueProjectPerYear(year);
-            
+        String message = "";
+        boolean success = false;
+        try {
+            String ClientId = (String) request.getParameter("ClientId");
+            String ClientSecret = (String) request.getParameter("ClientSecret");
+            String redirectUri = (String) request.getParameter("redirectUri");
+            Integer companyId = Integer.valueOf(request.getParameter("companyId"));
+            Token token = new Token("QBO", ClientId, ClientSecret, redirectUri, "NA", "0", companyId);
+            success = TokenDAO.createToken(token);
+            message = ClientDAO.getClientById(""+companyId).getCompanyName();
+        } catch (Exception e) {
+            message = e.getMessage();
+        } finally {
+            if (success) {
+                request.getSession().setAttribute("status", "Token created. Please reset the token for " + message);
+                response.sendRedirect("TokenOverview.jsp");
+            } else {
+                request.getSession().setAttribute("status", "Error: Failed to create token " + message);
+                response.sendRedirect("TokenOverview.jsp");
+            }
         }
-        request.setAttribute("overdueList", overdueList);
-        RequestDispatcher rd = request.getRequestDispatcher("Dashboard.jsp");
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

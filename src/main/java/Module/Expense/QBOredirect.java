@@ -46,21 +46,22 @@ public class QBOredirect extends HttpServlet {
             auth_code = request.getParameter("code");
             realmId = request.getParameter("realmId");
         } else {
-            request.setAttribute("UploadExcelResponse", "Invalid redirect at QBOredirect");
-            RequestDispatcher rd = request.getRequestDispatcher("InvoiceManagement.jsp");
-            rd.forward(request, response);
-            return;
+            request.getSession().setAttribute("status", "Error: Invalid redirect at QBOredirect");
+            response.sendRedirect("viewAllTokens.jsp");
         }
 
         // Get the client's token
+        if (request.getSession().getAttribute("tokenClientId") == null) {
+            request.getSession().setAttribute("status", "Error: No Client id found at QBOredirect");
+            response.sendRedirect("viewAllTokens.jsp");
+        }
         String clientId = (String) request.getSession().getAttribute("tokenClientId");
         request.getSession().removeAttribute("tokenClientId");
         Token token = TokenDAO.getToken(clientId);
 
         if (token == null) {
-            request.setAttribute("UploadExcelResponse", "No client id " + clientId + " found in the DB");
-            RequestDispatcher rd = request.getRequestDispatcher("InvoiceManagement.jsp");
-            rd.forward(request, response);
+            request.getSession().setAttribute("status", "Error: No token for company id " + clientId + " found in the DB");
+            response.sendRedirect("viewAllTokens.jsp");
         }
 
         QBOoauth2ClientFactory factory = new QBOoauth2ClientFactory(token);
@@ -77,17 +78,15 @@ public class QBOredirect extends HttpServlet {
             token.setRefreshToken(refresh_token);
             updateSuccess = TokenDAO.updateToken(token);
             if (updateSuccess) {
-                request.setAttribute("UploadExcelResponse", "Updated token!");
-                RequestDispatcher rd = request.getRequestDispatcher("InvoiceManagement.jsp");
-                rd.forward(request, response);
+                request.getSession().setAttribute("status", "Updated token!");
+                response.sendRedirect("viewAllTokens.jsp");
                 return;
             }
-            request.setAttribute("UploadExcelResponse", "Token update failed. SQL update query failure.");
-        } catch (OAuthException ex) {
-            request.setAttribute("UploadExcelResponse", ex.getMessage());
+            request.getSession().setAttribute("status", "Token update failed. SQL update query failure.");
+        } catch (OAuthException | NullPointerException ex) {
+            request.getSession().setAttribute("stats", "Error: " + ex.getMessage());
         }
-        RequestDispatcher rd = request.getRequestDispatcher("InvoiceManagement.jsp");
-        rd.forward(request, response);
+        response.sendRedirect("viewAllTokens.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
