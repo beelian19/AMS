@@ -178,6 +178,9 @@
                                             if (projectList != null && !projectList.isEmpty()) {
                                                 for (int i = 0; i < projectList.size(); i++) {
                                                     Project p = projectList.get(i);
+                                                    double sales = ProjectDAO.getSales(p);
+                                                    double totalActualCost = ProjectDAO.getTotalActualCost(p);
+                                                    double profit = ProjectDAO.getProfit(p);
                                         %>
                                         <tr>
                                             <td>
@@ -219,28 +222,28 @@
                                                 %>  
                                             </td>
                                             <td>
-                                                test
+                                                <%=sales%>
                                             </td>
                                             <td>
-                                                test
+                                                <%=totalActualCost%>
                                             </td>
                                             <td>
-                                                test
+                                                <%=profit%>
                                             </td>
                                             <td>
-                                                <% 
+                                                <%
                                                     employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
                                                     employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
                                                 %>
                                                 <a href=<%=employee1ProfileUrl2%>>
                                                     <%=p.getEmployee1()%>
                                                 </a>
-                                                <% if(!p.getEmployee2().toLowerCase().equals("na")){
-                                                    out.println(" and ");
+                                                <% if (!p.getEmployee2().toLowerCase().equals("na")) {
+                                                        out.println(" and ");
                                                 %>
-                                                    <a href=<%=employee2ProfileUrl2%>>
-                                                        <%=p.getEmployee2()%>
-                                                    </a>
+                                                <a href=<%=employee2ProfileUrl2%>>
+                                                    <%=p.getEmployee2()%>
+                                                </a>
                                                 <%
                                                     }
                                                 %>
@@ -318,28 +321,28 @@
                                                 %>  
                                             </td>
                                             <td>
-                                                test
+                                                <%=ProjectDAO.getSales(p)%>
                                             </td>
                                             <td>
-                                                test
+                                                <%=ProjectDAO.getTotalActualCost(p)%>
                                             </td>
                                             <td>
-                                                test
+                                                <%=ProjectDAO.getProfit(p)%>
                                             </td>
                                             <td>
-                                                <% 
+                                                <%
                                                     employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
                                                     employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
                                                 %>
                                                 <a href=<%=employee1ProfileUrl2%>>
                                                     <%=p.getEmployee1()%>
                                                 </a>
-                                                <% if(!p.getEmployee2().toLowerCase().equals("na")){
-                                                    out.println(" and ");
+                                                <% if (!p.getEmployee2().toLowerCase().equals("na")) {
+                                                        out.println(" and ");
                                                 %>
-                                                    <a href=<%=employee2ProfileUrl2%>>
-                                                        <%=p.getEmployee2()%>
-                                                    </a>
+                                                <a href=<%=employee2ProfileUrl2%>>
+                                                    <%=p.getEmployee2()%>
+                                                </a>
                                                 <%
                                                     }
                                                 %>
@@ -408,19 +411,19 @@
                                                 <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
                                             </td>
                                             <td>
-                                                <% 
+                                                <%
                                                     employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
                                                     employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
                                                 %>
                                                 <a href=<%=employee1ProfileUrl2%>>
                                                     <%=p.getEmployee1()%>
                                                 </a>
-                                                <% if(!p.getEmployee2().toLowerCase().equals("na")){
-                                                    out.println(" and ");
+                                                <% if (!p.getEmployee2().toLowerCase().equals("na")) {
+                                                        out.println(" and ");
                                                 %>
-                                                    <a href=<%=employee2ProfileUrl2%>>
-                                                        <%=p.getEmployee2()%>
-                                                    </a>
+                                                <a href=<%=employee2ProfileUrl2%>>
+                                                    <%=p.getEmployee2()%>
+                                                </a>
                                                 <%
                                                     }
                                                 %>
@@ -437,8 +440,6 @@
                         </div>
                     </div>
                     <script>
-                        var data = [-1.8612224E10,-7.8065322164220416E16,-2.558044476677102E21,-4.50015943435954E34,-2.4160046996700103E43,1337.5,0.0,16250.0,15312.5,3050.0,0.0,-7.444934436875E10];
-                        console.log(data);
                         var lineChartData = {
                             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                             datasets: [{
@@ -446,11 +447,7 @@
                                     fillColor: 'rgba(255, 99, 132, 0.2)',
                                     strokeColor: 'rgba(220,180,0,1)',
                                     pointColor: 'rgba(220,180,0,1)',
-<<<<<<< HEAD
-                                    data: data,//[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80], //"SalesGraph",
-=======
                                     data: [80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40], //"SalesGraph", //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
->>>>>>> 667a73ba9da6d4333841a759483336f1b1c2ff67
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)'
                                     ],
@@ -464,11 +461,7 @@
                                     fillColor: 'rgba(54, 162, 235, 0.2)',
                                     strokeColor: 'rgba(66,180,0,1)',
                                     pointColor: 'rgba(66,180,0,1)',
-<<<<<<< HEAD
-                                    data: [20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
-=======
                                     data: [20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10], //"ProfitGraph", //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
->>>>>>> 667a73ba9da6d4333841a759483336f1b1c2ff67
                                     backgroundColor: [
                                         'rgba(153, 102, 255, 0.2)'
                                     ],
@@ -481,11 +474,7 @@
                                     fillColor: 'rgba(54, 162, 235, 0.2)',
                                     strokeColor: 'rgba(54, 162, 235, 0.2)',
                                     pointColor: 'rgba(54, 162, 235, 0.2)',
-<<<<<<< HEAD
-                                    data: [60, 110.0, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
-=======
                                     data: [60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30], //"CostGraph", //[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
->>>>>>> 667a73ba9da6d4333841a759483336f1b1c2ff67
                                     backgroundColor: [
                                         'rgba(54, 162, 235, 0.2)'
                                     ],
