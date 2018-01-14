@@ -35,18 +35,20 @@ public class SalesGraph extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String selectedYear = "2017";
-        JsonArray events = new JsonArray();
-        PrintWriter out = response.getWriter();
-        JsonObject outputRequest = new JsonObject();
+//        JsonArray events = new JsonArray();
+//        PrintWriter out = response.getWriter();
+//        JsonObject outputRequest = new JsonObject();
         
         HashMap<String, Double> salesList = ProjectDAO.getSales(selectedYear);
+        System.out.println("Check======================= "+salesList.get("01"));
         for(String month : salesList.keySet()) {
-            double profit = salesList.get(month);
-            outputRequest.add(month, convertObjectToElement(profit));
+            double sales = salesList.get(month);
+            //outputRequest.add(month, convertObjectToElement(profit));
+            System.out.println("Sales for "+month+" ============================ "+sales);
         }
         
-        events.add(outputRequest);
-        out.print(events);
+        //events.add(outputRequest);
+        //out.print(events);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

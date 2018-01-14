@@ -1286,116 +1286,116 @@ public class ProjectDAO {
                             }
                             hoursAssignedList.put(key, value);
                             break;
-                        case "02":
-                            key = "02";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
-                        case "03":
-                            key = "03";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
-                        case "04":
-                            key = "04";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
-                        case "05":
-                            key = "05";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
-                        case "06":
-                            key = "06";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
-                        case "07":
-                            key = "07";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
-                        case "08":
-                            key = "08";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
-                        case "09":
-                            key = "09";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
-                        case "10":
-                            key = "10";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
-                        case "11":
-                            key = "11";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
-                        case "12":
-                            key = "12";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
-                            break;
+//                        case "02":
+//                            key = "02";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
+//                        case "03":
+//                            key = "03";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
+//                        case "04":
+//                            key = "04";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
+//                        case "05":
+//                            key = "05";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
+//                        case "06":
+//                            key = "06";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
+//                        case "07":
+//                            key = "07";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
+//                        case "08":
+//                            key = "08";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
+//                        case "09":
+//                            key = "09";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
+//                        case "10":
+//                            key = "10";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
+//                        case "11":
+//                            key = "11";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
+//                        case "12":
+//                            key = "12";
+//
+//                            if (hoursAssignedList.containsKey(key)) {
+//                                value += hoursAssignedList.get(key);
+//                            } else {
+//                                value = p.getPlannedHours();
+//                            }
+//                            hoursAssignedList.put(key, value);
+//                            break;
                     }
                 }
             }
@@ -1403,8 +1403,9 @@ public class ProjectDAO {
                 double costPerHour = costPerHourPerStaffList.get(empName);
                 for (String m : hoursAssignedList.keySet()) {
                     double hoursAssigned = hoursAssignedList.get(m);
+                    System.out.println("" + m + " --- "+ hoursAssigned + " --- " + costPerHour);
                     double sales = hoursAssigned * costPerHour;
-                    
+                    //System.out.println(sales);
                     if(salesList.containsKey(m)) {
                         sales += salesList.get(m);
                     }
@@ -1422,7 +1423,7 @@ public class ProjectDAO {
         HashMap<String, ArrayList<Project>> projectList = getCompletedProjectList();
 
         for (String empName : projectList.keySet()) {
-            ArrayList<Project> list = projectList.get(empName);
+            ArrayList<Project> list = projectList.get("Eugene");
 
             //Key = Month, Value = HoursAssigned based on EmpName
             HashMap<String, Double> hoursActualList = new HashMap();
@@ -1435,6 +1436,7 @@ public class ProjectDAO {
 
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String dateCompleted = df.format(p.getDateCompleted());
+                //System.out.println(dateCompleted);
                 String year = dateCompleted.substring(0, 4);
                 String month = dateCompleted.substring(5,7);
 
@@ -1450,121 +1452,121 @@ public class ProjectDAO {
                             }
                             hoursActualList.put(key, value);
                             break;
-                        case "02":
-                            key = "02";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
-                        case "03":
-                            key = "03";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
-                        case "04":
-                            key = "04";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
-                        case "05":
-                            key = "05";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
-                        case "06":
-                            key = "06";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
-                        case "07":
-                            key = "07";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
-                        case "08":
-                            key = "08";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
-                        case "09":
-                            key = "09";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
-                        case "10":
-                            key = "10";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
-                        case "11":
-                            key = "11";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
-                        case "12":
-                            key = "12";
-
-                            if (hoursActualList.containsKey(key)) {
-                                value += hoursActualList.get(key);
-                            } else {
-                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
-                            }
-                            hoursActualList.put(key, value);
-                            break;
+//                        case "02":
+//                            key = "02";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
+//                        case "03":
+//                            key = "03";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
+//                        case "04":
+//                            key = "04";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
+//                        case "05":
+//                            key = "05";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
+//                        case "06":
+//                            key = "06";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
+//                        case "07":
+//                            key = "07";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
+//                        case "08":
+//                            key = "08";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
+//                        case "09":
+//                            key = "09";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
+//                        case "10":
+//                            key = "10";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
+//                        case "11":
+//                            key = "11";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
+//                        case "12":
+//                            key = "12";
+//
+//                            if (hoursActualList.containsKey(key)) {
+//                                value += hoursActualList.get(key);
+//                            } else {
+//                                value = p.getEmployee1Hours() + p.getEmployee2Hours();
+//                            }
+//                            hoursActualList.put(key, value);
+//                            break;
                     }
                 }
             }
             if (!hoursActualList.isEmpty()) {
-                double costPerHour = costPerHourPerStaffList.get(empName);
+                double costPerHour = costPerHourPerStaffList.get("Eugene");
                 for (String m : hoursActualList.keySet()) {
                     double hoursAssigned = hoursActualList.get(m);
                     double sales = hoursAssigned * costPerHour;

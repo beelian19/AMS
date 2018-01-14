@@ -280,6 +280,8 @@
                         </div>
                     </div>
                     <script>
+                        var data = [-1.8612224E10,-7.8065322164220416E16,-2.558044476677102E21,-4.50015943435954E34,-2.4160046996700103E43,1337.5,0.0,16250.0,15312.5,3050.0,0.0,-7.444934436875E10];
+                        console.log(data);
                         var lineChartData = {
                             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                             datasets: [{
@@ -287,7 +289,7 @@
                                     fillColor: 'rgba(255, 99, 132, 0.2)',
                                     strokeColor: 'rgba(220,180,0,1)',
                                     pointColor: 'rgba(220,180,0,1)',
-                                    data: "SalesGraph",//[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                    data: data,//[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80], //"SalesGraph",
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)'
                                     ],
@@ -301,7 +303,7 @@
                                     fillColor: 'rgba(54, 162, 235, 0.2)',
                                     strokeColor: 'rgba(66,180,0,1)',
                                     pointColor: 'rgba(66,180,0,1)',
-                                    data: "ProfitGraph",//[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
+                                    data: [20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
                                     backgroundColor: [
                                         'rgba(153, 102, 255, 0.2)'
                                     ],
@@ -314,7 +316,7 @@
                                     fillColor: 'rgba(54, 162, 235, 0.2)',
                                     strokeColor: 'rgba(54, 162, 235, 0.2)',
                                     pointColor: 'rgba(54, 162, 235, 0.2)',
-                                    data: "CostGraph",//[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
+                                    data: [60, 110.0, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
                                     backgroundColor: [
                                         'rgba(54, 162, 235, 0.2)'
                                     ],
