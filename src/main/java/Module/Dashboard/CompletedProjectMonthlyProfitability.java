@@ -35,17 +35,17 @@ public class CompletedProjectMonthlyProfitability extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
        
-       ArrayList<Project> projectList = new ArrayList(); 
+       int[][] profitabilityList = new int[12][12]; 
        
-       if (request.getParameter("monthYear") == null) {
+       if (request.getParameter("year") == null) {
             
         } else {
-            String monthYear = (String) request.getParameter("monthYear");
-            projectList = ProjectDAO.getCompletedProjectMonthlyProfitability(monthYear);
+            String year = (String) request.getParameter("year");
+            profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability(year);
             
         }
-        request.setAttribute("projectList", projectList);
-        RequestDispatcher rd = request.getRequestDispatcher("Dashboard.jsp");
+        request.setAttribute("projectList", profitabilityList);
+        RequestDispatcher rd = request.getRequestDispatcher("FinalDashboard.jsp");
         rd.forward(request, response);
     }
 
