@@ -38,8 +38,8 @@ public class StaffMonthlyReport extends HttpServlet {
         
        Employee employee = null;
        ArrayList<Project> projectList = new ArrayList(); 
-       ArrayList<String> overdueList = new ArrayList();
-       ArrayList<String> exceededList = new ArrayList();
+       int[] overdueList = new int[12];
+       int[] exceededList = new int[12];
        
        if (request.getParameter("employeeName") == null || request.getParameter("Year") == null || request.getParameter("Month") == null ) {
             request.setAttribute("employee", employee);

@@ -43,6 +43,7 @@ import Utility.ConnectionManager;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -1226,9 +1227,9 @@ public class ProjectDAO {
         return complete;
     }
 
-    public static ArrayList<String> getOverdueProjectPerYear(String year) {
+    public static int[] getOverdueProjectPerYear(String year) {
 
-        ArrayList<String> projectList = new ArrayList<>();
+        int[] numList = new int[12];
 
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted > end) GROUP BY MONTH(end)");
@@ -1238,8 +1239,10 @@ public class ProjectDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String month = rs.getString("MONTH");
+                Integer monthInt = Integer.parseInt(month);
                 String count = rs.getString("COUNT");
-                projectList.add(month + "," + count);
+                Integer countInt = Integer.parseInt(count);
+                numList[monthInt -1] = countInt;
 
             }
         } catch (SQLException e) {
@@ -1247,7 +1250,7 @@ public class ProjectDAO {
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
-        return projectList;
+        return numList;
     }
 
     public static HashMap<String, Double> getSales(String selectedYear) {
@@ -1597,10 +1600,9 @@ public class ProjectDAO {
         return profitList;
     }
 
-    public static ArrayList<String> getOverdueProjectPerStaff(String year, String name) {
+    public static int[] getOverdueProjectPerStaff(String year, String name) {
 
-        ArrayList<String> projectList = new ArrayList<>();
-
+        int[] numList = new int[12];
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted > end) and employee1=? or employee2= ? GROUP BY MONTH(end)");
             stmt.setString(1, year);
@@ -1611,22 +1613,25 @@ public class ProjectDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String month = rs.getString("MONTH");
+                Integer monthInt = Integer.parseInt(month);
                 String count = rs.getString("COUNT");
-                projectList.add(month + "," + count);
-
+                Integer countInt = Integer.parseInt(count);
+                numList[monthInt -1] = countInt; 
+            
             }
         } catch (SQLException e) {
             System.out.println("SQLException at ProjectDAO: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
-        return projectList;
+        
+        return numList;
     }
 
-    public static ArrayList<String> getTimeExceededPerStaff(String year, String name) {
+    public static int[] getTimeExceededPerStaff(String year, String name) {
 
-        ArrayList<String> projectList = new ArrayList<>();
-
+        
+        int[] numList = new int[12];
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (employee1Hours > (plannedHours)/2) and employee1=? or employee2 =? GROUP BY MONTH(end)");
             stmt.setString(1, year);
@@ -1637,8 +1642,10 @@ public class ProjectDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String month = rs.getString("MONTH");
+                Integer monthInt = Integer.parseInt(month);
                 String count = rs.getString("COUNT");
-                projectList.add(month + "," + count);
+                Integer countInt = Integer.parseInt(count);
+                numList[monthInt -1] = countInt; 
 
             }
         } catch (SQLException e) {
@@ -1646,7 +1653,7 @@ public class ProjectDAO {
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
-        return projectList;
+        return numList;
     }
 
     public static double getTotalActualCost(Project project) {

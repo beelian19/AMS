@@ -34,7 +34,7 @@ public class OverdueProjectPerYear extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        ArrayList<String> overdueList = new ArrayList();
+        int[] overdueList = new int[12];
         if (request.getParameter("year") == null) {
             
         } else {
@@ -43,7 +43,7 @@ public class OverdueProjectPerYear extends HttpServlet {
             
         }
         request.setAttribute("overdueList", overdueList);
-        RequestDispatcher rd = request.getRequestDispatcher("Dashboard.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("FinalDashboard.jsp");
         rd.forward(request, response);
     }
 
