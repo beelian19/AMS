@@ -137,34 +137,22 @@
             clientProjectList = ProjectDAO.getAllProjectsByCompanyName("");
             ArrayList<ArrayList<Project>> employeeProjectList = new ArrayList<>();
             employeeProjectList = ProjectDAO.getAllProjectsByEmployee("");
+            boolean displayClientGraph = false;
+            boolean displayEmployeeGraph = true;
         %>
         <script>
             $(document).ready(function () {
-            $('#datatable').DataTable();
-            $('#datatable2').DataTable();
-            $('#datatable3').DataTable();
-            $('#datatable4').DataTable();
-            $('#datatable5').DataTable();
-            $('#datatable6').DataTable();
-            $('#datatable7').DataTable();
-            $('#datatable8').DataTable();
-            $('#datatable9').DataTable();
-            $('#datatable10').DataTable();
+                $('#datatable').DataTable();
+                $('#datatable2').DataTable();
+                $('#datatable3').DataTable();
+                $('#datatable4').DataTable();
+                $('#datatable5').DataTable();
+                $('#datatable6').DataTable();
+                $('#datatable7').DataTable();
+                $('#datatable8').DataTable();
+                $('#datatable9').DataTable();
+                $('#datatable10').DataTable();
             })
-        </script>
-        <script type="text/javascript">
-                    $(document).ready(function () {
-            $("input[type='radio']").click(function () {
-            var radioValue = $("input.clientDashboardMonth[type="radio"]:checked").val();
-            var yearValue = $("input.clientDashboardYear[type="radio"]:checked").val();
-            if (radioValue) {
-            alert("month " + radioValue);
-            }
-            if (yearValue) {
-            alert("year " + yearValue);
-            }
-            });
-            });
         </script>
     </head>
     <script src="js/Chart.min.js"></script>
@@ -496,46 +484,46 @@
                     </div>
                     <script>
                         var lineChartData = {
-                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                datasets: [{
-                                label: 'Revenue',
-                                        fillColor: 'rgba(255, 99, 132, 0.2)',
-                                        strokeColor: 'rgba(220,180,0,1)',
-                                        pointColor: 'rgba(220,180,0,1)',
-                                        data: [80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40], //"SalesGraph", //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
-                                        backgroundColor: [
-                                                'rgba(255, 99, 132, 0.2)'
-                                        ],
-                                        borderColor: [
-                                                'rgba(255,99,132,1)'
-                                        ],
-                                        borderWidth: 1
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [{
+                                    label: 'Revenue',
+                                    fillColor: 'rgba(255, 99, 132, 0.2)',
+                                    strokeColor: 'rgba(220,180,0,1)',
+                                    pointColor: 'rgba(220,180,0,1)',
+                                    data: [80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40], //"SalesGraph", //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255,99,132,1)'
+                                    ],
+                                    borderWidth: 1
                                 },
                                 {
-                                label: 'Profit',
-                                        fillColor: 'rgba(54, 162, 235, 0.2)',
-                                        strokeColor: 'rgba(66,180,0,1)',
-                                        pointColor: 'rgba(66,180,0,1)',
-                                        data: [20, - 30, 80, 20, 40, 10, 60, - 30, 80, 20, 40, 10], //"ProfitGraph", //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
-                                        backgroundColor: [
-                                                'rgba(153, 102, 255, 0.2)'
-                                        ],
-                                        borderColor: [
-                                                'rgba(153, 102, 255, 0.2)'
-                                        ],
-                                        borderWidth: 1
+                                    label: 'Profit',
+                                    fillColor: 'rgba(54, 162, 235, 0.2)',
+                                    strokeColor: 'rgba(66,180,0,1)',
+                                    pointColor: 'rgba(66,180,0,1)',
+                                    data: [20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10], //"ProfitGraph", //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
+                                    backgroundColor: [
+                                        'rgba(153, 102, 255, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(153, 102, 255, 0.2)'
+                                    ],
+                                    borderWidth: 1
                                 }, {
-                                label: 'Cost',
-                                        fillColor: 'rgba(54, 162, 235, 0.2)',
-                                        strokeColor: 'rgba(54, 162, 235, 0.2)',
-                                        pointColor: 'rgba(54, 162, 235, 0.2)',
-                                        data: [60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30], //"CostGraph", //[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
-                                        backgroundColor: [
-                                                'rgba(54, 162, 235, 0.2)'
-                                        ],
-                                        borderColor: [
-                                                'rgba(54, 162, 235, 0.2)'
-                                        ],
+                                    label: 'Cost',
+                                    fillColor: 'rgba(54, 162, 235, 0.2)',
+                                    strokeColor: 'rgba(54, 162, 235, 0.2)',
+                                    pointColor: 'rgba(54, 162, 235, 0.2)',
+                                    data: [60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30], //"CostGraph", //[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
+                                    backgroundColor: [
+                                        'rgba(54, 162, 235, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 0.2)'
+                                    ],
                                 }]
                         }
 
@@ -547,116 +535,116 @@
                         Chart.defaults.global.responsive = false;
                         var ctx = document.getElementById("RevenueChart").getContext("2d");
                         var RevenueChart = new Chart(ctx, {
-                        type: 'line',
-                                data: lineChartData,
-                                pointDotRadius: 5,
-                                bezierCurve: false,
-                                scaleShowVerticalLines: false
+                            type: 'line',
+                            data: lineChartData,
+                            pointDotRadius: 5,
+                            bezierCurve: false,
+                            scaleShowVerticalLines: false
                         });
                     </script>
                     <script>
                         var barChartData = {
-                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                datasets: [{
-                                label: '# of Projects',
-                                        data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-                                        backgroundColor: [
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)'
-                                        ],
-                                        borderColor: [
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)'
-                                        ],
-                                        borderWidth: 1
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [{
+                                    label: '# of Projects',
+                                    data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)'
+                                    ],
+                                    borderWidth: 1
                                 },
                                 {
-                                label: '# of Profits',
-                                        data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-                                        backgroundColor: [
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)'
-                                        ],
-                                        borderColor: [
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)'
-                                        ],
-                                        borderWidth: 1
+                                    label: '# of Profits',
+                                    data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                    backgroundColor: [
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)'
+                                    ],
+                                    borderWidth: 1
                                 },
                                 {
-                                label: '# of Losses',
-                                        data: [1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
-                                        backgroundColor: [
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)'
-                                        ],
-                                        borderColor: [
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)'
-                                        ],
-                                        borderWidth: 1
+                                    label: '# of Losses',
+                                    data: [1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
+                                    backgroundColor: [
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)'
+                                    ],
+                                    borderWidth: 1
                                 }
-                                ]
+                            ]
                         }
 
                         Chart.defaults.global.tooltipCornerRadius = 0;
@@ -666,114 +654,114 @@
                         Chart.defaults.global.responsive = false;
                         var ctx = document.getElementById("ProfitAndLossChart").getContext("2d");
                         var RevenueChart = new Chart(ctx, {
-                        type: 'bar',
-                                data: barChartData,
-                                scaleShowVerticalLines: false
+                            type: 'bar',
+                            data: barChartData,
+                            scaleShowVerticalLines: false
                         });
                     </script>
                     <script>
                         var barChartData = {
-                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                datasets: [{
-                                label: '# of Projects',
-                                        data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-                                        backgroundColor: [
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)'
-                                        ],
-                                        borderColor: [
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)'
-                                        ],
-                                        borderWidth: 1
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [{
+                                    label: '# of Projects',
+                                    data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)'
+                                    ],
+                                    borderWidth: 1
                                 },
                                 {
-                                label: '# of Projects On Time',
-                                        data: [1, 3, 4, 5, 2, 3, 1, 3, 4, 5, 2, 3],
-                                        backgroundColor: [
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)'
-                                        ],
-                                        borderColor: [
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)'
-                                        ],
-                                        borderWidth: 1
+                                    label: '# of Projects On Time',
+                                    data: [1, 3, 4, 5, 2, 3, 1, 3, 4, 5, 2, 3],
+                                    backgroundColor: [
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)'
+                                    ],
+                                    borderWidth: 1
                                 },
                                 {
-                                label: '# of Overdue Projects',
-                                        data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-                                        backgroundColor: [
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)'
-                                        ],
-                                        borderColor: [
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)'
-                                        ],
-                                        borderWidth: 1
+                                    label: '# of Overdue Projects',
+                                    data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                    backgroundColor: [
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)'
+                                    ],
+                                    borderWidth: 1
                                 }
-                                ]
+                            ]
                         }
                         Chart.defaults.global.tooltipCornerRadius = 0;
                         Chart.defaults.global.tooltipTitleFontStyle = "normal";
@@ -782,15 +770,20 @@
                         Chart.defaults.global.responsive = false;
                         var ctx = document.getElementById("ProjectsOverdueChart").getContext("2d");
                         var ProjectsOverdueChart = new Chart(ctx, {
-                        type: 'bar',
-                                data: barChartData,
-                                scaleShowVerticalLines: false
+                            type: 'bar',
+                            data: barChartData,
+                            scaleShowVerticalLines: false
                         });
                     </script>
                 </div>
+
+
+                <!-- ############################################### THIS PORTION IS FOR CLIENT PERFORMANCE ######################################################################-->
                 <div id="Client" class="tabcontent container-fluid" align='center' style="text-align: center;">
-                    <%
-                        if (employeeList != null && !employeeList.isEmpty()) {
+                    <% // this is to check if we're supposed to show the list of client or the graphs page 
+                        if (!displayClientGraph) {
+                            // Checks if clientlist is null or isempty
+                            if (clientList != null && !clientList.isEmpty()) {
                     %>   
                     <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
                         <form action="dashboardClientServlet" method="post">
@@ -899,151 +892,390 @@
                     </div>
                     <%
                         }
+                    } else {
                     %>
-                </div>
-                <div id="Employee" class="tabcontent container-fluid" align='center' style="text-align: center;">
-                    <%
-                        if (employeeList != null && !employeeList.isEmpty()) {
-                    %>   
-                    <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                        <form action = "refreshTokenServlet" method = "post">
-                            <div class="row">
+                    <div class="container-fluid" style="text-align:center; width:80%; height: 80%">
+                        <br/>
+                        <div class="col-xs-12" id="clientProjectOverdueTable" style="display:none">
+                            <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                <table id='datatable7' align="center" style="text-align: left;">
+                                    <thead>
+                                        <tr>
+                                            <th width="20.00%">Completion Date</th>
+                                            <th width="20.00%">Project Name</th>
+                                            <th width="20.00%">Hours Assigned</th>
+                                            <th width="20.00%">Hours Actual</th>
+                                            <th width="20.00%">Staff</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            if (clientProjectList != null && !clientProjectList.isEmpty()) {
+                                                for (int i = 0; i < clientProjectList.size(); i++) {
+                                                    //Project p = clientProjectList.get(i);
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <%//p.getDateCompleted()%>
+                                            </td>
+                                            <td>
+                                                <%// profileUrl2 = profileUrl + p.getProjectID();%>
+                                                <a href=<%=profileUrl2%>>
+                                                    <%// p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <%//p.getPlannedHours()%>
+                                            </td>
+                                            <td>
+                                                <%//p.getEmployee1Hours() + p.getEmployee2Hours()%>
+                                            </td>
+                                            <td>
+                                                <%
+                                                    //employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
+                                                    //employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
+                                                %>
+                                                <a href=<%=employee1ProfileUrl2%>>
+                                                    <%//p.getEmployee1()%>
+                                                </a>
+                                                <% //if (!p.getEmployee2().toLowerCase().equals("na")) {
+                                                    //    out.println(" and ");
+                                                %>
+                                                <a href=<%=employee2ProfileUrl2%>>
+                                                    <%//p.getEmployee2()%>
+                                                </a>
+                                                <%
+                                                    }
+                                                %>
+                                            </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
                                 <br/>
-                                <div class="col-xs-6">
-                                </div>
-                                <div class="col-xs-3">
-                                    <div class="dashboardSelect">
-                                        <select name="employeeDashboardMonth" class="clientDashboard" id="employeeDashboardMonth">
-                                            <option class="clientDashboard" disabled selected value>-- Please Select An Month --</option>
-                                            <option class="clientDashboard" value="01">January</option>
-                                            <option class="clientDashboard" value="02">February</option>
-                                            <option class="clientDashboard" value="03">March</option>
-                                            <option class="clientDashboard" value="04">April</option>
-                                            <option class="clientDashboard" value="05">May</option>
-                                            <option class="clientDashboard" value="06">June</option>
-                                            <option class="clientDashboard" value="07">July</option>
-                                            <option class="clientDashboard" value="08">August</option>
-                                            <option class="clientDashboard" value="09">September</option>
-                                            <option class="clientDashboard" value="10">October</option>
-                                            <option class="clientDashboard" value="11">November</option>
-                                            <option class="clientDashboard" value="12">December</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-3">
-                                    <div class="dashboardSelect">
-                                        <select name="employeeDashboardYear" class="clientDashboard" id="employeeDashboardYear" required>
-                                            <option class="clientDashboard" disabled selected value>-- Please Select An Year --</option>
-                                            <option class="clientDashboard" value="2014">2014</option>
-                                            <option class="clientDashboard" value="2014">2015</option>
-                                            <option class="clientDashboard" value="2014">2016</option>
-                                            <option class="clientDashboard" value="2014">2017</option>
-                                            <option class="clientDashboard" value="2014">2018</option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
-                            <br/><br/>
-                            <table id='datatable2' align="center">
-                                <thead>
-                                    <tr>
-                                        <th width="16.67%">Name</th>
-                                        <th width="16.67%">Position</th>
-                                        <th width="16.67%">Email</th>
-                                        <th width="16.67%">Number</th>
-                                        <th width="16.67%">Admin Access</th>
-                                        <th width="16.67%"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <%
-                                        for (int i = 0; i < employeeList.size(); i++) {
-                                    %>
-                                    <tr style="text-align: left;">
-                                        <td width="16.67%">
-                                            <%=employeeList.get(i).getName()%>
-                                        </td>
-                                        <td width="16.67%">
-                                            <%=employeeList.get(i).getPosition()%>
-                                        </td>
-                                        <td width="16.67%">
-                                            <%=employeeList.get(i).getEmail()%>
-                                        </td>
-                                        <td width="16.67%">
-                                            <%=employeeList.get(i).getNumber()%>
-                                        </td>
-                                        <td width="16.67%">
-                                            <%=employeeList.get(i).getIsAdmin()%>
-                                        </td>
-                                        <td width="16.67%" align="center">
-                                            <input type="radio" name="employee" value='<%=employeeList.get(i)%>' required>
-                                        </td>
-                                    </tr>
-                                    <%
-                                        }
-                                    %>
-                                </tbody>
-                            </table>
-                            <br/><br/>
-                            <table style="width: 100%" align="right">
-                                <tr>
-                                    <td style="width: 61%">
-                                        &nbsp;
-                                    </td>
-                                    <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
-                                    </td>
-                                    <td style="width: 1%">
-                                        &nbsp;
-                                    </td>
-                                    <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <br/><br/>
-                                    </td>
-                                </tr>
-                            </table>
-                        </form>
+                        </div>
+                        <div class="col-xs-12" id="clientProjectProfitAndLossTable" style="display:none">
+                            <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                <table id='datatable8' align="center" style="text-align: left;">
+                                    <thead>
+                                        <tr>
+                                            <th width="20.00%">Completion Date</th>
+                                            <th width="20.00%">Project Name</th>
+                                            <th width="20.00%">Sales</th>
+                                            <th width="20.00%">Cost</th>
+                                            <th width="20.00%">Profit/Loss</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            if (clientProjectList != null && !clientProjectList.isEmpty()) {
+                                                for (int i = 0; i < clientProjectList.size(); i++) {
+                                                    //Project p = clientProjectList.get(i);
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <%//p.getDateCompleted()%>
+                                            </td>
+                                            <td>
+                                                <%// profileUrl2 = profileUrl + p.getProjectID();%>
+
+                                                <!-- <a href=      profileUrl2      >-->
+                                                <%//p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
+                                                <!-- </a>-->
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                                <br/>
+                            </div>
+                        </div>
                     </div>
                     <%
                         }
                     %>
+                    <!-- ############################################### END OF CLIENT PERFORMANCE SECTION ###############################################-->                    
+
+                    <!-- ############################################### START OF EMPLOYEE PERFORMANCE SECTION ###############################################-->
+
+                    <div id="Employee" class="tabcontent container-fluid" align='center' style="text-align: center;">
+                        <% // this is to check if we're supposed to show the list of employees or the graphs page
+                            if (!displayEmployeeGraph) {
+                                // check if employeelist is null or empty
+                                if (employeeList != null && !employeeList.isEmpty()) {
+                        %>   
+                        <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                            <form action = "refreshTokenServlet" method = "post">
+                                <div class="row">
+                                    <br/>
+                                    <div class="col-xs-6">
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="dashboardSelect">
+                                            <select name="employeeDashboardMonth" class="clientDashboard" id="employeeDashboardMonth">
+                                                <option class="clientDashboard" disabled selected value>-- Please Select An Month --</option>
+                                                <option class="clientDashboard" value="01">January</option>
+                                                <option class="clientDashboard" value="02">February</option>
+                                                <option class="clientDashboard" value="03">March</option>
+                                                <option class="clientDashboard" value="04">April</option>
+                                                <option class="clientDashboard" value="05">May</option>
+                                                <option class="clientDashboard" value="06">June</option>
+                                                <option class="clientDashboard" value="07">July</option>
+                                                <option class="clientDashboard" value="08">August</option>
+                                                <option class="clientDashboard" value="09">September</option>
+                                                <option class="clientDashboard" value="10">October</option>
+                                                <option class="clientDashboard" value="11">November</option>
+                                                <option class="clientDashboard" value="12">December</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="dashboardSelect">
+                                            <select name="employeeDashboardYear" class="clientDashboard" id="employeeDashboardYear" required>
+                                                <option class="clientDashboard" disabled selected value>-- Please Select An Year --</option>
+                                                <option class="clientDashboard" value="2014">2014</option>
+                                                <option class="clientDashboard" value="2014">2015</option>
+                                                <option class="clientDashboard" value="2014">2016</option>
+                                                <option class="clientDashboard" value="2014">2017</option>
+                                                <option class="clientDashboard" value="2014">2018</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/><br/>
+                                <table id='datatable2' align="center">
+                                    <thead>
+                                        <tr>
+                                            <th width="16.67%">Name</th>
+                                            <th width="16.67%">Position</th>
+                                            <th width="16.67%">Email</th>
+                                            <th width="16.67%">Number</th>
+                                            <th width="16.67%">Admin Access</th>
+                                            <th width="16.67%"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            for (int i = 0; i < employeeList.size(); i++) {
+                                        %>
+                                        <tr style="text-align: left;">
+                                            <td width="16.67%">
+                                                <%=employeeList.get(i).getName()%>
+                                            </td>
+                                            <td width="16.67%">
+                                                <%=employeeList.get(i).getPosition()%>
+                                            </td>
+                                            <td width="16.67%">
+                                                <%=employeeList.get(i).getEmail()%>
+                                            </td>
+                                            <td width="16.67%">
+                                                <%=employeeList.get(i).getNumber()%>
+                                            </td>
+                                            <td width="16.67%">
+                                                <%=employeeList.get(i).getIsAdmin()%>
+                                            </td>
+                                            <td width="16.67%" align="center">
+                                                <input type="radio" name="employee" value='<%=employeeList.get(i)%>' required>
+                                            </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                                <br/><br/>
+                                <table style="width: 100%" align="right">
+                                    <tr>
+                                        <td style="width: 61%">
+                                            &nbsp;
+                                        </td>
+                                        <td style="width: 16.167%">
+                                            <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
+                                        </td>
+                                        <td style="width: 1%">
+                                            &nbsp;
+                                        </td>
+                                        <td style="width: 16.167%">
+                                            <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <br/><br/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                        <%
+                            }
+                        } else {
+                        %>
+                        <div class="container-fluid" style="text-align:center; width:80%; height: 80%" style="display: none;">
+                            <br/>
+                            <div class="col-xs-12" id="employeeProjectOverdueTable">
+                                <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                    <table id='datatable8' align="center" style="text-align: left;">
+                                        <thead>
+                                            <tr>
+                                                <th width="20.00%">Completion Date</th>
+                                                <th width="20.00%">Project Name</th>
+                                                <th width="20.00%">Hours Assigned</th>
+                                                <th width="20.00%">Hours Actual</th>
+                                                <th width="20.00%">Staff</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
+                                                    for (int i = 0; i < employeeProjectList.size(); i++) {
+                                                        //Project p = clientProjectList.get(i);
+                                            %>
+                                            <tr>
+                                                <td>
+                                                    test
+                                                    <%//p.getDateCompleted()%>
+                                                </td>
+                                                <td>
+                                                    test
+                                                    <%// profileUrl2 = profileUrl + p.getProjectID();%>
+                                                    <a href=<%=profileUrl2%>>
+                                                        <%// p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    test
+                                                    <%//p.getPlannedHours()%>
+                                                </td>
+                                                <td>
+                                                    <%//p.getEmployee1Hours() + p.getEmployee2Hours()%>
+                                                </td>
+                                                <td>
+                                                    <%
+                                                        //employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
+                                                        //employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
+                                                    %>
+                                                    <a href=<%=employee1ProfileUrl2%>>
+                                                        <%//p.getEmployee1()%>
+                                                    </a>
+                                                    <% //if (!p.getEmployee2().toLowerCase().equals("na")) {
+                                                        //    out.println(" and ");
+                                                    %>
+                                                    <a href=<%=employee2ProfileUrl2%>>
+                                                        <%//p.getEmployee2()%>
+                                                    </a>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </td>
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" id="employeeProjectProfitAndLossTable" style="display: none;">
+                                <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                    <table id='datatable9' align="center" style="text-align: left;">
+                                        <thead>
+                                            <tr>
+                                                <th width="20.00%">Completion Date</th>
+                                                <th width="20.00%">Project Name</th>
+                                                <th width="20.00%">Sales</th>
+                                                <th width="20.00%">Cost</th>
+                                                <th width="20.00%">Profit/Loss</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
+                                                    for (int i = 0; i < employeeProjectList.size(); i++) {
+                                                        //Project p = clientProjectList.get(i);
+                                            %>
+                                            <tr>
+                                                <td>
+                                                    <%//p.getDateCompleted()%>
+                                                </td>
+                                                <td>
+                                                    <%// profileUrl2 = profileUrl + p.getProjectID();%>
+
+                                                    <!-- <a href=      profileUrl2      >-->
+                                                    <%//p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
+                                                    <!-- </a>-->
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                            </tr>
+                                            <%
+                                                    }
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                </div>
+                            </div>
+                        </div>
+                        <%
+                            }
+                        %>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-</body>
-<script>
-    // this is for toggling between the 3 main pages
-    function KPIs(evt, KPI) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(KPI).style.display = "block";
-    evt.currentTarget.className += " active";
-    }
-</script>
-<script>
-    // this is for collapsing and hiding the tables
-    $(document).ready(function () {
-    $('.nav-toggle').click(function () {
-    //get collapse content selector
-    var collapse_content_selector = $(this).attr('href');
-    $(collapse_content_selector).slideToggle("fast", function () {
+        </nav>
+    </body>
+    <script>
+        // this is for toggling between the 3 main pages
+        function KPIs(evt, KPI) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(KPI).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+    <script>
+        // this is for collapsing and hiding the tables
+        $(document).ready(function () {
+            $('.nav-toggle').click(function () {
+                //get collapse content selector
+                var collapse_content_selector = $(this).attr('href');
+                $(collapse_content_selector).slideToggle("fast", function () {
 
-    });
-    });
-    });
-</script>
-
-<jsp:include page="Footer.html"/>
+                });
+            });
+        });
+    </script>
+    <jsp:include page="Footer.html"/>
 </html>
