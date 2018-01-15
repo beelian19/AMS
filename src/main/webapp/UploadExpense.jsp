@@ -21,6 +21,10 @@
         <title>Upload Expense | Abundant Accounting Management System</title>
     </head>
     <%        
+        String expenseJobRunning = (String) session.getAttribute("expenseJobRunning");
+        if(expenseJobRunning!=null){
+            session.setAttribute("status", "Error: Please try again later, there are other expense jobs running");
+        }
         ArrayList<String> idList = new ArrayList();
         ArrayList<String> nameList = new ArrayList();
         ClientDAO clientDAO = new ClientDAO();
@@ -62,60 +66,17 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        <input id="file-upload" type = "file" name = "file" value="Choose Files to Upload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style='display: block; width:100%; height: 30px' required/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <Strong>Select Client</Strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <select name="clientSelected" id="clientSelected" style='display: block; width:500px; height: 30px' required>
-                                            <option disabled selected value> -- select an option -- </option>
-                                            <%
-                                                if (idList.size() == nameList.size()) {
-                                                    for (int i = 0; i < idList.size(); i++) {
-                                            %>
-                                            <option class="optionFont" value=<%=idList.get(i)%>><%=nameList.get(i)%></option>
-                                            <%
-                                                    }
-                                                }
-                                            %>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <Strong>Select Project</Strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <select name="projectSelected" id="projectSelected" style='display: block; width:500px; height: 30px' required>
-                                            <option disabled selected value> -- select an option -- </option>
-                                            <%
-                                                for (int i = 0; i < projectList.size(); i++) {
-                                                    Project p = projectList.get(i);
-                                                    String projectTitle = p.getProjectTitle();
-                                                    int projectId = p.getProjectID();
-                                            %>
-                                            <option class="optionFont" value='<%=projectId%>'><%=projectTitle%></option>
-                                            <%
-                                                }
-                                            %>
-                                        </select>
+                                        <% 
+                                            if(expenseJobRunning==null){
+                                        %>
+                                            <input id="file-upload" type = "file" name = "file" value="Choose Files to Upload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style='display: block; width:100%; height: 30px' required/>
+                                        <%
+                                        }else{
+                                        %>  
+                                            <input id="file-upload" type = "file" name = "file" value="Choose Files to Upload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style='display: block; width:100%; height: 30px' disabled/>
+                                        <%
+                                          }  
+                                        %>
                                     </td>
                                 </tr>
                                 <tr>
@@ -128,7 +89,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        <br/>
+                                        <br/><br/><br/><br/><br/><br/><br/><br/>
                                     </td>
                                 </tr>
                                 <tr>
