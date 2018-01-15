@@ -39,38 +39,39 @@
             <div class="container-fluid" width="100%" height="100%" style='padding-left: 0px; padding-right: 0px;'>
                 <jsp:include page="StatusMessage.jsp"/>
                 <div class="container-fluid" style="text-align: center; width: 80%;margin-top: <%=session.getAttribute("margin")%>">
-                    <h1>All Tokens</h1>
-                    <div class="container-fluid" width="100%" height="100%" style="text-align: left;">
-                        <table id="datatable" style="border: #FFFFFF" width="100%" height="100%">
-                            <thead>
-                                <tr>
-                                    <th>Client ID</th>
-                                    <th>Company Name</th>
-                                    <th></th>
-                                </tr> 
-                            </thead>
-                            <tbody>
-                                <%
-                                    if (clientIdList!=null && !clientIdList.isEmpty()){
-                                        for (int i = 0; i < clientIdList.size(); i++) {
-                                %>
-                                <tr>
-                                    <td>
-                                        <%=clientIdList.get(i)%>
-                                    </td>
-                                    <td>
-                                        <%=ClientDAO.getClientById(clientIdList.get(i).toString()).getCompanyName()%>
-                                    </td>
-                                    <td>
-                                        <input type="radio" name="clientId" value='<%=clientIdList.get(i)%>' required>
-                                    </td>
-                                </tr>
-                                <%
+                    <h1>All Tokens <i class="material-icons" id="addNewToken">add_box</i></h1>
+                    <form action="ResetToken" method="post">
+                        <div class="container-fluid" width="100%" height="100%" style="text-align: left;">
+                            <table id="datatable" style="border: #FFFFFF" width="100%" height="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Client ID</th>
+                                        <th>Company Name</th>
+                                        <th></th>
+                                    </tr> 
+                                </thead>
+                                <tbody>
+                                    <%
+                                        if (clientIdList != null && !clientIdList.isEmpty()) {
+                                            for (int i = 0; i < clientIdList.size(); i++) {
+                                    %>
+                                    <tr>
+                                        <td>
+                                            <%=clientIdList.get(i)%>
+                                        </td>
+                                        <td>
+                                            <%=ClientDAO.getClientById(clientIdList.get(i).toString()).getCompanyName()%>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="clientId" value='<%=clientIdList.get(i)%>' required>
+                                        </td>
+                                    </tr>
+                                    <%
+                                            }
                                         }
-                                    }
-                                %>
-                            </tbody>
-                        </table>
+                                    %>
+                                </tbody>
+                            </table>
                             <br/><br/>
                             <table style="width: 100%" align="right">
                                 <tr>
@@ -78,13 +79,13 @@
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block" id="edit" type="submit">Edit</button>
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit" name="edit" value="edit">Edit</button>
                                     </td>
                                     <td style="width: 1%">
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">Refresh Token</button>
+                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit" name="refreshToken" value="refreshToken">Refresh Token</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -93,152 +94,152 @@
                                     </td>
                                 </tr>
                             </table>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </nav>
         <br/>
         <script>
-        $('#edit').click(function () {
-            $('#editTokenModal').modal();
-        });
-    </script>
-    <!-- Start of Modal -->
-    <div id="editTokenModal" class="modal fade" role="dialog">
-        <!-- Modal content -->
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">
-                        <span id="eventTitle">Edit Details</span>
-                    </h4>
-                </div>
-                <div class="modal-body" align="left">
-                    <form>
-                        <table>
-                            <fieldset>
-                                <tr>
-                                    <td>  
-                                        <label>Client ID&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td width="1%">
-                                        &nbsp;
-                                    </td>
-                                    <td>
-                                        <!--<input type="text" name="clientId" id="clientId" value="" class="text ui-widget-content ui-corner-all" required>-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        <br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label for="reviewer">Client Secret&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td width="1%">
-                                        &nbsp;
-                                    </td>
-                                    <td>
-                                        <!--<input type="text" name="emailEdit" id="emailEdit" value="" class="text ui-widget-content ui-corner-all" required>-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        <br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label for="reviewer">Redirect URI&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td width="1%">
-                                        &nbsp;
-                                    </td>
-                                    <td>
-                                        <!--<input type="text" name="directorEdit" id="directorEdit" value="" class="text ui-widget-content ui-corner-all" required>-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        <br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label for="reviewer">Company ID&nbsp;<font color="red">*</font></label>
-                                    </td>
-                                    <td width="1%">
-                                        &nbsp;
-                                    </td>
-                                    <td>
-                                        <!--<input type="text" name="secretaryEdit" id="secretaryEdit" value="" class="text ui-widget-content ui-corner-all" readonly>-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        <br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="1%" colspan="2">
-                                        &nbsp;
-                                    </td>
-                                    <td style="text-align: right">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="button" id="btnSave" class="btn btn-success">Save</button>
-                                    </td>
-                                </tr>
-                            </fieldset>
-                        </table>
-                    </form>
+            $('#addNewToken').click(function () {
+                $('#addNewTokenModal').modal();
+            });
+        </script>
+        <!-- Start of Modal -->
+        <div id="addNewTokenModal" class="modal fade" role="dialog">
+            <!-- Modal content -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">
+                            <span id="eventTitle">Add New Token</span>
+                        </h4>
+                    </div>
+                    <div class="modal-body" align="left">
+                        <form>
+                            <table>
+                                <fieldset>
+                                    <tr>
+                                        <td>
+                                            <label for="clientId">Client ID&nbsp;<font color="red">*</font></label>
+                                        </td>
+                                        <td width="1%">
+                                            &nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" name="clientId" id="clientId" class="text ui-widget-content ui-corner-all" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="clientSecret">Client Secret&nbsp;<font color="red">*</font></label>
+                                        </td>
+                                        <td width="1%">
+                                            &nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" name="clientSecret" id="clientSecret" class="text ui-widget-content ui-corner-all" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="redirectURI">Redirect URI&nbsp;<font color="red">*</font></label>
+                                        </td>
+                                        <td width="1%">
+                                            &nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" name="redirectURI" id="redirectURI" class="text ui-widget-content ui-corner-all" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="companyId">Company ID&nbsp;<font color="red">*</font></label>
+                                        </td>
+                                        <td width="1%">
+                                            &nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" name="companyId" id="companyId" class="text ui-widget-content ui-corner-all" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="1%" colspan="2">
+                                            &nbsp;
+                                        </td>
+                                        <td style="text-align: right">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" id="btnCreate" class="btn btn-success">Create</button>
+                                        </td>
+                                    </tr>
+                                </fieldset>
+                            </table>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- End of Modal-->
-    <script>
-        $('#btnSave').click(function () {
-            if ($('#officeContactEdit').val().trim() == "") {
-                alert("Office Contact Number Required");
-                return;
-            }
-            if ($('#emailEdit').val().trim() == "") {
-                alert("Email Required");
-                return;
-            }
-            if ($('#directorEdit').val().trim() == "") {
-                alert("Director Information Required");
-                return;
-            }
-            if ($('#secretaryEdit').val().trim() == "") {
-                alert("Secretary Information Required");
-                return;
-            } else {
-                var number = $('#officeContactEdit').val();
-                var email = $('#emailEdit').val();
-                var director = $('#directorEdit').val();
-                var secretary = $('#secretaryEdit').val();
+        <script>
+            $('#btnCreate').click(function () {
+                if ($('#clientId').val().trim() == "") {
+                    alert("Client ID Required");
+                    return;
+                }
+                if ($('#clientSecret').val().trim() == "") {
+                    alert("Client Secret Required");
+                    return;
+                }
+                if ($('#redirectURI').val().trim() == "") {
+                    alert("Redirect URI Required");
+                    return;
+                }
+                if ($('#companyId').val().trim() == "") {
+                    alert("Company ID Required");
+                    return;
+                } else {
+                    var clientId = $('#clientId').val();
+                    var clientSecret = $('#clientSecret').val();
+                    var redirectURI = $('#redirectURI').val();
+                    var companyId = $('#companyId').val();
 
-                $.ajax({
-                    type: 'POST',
-                    data: 'officeContact=' + number + '&' + 'contactEmailAddress=' + email + '&' + 'director=' + director + '&' + 'secretary=' + secretary + '&' + 'accountant=' + accountant + '&' + 'uen=' + uen + '&' + 'realmid=' + realmid + '&' + 'officeAddress=' + officeAddress + '&' + 'gstSubmission=' + gstSubmission + '&' + 'mgmtAcc=' + mgmtAcc,
-                    url: 'UpdateClientServlet',
-                    success: function () {
-                        location.reload();
-                        alert('Details Updated');
-                        $('#editTokenModal').modal('hide');
-                    },
-                    error: function () {
-                        alert('Fail to Edit Details');
-                    }
-                })
-            }
-            $('#editTokenModal').modal('hide');
-        });
-    </script>
+                    $.ajax({
+                        type: 'POST',
+                        data: 'clientId=' + clientId + '&' + 'clientSecret=' + clientSecret + '&' + 'redirectURI=' + redirectURI + '&' + 'companyId=' + companyId,
+                        url: 'CreateToken',
+                        success: function () {
+                            location.reload();
+                            alert('New Token Added');
+                            $('#addNewToken').modal('hide');
+                        },
+                        error: function () {
+                            alert('Error: Please try again!');
+                        }
+                    })
+                }
+                $('#addNewToken').modal('hide');
+            });
+        </script>
     </body>
     <jsp:include page="Footer.html"/>
 </html>

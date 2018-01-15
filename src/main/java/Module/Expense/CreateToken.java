@@ -45,6 +45,7 @@ public class CreateToken extends HttpServlet {
             message = e.getMessage();
         } finally {
             if (success) {
+                System.out.println("successful");
                 request.getSession().setAttribute("status", "Token created. Please reset the token for " + message);
                 response.sendRedirect("TokenOverview.jsp");
             } else {
