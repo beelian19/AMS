@@ -138,7 +138,7 @@
             ArrayList<ArrayList<Project>> employeeProjectList = new ArrayList<>();
             employeeProjectList = ProjectDAO.getAllProjectsByEmployee("");
             boolean displayClientGraph = false;
-            boolean displayEmployeeGraph = true;
+            boolean displayEmployeeGraph = false;
         %>
         <script>
             $(document).ready(function () {
