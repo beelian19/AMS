@@ -453,14 +453,12 @@ public class EmployeeDAO {
 
         for (int i = 0; i < empList.size(); i++) {
             Employee emp = empList.get(i);
-            if (!emp.getPosition().equals("Ex-Employee")) {
-                String key = emp.getName();
-                Double monthlyOverhead = Double.parseDouble(emp.getMonthlyOverhead());
-                Double value = monthlyOverhead / (20 * 8);
-                //System.out.println(key + " - " + value);
+            String key = emp.getName();
+            Double monthlyOverhead = Double.parseDouble(emp.getMonthlyOverhead());
+            Double value = monthlyOverhead / (20 * 8);
+            //System.out.println(key + " - " + value);
 
-                costPerHourPerStaff.put(key, value);
-            }
+            costPerHourPerStaff.put(key, value);
         }
         return costPerHourPerStaff;
     }
@@ -478,14 +476,14 @@ public class EmployeeDAO {
         }
         return projectList;
     }
-    
-    public static ArrayList<Employee> getCurrentEmployees () {
+
+    public static ArrayList<Employee> getCurrentEmployees() {
         ArrayList<Employee> currentEmpList = new ArrayList();
-        
+
         ArrayList<Employee> empList = getAllEmployees();
-        
-        for(Employee e : empList) {
-            if(!e.getPosition().equals("Ex-Employee")) {
+
+        for (Employee e : empList) {
+            if (!e.getPosition().equals("Ex-Employee")) {
                 currentEmpList.add(e);
             }
         }

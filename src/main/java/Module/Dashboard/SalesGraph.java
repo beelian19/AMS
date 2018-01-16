@@ -6,11 +6,9 @@
 package Module.Dashboard;
 
 import DAO.ProjectDAO;
-import static Utility.JsonFormatter.convertObjectToElement;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,20 +33,11 @@ public class SalesGraph extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String selectedYear = "2017";
-//        JsonArray events = new JsonArray();
-//        PrintWriter out = response.getWriter();
-//        JsonObject outputRequest = new JsonObject();
+        Double[] salesList = ProjectDAO.getSales(selectedYear);
         
-        HashMap<String, Double> salesList = ProjectDAO.getSales(selectedYear);
-        System.out.println("Check======================= "+salesList.get("01"));
-        for(String month : salesList.keySet()) {
-            double sales = salesList.get(month);
-            //outputRequest.add(month, convertObjectToElement(profit));
-            System.out.println("Sales for "+month+" ============================ "+sales);
-        }
+        ArrayList<Double> test = new ArrayList(Arrays.asList(salesList));
         
-        //events.add(outputRequest);
-        //out.print(events);
+        System.out.println(test);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

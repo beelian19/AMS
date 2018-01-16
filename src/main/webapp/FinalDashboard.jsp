@@ -440,6 +440,7 @@
                         </div>
                     </div>
                     <script>
+                        var sales = SalesGraph;
                         var lineChartData = {
                             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                             datasets: [{
@@ -447,7 +448,7 @@
                                     fillColor: 'rgba(255, 99, 132, 0.2)',
                                     strokeColor: 'rgba(220,180,0,1)',
                                     pointColor: 'rgba(220,180,0,1)',
-                                    data: [80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40], //"SalesGraph", //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                    data: [80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)'
                                     ],

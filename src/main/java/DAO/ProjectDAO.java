@@ -1250,20 +1250,15 @@ public class ProjectDAO {
         return projectList;
     }
 
-    public static HashMap<String, Double> getSales(String selectedYear) {
-        //Key = Month, Value = Sales (Hours Assigned * CostPerHourPerStaff)
-        HashMap<String, Double> salesList = new HashMap();
-
-        HashMap<String, Double> costPerHourPerStaffList = getCostPerHourPerStaff();
+    public static Double[] getSales(String selectedYear) {
+//        HashMap<String, Double> totalSalesList = new HashMap();
+        Double[] totalSalesList = new Double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         HashMap<String, ArrayList<Project>> projectList = getCompletedProjectList();
-
+        HashMap<String, Double> costPerHourPerStaffList = EmployeeDAO.getCostPerHourPerStaff();
+        
         for (String empName : projectList.keySet()) {
             ArrayList<Project> list = projectList.get(empName);
 
-            //Key = Month, Value = HoursAssigned based on EmpName
-            HashMap<String, Double> hoursAssignedList = new HashMap();
-
-            String key = "";
             double value = 0.0;
 
             for (int i = 0; i < list.size(); i++) {
@@ -1275,145 +1270,86 @@ public class ProjectDAO {
                 String month = dateCompleted.substring(5, 7);
 
                 if (year.equals(selectedYear)) {
+                    DecimalFormat decimal = new DecimalFormat("#.##");
                     switch (month) {
                         case "01":
-                            key = "01";
-
-                            if (hoursAssignedList.containsKey(key)) {
-                                value += hoursAssignedList.get(key);
-                            } else {
-                                value = p.getPlannedHours();
-                            }
-                            hoursAssignedList.put(key, value);
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+                            
+                            totalSalesList[0] += value;
                             break;
-//                        case "02":
-//                            key = "02";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
-//                        case "03":
-//                            key = "03";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
-//                        case "04":
-//                            key = "04";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
-//                        case "05":
-//                            key = "05";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
-//                        case "06":
-//                            key = "06";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
-//                        case "07":
-//                            key = "07";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
-//                        case "08":
-//                            key = "08";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
-//                        case "09":
-//                            key = "09";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
-//                        case "10":
-//                            key = "10";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
-//                        case "11":
-//                            key = "11";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
-//                        case "12":
-//                            key = "12";
-//
-//                            if (hoursAssignedList.containsKey(key)) {
-//                                value += hoursAssignedList.get(key);
-//                            } else {
-//                                value = p.getPlannedHours();
-//                            }
-//                            hoursAssignedList.put(key, value);
-//                            break;
+                        case "02":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+
+                            totalSalesList[1] += value;
+                            break;
+                        case "03":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+
+                            totalSalesList[2] += value;
+                            break;
+                        case "04":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+                            
+                            totalSalesList[3] += value;
+                            break;
+                        case "05":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+                            
+                            totalSalesList[4] += value;
+                            break;
+                        case "06":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+                            
+                            totalSalesList[5] += value;
+                            break;
+                        case "07":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+                            
+                            totalSalesList[6] += value;
+                            break;
+                        case "08":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+                            
+                            totalSalesList[7] += value;
+                            break;
+                        case "09":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+                            
+                            totalSalesList[8] += value;
+                            break;
+                        case "10":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+                            
+                            totalSalesList[9] += value;
+                            break;
+                        case "11":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+                           
+                            totalSalesList[10] += value;
+                            break;
+                        case "12":
+                            value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            value = Double.valueOf(decimal.format(value));
+                            
+                            totalSalesList[11] += value;
+                            break;
                     }
-                }
-            }
-            if (!hoursAssignedList.isEmpty()) {
-                double costPerHour = costPerHourPerStaffList.get(empName);
-                for (String m : hoursAssignedList.keySet()) {
-                    double hoursAssigned = hoursAssignedList.get(m);
-                    System.out.println("" + m + " --- " + hoursAssigned + " --- " + costPerHour);
-                    double sales = hoursAssigned * costPerHour;
-                    //System.out.println(sales);
-                    if (salesList.containsKey(m)) {
-                        sales += salesList.get(m);
-                    }
-                    salesList.put(m, sales);
                 }
             }
         }
-        return salesList;
+        
+        return totalSalesList;
     }
 
     public static HashMap<String, Double> getTotalActualCost(String selectedYear) {
@@ -1581,21 +1517,21 @@ public class ProjectDAO {
         return totalActualCostList;
     }
 
-    public static HashMap<String, Double> getProfit(String selectedYear) {
-        HashMap<String, Double> profitList = new HashMap();
-
-        HashMap<String, Double> salesList = getSales(selectedYear);
-        HashMap<String, Double> totalActualCostList = getTotalActualCost(selectedYear);
-
-        for (String m : salesList.keySet()) {
-            double sales = salesList.get(m);
-            double totalActualCost = totalActualCostList.get(m);
-
-            double profit = sales - totalActualCost;
-            profitList.put(m, profit);
-        }
-        return profitList;
-    }
+//    public static HashMap<String, Double> getProfit(String selectedYear) {
+//        HashMap<String, Double> profitList = new HashMap();
+//
+//        HashMap<String, Double> salesList = getSales(selectedYear);
+//        HashMap<String, Double> totalActualCostList = getTotalActualCost(selectedYear);
+//
+//        for (String m : salesList.keySet()) {
+//            double sales = salesList.get(m);
+//            double totalActualCost = totalActualCostList.get(m);
+//
+//            double profit = sales - totalActualCost;
+//            profitList.put(m, profit);
+//        }
+//        return profitList;
+//    }
 
     public static ArrayList<String> getOverdueProjectPerStaff(String year, String name) {
 
@@ -1665,28 +1601,18 @@ public class ProjectDAO {
         double emp2ActualHours = 0.0;
 
         if (emp1 != null && !emp1.equals("NA")) {
-            for (Employee e : currentEmpList) {
-                String empName = e.getName();
-                if (emp1.equals(empName)) {
-                    emp1CostPerHour = costPerHourPerStaffList.get(emp1);
-                    emp1ActualHours = project.getEmployee1Hours();
-                }
-            }
+            emp1CostPerHour = costPerHourPerStaffList.get(emp1);
+            emp1ActualHours = project.getEmployee1Hours();
         }
         if (emp2 != null && !emp2.equals("NA")) {
-            for (Employee e : currentEmpList) {
-                String empName = e.getName();
-                if (emp2.equals(empName)) {
-                    emp2CostPerHour = costPerHourPerStaffList.get(emp2);
-                    emp2ActualHours = project.getEmployee2Hours();
-                }
-            }
+            emp2CostPerHour = costPerHourPerStaffList.get(emp2);
+            emp2ActualHours = project.getEmployee2Hours();
         }
 
         totalActualCost = (emp1CostPerHour * emp1ActualHours) + (emp2CostPerHour * emp2ActualHours);
         DecimalFormat df = new DecimalFormat("#.##");
         totalActualCost = Double.valueOf(df.format(totalActualCost));
-        
+
         return totalActualCost;
     }
 
@@ -1694,7 +1620,6 @@ public class ProjectDAO {
         double sales = 0.0;
 
         HashMap<String, Double> costPerHourPerStaffList = EmployeeDAO.getCostPerHourPerStaff();
-        ArrayList<Employee> currentEmpList = EmployeeDAO.getCurrentEmployees();
 
         String emp1 = project.getEmployee1();
         String emp2 = project.getEmployee2();
@@ -1706,20 +1631,10 @@ public class ProjectDAO {
         double emp2CostPerHour = 0.0;
 
         if (emp1 != null && !emp1.equals("NA")) {
-            for (Employee e : currentEmpList) {
-                String empName = e.getName();
-                if (emp1.equals(empName)) {
-                    emp1CostPerHour = costPerHourPerStaffList.get(emp1);
-                }
-            }
+            emp1CostPerHour = costPerHourPerStaffList.get(emp1);
         }
         if (emp2 != null && !emp2.equals("NA")) {
-            for (Employee e : currentEmpList) {
-                String empName = e.getName();
-                if (emp2.equals(empName)) {
-                    emp2CostPerHour = costPerHourPerStaffList.get(emp2);
-                }
-            }
+            emp2CostPerHour = costPerHourPerStaffList.get(emp2);
         }
 
         sales = (emp1CostPerHour * (plannedHours / 2.0)) + (emp2CostPerHour * (plannedHours / 2.0));
