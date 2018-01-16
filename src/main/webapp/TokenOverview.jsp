@@ -4,6 +4,7 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="Entity.Client"%>
 <%@page import="DAO.ClientDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@include file="Protect.jsp"%>
@@ -22,13 +23,9 @@
                 $('#datatable').DataTable();
             })
         </script>
-        <%             ArrayList<String> clientNameList = new ArrayList<>();
-            ArrayList<Integer> clientIdList = new ArrayList<>();
-
-            clientNameList = ClientDAO.getAllCompanyNames();
-            for (int i = 0; i < clientNameList.size(); i++) {
-                clientIdList.add(i, (ClientDAO.getClientByCompanyName(clientNameList.get(i))).getClientID());
-            }
+        <%             
+            ArrayList<Client> clientList;
+            clientList = ClientDAO.getAllClient();
         %>
     </head>
     <body width="100%" style='background-color: #F0F8FF;'>
@@ -52,18 +49,19 @@
                                 </thead>
                                 <tbody>
                                     <%
-                                        if (clientIdList != null && !clientIdList.isEmpty()) {
-                                            for (int i = 0; i < clientIdList.size(); i++) {
+                                        if (clientList != null && !clientList.isEmpty()) {
+                                            for (Client c: clientList) {
+                                                
                                     %>
                                     <tr>
                                         <td>
-                                            <%=clientIdList.get(i)%>
+                                            <%=c.getClientID()%>
                                         </td>
                                         <td>
-                                            <%=ClientDAO.getClientById(clientIdList.get(i).toString()).getCompanyName()%>
+                                            <%=c.getCompanyName()%>
                                         </td>
                                         <td>
-                                            <input type="radio" name="ClientId" value='<%=clientIdList.get(i)%>' required>
+                                            <input type="radio" name="ClientId" value='<%=c.getClientID()%>' required>
                                         </td>
                                     </tr>
                                     <%

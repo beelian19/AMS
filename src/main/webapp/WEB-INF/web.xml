@@ -145,10 +145,6 @@
         <servlet-class>Module.Dashboard.CompletedProjectMonthlyProfitability</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CreateToken</servlet-name>
-        <servlet-class>Module.Expense.CreateToken</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ProfitGraph</servlet-name>
         <servlet-class>Module.Dashboard.ProfitGraph</servlet-class>
     </servlet>
@@ -311,10 +307,6 @@
     <servlet-mapping>
         <servlet-name>CompletedProjectMonthlyProfitability</servlet-name>
         <url-pattern>/CompletedProjectMonthlyProfitability</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateToken</servlet-name>
-        <url-pattern>/CreateToken</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProfitGraph</servlet-name>

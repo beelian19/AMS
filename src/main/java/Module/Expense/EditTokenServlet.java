@@ -39,7 +39,7 @@ public class EditTokenServlet extends HttpServlet {
             String clientSecret = request.getParameter("clientSecret");
             String redirectURI = request.getParameter("redirectURI");
             String companyId = request.getParameter("companyId");
-            System.out.println(clientKey + " =TES " + companyId);
+
             Client client = ClientDAO.getClientById(companyId);
             if (client == null) {
                 throw new IllegalArgumentException(companyId);
