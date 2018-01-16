@@ -63,7 +63,7 @@
                                             <%=ClientDAO.getClientById(clientIdList.get(i).toString()).getCompanyName()%>
                                         </td>
                                         <td>
-                                            <input type="radio" name="clientId" value='<%=clientIdList.get(i)%>' required>
+                                            <input type="radio" name="ClientId" value='<%=clientIdList.get(i)%>' required>
                                         </td>
                                     </tr>
                                     <%
