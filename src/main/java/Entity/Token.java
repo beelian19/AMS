@@ -60,7 +60,7 @@ public class Token {
         this.companyId = companyId;
         this.xeroToken = "NA";
         this.xeroTokenSecret = "NA";
-        this.xeroTokenSecret = "NA";
+        this.xeroTokenHandle = "NA";
     }
 
     /**
@@ -106,6 +106,20 @@ public class Token {
         return refreshToken;
     }
 
+    public void setClientId(String ClientId) {
+        this.ClientId = ClientId;
+    }
+
+    public void setClientSecret(String ClientSecret) {
+        this.ClientSecret = ClientSecret;
+    }
+
+    public void setRedirectUri(String redirectUri) {
+        this.redirectUri = redirectUri;
+    }
+
+    
+    
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }

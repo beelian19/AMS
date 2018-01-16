@@ -27,64 +27,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Invoice Management Module | Abundant Accounting Management System</title>
-        <style type="text/css">
-            /* Popup container - can be anything you want */
-            .popup {
-                position: relative;
-                display: inline-block;
-                cursor: pointer;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
-
-            /* The actual popup */
-            .popup .popuptext {
-                visibility: hidden;
-                width: 500px;
-                background-color: #555;
-                color: #fff;
-                text-align: left;
-                border-radius: 6px;
-                padding: 8px 0;
-                position: absolute;
-                z-index: 1;
-                bottom: 125%;
-                left: 50%;
-                right: 50%;
-            }
-
-            /* Popup arrow */
-            .popup .popuptext::after {
-                content: "";
-                position: absolute;
-                top: 100%;
-                left: 10%;
-                margin-left: -5px;
-                border-width: 5px;
-                border-style: solid;
-                border-color: #555 transparent transparent transparent;
-            }
-
-            /* Toggle this class - hide and show the popup */
-            .popup .show {
-                visibility: visible;
-                -webkit-animation: fadeIn 0.5s;
-                animation: fadeIn 0.5s;
-            }
-
-            /* Add animation (fade in the popup) */
-            @-webkit-keyframes fadeIn {
-                from {opacity: 0;} 
-                to {opacity: 1;}
-            }
-
-            @keyframes fadeIn {
-                from {opacity: 0;}
-                to {opacity:1 ;}
-            }
-        </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
@@ -96,7 +38,8 @@
         </script>
     </head>
     <body width="100%" style='background-color: #F0F8FF;'>
-        <%            // Ensure that the workbook is there, if not redirect to UploadExpense.jsp
+        <%            
+            // Ensure that the workbook is there, if not redirect to UploadExpense.jsp
             if (request.getSession().getAttribute("excel") == null) {
                 request.setAttribute("UploadExcelResponse", "Missing excel attribute at ProcessExpense.jsp");
                 RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
@@ -193,15 +136,6 @@
                     <%
                         }
                     %>
-                    <div class="popup" onclick="helpPopup()">(Click here for help)
-                        <span class="popuptext" id="myPopup">
-                            &nbsp;1. Client's realmid has to be present to confirm the invoices
-                            <br/>
-                            &nbsp;2. For line items to be valid, there must not be any "--Needed--" tags in the row
-                            <br/>
-                            &nbsp;3. A clear line does not necessarily mean that the row invoice will be processed. &nbsp;&nbsp;Check results after to confirm. 
-                        </span>
-                    </div>
                     </br>
                     <br/>
                     <div class="container-fluid" align="center">
@@ -397,13 +331,6 @@
                             </td>
                         </tr>
                     </table>
-                    <script>
-                        // When the user clicks on div, open the popup
-                        function helpPopup() {
-                            var popup = document.getElementById("myPopup");
-                            popup.classList.toggle("show");
-                        }
-                    </script>
                 </div>
             </div>
         </nav>

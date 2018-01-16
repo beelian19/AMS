@@ -7,8 +7,10 @@ package Module.Expense;
 
 import DAO.ClientDAO;
 import DAO.TokenDAO;
+import Entity.Client;
 import Entity.Token;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Lin
  */
-public class CreateToken extends HttpServlet {
+public class EditTokenServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,27 +33,48 @@ public class CreateToken extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String message = "";
-        boolean success = false;
+        String status = "";
         try {
-            String ClientId = (String) request.getParameter("ClientId");
-            String ClientSecret = (String) request.getParameter("ClientSecret");
-            String redirectUri = (String) request.getParameter("redirectUri");
-            Integer companyId = Integer.valueOf(request.getParameter("companyId"));
-            Token token = new Token("QBO", ClientId, ClientSecret, redirectUri, "NA", "0", companyId);
-            success = TokenDAO.createToken(token);
-            message = ClientDAO.getClientById(""+companyId).getCompanyName();
-        } catch (Exception e) {
-            message = e.getMessage();
-        } finally {
-            if (success) {
-                request.getSession().setAttribute("status", "Token created. Please reset the token for " + message);
-                response.sendRedirect("TokenOverview.jsp");
-            } else {
-                request.getSession().setAttribute("status", "Error: Failed to create token " + message);
-                response.sendRedirect("TokenOverview.jsp");
+            String clientKey = request.getParameter("clientId");
+            String clientSecret = request.getParameter("clientSecret");
+            String redirectURI = request.getParameter("redirectURI");
+            String companyId = request.getParameter("companyId");
+
+            Client client = ClientDAO.getClientById(companyId);
+            if (client == null) {
+                throw new IllegalArgumentException(companyId);
             }
+            Integer companyIdInt = Integer.parseInt(companyId);
+            Token token = TokenDAO.getToken(companyId);
+            if (token == null) {
+                token = new Token("QBO", clientKey, clientSecret, redirectURI, "na", "0", companyIdInt);
+                if (TokenDAO.createToken(token)) {
+                    request.getSession().setAttribute("status", "Token created for " + client.getCompanyName());
+                } else {
+                    request.getSession().setAttribute("status", "Error: Create token for " + client.getCompanyName() + " failed");
+                }
+            } else {
+                token.setClientId(clientKey);
+                token.setClientSecret(clientSecret);
+                token.setRedirectUri(redirectURI);
+                token.setInUse("0");
+                if (TokenDAO.updateToken(token)) {
+                    request.getSession().setAttribute("status", "Token updated for " + client.getCompanyName());
+                } else {
+                    request.getSession().setAttribute("status", "Error: Update token for " + client.getCompanyName() + " failed");
+                }
+            }
+
+            response.sendRedirect("TokenOverview.jsp");
+            return;
+        } catch (IllegalArgumentException iae) {
+            status = "No company with id " + iae.getMessage();
+        } catch (NullPointerException | IOException npe) {
+            status = npe.getMessage();
         }
+
+        request.getSession().setAttribute("status", "Error: " + status);
+        response.sendRedirect("TokenOverview.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
