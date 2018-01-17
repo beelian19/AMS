@@ -5,8 +5,26 @@
  */
 package Module.Expense;
 
+import Entity.Payment;
+import Entity.PaymentFactory;
+import Entity.SampleData;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
+import static java.lang.String.format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,19 +47,94 @@ public class saveResultsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet saveResultsServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet saveResultsServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        final String PROPS_FILENAME = "connection.properties";
+        String eUser;
+        String ePass;
+        Future<PaymentFactory> qboFuture;
+        PaymentFactory pf = null;
+        List<Payment> post;
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        System.out.println(timeStamp + "aaaaaaaaaaa");
+
+        if (request.getSession().getAttribute("expenseFuture") != null) {
+            qboFuture = (Future<PaymentFactory>) request.getSession().getAttribute("expenseFuture");
+            if (!qboFuture.isDone()) {
+                request.getSession().setAttribute("status", "Payment job is still running");
+                request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
+
+            } else {
+                try {
+                    pf = qboFuture.get();
+                    post = pf.getPostPayments();
+                    if (post != null && !post.isEmpty()) {
+                        InputStream is = null;
+                        Properties props = new Properties();
+                        is = saveResultsServlet.class.getResourceAsStream("/" + PROPS_FILENAME);
+                        if (is == null) {
+                            throw new IllegalArgumentException(format("Could not load '%s'. Missing File?", PROPS_FILENAME));
+                        }
+                        String fileName = pf.getExcelClientName() + timeStamp;
+                        try {
+                            props.load(is);
+                            eUser = props.getProperty("email.user");
+                            ePass = props.getProperty("email.password");
+                            final String from = eUser;
+                            final String pass = ePass;
+                            if (eUser == null || ePass == null) {
+                                throw new IllegalArgumentException(format("Could not load '%s'. Missing File?", PROPS_FILENAME));
+                            }
+                            Properties m_properties = new Properties();
+                            m_properties.put("mail.transport.protocol", "smtp");
+                            m_properties.put("mail.smtp.host", "smtp.gmail.com");
+                            m_properties.put("mail.smtp.port", "25");
+                            m_properties.put("mail.smtp.auth", "true");
+                            m_properties.put("mail.smtp.starttls.enable", "true");
+                            Authenticator authenticator;
+                            authenticator = new Authenticator() {
+                                @Override
+                                protected PasswordAuthentication getPasswordAuthentication() {
+                                    return new PasswordAuthentication(from, pass);
+                                }
+                            };
+                            Session session1 = Session.getDefaultInstance(m_properties, authenticator);
+                            //String to = "pm@abaccounting.com.sg";
+                            String to = "minoo.ye.2015@sis.smu.edu.sg";
+                            MimeMessage message = new MimeMessage(session1);
+                            message.setFrom(new InternetAddress(from));
+                            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                            message.setSubject("Results for: " + fileName);
+                            String msg = "Reference Number : Status \n";
+
+                            for (Payment p : post) {
+                                String temp = p.getReferenceNumber() + " : " + p.getStatus() + "\n";
+                                msg += temp;
+                            }
+                            message.setText(msg);
+                            Transport.send(message);
+                            request.getSession().setAttribute("status", "Success: Results sent");
+                        } catch (MessagingException ex) {
+                            request.getSession().setAttribute("status", "Error: MessagingException " + ex.getMessage());
+                        } finally {
+                            if (request.getSession().getAttribute("expenseFuture") != null) {
+                                request.getSession().removeAttribute("expenseFuture");
+                            }
+                            if (request.getSession().getAttribute("paymentClient") != null) {
+                                request.getSession().removeAttribute("expenseFuture");
+                            }
+                            response.sendRedirect("UploadExpense.jsp");
+                        }
+                    }
+                } catch (IllegalArgumentException | InterruptedException | ExecutionException ex) {
+                    request.getSession().setAttribute("status", "Error: Critical error " + ex.getMessage());
+                    response.sendRedirect("UploadExpense.jsp");
+                }
+
+            }
+        } else {
+            request.getSession().setAttribute("status", "Error: No Payments found");
+            response.sendRedirect("UploadExpense.jsp");
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

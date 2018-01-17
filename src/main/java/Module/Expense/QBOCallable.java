@@ -2,7 +2,8 @@ package Module.Expense;
 
 import DAO.QBODAO;
 import DAO.TokenDAO;
-import Entity.Expense;
+import Entity.Payment;
+import Entity.PaymentFactory;
 import Entity.Token;
 import com.intuit.ipp.core.Context;
 import com.intuit.ipp.core.ServiceType;
@@ -17,27 +18,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class QBOCallable implements Callable<ExpenseFactory> {
+public class QBOCallable implements Callable<PaymentFactory> {
 
-    private ExpenseFactory ef;
+    private PaymentFactory pf;
 
-    public QBOCallable(ExpenseFactory ef) {
-        this.ef = ef;
+    public QBOCallable(PaymentFactory pf) {
+        this.pf = pf;
     }
 
     // Process and submit expenses to quickbooks
     @Override
-    public ExpenseFactory call() throws Exception {
-        // Get list of expenses
-        List<Expense> expenses = ef.getExpenses();
-        List<Expense> processedExpenses = null;
+    public PaymentFactory call() throws Exception {
+
+        // Get lsit of Payments
+        List<Payment> prePayments = pf.getPrePayments();
+        List<Payment> postPayments = new ArrayList<>();
 
         // Set up connection
         List<String> processMessage = new ArrayList<>();
-        Token token = ef.getToken();
+        Token token = pf.getToken();
         String refreshToken = token.getRefreshToken();
         String accessToken = "";
-        String realmid = ef.getRealmid();
+        String realmid = pf.getRealmid();
         QBOoauth2ClientFactory factory = new QBOoauth2ClientFactory(token);
         OAuth2PlatformClient client = factory.getOAuth2PlatformClient();
         try {
@@ -57,11 +59,8 @@ public class QBOCallable implements Callable<ExpenseFactory> {
                 // return ef
             } else {
                 // Submit expenses
-                processedExpenses = qbodao.submitListOfExpenses(expenses);
+                postPayments = qbodao.submitPrePayments(prePayments, pf.getChargedAccountNumber());
             }
-
-            token.setInUse("0");
-            TokenDAO.updateToken(token);
 
         } catch (OAuthException oae) {
             processMessage.add("Refresh token failed @ QBOCallable: " + oae.getMessage());
@@ -72,12 +71,15 @@ public class QBOCallable implements Callable<ExpenseFactory> {
             });
         }
 
-        // Return expense factory
-        ef.setProcessMessages(processMessage);
-        if (processedExpenses != null) {
-            ef.setExpenses(processedExpenses);
+        if (!processMessage.isEmpty()) {
+            processMessage.add("No Payments were processed");
         }
-        return ef;
+
+        // Return expense factory
+        pf.setPostPayments(postPayments);
+        pf.setProcessMessages(processMessage);
+
+        return pf;
     }
 
 }

@@ -47,7 +47,7 @@
             }
 
             String chargedAccount = pf.getChargedAccountName();
-            Client client = (request.getSession().getAttribute("paymentClient") != null) ? (Client) request.getAttribute("expenseClient") : null;
+            Client client = (request.getSession().getAttribute("paymentClient") != null) ? (Client) request.getSession().getAttribute("paymentClient") : null;
             if (client == null) {
                 request.getSession().setAttribute("status", "Error: Null Client at ProcessExpense.jsp");
                 request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
@@ -56,7 +56,7 @@
             Boolean canProceed = true;
 
             String clientName = client.getCompanyName();
-            String chargedAccountNumber = pf.getChargedAccountName();
+            String chargedAccountNumber = pf.getChargedAccountNumber() + "";
             String realmid = null;
             realmid = client.getRealmid();
             if (realmid == null || realmid.isEmpty()) {

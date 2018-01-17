@@ -8,10 +8,13 @@
 package DAO;
 
 import Entity.Expense;
+import Entity.Payment;
+import Entity.PaymentLine;
 import com.intuit.ipp.core.IEntity;
 import com.intuit.ipp.data.Account;
 import com.intuit.ipp.data.AccountBasedExpenseLineDetail;
 import com.intuit.ipp.data.AccountTypeEnum;
+import com.intuit.ipp.data.Customer;
 import com.intuit.ipp.data.Department;
 import com.intuit.ipp.data.GlobalTaxCalculationEnum;
 import com.intuit.ipp.data.Line;
@@ -41,24 +44,22 @@ public class QBODAO {
 
     // DataService
     private DataService dataService;
+    // List Data objects to reduce number of query to quickbooks
+    private List<Account> allAccounts;
     private List<Vendor> vendors;
-    private List<Account> bankAccounts;
-    private List<Account> expenseAccounts;
     private List<TaxCode> taxCodes;
     private List<PaymentMethod> paymentMethods;
     private List<Department> departments;
-    private String initError = "";
-    private Boolean initHasError = false;
-
-    // Double values for the various taxes
-    private Double taxValue = 0.07;
-    private Double noTaxValue = 0.00;
-
-    // Fields for a complete Purchase object
-    private ReferenceType reference;
+    private List<com.intuit.ipp.data.Class> classes;
+    private List<Customer> customers;
     private ReferenceType imReference;
     private ReferenceType txReference;
     private ReferenceType nrReference;
+
+    private List<Account> bankAccounts;
+    private List<Account> expenseAccounts;
+    private String initError;
+    private Boolean initHasError = false;
     private PaymentTypeEnum pte;
     private int rowNumber;
     private Date date;
@@ -83,6 +84,7 @@ public class QBODAO {
 
     // Queries
     private final String ACCOUNT_TYPE_QUERY = "select * from account where accounttype = '%s'";
+    private final String ACCOUNT_ALL = "select * from account";
 
     /**
      * Type-generic query method which returns the whole list from a query and
@@ -145,15 +147,33 @@ public class QBODAO {
                 query, com.intuit.ipp.data.Account.class);
     }
 
+    private List<Account> findAllAccounts() {
+        String query = ACCOUNT_ALL;
+        return (List<Account>) executeQueryList(dataService,
+                query, com.intuit.ipp.data.Account.class);
+    }
+
     /**
-     * 
+     *
      */
-    private List<Department> findAllDepartments(){
+    private List<Department> findAllDepartments() {
         String query = "select * from department";
         return (List<Department>) executeQueryList(dataService, query,
                 com.intuit.ipp.data.Department.class);
     }
-    
+
+    private List<com.intuit.ipp.data.Class> findAllClasses() {
+        String query = "select * from class";
+        return (List<com.intuit.ipp.data.Class>) executeQueryList(dataService, query,
+                com.intuit.ipp.data.Class.class);
+    }
+
+    private List<Customer> findAllCustomers() {
+        String query = "select * from customer";
+        return (List<Customer>) executeQueryList(dataService, query,
+                com.intuit.ipp.data.Customer.class);
+    }
+
     /**
      * Finds all the vendors (suppliers) from the parsed QBO account
      *
@@ -193,15 +213,36 @@ public class QBODAO {
      * @return
      */
     private ReferenceType getVendorReference(String txnSupplierName) {
+        if (txnSupplierName == null) {
+            return null;
+        }
         if (!vendors.isEmpty()) {
             Iterator<Vendor> itr = vendors.iterator();
             while (itr.hasNext()) {
                 Vendor ven = itr.next();
                 if (ven != null && ven.getDisplayName() != null) {
-                    if (ven.getDisplayName().equals(txnSupplierName)) {
+                    if (ven.getDisplayName().toLowerCase().equals(txnSupplierName.toLowerCase())) {
                         ReferenceType venref = new ReferenceType();
                         venref.setValue(ven.getId());
                         return venref;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    private ReferenceType getLocationReference(String location) {
+        if (location == null) return null;
+        if (!departments.isEmpty()){
+            Iterator<Department> itr = departments.iterator();
+            while (itr.hasNext()){
+                Department d = itr.next();
+                if (d != null && d.getName() != null) {
+                    if (d.getName().toLowerCase().equals(location.toLowerCase())) {
+                        ReferenceType dref = new ReferenceType();
+                        dref.setValue(d.getId());
+                        return dref;
                     }
                 }
             }
@@ -244,12 +285,15 @@ public class QBODAO {
     }
 
     private ReferenceType getPaymentMethodReference(String paymentMethod) {
+        if (paymentMethod == null) {
+            return null;
+        }
         if (!paymentMethods.isEmpty()) {
             Iterator<PaymentMethod> itr = paymentMethods.iterator();
             while (itr.hasNext()) {
                 PaymentMethod pm = itr.next();
                 if (pm != null && pm.getName() != null) {
-                    if (pm.getName().equals(paymentMethod)) {
+                    if (pm.getName().toLowerCase().equals(paymentMethod.toLowerCase())) {
                         ReferenceType pmRef = new ReferenceType();
                         pmRef.setValue(pm.getId());
                         return pmRef;
@@ -284,33 +328,28 @@ public class QBODAO {
 
     public List<Expense> submitListOfExpenses(List<Expense> expenses) {
         List<Expense> processedExpenses = new ArrayList<>();
-        
+
         if (!initializeTaxcodeReferences()) {
             processedExpenses.add(new Expense("Tax Code init failed"));
         }
-        
+
         ReferenceType bankReference;
-        
+
         Expense e = expenses.get(0);
         bankReference = getBankReference(String.valueOf(e.getChargedAccountNumber()));
-        
+
         if (bankReference == null) {
             processedExpenses.add(new Expense("No bank reference with account number: " + e.getChargedAccountNumber()));
         }
-        
+
         // if there are errors
         if (!processedExpenses.isEmpty()) {
             return processedExpenses;
         }
-        
-        for (Expense ex : expenses) {
-            
-        
-        }
-        
+
         return processedExpenses;
     }
-    
+
     /**
      * PaymentTypeEnum is hard coded for now Returns a multi dimension array of
      * 3 0 - row number 1 - 0 for failed, non 0 for success 2 - Reasons, if any,
@@ -426,10 +465,9 @@ public class QBODAO {
 
                 excTaxAmount = new BigDecimal(txnAmountString).setScale(2, BigDecimal.ROUND_HALF_UP);
                 totalAmount = new BigDecimal(txnTotalAmountString).setScale(2, BigDecimal.ROUND_HALF_UP);
-                
+
                 line.setDescription(txnDescription);
-                
-                
+
                 line.setAmount(excTaxAmount);
                 line.setDetailType(LineDetailTypeEnum.ACCOUNT_BASED_EXPENSE_LINE_DETAIL);
                 AccountBasedExpenseLineDetail abeld = new AccountBasedExpenseLineDetail();
@@ -513,22 +551,18 @@ public class QBODAO {
 
     public String init() {
         // Initialize all vendors
+        allAccounts = findAllAccounts();
         vendors = findAllVendors();
-        bankAccounts = findAccountsByType(AccountTypeEnum.BANK);
-        expenseAccounts = findAccountsByType(AccountTypeEnum.EXPENSE);
-        paymentMethods = findAllPaymentMethods();
         taxCodes = findAllTaxCodes();
+        paymentMethods = findAllPaymentMethods();
         departments = findAllDepartments();
+        classes = findAllClasses();
+        customers = findAllCustomers();
 
+        initError = "";
         // Check for valid lists
         if (vendors == null) {
             initError += "|vendors list is null|";
-        }
-        if (bankAccounts == null) {
-            initError += "|bankAccounts list is null|";
-        }
-        if (expenseAccounts == null) {
-            initError += "|expenseAccounts list is null|";
         }
         if (!initializeTaxcodeReferences()) {
             initError += "|taxCode init fail|";
@@ -557,5 +591,87 @@ public class QBODAO {
         } else {
             this.dataService = dataService;
         }
+    }
+
+    /**
+     * Returns processed Payment objects
+     *
+     * @param prePayments
+     * @param chargedAccountNumber
+     * @return
+     */
+    public List<Payment> submitPrePayments(List<Payment> prePayments, int chargedAccountNumber) {
+        List<Payment> postPayments = new ArrayList<>();
+        // Get the charged account reference
+        ReferenceType bankReference = getBankReference(String.valueOf(chargedAccountNumber));
+
+        for (Payment pre : prePayments) {
+            String status = "";
+            //process purchase
+
+            Purchase purchase = new Purchase();
+
+            // Set charged account (required)
+            if (bankReference != null) {
+                purchase.setAccountRef(bankReference);
+            } else {
+                status += "-" + chargedAccountNumber + " account number invalid-";
+            }
+
+            // Set date (required)
+            if (pre.getDate() != null) {
+                purchase.setTxnDate(pre.getDate());
+            } else {
+                status += "-No Date-";
+            }
+
+            // Set reference number (optional)
+            if (pre.getReferenceNumber() != null || !pre.getReferenceNumber().isEmpty()) {
+                purchase.setDocNumber(pre.getReferenceNumber());
+            }
+
+            // Set memo (optional)
+            if (pre.getMemo() != null) {
+                purchase.setPrivateNote(pre.getMemo());
+            }
+
+            // Set payment method (optional)
+            purchase.setPaymentType(PaymentTypeEnum.CASH);
+            if (pre.getPaymentMethod() != null) {
+                ReferenceType paymentMethodReference = getPaymentMethodReference(pre.getPaymentMethod().trim());
+                if (paymentMethodReference != null) {
+                    purchase.setPaymentMethodRef(paymentMethodReference);
+                }
+            }
+
+            // Set vendor (required)
+            if (pre.getVendor() != null) {
+                ReferenceType vendorReference = getVendorReference(pre.getVendor().trim());
+                if (vendorReference != null) {
+                    purchase.setEntityRef(vendorReference);
+                } else {
+                    status += "-" + pre.getVendor() + "vendor invalid-";
+                }
+            } else {
+                status += "-No Vendor-";
+            }
+            
+            // Set location (optional)
+            if (pre.getLocation() != null) {
+                ReferenceType locationReference = getLocationReference(pre.getLocation().trim());
+                if (locationReference != null) {
+                    purchase.setDepartmentRef(locationReference);
+                }
+            }
+
+            List<PaymentLine> paymentLines = pre.getLines();
+            
+            
+            //set results into status
+            pre.setStatus(status);
+            postPayments.add(pre);
+        }
+
+        return postPayments;
     }
 }

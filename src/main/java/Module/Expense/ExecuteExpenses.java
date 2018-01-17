@@ -5,9 +5,7 @@
  */
 package Module.Expense;
 
-import DAO.TokenDAO;
-import Entity.Client;
-import Entity.Expense;
+import Entity.PaymentFactory;
 import Entity.Token;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,46 +32,19 @@ public class ExecuteExpenses extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<String> messages = new ArrayList<>();
-
+        messages.add("Errors from ExecuteExpenses");
         try {
-
-            // Get the list of expenses
-            ExpenseFactory ef;
-            if (request.getSession().getAttribute("expenseFactory") == null) {
-                throw new IllegalArgumentException("No expense factory found at ExecuteExpenses servlet");
+            
+            PaymentFactory pf = (request.getSession().getAttribute("paymentFactory") != null) ? (PaymentFactory) request.getSession().getAttribute("paymentFactory") : null;
+            if (pf == null) {
+                throw new IllegalArgumentException("No payment factory found at ExecuteExpenses servlet");
+            } else if (pf.getPrePayments() == null || pf.getPrePayments().isEmpty()) {
+                throw new IllegalArgumentException("No payments found in payment factory");
             }
-            ef = (ExpenseFactory) request.getSession().getAttribute("expenseFactory");
-            List<Expense> expenses = ef.getExpenses();
-            if (expenses.isEmpty()) {
-                throw new IllegalArgumentException("No expense found in expense factory");
-            }
-
-            // Get token
-            Token token;
-            if (request.getAttribute("expenseToken") == null) {
-                throw new IllegalArgumentException("No token in attribute expenseToken found");
-            } else {
-                token = (Token) request.getAttribute("expenseToken");
-                token.setInUse("1");
-                // Update the database that the client's token is in use
-                if (!TokenDAO.updateToken(token)) {
-                    throw new IllegalArgumentException("Update token failed");
-                }
-                
-                ef.setToken(token);
-            }
-
-            // Get Client
-            Client client;
-            String realmid;
-            if (request.getAttribute("expenseClient") == null) {
-                throw new IllegalArgumentException("No client in attribute expenseClient found");
-            } else {
-                client = (Client) request.getAttribute("expenseClient");
-                realmid = client.getRealmid();
-                if (realmid == null || realmid.equals("")) {
-                    throw new IllegalArgumentException("No realmid for client " + client.getCompanyName());
-                }
+            
+            Token token = pf.getToken();
+            if (token == null) {
+                throw new IllegalArgumentException("No token found");
             }
 
             ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -82,16 +53,19 @@ public class ExecuteExpenses extends HttpServlet {
             switch (token.getAccType().toLowerCase()) {
                 // QBO
                 case "qbo":
-                    QBOCallable qboCallable = new QBOCallable(ef);
-                    Future<ExpenseFactory> qboFuture = executorService.submit(qboCallable);
+                    QBOCallable qboCallable = new QBOCallable(pf);
+                    Future<PaymentFactory> qboFuture = executorService.submit(qboCallable);
                     request.getSession().setAttribute("expenseFuture", qboFuture);
                     break;
                 // XERO
                 case "xero":
-                    XEROCallable xeroCallable = new XEROCallable(ef);
+                    /*
+                    XEROCallable xeroCallable = new XEROCallable(pf);
                     Future<ExpenseFactory> xeroFuture = executorService.submit(xeroCallable);
                     request.getSession().setAttribute("expenseFuture", xeroFuture);
                     break;
+                    */
+                    throw new IllegalArgumentException("XERO not supported yet");
 
                 default:
                     throw new IllegalArgumentException("No account type of " + token.getAccType() + " found");
@@ -100,6 +74,7 @@ public class ExecuteExpenses extends HttpServlet {
             // Set future into request session
             // Callable has been successfully created
             response.sendRedirect("ExpenseResults.jsp");
+            return;
 
         } catch (NullPointerException npe) {
             messages.add("NullPointerException caught" + npe.getMessage());
@@ -110,7 +85,7 @@ public class ExecuteExpenses extends HttpServlet {
         }
 
         request.setAttribute("messages", messages);
-        request.getRequestDispatcher("upload.jsp").forward(request, response);
+        request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
     }
 
     /**

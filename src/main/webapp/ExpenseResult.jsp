@@ -4,6 +4,8 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="Entity.SampleData"%>
+<%@page import="java.util.concurrent.ExecutionException"%>
 <%@page import="Entity.Payment"%>
 <%@page import="Entity.PaymentFactory"%>
 <%@page import="java.util.concurrent.Future"%>
@@ -30,32 +32,50 @@
         <title>Invoice Results | Abundant Accounting Management System</title>
         <%            
             
-            
             Future<PaymentFactory> qboFuture;
             if (request.getSession().getAttribute("expenseFuture") == null) {
                 request.getSession().setAttribute("status", "Error: No job running found");
                 response.sendRedirect("UploadExpense.jsp");
+                return;
             }
             qboFuture = (Future<PaymentFactory>) request.getSession().getAttribute("expenseFuture");
             if (!qboFuture.isDone()) {
                 request.getSession().setAttribute("status", "Payment job is still running");
                 response.sendRedirect("UploadExpense.jsp");
+                return;
             }
 
-            PaymentFactory pf = qboFuture.get();
-            List<Payment> postList = pf.getPostPayments();
-            List<String> processMessage = pf.getProcessMessages();
-            if (processMessage.isEmpty()) {
+            PaymentFactory pf = null;
 
+            try {
+                pf = qboFuture.get();
+            } catch (InterruptedException | ExecutionException ex) {
+                request.getSession().setAttribute("status", "Error: Critical error " + ex.getMessage());
+                response.sendRedirect("UploadExpense.jsp");
+                return;
             }
 
             Client client = (request.getSession().getAttribute("paymentClient") != null) ? (Client) request.getAttribute("expenseClient") : null;
             if (client == null) {
                 request.getSession().setAttribute("status", "Error: Null Client at ExpenseResult.jsp");
                 request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
+                return;
             }
+            
+            List<Payment> postList = pf.getPostPayments();
+            List<String> processMessage = pf.getProcessMessages();
+            if (processMessage == null) processMessage = new ArrayList<>();
             String clientName = client.getCompanyName();
-
+            
+            
+            /*
+            List<Payment> postList = SampleData.loadPostPaymentList();
+            //List<Payment> postList = new ArrayList<>();
+            List<String> processMessage = new ArrayList<>();
+            //processMessage.add("test");
+            //processMessage.add("test1");
+            String clientName = "test";
+            */
 
         %>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -121,9 +141,6 @@
                     <!--
                     ###########################################################################################################################
                     -->
-                    <!--
-                        for object[][] First 8 rows are expense info, 9 and below are the line items
-                    -->
                     <div align="center" style='width: 80%; display: inline-block'>
                         <table id="datatable" style="border: #FFFFFF; text-align:center; overflow:auto" align="center">
                             <thead>
@@ -142,7 +159,7 @@
                                             } else {
                                                 colorCode = "#F0F8FF";
                                             }
-                                            
+
                                 %>
                                 <tr style="background-color: <%=colorCode%>">
                                     <td style="font-size: 14px; text-align:left" width="10%">
@@ -161,12 +178,12 @@
                     </div>
                     <br/>
                     <br/>
-                    <table style="text-align: right" width="90%">
-                        <tr width="40%">
+                    <table style="text-align: right" width="20%">
+                        <tr width="20%">
                             <td>
                                 <form action="saveResultsServlet" method="post">
                                     <!-- Reminder: send over filename and results -->
-                                    <button class="btn btn-lg btn-primary btn-block btn-success" type="submit" >Send to email and clear</button>
+                                    <button class="btn btn-lg btn-primary btn-block btn-success" type="submit" >Send to email and clear results</button>
                                 </form>
                             </td>
                             <td>

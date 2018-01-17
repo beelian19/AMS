@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -86,10 +84,10 @@ public class ReadExcelFile extends HttpServlet {
                     }
 
                     request.getSession().setAttribute("expenseFactory", ef);
-                    request.setAttribute("expenseClient", client);
+                    request.getSession().setAttribute("expenseClient", client);
                     request.setAttribute("expenseToken", token);
                     request.getRequestDispatcher("ProcessExpense.jsp").forward(request, response);
-
+                    return;
                 }
 
             } catch (FileUploadException fue) {
@@ -144,13 +142,13 @@ public class ReadExcelFile extends HttpServlet {
                 } else if (fileItems.size() != 1) {
                     throw new IllegalArgumentException("Invalid parameters. Request file item count > 1");
                 }
-                
+
                 // Get the excel file
                 FileItem excelFileItem = fileItems.get(0);
                 if (!excelFileItem.getName().endsWith("xlsx")) {
                     throw new IllegalArgumentException("Only xlsx file type is accepted. " + excelFileItem.getName() + " uploaded");
                 }
-                
+
                 try (InputStream excelStream = excelFileItem.getInputStream()) {
                     Workbook excelWorkbook = new XSSFWorkbook(excelStream);
 
@@ -166,7 +164,7 @@ public class ReadExcelFile extends HttpServlet {
 
                     // Get client associated with the UEN number
                     Client client = ClientDAO.getClientByUEN(pf.getUEN().trim());
-                    
+
                     if (client == null) {
                         throw new IllegalArgumentException("No client in database with UEN: " + pf.getUEN());
                     } else {
@@ -176,10 +174,9 @@ public class ReadExcelFile extends HttpServlet {
                     Token token = TokenDAO.getToken(client.getClientID());
                     if (token == null) {
                         throw new IllegalArgumentException("No token in database with company id " + client.getClientID() + ". Please edit accordingly for " + client.getCompanyName());
+                    } else {
+                        pf.setToken(token);
                     }
-                    
-                    pf.setToken(token);
-
                     request.getSession().setAttribute("paymentFactory", pf);
                     request.getSession().setAttribute("paymentClient", client);
                     request.getRequestDispatcher("ProcessExpense.jsp").forward(request, response);
