@@ -184,17 +184,17 @@
                 <div id="Abundant" class="tabcontent container-fluid" style="text-align: center;">
                     <br/>
                     <div class="row">
-                        <div class="col-xs-4 nav-toggle" href="#revenueTable">
+                        <div class="col-xs-6 nav-toggle" href="#revenueTable">
                             <h2>Revenue</h2>
-                            <canvas id="RevenueChart" style="width: 100%; height: 150%;"></canvas>
+                            <canvas id="RevenueChart" style="width: 500px; height: 500px;"></canvas>
                         </div>
-                        <div class="col-xs-4 nav-toggle" href="#ProfitAndLossTable">
+                        <div class="col-xs-6 nav-toggle" href="#ProfitAndLossTable">
                             <h2>Project P&L</h2>
-                            <canvas id="ProfitAndLossChart" style="width: 100%; height: 150%;"></canvas>
+                            <canvas id="ProfitAndLossChart" style="width: 250px; height: 250px;"></canvas>
                         </div>
-                        <div class="col-xs-4 nav-toggle" href="#ProjectsOverdueChartTable">
+                        <div class="col-xs-6 nav-toggle" href="#ProjectsOverdueChartTable">
                             <h2>Project Overdue</h2>
-                            <canvas id="ProjectsOverdueChart" style="width: 100%; height: 150%;"></canvas>
+                            <canvas id="ProjectsOverdueChart" style="width: 250px; height: 250px;"></canvas>
                         </div>
                     </div>
                     <div class="row">
@@ -547,6 +547,7 @@
                                     Chart.defaults.global.animationEasing = "easeInOutElastic";
                                     Chart.defaults.global.responsive = false;
                                     var ctx = document.getElementById("RevenueChart").getContext("2d");
+                                    //ctx.height = 500;
                                     var RevenueChart = new Chart(ctx, {
                                         type: 'line',
                                         data: lineChartData,
