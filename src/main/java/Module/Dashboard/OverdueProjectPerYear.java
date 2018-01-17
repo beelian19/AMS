@@ -49,7 +49,8 @@ public class OverdueProjectPerYear extends HttpServlet {
             overdue.add(value);
         }
 
-        out.print(overdue);
+        //out.print(overdue);
+        request.getSession().setAttribute("overdueProject", overdue);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
