@@ -4,6 +4,7 @@
  */
 package Entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -99,6 +100,10 @@ public class Payment {
         this.status = status;
     }
     
+    public String getDateString(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return (date == null) ? null : sdf.format(date);
+    }
     
     
 }

@@ -154,7 +154,7 @@ public class PaymentFactory {
                     }
 
                     // Set payment method (optional, null value will be defaulted to cash
-                    varCell = row.getCell(xlRow);
+                    varCell = row.getCell(9);
                     String paymentMethod = getStringValue(varCell);
                     if (paymentMethod != null) {
                         paymentObject.setPaymentMethod(paymentMethod);

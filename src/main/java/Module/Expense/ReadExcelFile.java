@@ -177,6 +177,8 @@ public class ReadExcelFile extends HttpServlet {
                     if (token == null) {
                         throw new IllegalArgumentException("No token in database with company id " + client.getClientID() + ". Please edit accordingly for " + client.getCompanyName());
                     }
+                    
+                    pf.setToken(token);
 
                     request.getSession().setAttribute("paymentFactory", pf);
                     request.setAttribute("expenseClient", client);
