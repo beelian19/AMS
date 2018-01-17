@@ -131,7 +131,7 @@
             clientProjectList = ProjectDAO.getAllProjectsByCompanyName("");
             ArrayList<ArrayList<Project>> employeeProjectList = new ArrayList<>();
             employeeProjectList = ProjectDAO.getAllProjectsByEmployee("");
-            boolean displayClientGraph = false;
+            boolean displayClientGraph = true;
             boolean displayEmployeeGraph = false;
         %>
         <script>
@@ -783,10 +783,10 @@
                                         <select name="clientDashboardYear" class="clientDashboard" id="clientDashboardYear" required>
                                             <option class="clientDashboard" disabled selected value>-- Please Select Year --</option>
                                             <option class="clientDashboard" value="2014">2014</option>
-                                            <option class="clientDashboard" value="2014">2015</option>
-                                            <option class="clientDashboard" value="2014">2016</option>
-                                            <option class="clientDashboard" value="2014">2017</option>
-                                            <option class="clientDashboard" value="2014">2018</option>
+                                            <option class="clientDashboard" value="2015">2015</option>
+                                            <option class="clientDashboard" value="2016">2016</option>
+                                            <option class="clientDashboard" value="2017">2017</option>
+                                            <option class="clientDashboard" value="2018">2018</option>
                                         </select>
                                     </div>
                                 </div>
@@ -894,194 +894,190 @@
                     %>
                 </div>
                 <script>
-                    $(document).ready(function () {
+                    $(document).ready (function () {
+                        var year = "2017";//document.getElementById('clientDashboardYear');
+                        var clientID = "1";//document.getElementById("client").value;
+                        $.ajax({
+                            url: 'ClientDashboard',
+                            data: 'clientID=' + clientID + '&' + 'year=' + year,
+                            type: 'POST',
+                            success: function () {
+                                var clientYearProfitData = "<%=request.getSession().getAttribute("clientYearProfit")%>";
+                                var clientYearProfit = clientYearProfitData.split(",");
+                                var clientYearLossData = "<%=request.getSession().getAttribute("clientYearLoss")%>";
+                                var clientYearLoss = clientYearLossData.split(",");
+                                var clientOverdueProjectData = "<%=request.getSession().getAttribute("clientOverdueProject")%>";
+                                var clientOverdueProject = clientOverdueProjectData.split(",");
 
-                        $('#viewPerformance').click(function () {
-                            var clientDashboardYear = $("#clientDashboardYear").val();
-                            var clientID = document.getElementById("client").value;
-                            $.ajax({
-                                url: 'ClientDashboard',
-                                data: 'clientID=' + clientID + '&' + 'year=' + clientDashboardYear,
-                                type: 'POST',
-                                success: function () {
-                                    var clientYearProfitData = "<%=request.getSession().getAttribute("clientYearProfit")%>";
-                                    var clientYearProfit = clientYearProfitData.split(",");
-                                    var clientYearLossData = "<%=request.getSession().getAttribute("clientYearLoss")%>";
-                                    var clientYearLoss = clientYearLossData.split(",");
-                                    var clientOverdueProjectData = "<%=request.getSession().getAttribute("clientOverdueProject")%>";
-                                    var clientOverdueProject = clientOverdueProjectData.split(",");
-
-                                    var barChartData = {
-                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                        datasets: [{
-                                                label: '# of Profits',
-                                                data: clientYearProfit, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-                                                backgroundColor: [
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)'
-                                                ],
-                                                borderColor: [
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)'
-                                                ],
-                                                borderWidth: 1
-                                            },
-                                            {
-                                                label: '# of Losses',
-                                                data: clientYearLoss, //[1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
-                                                backgroundColor: [
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)'
-                                                ],
-                                                borderColor: [
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)'
-                                                ],
-                                                borderWidth: 1
-                                            }
-                                        ]
-                                    }
-
-                                    Chart.defaults.global.tooltipCornerRadius = 0;
-                                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                                    Chart.defaults.global.animationEasing = "easeInOutElastic";
-                                    Chart.defaults.global.responsive = false;
-                                    var ctx = document.getElementById("clientProfitAndLossChart").getContext("2d");
-                                    var clientProfitAndLossChart = new Chart(ctx, {
-                                        type: 'bar',
-                                        data: barChartData,
-                                        scaleShowVerticalLines: false
-                                    });
-
-                                    var barChartData = {
-                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                        datasets: [{
-                                                label: '# of Punctual Projects',
-                                                data: clientOverdueProject, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-                                                backgroundColor: [
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)'
-                                                ],
-                                                borderColor: [
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)'
-                                                ],
-                                                borderWidth: 1
-                                            },
-                                            {
-                                                label: '# of Overdue Projects',
-                                                data: clientOverdueProject, //[1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
-                                                backgroundColor: [
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)'
-                                                ],
-                                                borderColor: [
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)'
-                                                ],
-                                                borderWidth: 1
-                                            }
-                                        ]
-                                    }
-
-                                    Chart.defaults.global.tooltipCornerRadius = 0;
-                                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                                    Chart.defaults.global.animationEasing = "easeInOutElastic";
-                                    Chart.defaults.global.responsive = false;
-                                    var ctx = document.getElementById("clientOverdueChart").getContext("2d");
-                                    var clientProfitAndLossChart = new Chart(ctx, {
-                                        type: 'bar',
-                                        data: barChartData,
-                                        scaleShowVerticalLines: false
-                                    });
-
+                                var barChartData = {
+                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                    datasets: [{
+                                            label: '# of Profits',
+                                            data: clientYearProfit, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                            backgroundColor: [
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)'
+                                            ],
+                                            borderWidth: 1
+                                        },
+                                        {
+                                            label: '# of Losses',
+                                            data: clientYearLoss, //[1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
+                                            backgroundColor: [
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)'
+                                            ],
+                                            borderWidth: 1
+                                        }
+                                    ]
                                 }
-                            });
+
+                                Chart.defaults.global.tooltipCornerRadius = 0;
+                                Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                Chart.defaults.global.responsive = false;
+                                var ctx = document.getElementById("clientProfitAndLossChart").getContext("2d");
+                                var clientProfitAndLossChart = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: barChartData,
+                                    scaleShowVerticalLines: false
+                                });
+
+                                var barChartData = {
+                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                    datasets: [{
+                                            label: '# of Punctual Projects',
+                                            data: clientOverdueProject, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                            backgroundColor: [
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)'
+                                            ],
+                                            borderWidth: 1
+                                        },
+                                        {
+                                            label: '# of Overdue Projects',
+                                            data: clientOverdueProject, //[1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
+                                            backgroundColor: [
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)'
+                                            ],
+                                            borderWidth: 1
+                                        }
+                                    ]
+                                }
+
+                                Chart.defaults.global.tooltipCornerRadius = 0;
+                                Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                Chart.defaults.global.responsive = false;
+                                var ctx = document.getElementById("clientOverdueChart").getContext("2d");
+                                var clientProfitAndLossChart = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: barChartData,
+                                    scaleShowVerticalLines: false
+                                });
+
+                            }
                         });
-                    }
-                    );
+                    });
                 </script>
                 <!-- ############################################### END OF CLIENT PERFORMANCE SECTION ###############################################-->                    
 
@@ -1124,10 +1120,10 @@
                                         <select name="employeeDashboardYear" class="clientDashboard" id="employeeDashboardYear" required>
                                             <option class="clientDashboard" disabled selected value>-- Please Select Year --</option>
                                             <option class="clientDashboard" value="2014">2014</option>
-                                            <option class="clientDashboard" value="2014">2015</option>
-                                            <option class="clientDashboard" value="2014">2016</option>
-                                            <option class="clientDashboard" value="2014">2017</option>
-                                            <option class="clientDashboard" value="2014">2018</option>
+                                            <option class="clientDashboard" value="2015">2015</option>
+                                            <option class="clientDashboard" value="2016">2016</option>
+                                            <option class="clientDashboard" value="2017">2017</option>
+                                            <option class="clientDashboard" value="2018">2018</option>
                                         </select>
                                     </div>
                                 </div>
