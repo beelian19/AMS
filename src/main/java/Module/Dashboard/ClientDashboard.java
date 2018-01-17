@@ -41,12 +41,21 @@ public class ClientDashboard extends HttpServlet {
         profitabilityList = ProjectDAO.getCompanyMonthlyProfitability(clientID,year);
         int[] overdueList = new int[12];
         overdueList = ProjectDAO.getClientOverdueProjectPerYear(clientID,year);
+        int[] ontimeList = new int[12];
+        ontimeList = ProjectDAO.getClientOnTimeProjectPerYear(clientID,year);
         
         ArrayList<Integer> overdue = new ArrayList();
 
         for (int i = 0; i < 12; i++) {
             int value = overdueList[i];
             overdue.add(value);
+        }
+        
+        ArrayList<Integer> ontime = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = ontimeList[i];
+            ontime.add(value);
         }
         
         ArrayList<Integer> yearProfitList = profitabilityList.get(0);
@@ -56,6 +65,7 @@ public class ClientDashboard extends HttpServlet {
         request.getSession().setAttribute("clientYearLoss", yearLossList);
         
         request.getSession().setAttribute("clientOverdueProject", overdue);
+        request.getSession().setAttribute("clientOnTimeProject", ontime);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
