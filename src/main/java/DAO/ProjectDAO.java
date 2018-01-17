@@ -2021,4 +2021,34 @@ public class ProjectDAO {
         return numList;
     } 
     
+    public static int[] getClientOnTimeProjectPerYear(String clientid, String year) {
+        
+        Client client = ClientDAO.getClientById(clientid);
+        String companyName = client.getCompanyName();
+        int[] numList = new int[12];
+
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted < end) and companyName = ? GROUP BY MONTH(end)");
+            stmt.setString(1, year);
+            stmt.setString(2,companyName);
+            //date for start
+            //date for end 
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String month = rs.getString("MONTH");
+                Integer monthInt = Integer.parseInt(month);
+                String count = rs.getString("COUNT");
+                Integer countInt = Integer.parseInt(count);
+                numList[monthInt - 1] = countInt;
+
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        return numList;
+    }
+    
+    
 }
