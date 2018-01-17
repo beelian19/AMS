@@ -137,8 +137,8 @@
             clientProjectList = ProjectDAO.getAllProjectsByCompanyName("");
             ArrayList<ArrayList<Project>> employeeProjectList = new ArrayList<>();
             employeeProjectList = ProjectDAO.getAllProjectsByEmployee("");
-            boolean displayClientGraph = false;
-            boolean displayEmployeeGraph = false;
+            boolean displayClientGraph = true;
+            boolean displayEmployeeGraph = true;
         %>
         <script>
             $(document).ready(function () {
@@ -844,27 +844,7 @@
                         <form action="dashboardClientServlet" method="post">
                             <div class="row">
                                 <br/>
-                                <div class="col-xs-6">
-                                </div>
-                                <div class="col-xs-3">
-                                    <div class="dashboardSelect">
-                                        <select name="clientDashboardMonth" class="clientDashboard" id="clientDashboardMonth">
-                                            <option class="clientDashboard" disabled selected value>-- Please Select Month --</option>
-                                            <option class="clientDashboard" value="01">January</option>
-                                            <option class="clientDashboard" value="02">February</option>
-                                            <option class="clientDashboard" value="03">March</option>
-                                            <option class="clientDashboard" value="04">April</option>
-                                            <option class="clientDashboard" value="05">May</option>
-                                            <option class="clientDashboard" value="06">June</option>
-                                            <option class="clientDashboard" value="07">July</option>
-                                            <option class="clientDashboard" value="08">August</option>
-                                            <option class="clientDashboard" value="09">September</option>
-                                            <option class="clientDashboard" value="10">October</option>
-                                            <option class="clientDashboard" value="11">November</option>
-                                            <option class="clientDashboard" value="12">December</option>
-
-                                        </select>
-                                    </div>
+                                <div class="col-xs-9">
                                 </div>
                                 <div class="col-xs-3">
                                     <div class="dashboardSelect">
@@ -883,12 +863,10 @@
                             <table id='datatable' align="center">
                                 <thead>
                                     <tr>
-                                        <th width="16.67%">Client ID</th>
-                                        <th width="16.67%">Company Name</th>
-                                        <th width="16.67%">Business Type</th>
-                                        <th width="16.67%"># Ongoing Projects</th>
-                                        <th width="16.67%"># Completed Projects</th>
-                                        <th width="16.67%"></th>
+                                        <th width="10.0%">Client ID</th>
+                                        <th width="25.0%">Business Type</th>
+                                        <th width="25.0%">Company Name</th>
+                                        <th width="40.0%" align="right"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -896,22 +874,16 @@
                                         for (int i = 0; i < clientList.size(); i++) {
                                     %>
                                     <tr style="text-align: left;">
-                                        <td width="16.67%">
+                                        <td width="10.0%">
                                             <%=clientList.get(i).getClientID()%>
                                         </td>
-                                        <td width="16.67%">
+                                        <td width="25.0%">
                                             <%=clientList.get(i).getBusinessType()%>
                                         </td>
-                                        <td width="16.67%">
+                                        <td width="25.0%">
                                             <%=clientList.get(i).getCompanyName()%>
                                         </td>
-                                        <td width="16.67%">
-
-                                        </td>
-                                        <td width="16.67%">
-
-                                        </td>
-                                        <td width="16.67%" align="center">
+                                        <td width="40.0%" align="right">
                                             <input type="radio" name="client" value='<%=clientList.get(i)%>' required>
                                         </td>
                                     </tr>
@@ -949,115 +921,18 @@
                         }
                     } else {
                     %>
-                    <div class="container-fluid" style="text-align:center; width:80%; height: 80%">
+                    <div id="Abundant" class="tabcontent container-fluid" style="text-align: center;">
                         <br/>
-                        <div class="col-xs-12" id="clientProjectOverdueTable" style="display:none">
-                            <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                <table id='datatable7' align="center" style="text-align: left;">
-                                    <thead>
-                                        <tr>
-                                            <th width="20.00%">Completion Date</th>
-                                            <th width="20.00%">Project Name</th>
-                                            <th width="20.00%">Hours Assigned</th>
-                                            <th width="20.00%">Hours Actual</th>
-                                            <th width="20.00%">Staff</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            if (clientProjectList != null && !clientProjectList.isEmpty()) {
-                                                for (int i = 0; i < clientProjectList.size(); i++) {
-                                                    //Project p = clientProjectList.get(i);
-                                        %>
-                                        <tr>
-                                            <td>
-                                                <%//p.getDateCompleted()%>
-                                            </td>
-                                            <td>
-                                                <%// profileUrl2 = profileUrl + p.getProjectID();%>
-                                                <a href=<%=profileUrl2%>>
-                                                    <%// p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <%//p.getPlannedHours()%>
-                                            </td>
-                                            <td>
-                                                <%//p.getEmployee1Hours() + p.getEmployee2Hours()%>
-                                            </td>
-                                            <td>
-                                                <%
-                                                    //employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
-                                                    // getEmployee2().toLowerCase();
-%>
-                                                <a href=<%=employee1ProfileUrl2%>>
-                                                    <%//p.getEmployee1()%>
-                                                </a>
-                                                <% //if (!p.getEmployee2().toLowerCase().equals("na")) {
-                                                    //    out.println(" and ");
-%>
-                                                <a href=<%=employee2ProfileUrl2%>>
-                                                    <%//p.getEmployee2()%>
-                                                </a>
-                                                <%
-                                                    }
-                                                %>
-                                            </td>
-                                        </tr>
-                                        <%
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
-                                <br/>
+                        <div class="row">
+                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
+                            <div class="col-xs-5 nav-toggle" href="#revenueTable" style="text-align: center;" align="center;">
+                                <h2>Revenue</h2>
+                                <canvas id="RevenueChart" style="width: 500px; height: 500px; text-align: center;" align="center"></canvas>
                             </div>
-                        </div>
-                        <div class="col-xs-12" id="clientProjectProfitAndLossTable" style="display:none">
-                            <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                <table id='datatable8' align="center" style="text-align: left;">
-                                    <thead>
-                                        <tr>
-                                            <th width="20.00%">Completion Date</th>
-                                            <th width="20.00%">Project Name</th>
-                                            <th width="20.00%">Sales</th>
-                                            <th width="20.00%">Cost</th>
-                                            <th width="20.00%">Profit/Loss</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            if (clientProjectList != null && !clientProjectList.isEmpty()) {
-                                                for (int i = 0; i < clientProjectList.size(); i++) {
-                                                    //Project p = clientProjectList.get(i);
-                                        %>
-                                        <tr>
-                                            <td>
-                                                <%//p.getDateCompleted()%>
-                                            </td>
-                                            <td>
-                                                <%// profileUrl2 = profileUrl + p.getProjectID();%>
-
-                                                <!-- <a href=      profileUrl2      >-->
-                                                <%//p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
-                                                <!-- </a>-->
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                        </tr>
-                                        <%
-                                                }
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
-                                <br/>
+                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
+                            <div class="col-xs-5 nav-toggle" href="#ProfitAndLossTable" style="text-align: center;" align="center;">
+                                <h2>Project P&L</h2>
+                                <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                         </div>
                     </div>
@@ -1077,224 +952,124 @@
                                 System.out.println("Employee List Size: " + employeeList.size());
                     %>
                     <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                    <form action = "refreshTokenServlet" method = "post">
-                        <div class="row">
-                            <br/>
-                            <div class="col-xs-6">
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="dashboardSelect">
-                                    <select name="employeeDashboardMonth" class="clientDashboard" id="employeeDashboardMonth">
-                                        <option class="clientDashboard" disabled selected value>-- Please Select Month --</option>
-                                        <option class="clientDashboard" value="01">January</option>
-                                        <option class="clientDashboard" value="02">February</option>
-                                        <option class="clientDashboard" value="03">March</option>
-                                        <option class="clientDashboard" value="04">April</option>
-                                        <option class="clientDashboard" value="05">May</option>
-                                        <option class="clientDashboard" value="06">June</option>
-                                        <option class="clientDashboard" value="07">July</option>
-                                        <option class="clientDashboard" value="08">August</option>
-                                        <option class="clientDashboard" value="09">September</option>
-                                        <option class="clientDashboard" value="10">October</option>
-                                        <option class="clientDashboard" value="11">November</option>
-                                        <option class="clientDashboard" value="12">December</option>
-                                    </select>
+                        <form action = "refreshTokenServlet" method = "post">
+                            <div class="row">
+                                <br/>
+                                <div class="col-xs-6">
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="dashboardSelect">
+                                        <select name="employeeDashboardMonth" class="clientDashboard" id="employeeDashboardMonth">
+                                            <option class="clientDashboard" disabled selected value>-- Please Select Month --</option>
+                                            <option class="clientDashboard" value="01">January</option>
+                                            <option class="clientDashboard" value="02">February</option>
+                                            <option class="clientDashboard" value="03">March</option>
+                                            <option class="clientDashboard" value="04">April</option>
+                                            <option class="clientDashboard" value="05">May</option>
+                                            <option class="clientDashboard" value="06">June</option>
+                                            <option class="clientDashboard" value="07">July</option>
+                                            <option class="clientDashboard" value="08">August</option>
+                                            <option class="clientDashboard" value="09">September</option>
+                                            <option class="clientDashboard" value="10">October</option>
+                                            <option class="clientDashboard" value="11">November</option>
+                                            <option class="clientDashboard" value="12">December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="dashboardSelect">
+                                        <select name="employeeDashboardYear" class="clientDashboard" id="employeeDashboardYear" required>
+                                            <option class="clientDashboard" disabled selected value>-- Please Select Year --</option>
+                                            <option class="clientDashboard" value="2014">2014</option>
+                                            <option class="clientDashboard" value="2014">2015</option>
+                                            <option class="clientDashboard" value="2014">2016</option>
+                                            <option class="clientDashboard" value="2014">2017</option>
+                                            <option class="clientDashboard" value="2014">2018</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
-                                <div class="dashboardSelect">
-                                    <select name="employeeDashboardYear" class="clientDashboard" id="employeeDashboardYear" required>
-                                        <option class="clientDashboard" disabled selected value>-- Please Select Year --</option>
-                                        <option class="clientDashboard" value="2014">2014</option>
-                                        <option class="clientDashboard" value="2014">2015</option>
-                                        <option class="clientDashboard" value="2014">2016</option>
-                                        <option class="clientDashboard" value="2014">2017</option>
-                                        <option class="clientDashboard" value="2014">2018</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <br/><br/>
-                        <table id='datatable2' align="center">
-                            <thead>
+                            <br/><br/>
+                            <table id='datatable2' align="center">
+                                <thead>
+                                    <tr>
+                                        <th width="16.67%">Name</th>
+                                        <th width="16.67%">Position</th>
+                                        <th width="16.67%">Email</th>
+                                        <th width="16.67%">Number</th>
+                                        <th width="16.67%">Admin Access</th>
+                                        <th width="16.67%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        for (int i = 0; i < employeeList.size(); i++) {
+                                    %>
+                                    <tr style="text-align: left;">
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getName()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getPosition()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getEmail()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getNumber()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getIsAdmin()%>
+                                        </td>
+                                        <td width="16.67%" align="center">
+                                            <input type="radio" name="employee" value='<%=employeeList.get(i)%>' required>
+                                        </td>
+                                    </tr>
+                                    <%
+                                        }
+                                    %>
+                                </tbody>
+                            </table>
+                            <br/><br/>
+                            <table style="width: 100%" align="right">
                                 <tr>
-                                    <th width="16.67%">Name</th>
-                                    <th width="16.67%">Position</th>
-                                    <th width="16.67%">Email</th>
-                                    <th width="16.67%">Number</th>
-                                    <th width="16.67%">Admin Access</th>
-                                    <th width="16.67%"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    for (int i = 0; i < employeeList.size(); i++) {
-                                %>
-                                <tr style="text-align: left;">
-                                    <td width="16.67%">
-                                        <%=employeeList.get(i).getName()%>
+                                    <td style="width: 61%">
+                                        &nbsp;
                                     </td>
-                                    <td width="16.67%">
-                                        <%=employeeList.get(i).getPosition()%>
+                                    <td style="width: 16.167%">
+                                        <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
                                     </td>
-                                    <td width="16.67%">
-                                        <%=employeeList.get(i).getEmail()%>
+                                    <td style="width: 1%">
+                                        &nbsp;
                                     </td>
-                                    <td width="16.67%">
-                                        <%=employeeList.get(i).getNumber()%>
-                                    </td>
-                                    <td width="16.67%">
-                                        <%=employeeList.get(i).getIsAdmin()%>
-                                    </td>
-                                    <td width="16.67%" align="center">
-                                        <input type="radio" name="employee" value='<%=employeeList.get(i)%>' required>
+                                    <td style="width: 16.167%">
+                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
                                     </td>
                                 </tr>
-                                <%
-                                    }
-                                %>
-                            </tbody>
-                        </table>
-                        <br/><br/>
-                        <table style="width: 100%" align="right">
-                            <tr>
-                                <td style="width: 61%">
-                                    &nbsp;
-                                </td>
-                                <td style="width: 16.167%">
-                                    <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
-                                </td>
-                                <td style="width: 1%">
-                                    &nbsp;
-                                </td>
-                                <td style="width: 16.167%">
-                                    <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <br/><br/>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+                                <tr>
+                                    <td colspan="4">
+                                        <br/><br/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
                     </div>
                     <%
                         }
                     } else {
                     %>
-                    <div class="container-fluid" style="text-align:center; width:80%; height: 80%" style="display: none;">
+                    <div id="Abundant" class="tabcontent container-fluid" style="text-align: center;">
                         <br/>
-                        <div class="col-xs-12" id="employeeProjectOverdueTable">
-                            <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                <table id='datatable8' align="center" style="text-align: left;">
-                                    <thead>
-                                        <tr>
-                                            <th width="20.00%">Completion Date</th>
-                                            <th width="20.00%">Project Name</th>
-                                            <th width="20.00%">Hours Assigned</th>
-                                            <th width="20.00%">Hours Actual</th>
-                                            <th width="20.00%">Staff</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
-                                                for (int i = 0; i < employeeProjectList.size(); i++) {
-                                                    //Project p = clientProjectList.get(i);
-                                        %>
-                                        <tr>
-                                            <td>
-                                                test
-                                                <%//p.getDateCompleted()%>
-                                            </td>
-                                            <td>
-                                                test
-                                                <%// profileUrl2 = profileUrl + p.getProjectID();%>
-                                                <a href=<%=profileUrl2%>>
-                                                    <%// p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                test
-                                                <%//p.getPlannedHours()%>
-                                            </td>
-                                            <td>
-                                                <%//p.getEmployee1Hours() + p.getEmployee2Hours()%>
-                                            </td>
-                                            <td>
-                                                <%
-                                                    //employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
-                                                    // employee2().toLowerCase();
-%>
-                                                <a href=<%=employee1ProfileUrl2%>>
-                                                    <%//p.getEmployee1()%>
-                                                </a>
-                                                <% //if (!p.getEmployee2().toLowerCase().equals("na")) {
-                                                    out.println(" and ");
-                                                %>
-                                                <a href=<%=employee2ProfileUrl2%>>
-                                                    <%//p.getEmployee2()%>
-                                                </a>
-                                                <%
-                                                    }
-                                                %>
-                                            </td>
-                                        </tr>
-                                        <%
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
-                                <br/>
+                        <div class="row">
+                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
+                            <div class="col-xs-5 nav-toggle" href="#revenueTable" style="text-align: center;" align="center;">
+                                <h2>Revenue</h2>
+                                <canvas id="RevenueChart" style="width: 500px; height: 500px; text-align: center;" align="center"></canvas>
                             </div>
-                        </div>
-                        <div class="col-xs-12" id="employeeProjectProfitAndLossTable" style="display: none;">
-                            <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                <table id='datatable9' align="center" style="text-align: left;">
-                                    <thead>
-                                        <tr>
-                                            <th width="20.00%">Completion Date</th>
-                                            <th width="20.00%">Project Name</th>
-                                            <th width="20.00%">Sales</th>
-                                            <th width="20.00%">Cost</th>
-                                            <th width="20.00%">Profit/Loss</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
-                                                for (int i = 0; i < employeeProjectList.size(); i++) {
-                                                    //Project p = clientProjectList.get(i);
-                                        %>
-                                        <tr>
-                                            <td>
-                                                <%//p.getDateCompleted()%>
-                                            </td>
-                                            <td>
-                                                <%// profileUrl2 = profileUrl + p.getProjectID();%>
-
-                                                <!-- <a href=      profileUrl2      >-->
-                                                <%//p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
-                                                <!-- </a>-->
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                        </tr>
-                                        <%
-                                                }
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
-                                <br/>
+                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
+                            <div class="col-xs-5 nav-toggle" href="#ProfitAndLossTable" style="text-align: center;" align="center;">
+                                <h2>Project P&L</h2>
+                                <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                         </div>
                     </div>
