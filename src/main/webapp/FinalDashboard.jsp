@@ -132,7 +132,11 @@
             ArrayList<ArrayList<Project>> employeeProjectList = new ArrayList<>();
             employeeProjectList = ProjectDAO.getAllProjectsByEmployee("");
             boolean displayClientGraph = true;
+<<<<<<< HEAD
             boolean displayEmployeeGraph = false;
+=======
+            boolean displayEmployeeGraph = true;
+>>>>>>> cbc2b50a51842abc317fcec3f012367cc98580db
         %>
         <script>
             $(document).ready(function () {
@@ -859,23 +863,24 @@
                         <div class="row">
                             <div class="col-xs-1 nav-toggle">&nbsp;</div>
                             <div class="col-xs-5 nav-toggle" style="text-align: center;" align="center;">
-                                <h2>Revenue</h2>
+                                <h2>Project P&L</h2>
                                 <canvas id="clientProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-1 nav-toggle">&nbsp;</div>
                             <div class="col-xs-5 nav-toggle" style="text-align: center;" align="center;">
-                                <h2>Project P&L</h2>
+                                <h2>Project Overdue</h2>
                                 <canvas id="clientOverdueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                         </div>
                         <div class="row">
-                            <table style="width: 100%; position: absolute; bottom: 10px;">
+                            <table style="width: 100%; position: relative; bottom: 0px;">
                                 <tr>
                                     <td style="width: 78.3%">
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block" href="EmployeeProfile.jsp?profileId=">Go to Profile</button>
+                                        <br/>
+                                        <button class="btn btn-lg btn-primary btn-block" href="ClientProfile.jsp?profileId=">Go to Profile</button>
                                     </td>
                                     <td style="width: 5.666%">
                                         &nbsp;
@@ -1169,7 +1174,7 @@
                                     %>
                                 </tbody>
                             </table>
-                            <br/><br/>
+                            <br/>
                             <table style="width: 100%" align="right">
                                 <tr>
                                     <td style="width: 61%">
@@ -1212,7 +1217,64 @@
                             </div>
                         </div>
                         <div class="row">
-                            <table style="width: 100%; position: absolute; bottom: 10px;">
+                            <br/><br/>
+                            <div class="col-xs-12" id="employeeProjectOverdueTable">
+                                <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                    <table id='datatable8' align="center" style="text-align: left;">
+                                        <thead>
+                                            <tr>
+                                                <th width="20.00%">Completion Date</th>
+                                                <th width="20.00%">Project Name</th>
+                                                <th width="20.00%">Hours Assigned</th>
+                                                <th width="20.00%">Hours Actual</th>
+                                                <th width="20.00%">Staff</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
+                                                    for (int i = 0; i < employeeProjectList.size(); i++) {
+                                                        //Project p = clientProjectList.get(i);
+                                            %>
+                                            <tr>
+                                                <td>
+                                                    test
+                                                    <%//p.getDateCompleted()%>
+                                                </td>
+                                                <td>
+                                                    test
+                                                    <%//p.getProjectTitle()%>
+                                                </td>
+                                                <td>
+                                                    test
+                                                    <%//p.getPlannedHours()%>
+                                                </td>
+                                                <td>
+                                                    <%//p.getEmployee1Hours() + p.getEmployee2Hours()%>
+                                                </td>
+                                                <td>
+                                                    <%//p.getEmployee1()%>
+                                                    <% //if (!p.getEmployee2().toLowerCase().equals("na")) {
+                                                        out.println(" and ");
+                                                    %>
+                                                    <%//p.getEmployee2()%>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </td>
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                </div>
+                            </div>
+                            <br/>
+                        </div>
+                        <div class="row">
+                            <table style="width: 100%; position: relative; bottom: 0px;">
                                 <tr>
                                     <td style="width: 78.3%">
                                         &nbsp;
