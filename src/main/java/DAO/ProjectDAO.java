@@ -29,6 +29,7 @@ package DAO;
  */
 import static DAO.EmployeeDAO.getCompletedProjectList;
 import static DAO.EmployeeDAO.getCostPerHourPerStaff;
+import Entity.Client;
 import Entity.Employee;
 import Entity.Project;
 import Entity.Task;
@@ -1827,6 +1828,199 @@ public class ProjectDAO {
         return numList;
     }
      
+     public static ArrayList<ArrayList<Integer>> getCompanyMonthlyProfitability(String clientId, String year) {
+
+        //array of profit project count per month and array of loss project count per month
+        Client client = ClientDAO.getClientById(clientId);
+        String companyName = client.getCompanyName();
+        
+        int yearProfit[] = new int[12];
+        int yearLoss[] = new int[12];
+
+        Project project;
+        //retrieve all fully completed project for a given year
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE projectReviewStatus = ? and companyName=? and year(end)=?");
+            stmt.setString(1, "complete");
+            stmt.setString(2, companyName);
+            stmt.setString(3, year);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                //check the month of the project
+                Date date = rs.getDate("end");
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+                int month = cal.get(Calendar.MONTH);
+                //create the project object
+                project = new Project();
+                project.setProjectID(rs.getInt("projectID"));
+                project.setProjectTitle(rs.getString("title"));
+                project.setCompanyName(rs.getString("companyName"));
+                project.setBusinessType(rs.getString("businessType"));
+                project.setStart(rs.getDate("start"));
+                project.setEnd(rs.getDate("end"));
+                project.setProjectRemarks(rs.getString("projectRemarks"));
+                project.setProjectStatus(rs.getString("projectStatus"));
+                project.setActualDeadline(rs.getDate("actualDeadline"));
+                project.setFrequency(rs.getString("frequency"));
+                project.setProjectType(rs.getString("projectType"));
+                project.setEmployee1(rs.getString("employee1"));
+                project.setEmployee2(rs.getString("employee2"));
+                project.setEmployee1Hours(rs.getDouble("employee1Hours"));
+                project.setEmployee2Hours(rs.getDouble("employee2Hours"));
+                project.setProjectReviewer(rs.getString("projectReviewer"));
+                project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
+                project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
+
+                //check here if profit or loss 
+                double status = getProfit(project);
+                
+                //add into respective month arraylist based on month retrieved 
+                switch (month) {
+                    case 0:
+                        if (status > 0) {
+                            yearProfit[0] += 1;
+                        } else {
+                            yearLoss[0] += 1;
+                        }
+                        break;
+                    case 1:
+                        if (status > 0) {
+                            yearProfit[1] += 1;
+                        } else {
+                            yearLoss[1] += 1;
+                        }
+                        break;
+                    case 2:
+                        if (status > 0) {
+                            yearProfit[2] += 1;
+                        } else {
+                            yearLoss[2] += 1;
+                        }
+                        break;
+                    case 3:
+                        if (status > 0) {
+                            yearProfit[3] += 1;
+                        } else {
+                            yearLoss[3] += 1;
+                        }
+                        break;
+                    case 4:
+                        if (status > 0) {
+                            yearProfit[4] += 1;
+                        } else {
+                            yearLoss[4] += 1;
+                        }
+                        break;
+                    case 5:
+                        if (status > 0) {
+                            yearProfit[5] += 1;
+                        } else {
+                            yearLoss[5] += 1;
+                        }
+                        break;
+                    case 6:
+                        if (status > 0) {
+                            yearProfit[6] += 1;
+                        } else {
+                            yearLoss[6] += 1;
+                        }
+                        break;
+                    case 7:
+                        if (status > 0) {
+                            yearProfit[7] += 1;
+                        } else {
+                            yearLoss[7] += 1;
+                        }
+                        break;
+                    case 8:
+                        if (status > 0) {
+                            yearProfit[8] += 1;
+                        } else {
+                            yearLoss[8] += 1;
+                        }
+                        break;
+                    case 9:
+                        if (status > 0) {
+                            yearProfit[9] += 1;
+                        } else {
+                            yearLoss[9] += 1;
+                        }
+                        break;
+                    case 10:
+                        if (status > 0) {
+                            yearProfit[10] += 1;
+                        } else {
+                            yearLoss[10] += 1;
+                        }
+                        break;
+                    case 11:
+                        if (status > 0) {
+                            yearProfit[11] += 1;
+                        } else {
+                            yearLoss[11] += 1;
+                        }
+                        break;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        //combine the 2 arrays
+        
+        ArrayList<Integer> yearProfitList = new ArrayList();
+        ArrayList<Integer> yearLossList = new ArrayList();
+        
+        for(int i = 0; i < 12; i++) {
+            int value = yearProfit[i];
+            yearProfitList.add(value);
+        }
+        
+        for(int i = 0; i < 12; i++) {
+            int value = yearLoss[i];
+            yearLossList.add(value);
+        }
+        ArrayList<ArrayList<Integer>> complete = new ArrayList();
+        
+        complete.add(yearProfitList);
+        complete.add(yearLossList);
+        return complete;
+    }
      
+    public static int[] getClientOverdueProjectPerYear(String clientid, String year) {
+        
+        Client client = ClientDAO.getClientById(clientid);
+        String companyName = client.getCompanyName();
+        int[] numList = new int[12];
+
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted > end) and companyName = ? GROUP BY MONTH(end)");
+            stmt.setString(1, year);
+            stmt.setString(2,companyName);
+            
+            //date for start
+            //date for end 
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String month = rs.getString("MONTH");
+                Integer monthInt = Integer.parseInt(month);
+                String count = rs.getString("COUNT");
+                Integer countInt = Integer.parseInt(count);
+                numList[monthInt - 1] = countInt;
+
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        return numList;
+    } 
     
 }

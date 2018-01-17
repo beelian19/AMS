@@ -156,6 +156,10 @@
         <servlet-name>EditTokenServlet</servlet-name>
         <servlet-class>Module.Expense.EditTokenServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClientDashboard</servlet-name>
+        <servlet-class>Module.Dashboard.ClientDashboard</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
@@ -311,6 +315,10 @@
     <servlet-mapping>
         <servlet-name>EditTokenServlet</servlet-name>
         <url-pattern>/EditTokenServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClientDashboard</servlet-name>
+        <url-pattern>/ClientDashboard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
