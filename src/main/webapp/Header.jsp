@@ -379,7 +379,7 @@
                                     <%
                                         if (sessionUserIsAdmin.equals("yes")) {
                                     %> 
-                                <li><a href="ReminderServlet">Send Reminders Now</a></li>
+                                <!--<li><a href="ReminderServlet">Send Reminders Now</a></li>-->
                                 <li><a href="CreateAdHocProject.jsp">Create Ad Hoc Project</a></li>
                                     <%
                                         }
