@@ -5,10 +5,8 @@
  */
 package Module.Expense;
 
-import Entity.PaymentFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.concurrent.Future;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Lin
  */
-public class clearResultsServlet extends HttpServlet {
+public class saveResultsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,23 +29,19 @@ public class clearResultsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Future<PaymentFactory> qboFuture;
-        if (request.getSession().getAttribute("expenseFuture") != null) {
-            qboFuture = (Future<PaymentFactory>) request.getSession().getAttribute("expenseFuture");
-            if (!qboFuture.isDone()) {
-                request.getSession().setAttribute("status", "Payment job is still running");
-                response.sendRedirect("UploadExpense.jsp");
-            } else {
-                request.getSession().removeAttribute("expenseFuture");
-            }
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet saveResultsServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet saveResultsServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        if (request.getSession().getAttribute("paymentClient") != null) {
-            request.getSession().removeAttribute("expenseFuture");
-        }
-
-        request.getSession().setAttribute("status", "Results cleared!");
-        response.sendRedirect("UploadExpense.jsp");
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -166,7 +166,7 @@
                             <td>
                                 <form action="saveResultsServlet" method="post">
                                     <!-- Reminder: send over filename and results -->
-                                    <button class="btn btn-lg btn-primary btn-block btn-success" type="submit" >Save to email</button>
+                                    <button class="btn btn-lg btn-primary btn-block btn-success" type="submit" >Send to email and clear</button>
                                 </form>
                             </td>
                             <td>
