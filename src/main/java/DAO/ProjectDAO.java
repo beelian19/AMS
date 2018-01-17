@@ -1124,7 +1124,7 @@ public class ProjectDAO {
         ArrayList<Project> projectList = new ArrayList<>();
         ArrayList<Project> incomplete = new ArrayList<>();
         ArrayList<Project> complete = new ArrayList<>();
-
+        
         Project project;
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE employee1 = ? OR employee2 = ? and MONTH(end)=? and YEAR(end)=?");
