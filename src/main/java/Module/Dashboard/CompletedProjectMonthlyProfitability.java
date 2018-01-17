@@ -34,19 +34,16 @@ public class CompletedProjectMonthlyProfitability extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
-       int[][] profitabilityList = new int[12][12]; 
-       
-       if (request.getParameter("year") == null) {
-            
-        } else {
-            String year = (String) request.getParameter("year");
-            profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability(year);
-            
-        }
-        request.setAttribute("projectList", profitabilityList);
-        RequestDispatcher rd = request.getRequestDispatcher("FinalDashboard.jsp");
-        rd.forward(request, response);
+
+        ArrayList<ArrayList<Integer>> profitabilityList = new ArrayList();
+
+        profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability("2017");
+        
+        ArrayList<Integer> yearProfitList = profitabilityList.get(0);
+        ArrayList<Integer> yearLossList = profitabilityList.get(1);
+        
+        request.getSession().setAttribute("yearProfit", yearProfitList);
+        request.getSession().setAttribute("yearLoss", yearLossList);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

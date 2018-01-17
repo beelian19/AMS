@@ -1182,33 +1182,7 @@ public class ProjectDAO {
         }
     }
 
-    public static int[][] getCompletedProjectMonthlyProfitability(String year) {
-
-        //this serves as counters for the number of profitable project per month and losses per month 
-        int janP = 0;
-        int janL = 0;
-        int febP = 0;
-        int febL = 0;
-        int marP = 0;
-        int marL = 0;
-        int aprP = 0;
-        int aprL = 0;
-        int mayP = 0;
-        int mayL = 0;
-        int junP = 0;
-        int junL = 0;
-        int julP = 0;
-        int julL = 0;
-        int augP = 0;
-        int augL = 0;
-        int sepP = 0;
-        int sepL = 0;
-        int octP = 0;
-        int octL = 0;
-        int novP = 0;
-        int novL = 0;
-        int decP = 0;
-        int decL = 0;
+    public static ArrayList<ArrayList<Integer>> getCompletedProjectMonthlyProfitability(String year) {
 
         //array of profit project count per month and array of loss project count per month
         int yearProfit[] = new int[12];
@@ -1229,7 +1203,6 @@ public class ProjectDAO {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date);
                 int month = cal.get(Calendar.MONTH);
-
                 //create the project object
                 project = new Project();
                 project.setProjectID(rs.getInt("projectID"));
@@ -1255,130 +1228,118 @@ public class ProjectDAO {
 
                 //check here if profit or loss 
                 double status = getProfit(project);
-
+                
                 //add into respective month arraylist based on month retrieved 
                 switch (month) {
                     case 0:
                         if (status > 0) {
-                            janP += 1;
+                            yearProfit[0] += 1;
                         } else {
-                            janL += 1;
+                            yearLoss[0] += 1;
                         }
                         break;
                     case 1:
                         if (status > 0) {
-                            febP += 1;
+                            yearProfit[1] += 1;
                         } else {
-                            febL += 1;
+                            yearLoss[1] += 1;
                         }
                         break;
                     case 2:
                         if (status > 0) {
-                            marP += 1;
+                            yearProfit[2] += 1;
                         } else {
-                            marL += 1;
+                            yearLoss[2] += 1;
                         }
                         break;
                     case 3:
                         if (status > 0) {
-                            aprP += 1;
+                            yearProfit[3] += 1;
                         } else {
-                            aprL += 1;
+                            yearLoss[3] += 1;
                         }
                         break;
                     case 4:
                         if (status > 0) {
-                            mayP += 1;
+                            yearProfit[4] += 1;
                         } else {
-                            mayL += 1;
+                            yearLoss[4] += 1;
                         }
                         break;
                     case 5:
                         if (status > 0) {
-                            junP += 1;
+                            yearProfit[5] += 1;
                         } else {
-                            junL += 1;
+                            yearLoss[5] += 1;
                         }
                         break;
                     case 6:
                         if (status > 0) {
-                            julP += 1;
+                            yearProfit[6] += 1;
                         } else {
-                            julL += 1;
+                            yearLoss[6] += 1;
                         }
                         break;
                     case 7:
                         if (status > 0) {
-                            augP += 1;
+                            yearProfit[7] += 1;
                         } else {
-                            augL += 1;
+                            yearLoss[7] += 1;
                         }
                         break;
                     case 8:
                         if (status > 0) {
-                            sepP += 1;
+                            yearProfit[8] += 1;
                         } else {
-                            sepL += 1;
+                            yearLoss[8] += 1;
                         }
                         break;
                     case 9:
                         if (status > 0) {
-                            octP += 1;
+                            yearProfit[9] += 1;
                         } else {
-                            octL += 1;
+                            yearLoss[9] += 1;
                         }
                         break;
                     case 10:
                         if (status > 0) {
-                            novP += 1;
+                            yearProfit[10] += 1;
                         } else {
-                            novL += 1;
+                            yearLoss[10] += 1;
                         }
                         break;
                     case 11:
                         if (status > 0) {
-                            decP += 1;
+                            yearProfit[11] += 1;
                         } else {
-                            decL += 1;
+                            yearLoss[11] += 1;
                         }
                         break;
                 }
-
             }
-            //assign values to the array for profit
-            yearProfit[0] = janP;
-            yearProfit[1] = febP;
-            yearProfit[2] = marP;
-            yearProfit[3] = aprP;
-            yearProfit[4] = mayP;
-            yearProfit[5] = junP;
-            yearProfit[6] = julP;
-            yearProfit[7] = augP;
-            yearProfit[8] = sepP;
-            yearProfit[9] = octP;
-            yearProfit[10] = novP;
-            yearProfit[11] = decP;
-            //assign values to the array for loss
-            yearLoss[0] = janL;
-            yearLoss[1] = febL;
-            yearLoss[2] = marL;
-            yearLoss[3] = aprL;
-            yearLoss[4] = mayL;
-            yearLoss[5] = junL;
-            yearLoss[6] = julL;
-            yearLoss[7] = augL;
-            yearLoss[8] = sepL;
-            yearLoss[9] = octL;
-            yearLoss[10] = novL;
-            yearLoss[11] = decL;
-
         } catch (SQLException e) {
             System.out.println("SQLException at ProjectDAO: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
         //combine the 2 arrays
-        int[][] complete = {yearProfit, yearLoss};
+        
+        ArrayList<Integer> yearProfitList = new ArrayList();
+        ArrayList<Integer> yearLossList = new ArrayList();
+        
+        for(int i = 0; i < 12; i++) {
+            int value = yearProfit[i];
+            yearProfitList.add(value);
+        }
+        
+        for(int i = 0; i < 12; i++) {
+            int value = yearLoss[i];
+            yearLossList.add(value);
+        }
+        ArrayList<ArrayList<Integer>> complete = new ArrayList();
+        
+        complete.add(yearProfitList);
+        complete.add(yearLossList);
         return complete;
     }
 
