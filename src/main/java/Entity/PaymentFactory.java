@@ -129,6 +129,13 @@ public class PaymentFactory {
                     if (chargedAccountNumber == 0) {
                         paymentInitMessage += "Missing charged account number: ";
                     }
+                    
+                    // Set the location
+                    varCell = row.getCell(11);
+                    String location = getStringValue(varCell);
+                    if (location != null) {
+                        paymentObject.setLocation(location);
+                    }
 
                     // Set the transaction date (required)
                     // If no dates, assume end of list
