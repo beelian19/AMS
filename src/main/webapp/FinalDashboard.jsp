@@ -897,7 +897,7 @@
                     $(document).ready(function () {
 
                         $('#viewPerformance').click(function () {
-                            var clientDashboardYear = document.getElementById("clientDashboardYear").value;
+                            var clientDashboardYear = $("#clientDashboardYear").val();
                             var clientID = document.getElementById("client").value;
                             $.ajax({
                                 url: 'ClientDashboard',
