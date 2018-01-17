@@ -239,13 +239,15 @@ public class PaymentFactory {
                     if (lineCustomer != null) {
                         paymentLine.setQBOLineCustomer(lineCustomer);
                     }
+                    
+                    // Set init message
+                    paymentLine.setInitStatus(paymentInitMessage);
 
                     // Add line to Payment
                     // Add status to Payment
                     List<PaymentLine> line = new ArrayList<>();
                     line.add(paymentLine);
                     paymentObject.setLines(line);
-                    paymentObject.setStatus(paymentInitMessage);
 
                     // Add Payment to holding list
                     holdingList.add(paymentObject);
@@ -261,7 +263,7 @@ public class PaymentFactory {
             for (Payment p2 : holdingList) {
                 String ref = p2.getReferenceNumber();
                 if (ref == null) {
-                    paymentMap.put("null" + nullReferenced, p2);
+                    paymentMap.put("amsNull" + nullReferenced, p2);
                     nullReferenced ++;
                 } else {
                     Payment p1 = paymentMap.get(ref);
@@ -276,7 +278,7 @@ public class PaymentFactory {
                 }
             }
             
-            prePayments = (List<Payment>) paymentMap.values();
+            prePayments = new ArrayList<>(paymentMap.values());
 
         } catch (NullPointerException npe) {
             messages.add("NullPointerException found: " + npe.getMessage());

@@ -10,6 +10,8 @@ public class PaymentLine {
     private String tax;
     private String QBOLineClass;
     private String QBOLineCustomer;
+    
+    private String initStatus;
 
     /**
      * Check is this line has the required information to be processed
@@ -19,6 +21,13 @@ public class PaymentLine {
     public boolean checkPaymentLine() {
         return accountNumber != null && exTaxAmount != null && incTaxAmount != null && tax != null;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentLine{" + "accountName=" + accountName + ", accountNumber=" + accountNumber + ", lineDescription=" + lineDescription + ", exTaxAmount=" + exTaxAmount + ", incTaxAmount=" + incTaxAmount + ", tax=" + tax + ", QBOLineClass=" + QBOLineClass + ", QBOLineCustomer=" + QBOLineCustomer + ", initStatus=" + initStatus + '}';
+    }
+    
+    
 
     public String getAccountName() {
         return accountName;
@@ -84,5 +93,15 @@ public class PaymentLine {
         this.QBOLineCustomer = QBOLineCustomer;
     }
 
+    public String getInitStatus() {
+        return initStatus;
+    }
+
+    public void setInitStatus(String initStatus) {
+        this.initStatus = initStatus;
+    }
+
+    
+    
 
 }
