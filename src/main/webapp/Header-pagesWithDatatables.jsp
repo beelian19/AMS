@@ -327,7 +327,7 @@
             <table align="right" class="container-fluid">
                 <tr>
                     <td>
-                        <a href="Dashboard.jsp" class="btn btn-default btn-lg neck-button black">Dashboard &emsp;</a>
+                        <a href="FinalDashboard.jsp" class="btn btn-default btn-lg neck-button black">Dashboard &emsp;</a>
                     </td>
                     <td>
                         <div class="dropdown">
