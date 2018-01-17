@@ -35,6 +35,7 @@ public class ClientDashboard extends HttpServlet {
         
         ArrayList<ArrayList<Integer>> profitabilityList = new ArrayList();
 
+        //take in clientID and year as parameters
         profitabilityList = ProjectDAO.getCompanyMonthlyProfitability("4","2017");
         int[] overdueList = new int[12];
         overdueList = ProjectDAO.getClientOverdueProjectPerYear("4","2017");

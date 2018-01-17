@@ -576,13 +576,13 @@
                                     var profitableProjects = profitableProjectsData.split(",");
                                     var lossProjectsData = "<%=request.getSession().getAttribute("yearLoss")%>";
                                     var lossProjects = lossProjectsData.split(",");
-                                    //var profitData = "<=request.getSession().getAttribute("profit")%>";
-                                    //var profit = profitData.split(",");
+                                    var totalCompletedList = "<%=request.getSession().getAttribute("totalCompletedList")%>";
+                                    var totalCompletedProjects = totalCompletedList.split(",");
                                     var barChartData = {
                                         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                         datasets: [{
                                                 label: '# of Projects',
-                                                data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                                data: totalCompletedProjects, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                                 backgroundColor: [
                                                     'rgba(255, 99, 132, 0.2)',
                                                     'rgba(255, 99, 132, 0.2)',
@@ -708,11 +708,15 @@
                                 success: function () {
                                     var overdueProject = "<%=request.getSession().getAttribute("overdueProject")%>";
                                     var overdue = overdueProject.split(",");
+                                    var ontimeProject = "<%=request.getSession().getAttribute("ontimeProject")%>";
+                                    var ontime = ontimeProject.split(",");
+                                    var completedProject = "<%=request.getSession().getAttribute("completedProject")%>";
+                                    var completed = completedProject.split(",");
                                     var barChartData = {
                                         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                         datasets: [{
                                                 label: '# of Projects',
-                                                data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                                data: completed, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                                 backgroundColor: [
                                                     'rgba(255, 99, 132, 0.2)',
                                                     'rgba(255, 99, 132, 0.2)',
@@ -745,7 +749,7 @@
                                             },
                                             {
                                                 label: '# of Projects On Time',
-                                                data: [1, 3, 4, 5, 2, 3, 1, 3, 4, 5, 2, 3],
+                                                data: ontime, //[1, 3, 4, 5, 2, 3, 1, 3, 4, 5, 2, 3],
                                                 backgroundColor: [
                                                     'rgba(54, 162, 235, 0.2)',
                                                     'rgba(54, 162, 235, 0.2)',
@@ -1077,107 +1081,107 @@
                                 System.out.println("Employee List Size: " + employeeList.size());
                     %>
                     <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                    <form action = "refreshTokenServlet" method = "post">
-                        <div class="row">
-                            <br/>
-                            <div class="col-xs-6">
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="dashboardSelect">
-                                    <select name="employeeDashboardMonth" class="clientDashboard" id="employeeDashboardMonth">
-                                        <option class="clientDashboard" disabled selected value>-- Please Select Month --</option>
-                                        <option class="clientDashboard" value="01">January</option>
-                                        <option class="clientDashboard" value="02">February</option>
-                                        <option class="clientDashboard" value="03">March</option>
-                                        <option class="clientDashboard" value="04">April</option>
-                                        <option class="clientDashboard" value="05">May</option>
-                                        <option class="clientDashboard" value="06">June</option>
-                                        <option class="clientDashboard" value="07">July</option>
-                                        <option class="clientDashboard" value="08">August</option>
-                                        <option class="clientDashboard" value="09">September</option>
-                                        <option class="clientDashboard" value="10">October</option>
-                                        <option class="clientDashboard" value="11">November</option>
-                                        <option class="clientDashboard" value="12">December</option>
-                                    </select>
+                        <form action = "refreshTokenServlet" method = "post">
+                            <div class="row">
+                                <br/>
+                                <div class="col-xs-6">
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="dashboardSelect">
+                                        <select name="employeeDashboardMonth" class="clientDashboard" id="employeeDashboardMonth">
+                                            <option class="clientDashboard" disabled selected value>-- Please Select Month --</option>
+                                            <option class="clientDashboard" value="01">January</option>
+                                            <option class="clientDashboard" value="02">February</option>
+                                            <option class="clientDashboard" value="03">March</option>
+                                            <option class="clientDashboard" value="04">April</option>
+                                            <option class="clientDashboard" value="05">May</option>
+                                            <option class="clientDashboard" value="06">June</option>
+                                            <option class="clientDashboard" value="07">July</option>
+                                            <option class="clientDashboard" value="08">August</option>
+                                            <option class="clientDashboard" value="09">September</option>
+                                            <option class="clientDashboard" value="10">October</option>
+                                            <option class="clientDashboard" value="11">November</option>
+                                            <option class="clientDashboard" value="12">December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="dashboardSelect">
+                                        <select name="employeeDashboardYear" class="clientDashboard" id="employeeDashboardYear" required>
+                                            <option class="clientDashboard" disabled selected value>-- Please Select Year --</option>
+                                            <option class="clientDashboard" value="2014">2014</option>
+                                            <option class="clientDashboard" value="2014">2015</option>
+                                            <option class="clientDashboard" value="2014">2016</option>
+                                            <option class="clientDashboard" value="2014">2017</option>
+                                            <option class="clientDashboard" value="2014">2018</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
-                                <div class="dashboardSelect">
-                                    <select name="employeeDashboardYear" class="clientDashboard" id="employeeDashboardYear" required>
-                                        <option class="clientDashboard" disabled selected value>-- Please Select Year --</option>
-                                        <option class="clientDashboard" value="2014">2014</option>
-                                        <option class="clientDashboard" value="2014">2015</option>
-                                        <option class="clientDashboard" value="2014">2016</option>
-                                        <option class="clientDashboard" value="2014">2017</option>
-                                        <option class="clientDashboard" value="2014">2018</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <br/><br/>
-                        <table id='datatable2' align="center">
-                            <thead>
+                            <br/><br/>
+                            <table id='datatable2' align="center">
+                                <thead>
+                                    <tr>
+                                        <th width="16.67%">Name</th>
+                                        <th width="16.67%">Position</th>
+                                        <th width="16.67%">Email</th>
+                                        <th width="16.67%">Number</th>
+                                        <th width="16.67%">Admin Access</th>
+                                        <th width="16.67%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        for (int i = 0; i < employeeList.size(); i++) {
+                                    %>
+                                    <tr style="text-align: left;">
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getName()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getPosition()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getEmail()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getNumber()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getIsAdmin()%>
+                                        </td>
+                                        <td width="16.67%" align="center">
+                                            <input type="radio" name="employee" value='<%=employeeList.get(i)%>' required>
+                                        </td>
+                                    </tr>
+                                    <%
+                                        }
+                                    %>
+                                </tbody>
+                            </table>
+                            <br/><br/>
+                            <table style="width: 100%" align="right">
                                 <tr>
-                                    <th width="16.67%">Name</th>
-                                    <th width="16.67%">Position</th>
-                                    <th width="16.67%">Email</th>
-                                    <th width="16.67%">Number</th>
-                                    <th width="16.67%">Admin Access</th>
-                                    <th width="16.67%"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    for (int i = 0; i < employeeList.size(); i++) {
-                                %>
-                                <tr style="text-align: left;">
-                                    <td width="16.67%">
-                                        <%=employeeList.get(i).getName()%>
+                                    <td style="width: 61%">
+                                        &nbsp;
                                     </td>
-                                    <td width="16.67%">
-                                        <%=employeeList.get(i).getPosition()%>
+                                    <td style="width: 16.167%">
+                                        <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
                                     </td>
-                                    <td width="16.67%">
-                                        <%=employeeList.get(i).getEmail()%>
+                                    <td style="width: 1%">
+                                        &nbsp;
                                     </td>
-                                    <td width="16.67%">
-                                        <%=employeeList.get(i).getNumber()%>
-                                    </td>
-                                    <td width="16.67%">
-                                        <%=employeeList.get(i).getIsAdmin()%>
-                                    </td>
-                                    <td width="16.67%" align="center">
-                                        <input type="radio" name="employee" value='<%=employeeList.get(i)%>' required>
+                                    <td style="width: 16.167%">
+                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
                                     </td>
                                 </tr>
-                                <%
-                                    }
-                                %>
-                            </tbody>
-                        </table>
-                        <br/><br/>
-                        <table style="width: 100%" align="right">
-                            <tr>
-                                <td style="width: 61%">
-                                    &nbsp;
-                                </td>
-                                <td style="width: 16.167%">
-                                    <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
-                                </td>
-                                <td style="width: 1%">
-                                    &nbsp;
-                                </td>
-                                <td style="width: 16.167%">
-                                    <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <br/><br/>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+                                <tr>
+                                    <td colspan="4">
+                                        <br/><br/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
                     </div>
                     <%
                         }
