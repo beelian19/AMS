@@ -358,7 +358,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="UploadExpense.jsp">QuickBooks</a></li>
-                                <li><a href="ResultRedirect">Results</a></li>
+                                <li><a href="ExpenseResult.jsp">Results</a></li>
                                 <li><a href="TokenOverview.jsp">Tokens</a></li>
                             </ul>
                         </div>
