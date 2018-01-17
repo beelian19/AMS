@@ -483,65 +483,84 @@
                         </div>
                     </div>
                     <script>
-                        var sales = SalesGraph;
-                        var lineChartData = {
-                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                            datasets: [{
-                                    label: 'Revenue',
-                                    fillColor: 'rgba(255, 99, 132, 0.2)',
-                                    strokeColor: 'rgba(220,180,0,1)',
-                                    pointColor: 'rgba(220,180,0,1)',
-                                    data: [80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
-                                    backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(255,99,132,1)'
-                                    ],
-                                    borderWidth: 1
-                                },
-                                {
-                                    label: 'Profit',
-                                    fillColor: 'rgba(54, 162, 235, 0.2)',
-                                    strokeColor: 'rgba(66,180,0,1)',
-                                    pointColor: 'rgba(66,180,0,1)',
-                                    data: [20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10], //"ProfitGraph", //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
-                                    backgroundColor: [
-                                        'rgba(153, 102, 255, 0.2)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(153, 102, 255, 0.2)'
-                                    ],
-                                    borderWidth: 1
-                                }, {
-                                    label: 'Cost',
-                                    fillColor: 'rgba(54, 162, 235, 0.2)',
-                                    strokeColor: 'rgba(54, 162, 235, 0.2)',
-                                    pointColor: 'rgba(54, 162, 235, 0.2)',
-                                    data: [60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30], //"CostGraph", //[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
-                                    backgroundColor: [
-                                        'rgba(54, 162, 235, 0.2)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(54, 162, 235, 0.2)'
-                                    ],
-                                }]
-                        }
+                        $(document).ready(function () {
+                            $.ajax({
+                                url: 'SalesGraph',
+                                method: 'POST',
+                                success: function () {
+                                    var salesData = "<%=request.getSession().getAttribute("sales")%>";
+                                    var sales = salesData.split(",");
+                                    var costData = "<%=request.getSession().getAttribute("cost")%>";
+                                    var cost = costData.split(",");
+                                    var profitData = "<%=request.getSession().getAttribute("profit")%>";
+                                    var profit = profitData.split(",");
+                                            var lineChartData = {
+                                                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                                datasets: [
+                                                    {
+                                                        label: 'Revenue',
+                                                        fillColor: 'rgba(255, 99, 132, 0.2)',
+                                                        strokeColor: 'rgba(220,180,0,1)',
+                                                        pointColor: 'rgba(220,180,0,1)',
+                                                        data: sales, //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                                        backgroundColor: [
+                                                            'rgba(255, 99, 132, 0.2)'
+                                                        ],
+                                                        borderColor: [
+                                                            'rgba(255,99,132,1)'
+                                                        ],
+                                                        borderWidth: 1
+                                                    },
+                                                    {
+                                                        label: 'Profit',
+                                                        fillColor: 'rgba(54, 162, 235, 0.2)',
+                                                        strokeColor: 'rgba(66,180,0,1)',
+                                                        pointColor: 'rgba(66,180,0,1)',
+                                                        data: profit, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
+                                                        backgroundColor: [
+                                                            'rgba(153, 102, 255, 0.2)'
+                                                        ],
+                                                        borderColor: [
+                                                            'rgba(153, 102, 255, 0.2)'
+                                                        ],
+                                                        borderWidth: 1
+                                                    }, {
+                                                        label: 'Cost',
+                                                        fillColor: 'rgba(54, 162, 235, 0.2)',
+                                                        strokeColor: 'rgba(54, 162, 235, 0.2)',
+                                                        pointColor: 'rgba(54, 162, 235, 0.2)',
+                                                        data: cost, //[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
+                                                        backgroundColor: [
+                                                            'rgba(54, 162, 235, 0.2)'
+                                                        ],
+                                                        borderColor: [
+                                                            'rgba(54, 162, 235, 0.2)'
+                                                        ],
+                                                    }
+                                                ]
+                                            };
 
-                        Chart.defaults.global.tooltipYPadding = 16;
-                        Chart.defaults.global.tooltipCornerRadius = 0;
-                        Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                        Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                        Chart.defaults.global.animationEasing = "easeInOutElastic";
-                        Chart.defaults.global.responsive = false;
-                        var ctx = document.getElementById("RevenueChart").getContext("2d");
-                        var RevenueChart = new Chart(ctx, {
-                            type: 'line',
-                            data: lineChartData,
-                            pointDotRadius: 5,
-                            bezierCurve: false,
-                            scaleShowVerticalLines: false
+                                    Chart.defaults.global.tooltipYPadding = 16;
+                                    Chart.defaults.global.tooltipCornerRadius = 0;
+                                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                    Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                    Chart.defaults.global.responsive = false;
+                                    var ctx = document.getElementById("RevenueChart").getContext("2d");
+                                    var RevenueChart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: lineChartData,
+                                        pointDotRadius: 5,
+                                        bezierCurve: false,
+                                        scaleShowVerticalLines: false
+                                    });
+                                },
+                                error: function (data) {
+                                    console.log("Error: " + data);
+                                }
+                            });
                         });
+
                     </script>
                     <script>
                         var barChartData = {
@@ -934,7 +953,7 @@
                                             <td>
                                                 <%
                                                     //employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
-                                                    //employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
+                                                    // getEmployee2().toLowerCase();
                                                 %>
                                                 <a href=<%=employee1ProfileUrl2%>>
                                                     <%//p.getEmployee1()%>
@@ -1169,13 +1188,13 @@
                                                 <td>
                                                     <%
                                                         //employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
-                                                        //employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
+                                                        // employee2().toLowerCase();
                                                     %>
                                                     <a href=<%=employee1ProfileUrl2%>>
                                                         <%//p.getEmployee1()%>
                                                     </a>
                                                     <% //if (!p.getEmployee2().toLowerCase().equals("na")) {
-                                                        //    out.println(" and ");
+                                                        out.println(" and ");
                                                     %>
                                                     <a href=<%=employee2ProfileUrl2%>>
                                                         <%//p.getEmployee2()%>

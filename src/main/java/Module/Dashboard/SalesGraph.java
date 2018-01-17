@@ -6,10 +6,13 @@
 package Module.Dashboard;
 
 import DAO.ProjectDAO;
+import static Utility.JsonFormatter.convertObjectToElement;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,11 +36,40 @@ public class SalesGraph extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String selectedYear = "2017";
+        PrintWriter out = response.getWriter();
         Double[] salesList = ProjectDAO.getSales(selectedYear);
+        Double[] costList = ProjectDAO.getActualCost(selectedYear);
+        Double[] profitList = ProjectDAO.getProfit(selectedYear);
         
-        ArrayList<Double> test = new ArrayList(Arrays.asList(salesList));
+        ArrayList<Double> sales = new ArrayList();
+        ArrayList<Double> cost = new ArrayList();
+        ArrayList<Double> profit = new ArrayList();
+
+        DecimalFormat decimal = new DecimalFormat("#.##");
         
-        System.out.println(test);
+        for(int i = 0; i < 12; i++) {
+            double value = salesList[i];
+            
+            value = Double.valueOf(decimal.format(value));
+            sales.add(value);
+        }
+        
+        for(int i = 0; i < 12; i++) {
+            double value = costList[i];
+            
+            value = Double.valueOf(decimal.format(value));
+            cost.add(value);
+        }
+        
+        for(int i = 0; i < 12; i++) {
+            double value = profitList[i];
+            
+            value = Double.valueOf(decimal.format(value));
+            profit.add(value);
+        }
+        request.getSession().setAttribute("sales", sales);
+        request.getSession().setAttribute("cost", cost);
+        request.getSession().setAttribute("profit", profit);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

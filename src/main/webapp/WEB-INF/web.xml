@@ -145,16 +145,8 @@
         <servlet-class>Module.Dashboard.CompletedProjectMonthlyProfitability</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ProfitGraph</servlet-name>
-        <servlet-class>Module.Dashboard.ProfitGraph</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SalesGraph</servlet-name>
         <servlet-class>Module.Dashboard.SalesGraph</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CostGraph</servlet-name>
-        <servlet-class>Module.Dashboard.CostGraph</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>OverdueProjectPerYear</servlet-name>
@@ -309,16 +301,8 @@
         <url-pattern>/CompletedProjectMonthlyProfitability</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ProfitGraph</servlet-name>
-        <url-pattern>/ProfitGraph</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>SalesGraph</servlet-name>
         <url-pattern>/SalesGraph</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CostGraph</servlet-name>
-        <url-pattern>/CostGraph</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>OverdueProjectPerYear</servlet-name>
