@@ -3,11 +3,14 @@ package Module.Expense;
 import DAO.ClientDAO;
 import DAO.TokenDAO;
 import Entity.Client;
+import Entity.PaymentFactory;
 import Entity.Token;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -82,7 +85,6 @@ public class ReadExcelFile extends HttpServlet {
                         throw new IllegalArgumentException("No token in database with company id " + client.getClientID());
                     }
 
-                    
                     request.getSession().setAttribute("expenseFactory", ef);
                     request.setAttribute("expenseClient", client);
                     request.setAttribute("expenseToken", token);
@@ -99,7 +101,7 @@ public class ReadExcelFile extends HttpServlet {
             }
 
             request.setAttribute("messages", messages);
-            request.getRequestDispatcher("UploadExpenses.jsp").forward(request, response);
+            request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
 
         }
     }
@@ -116,7 +118,10 @@ public class ReadExcelFile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        List<String> servletMessages = new ArrayList<>();
+        servletMessages.add("doGet and processRequest not supported");
+        request.setAttribute("messages", servletMessages);
+        request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
     }
 
     /**
@@ -130,7 +135,67 @@ public class ReadExcelFile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        List<String> servletMessages = new ArrayList<>();
+        if (ServletFileUpload.isMultipartContent(request)) {
+            try {
+                List<FileItem> fileItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+                if (fileItems == null) {
+                    throw new IllegalArgumentException("No file uploaded");
+                } else if (fileItems.size() != 1) {
+                    throw new IllegalArgumentException("Invalid parameters. Request file item count > 1");
+                }
+                
+                // Get the excel file
+                FileItem excelFileItem = fileItems.get(0);
+                if (!excelFileItem.getName().endsWith("xlsx")) {
+                    throw new IllegalArgumentException("Only xlsx file type is accepted. " + excelFileItem.getName() + " uploaded");
+                }
+                
+                try (InputStream excelStream = excelFileItem.getInputStream()) {
+                    Workbook excelWorkbook = new XSSFWorkbook(excelStream);
+
+                    // Initialize Paymont Factory 
+                    PaymentFactory pf = new PaymentFactory(excelWorkbook);
+
+                    // Ensure that data is correctly initialized
+                    if (!pf.init()) {
+                        List<String> initMessages = pf.getInitMessages();
+                        servletMessages.addAll(initMessages);
+                        throw new IllegalArgumentException("Excel file was not initialized correctly");
+                    }
+
+                    // Get client associated with the UEN number
+                    Client client = ClientDAO.getClientByUEN(pf.getUEN().trim());
+                    
+                    if (client == null) {
+                        throw new IllegalArgumentException("No client in database with UEN: " + pf.getUEN());
+                    } else {
+                        pf.setRealmid(client.getRealmid().trim());
+                    }
+
+                    Token token = TokenDAO.getToken(client.getClientID());
+                    if (token == null) {
+                        throw new IllegalArgumentException("No token in database with company id " + client.getClientID() + ". Please edit accordingly for " + client.getCompanyName());
+                    }
+
+                    request.getSession().setAttribute("paymentFactory", pf);
+                    request.setAttribute("expenseClient", client);
+                    //request.getRequestDispatcher("ProcessExpense.jsp").forward(request, response);
+                    request.getRequestDispatcher("XERORedirect").forward(request, response);
+                }
+
+            } catch (FileUploadException fue) {
+                servletMessages.add("FileUploadException: " + fue.getMessage());
+            } catch (IllegalArgumentException iae) {
+                servletMessages.add("IllegalArgumentException: " + iae.getMessage());
+            } catch (RuntimeException re) {
+                servletMessages.add("RuntimeException found: " + re.getMessage());
+            }
+        } else {
+            servletMessages.add("Request parameter is not multipart");
+        }
+        request.setAttribute("messages", servletMessages);
+        request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
     }
 
     /**

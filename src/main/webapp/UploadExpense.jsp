@@ -20,11 +20,12 @@
     <head>
         <title>Upload Expense | Abundant Accounting Management System</title>
     </head>
-    <%        
-        String expenseJobRunning = (String) session.getAttribute("expenseJobRunning");
-        if(expenseJobRunning != null){
+    <%        String expenseJobRunning = (String) session.getAttribute("expenseJobRunning");
+        if (expenseJobRunning != null) {
             session.setAttribute("status", "Error: Please try again later, there is an expense job currently running");
         }
+        List<String> errors = (request.getAttribute("messages") != null) ? (List<String>) request.getAttribute("messages") : null;
+
 
     %>
     <body width="100%" style='background-color: #F0F8FF;'>
@@ -37,7 +38,7 @@
                 <div class="container-fluid" width="100%" height='100%' style="margin-top: <%=session.getAttribute("margin")%>" align="center">
                     <h1>Upload expenses into Quickbook</h1>
                     <div class="container-fluid" align="center" style='width: 40%; display: inline-block'>
-                        <form action = "ProcessExcelServlet" method = "post" enctype = "multipart/form-data">
+                        <form action = "ReadExcelFile" method = "post" enctype = "multipart/form-data">
                             <table align="center" width="100%" style="align: center">
                                 <tr>
                                     <td colspan="4">
@@ -51,19 +52,32 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        <% 
-                                            if(expenseJobRunning==null){
+                                        <%
+                                            if (expenseJobRunning == null) {
                                         %>
-                                            <input id="file-upload" type = "file" name = "file" value="Choose Files to Upload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style='display: block; width:100%; height: 30px' required/>
+                                        <input id="file-upload" type = "file" name = "file" value="Choose Files to Upload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style='display: block; width:100%; height: 30px' required/>
                                         <%
-                                        }else{
+                                        } else {
                                         %>  
-                                            <input id="file-upload" type = "file" name = "file" value="Choose Files to Upload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style='display: block; width:100%; height: 30px' disabled/>
+                                        <input id="file-upload" type = "file" name = "file" value="Choose Files to Upload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style='display: block; width:100%; height: 30px' disabled/>
                                         <%
-                                          }  
+                                            }
                                         %>
                                     </td>
                                 </tr>
+                                <%
+                                    if (errors != null) {
+                                        for (String error : errors) {
+                                %>
+                                <tr>
+                                    <td colspan="4">
+                                        <p> <font color="red"><%=error%></font></p>
+                                    </td>
+                                </tr>
+                                <%
+                                        }
+                                    }
+                                %>
                                 <tr>
                                     <td colspan="4">
                                         <% if (request.getAttribute("UploadExcelSuccess") != null || request.getAttribute("UploadExcelResponse") != null) {%>

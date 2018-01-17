@@ -23,6 +23,7 @@ public class TestClass {
             System.out.println("Payment success: " + p.checkPayment());
             p.getLines().forEach(
                     (li) -> {
+                        System.out.println("Payment Status: " + li.getInitStatus());
                         System.out.println("PaymentLine success: " + li.checkPaymentLine());
                     }
             );

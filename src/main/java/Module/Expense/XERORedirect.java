@@ -6,12 +6,16 @@
 package Module.Expense;
 
 import DAO.TokenDAO;
+import Entity.Payment;
+import Entity.PaymentFactory;
+import Entity.SampleData;
 import Entity.Token;
 import com.xero.api.Config;
 import com.xero.api.JsonConfig;
 import com.xero.api.OAuthAccessToken;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +38,28 @@ public class XERORedirect extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        PaymentFactory pf = (PaymentFactory) request.getSession().getAttribute("paymentFactory");
+        
+        List<Payment> pre = pf.getPrePayments();
+
+        System.out.println("Printing Pre Payments");
+        pre.stream().forEach((p) -> {
+            System.out.println(p.toString());
+            System.out.println("Payment success: " + p.checkPayment());
+            p.getLines().forEach(
+                    (li) -> {
+                        System.out.println("Line: " + li.toString());
+                        System.out.println("Payment Status: " + li.getInitStatus());
+                        System.out.println("PaymentLine success: " + li.checkPaymentLine());
+                    }
+            );
+        });
+        
+        request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
+    }
+    
+    protected void processRequest2(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Get the client's token
         String clientId = (String) request.getSession().getAttribute("tokenClientId");
