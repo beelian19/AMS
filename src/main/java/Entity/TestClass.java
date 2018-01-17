@@ -7,6 +7,7 @@ package Entity;
 
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -36,14 +37,19 @@ public class TestClass {
         });
         System.out.println("End");
     }
-    
-    public static void testListPrint(){
+
+    public static void testListPrint() {
         Arrays.asList(1, 2, 3, 4, 5).stream().forEach((i) -> {
             System.out.println(i + ":");
         });
     }
 
+    public static void testSubString() {
+        String s = "123456";
+        System.out.println(StringUtils.substring(s, 0, 15));
+    }
+
     public static void main(String[] args) {
-        testListPrint();
+        testSubString();
     }
 }

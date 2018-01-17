@@ -4,6 +4,10 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="Entity.Payment"%>
+<%@page import="Entity.PaymentFactory"%>
+<%@page import="java.util.concurrent.Future"%>
+<%@page import="Module.Expense.ExpenseFactory"%>
 <%@page import="DAO.ProjectDAO"%>
 <%@page import="Entity.Project"%>
 <%@page import="Entity.Token"%>
@@ -23,58 +27,34 @@
 
 <html>
     <head>
-        <title>Process Invoice | Abundant Accounting Management System</title>
-        <%            /**
-             * Check if future "expensefuture" exist, if not, display no job submitted message 
-             * if exist, check if done. If not, display still ongoing with info from request session ef
-             * if done, display resutls and clear ef and future from session using future.get()
-             *
-             */
-            if (request.getSession().getAttribute("excel") == null) {
-                request.setAttribute("UploadExcelResponse", "Missing excel attribute at ExpenseResult.jsp");
-                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
-                rd.forward(request, response);
+        <title>Invoice Results | Abundant Accounting Management System</title>
+        <%            
+            
+            
+            Future<PaymentFactory> qboFuture;
+            if (request.getSession().getAttribute("expenseFuture") == null) {
+                request.getSession().setAttribute("status", "Error: No job running found");
+                response.sendRedirect("UploadExpense.jsp");
             }
-            Excel excel = (Excel) request.getSession().getAttribute("excel");
-            String client = excel.getCompanyName();
-            String numProjected = (String) request.getAttribute("projectedNumber");
-            String[][] results = (String[][]) request.getAttribute("results");
-            int numberOfItems = results.length;
-            String actualProccessed = results[0][1];
-            String actualError = results[0][2];
+            qboFuture = (Future<PaymentFactory>) request.getSession().getAttribute("expenseFuture");
+            if (!qboFuture.isDone()) {
+                request.getSession().setAttribute("status", "Payment job is still running");
+                response.sendRedirect("UploadExpense.jsp");
+            }
 
-            if (request.getSession().getAttribute("invoiceProjectId") == null) {
-                request.setAttribute("UploadExcelResponse", "Missing project id ExpenseResult.jsp");
-                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
-                rd.forward(request, response);
-            }
-            String projectId = (String) request.getSession().getAttribute("invoiceProjectId");
-            Project p = ProjectDAO.getProjectByID(projectId);
-            String projectUrl = "ProjectProfile.jsp?projectID=";
-            projectUrl += projectId;
-            //Boolean canProceed = true;
-            request.getSession().removeAttribute("realmid");
-            request.getSession().removeAttribute("invoiceProjectId");
-            request.getSession().removeAttribute("excel");
-            // Rows below are for debugging
-            int numInvoice = Integer.parseInt(actualProccessed);
-            numInvoice += p.getNumberOfInvoices();
-            p.setNumberOfInvoices(numInvoice);
-            ProjectDAO.updateProject(p);
+            PaymentFactory pf = qboFuture.get();
+            List<Payment> postList = pf.getPostPayments();
+            List<String> processMessage = pf.getProcessMessages();
+            if (processMessage.isEmpty()) {
 
-            // Get all the data 
-            // These are the new stuff
-            //String[][] lineItems = (String[][]) excel.getLineItems();
-            String empId = (String) session.getAttribute("userId");
-            EmployeeDAO empDAO = new EmployeeDAO();
-            Employee employee = empDAO.getEmployeeByID(empId);
-            String employeeName = "";
-            if (employee == null) {
-                employeeName = "No User";
-            } else {
-                employeeName = employee.getName();
             }
-            String sessionUserIsAdmin = employee.getIsAdmin();
+
+            Client client = (request.getSession().getAttribute("paymentClient") != null) ? (Client) request.getAttribute("expenseClient") : null;
+            if (client == null) {
+                request.getSession().setAttribute("status", "Error: Null Client at ExpenseResult.jsp");
+                request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
+            }
+            String clientName = client.getCompanyName();
 
 
         %>
@@ -95,9 +75,9 @@
             <div class="container-fluid" width="100%" height="100%" style='padding-left: 0px; padding-right: 0px;'>
                 <jsp:include page="StatusMessage.jsp"/>
                 <div class="container-fluid" style="text-align: center; width: 100%; height: 100%; margin-top: <%=session.getAttribute("margin")%>">
-                    <%                        if (client != null && client != "") {
+                    <%                        if (clientName != null && clientName != "") {
                     %>
-                    <h1 style="text-align: center">Results for <%=client%></h1>
+                    <h1 style="text-align: center">Results for <%=clientName%></h1>
                     <%
                     } else {
                     %>
@@ -110,34 +90,31 @@
                     -->         
                     <br/>
                     <div align="center">
+                        <%
+                            if (!processMessage.isEmpty()) {
+
+                        %>
                         <table width="60%" height="60%" style='border-bottom: #1b6d85; border-top: #1b6d85' cellpadding="10">
                             <tr>
-                                <td width="20%">
+                                <td width="50%">
                                     <label Style="whitespace: nowrap" style="overflow-x:auto">
-                                        Projected Number Of Successful Invoices
+                                        Processing errors
                                     </label>
-                                </td>
-                                <td width="20%">
-                                    <%=numProjected%>
-                                </td>
-                                <td width="20%">
-                                    <label Style="whitespace: nowrap" style="overflow-x:auto">
-                                        Total Successfully Submitted Invoices
-                                    </label>
-                                </td>
-                                <td width="20%">
-                                    <%=actualProccessed%>
-                                </td>
-                                <td width="20%">
-                                    <label Style="whitespace: nowrap" style="overflow-x:auto">
-                                        Total Erroneous Invoices
-                                    </label>
-                                </td>
-                                <td width="20%">
-                                    <%=actualError%>
                                 </td>
                             </tr>
-                        </table>  
+                            <%                                for (String error : processMessage) {
+                            %>
+                            <tr>
+                                <td width="20%">
+                                    <%=error%>
+                                </td>
+                            </tr>
+
+                            <%
+                                    }
+                                }
+                            %>      
+                        </table> 
                     </div>
                     <br/>
                     <br/>
@@ -151,39 +128,28 @@
                         <table id="datatable" style="border: #FFFFFF; text-align:center; overflow:auto" align="center">
                             <thead>
                                 <tr>
-                                    <th width="10%" Style="text-align:left">#</th>
-                                    <th width="20%" Style="text-align:left">Invoice Id</th>
-                                    <th width="70%" Style="text-align:left">Message</th>
+                                    <th width="20%" Style="text-align:left">Reference Number</th>
+                                    <th width="80%" Style="text-align:left">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <%
-                                    if (numberOfItems != 0) {
+                                    if (postList != null || !postList.isEmpty()) {
                                         String colorCode;
-                                        for (String[] row : results) {
-
-                                            if (row[0] == null) {
-                                                break;
-                                            } else if (row[0].equals("0")) {
-                                                continue;
-                                            }
-
-                                            if (row[1].equals("0")) {
-                                                colorCode = "#ffb6c1";
+                                        for (Payment p : postList) {
+                                            if (p.getStatus().toLowerCase().contains("error")) {
+                                                colorCode = "#FFB6C1";
                                             } else {
                                                 colorCode = "#F0F8FF";
                                             }
+                                            
                                 %>
                                 <tr style="background-color: <%=colorCode%>">
-
                                     <td style="font-size: 14px; text-align:left" width="10%">
-                                        <%=row[0]%>
+                                        <%=p.getReferenceNumber()%>
                                     </td>
-                                    <td style="font-size: 14px; text-align:left" width="20%">
-                                        <%=(row[1] == null) ? "missing" : row[1]%>
-                                    </td>
-                                    <td style="font-size: 14px;" width="70%">
-                                        <%=(row[2] == null) ? "missing" : row[2]%>
+                                    <td style="font-size: 10px; text-align:left" width="20%">
+                                        <%=p.getStatus()%>
                                     </td>
                                 </tr>
                                 <%
@@ -196,18 +162,7 @@
                     <br/>
                     <br/>
                     <table style="text-align: right" width="90%">
-                        <tr width="90%">
-                            <td width="80%">
-                                &nbsp;
-                            </td>
-                            <td>
-                                <form action="<%= projectUrl%>" method="post">
-                                    <button class="btn btn-lg btn-primary btn-block" type="submit">Go to project</button>
-                                </form>
-                            </td>
-                            <td width="1%">
-                                &nbsp;
-                            </td>
+                        <tr width="40%">
                             <td>
                                 <form action="saveResultsServlet" method="post">
                                     <!-- Reminder: send over filename and results -->
@@ -216,6 +171,12 @@
                             </td>
                             <td>
                                 &nbsp;
+                            </td>
+                            <td>
+                                <form action="clearResultsServlet" method="post">
+                                    <!-- Reminder: send over filename and results -->
+                                    <button class="btn btn-lg btn-primary btn-block btn-success" type="submit" >Clear results</button>
+                                </form>
                             </td>
                         </tr>
                     </table>
