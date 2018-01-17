@@ -8,7 +8,9 @@ package Module.Dashboard;
 import DAO.ProjectDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,18 +35,21 @@ public class OverdueProjectPerYear extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
+        PrintWriter out = response.getWriter();
         int[] overdueList = new int[12];
-        if (request.getParameter("year") == null) {
-            
-        } else {
-            String year = (String) request.getParameter("year");
-            overdueList = ProjectDAO.getOverdueProjectPerYear(year);
-            
+        overdueList = ProjectDAO.getOverdueProjectPerYear("2017");
+        //request.setAttribute("overdueList", overdueList);
+        //RequestDispatcher rd = request.getRequestDispatcher("FinalDashboard.jsp");
+        //rd.forward(request, response);
+        ArrayList<Integer> overdue = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = overdueList[i];
+            overdue.add(value);
         }
-        request.setAttribute("overdueList", overdueList);
-        RequestDispatcher rd = request.getRequestDispatcher("FinalDashboard.jsp");
-        rd.forward(request, response);
+
+        out.print(overdue);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
