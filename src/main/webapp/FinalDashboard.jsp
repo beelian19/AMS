@@ -127,12 +127,6 @@
             projectList = ProjectDAO.getAllProjects();
             String profileUrl = "ProjectProfile.jsp?projectID=";
             String profileUrl2 = "";
-            String clientProfileUrl = "ClientProfile.jsp?profileId=";
-            String clientProfileUrl2 = "";
-            String employee1ProfileUrl = "EmployeeProfile.jsp?profileId=";
-            String employee1ProfileUrl2 = "";
-            String employee2ProfileUrl = "EmployeeProfile.jsp?profileId=";
-            String employee2ProfileUrl2 = "";
             ArrayList<ArrayList<Project>> clientProjectList = new ArrayList<>();
             clientProjectList = ProjectDAO.getAllProjectsByCompanyName("");
             ArrayList<ArrayList<Project>> employeeProjectList = new ArrayList<>();
@@ -204,6 +198,7 @@
                         <br/>
                         <div class="col-xs-12" id="revenueTable" style="display:none">
                             <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                <h3>Revenue</h3>
                                 <table id='datatable4' align="center" style="text-align: left;">
                                     <thead>
                                         <tr>
@@ -233,22 +228,7 @@
                                                 <%=p.getDateCompleted()%>
                                             </td>
                                             <td>
-                                                <%
-                                                    Client c = ClientDAO.getClientByCompanyName(p.getCompanyName());
-
-                                                    if (c != null && !(p.getCompanyName()).isEmpty()) {
-                                                        clientProfileUrl2 = clientProfileUrl + c.getClientID();
-                                                %>
-                                                <a href='<%=clientProfileUrl2%>'>
-                                                    <%=p.getCompanyName()%>
-                                                </a>
-                                                <%
-                                                } else {
-                                                %>
                                                 <%=p.getCompanyName()%>
-                                                <%
-                                                    }
-                                                %>
                                             </td>
                                             <td>
                                                 <% profileUrl2 = profileUrl + p.getProjectID();%>
@@ -277,19 +257,11 @@
                                                 <%=profit%>
                                             </td>
                                             <td>
-                                                <%
-                                                    employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
-                                                    employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
-                                                %>
-                                                <a href=<%=employee1ProfileUrl2%>>
-                                                    <%=p.getEmployee1()%>
-                                                </a>
+                                                <%=p.getEmployee1()%>
                                                 <% if (!p.getEmployee2().toLowerCase().equals("na")) {
                                                         out.println(" and ");
                                                 %>
-                                                <a href=<%=employee2ProfileUrl2%>>
-                                                    <%=p.getEmployee2()%>
-                                                </a>
+                                                <%=p.getEmployee2()%>
                                                 <%
                                                     }
                                                 %>
@@ -306,6 +278,7 @@
                         </div>
                         <div class="col-xs-12" id="ProfitAndLossTable" style="display:none">
                             <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                <h3>Profit and Loss</h3>
                                 <table id='datatable5' align="center" style="text-align: left;">
                                     <thead>
                                         <tr>
@@ -332,22 +305,7 @@
                                                 <%=p.getDateCompleted()%>
                                             </td>
                                             <td>
-                                                <%
-                                                    Client c = ClientDAO.getClientByCompanyName(p.getCompanyName());
-
-                                                    if (c != null && !(p.getCompanyName()).isEmpty()) {
-                                                        clientProfileUrl2 = clientProfileUrl + c.getClientID();
-                                                %>
-                                                <a href='<%=clientProfileUrl2%>'>
-                                                    <%=p.getCompanyName()%>
-                                                </a>
-                                                <%
-                                                } else {
-                                                %>
                                                 <%=p.getCompanyName()%>
-                                                <%
-                                                    }
-                                                %>
                                             </td>
                                             <td>
                                                 <% profileUrl2 = profileUrl + p.getProjectID();%>
@@ -376,19 +334,11 @@
                                                 <%=ProjectDAO.getProfit(p)%>
                                             </td>
                                             <td>
-                                                <%
-                                                    employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
-                                                    employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
-                                                %>
-                                                <a href=<%=employee1ProfileUrl2%>>
-                                                    <%=p.getEmployee1()%>
-                                                </a>
+                                                <%=p.getEmployee1()%>
                                                 <% if (!p.getEmployee2().toLowerCase().equals("na")) {
                                                         out.println(" and ");
                                                 %>
-                                                <a href=<%=employee2ProfileUrl2%>>
-                                                    <%=p.getEmployee2()%>
-                                                </a>
+                                                <%=p.getEmployee2()%>
                                                 <%
                                                     }
                                                 %>
@@ -405,6 +355,7 @@
                         </div>
                         <div class="col-xs-12" id="ProjectsOverdueChartTable" style="display:none">
                             <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                <h3>Project Overdue</h3>
                                 <table id='datatable6' align="center" style="text-align: left;">
                                     <thead>
                                         <tr>
@@ -427,22 +378,7 @@
                                                 <%=p.getDateCompleted()%>
                                             </td>
                                             <td>
-                                                <%
-                                                    Client c = ClientDAO.getClientByCompanyName(p.getCompanyName());
-
-                                                    if (c != null && !(p.getCompanyName()).isEmpty()) {
-                                                        clientProfileUrl2 = clientProfileUrl + c.getClientID();
-                                                %>
-                                                <a href='<%=clientProfileUrl2%>'>
-                                                    <%=p.getCompanyName()%>
-                                                </a>
-                                                <%
-                                                } else {
-                                                %>
                                                 <%=p.getCompanyName()%>
-                                                <%
-                                                    }
-                                                %>
                                             </td>
                                             <td>
                                                 <% profileUrl2 = profileUrl + p.getProjectID();%>
@@ -457,19 +393,11 @@
                                                 <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
                                             </td>
                                             <td>
-                                                <%
-                                                    employee1ProfileUrl2 = employee1ProfileUrl + p.getEmployee1().toLowerCase();
-                                                    employee2ProfileUrl2 = employee2ProfileUrl + p.getEmployee2().toLowerCase();
-                                                %>
-                                                <a href=<%=employee1ProfileUrl2%>>
-                                                    <%=p.getEmployee1()%>
-                                                </a>
+                                                <%=p.getEmployee1()%>
                                                 <% if (!p.getEmployee2().toLowerCase().equals("na")) {
                                                         out.println(" and ");
                                                 %>
-                                                <a href=<%=employee2ProfileUrl2%>>
-                                                    <%=p.getEmployee2()%>
-                                                </a>
+                                                <%=p.getEmployee2()%>
                                                 <%
                                                     }
                                                 %>
