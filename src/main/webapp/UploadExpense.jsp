@@ -22,25 +22,10 @@
     </head>
     <%        
         String expenseJobRunning = (String) session.getAttribute("expenseJobRunning");
-        if(expenseJobRunning!=null){
-            session.setAttribute("status", "Error: Please try again later, there are other expense jobs running");
+        if(expenseJobRunning != null){
+            session.setAttribute("status", "Error: Please try again later, there is an expense job currently running");
         }
-        ArrayList<String> idList = new ArrayList();
-        ArrayList<String> nameList = new ArrayList();
-        ClientDAO clientDAO = new ClientDAO();
-        ProjectDAO projectDAO = new ProjectDAO();
-        ArrayList<Project> projectList = projectDAO.getAllIncompleteProjects();
-        ArrayList<Client> clientList = clientDAO.getAllClient();
-        if (clientList != null) {
-            for (int i = 0; i < clientList.size(); i++) {
-                Client c = clientList.get(i);
-                String id = Integer.toString(c.getClientID());
-                String name = c.getCompanyName();
-                idList.add(id);
-                nameList.add(name);
-            }
-        }
-        //Collections.sort(nameList, String.CASE_INSENSITIVE_ORDER);
+
     %>
     <body width="100%" style='background-color: #F0F8FF;'>
         <nav class="container-fluid" width="100%" height="100%" style='padding-left: 0px; padding-right: 0px;'>
@@ -50,7 +35,7 @@
             <div class="container-fluid" width="100%" height="100%" style='padding-left: 0px; padding-right: 0px;'>
                 <jsp:include page="StatusMessage.jsp"/>
                 <div class="container-fluid" width="100%" height='100%' style="margin-top: <%=session.getAttribute("margin")%>" align="center">
-                    <h1>Upload expenses onto Quickbook</h1>
+                    <h1>Upload expenses into Quickbook</h1>
                     <div class="container-fluid" align="center" style='width: 40%; display: inline-block'>
                         <form action = "ProcessExcelServlet" method = "post" enctype = "multipart/form-data">
                             <table align="center" width="100%" style="align: center">
@@ -61,7 +46,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        <Strong>Upload a new expense file</Strong>
+                                        <Strong>Upload a new expense xlsx file</Strong>
                                     </td>
                                 </tr>
                                 <tr>

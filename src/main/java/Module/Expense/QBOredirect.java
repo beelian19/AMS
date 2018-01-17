@@ -47,13 +47,15 @@ public class QBOredirect extends HttpServlet {
             realmId = request.getParameter("realmId");
         } else {
             request.getSession().setAttribute("status", "Error: Invalid redirect at QBOredirect");
-            response.sendRedirect("viewAllTokens.jsp");
+            response.sendRedirect("TokenOverview.jsp");
+            return;
         }
 
         // Get the client's token
         if (request.getSession().getAttribute("tokenClientId") == null) {
             request.getSession().setAttribute("status", "Error: No Client id found at QBOredirect");
-            response.sendRedirect("viewAllTokens.jsp");
+            response.sendRedirect("TokenOverview.jsp");
+            return;
         }
         String clientId = (String) request.getSession().getAttribute("tokenClientId");
         request.getSession().removeAttribute("tokenClientId");
@@ -61,7 +63,8 @@ public class QBOredirect extends HttpServlet {
 
         if (token == null) {
             request.getSession().setAttribute("status", "Error: No token for company id " + clientId + " found in the DB");
-            response.sendRedirect("viewAllTokens.jsp");
+            response.sendRedirect("TokenOverview.jsp");
+            return;
         }
 
         QBOoauth2ClientFactory factory = new QBOoauth2ClientFactory(token);
@@ -78,15 +81,15 @@ public class QBOredirect extends HttpServlet {
             token.setRefreshToken(refresh_token);
             updateSuccess = TokenDAO.updateToken(token);
             if (updateSuccess) {
-                request.getSession().setAttribute("status", "Updated token!");
-                response.sendRedirect("viewAllTokens.jsp");
+                request.getSession().setAttribute("status", "Updated token for client id: " + clientId);
+                response.sendRedirect("TokenOverview.jsp");
                 return;
             }
             request.getSession().setAttribute("status", "Token update failed. SQL update query failure.");
         } catch (OAuthException | NullPointerException ex) {
             request.getSession().setAttribute("stats", "Error: " + ex.getMessage());
         }
-        response.sendRedirect("viewAllTokens.jsp");
+        response.sendRedirect("TokenOverview.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
