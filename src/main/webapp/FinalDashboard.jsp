@@ -853,19 +853,39 @@
                         }
                     } else {
                     %>
-                    <div id="Abundant" class="tabcontent container-fluid" style="text-align: center;">
+                    <div class="container-fluid" style="text-align: center;">
                         <br/>
                         <div class="row">
                             <div class="col-xs-1 nav-toggle">&nbsp;</div>
                             <div class="col-xs-5 nav-toggle" href="#revenueTable" style="text-align: center;" align="center;">
                                 <h2>Revenue</h2>
-                                <canvas id="RevenueChart" style="width: 500px; height: 500px; text-align: center;" align="center"></canvas>
+                                <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-1 nav-toggle">&nbsp;</div>
                             <div class="col-xs-5 nav-toggle" href="#ProfitAndLossTable" style="text-align: center;" align="center;">
                                 <h2>Project P&L</h2>
                                 <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
+                        </div>
+                        <div class="row">
+                            <table style="width: 100%; position: absolute; bottom: 10px;">
+                                <tr>
+                                    <td style="width: 78.3%">
+                                        &nbsp;
+                                    </td>
+                                    <td style="width: 16.167%">
+                                        <button class="btn btn-lg btn-primary btn-block" href="EmployeeProfile.jsp?profileId=">Go to Profile</button>
+                                    </td>
+                                    <td style="width: 5.666%">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     <%
@@ -990,19 +1010,39 @@
                         }
                     } else {
                     %>
-                    <div id="Abundant" class="tabcontent container-fluid" style="text-align: center;">
+                    <div class="container-fluid" style="text-align: center;">
                         <br/>
                         <div class="row">
                             <div class="col-xs-1 nav-toggle">&nbsp;</div>
                             <div class="col-xs-5 nav-toggle" href="#revenueTable" style="text-align: center;" align="center;">
                                 <h2>Revenue</h2>
-                                <canvas id="RevenueChart" style="width: 500px; height: 500px; text-align: center;" align="center"></canvas>
+                                <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-1 nav-toggle">&nbsp;</div>
                             <div class="col-xs-5 nav-toggle" href="#ProfitAndLossTable" style="text-align: center;" align="center;">
                                 <h2>Project P&L</h2>
                                 <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
+                        </div>
+                        <div class="row">
+                            <table style="width: 100%; position: absolute; bottom: 10px;">
+                                <tr>
+                                    <td style="width: 78.3%">
+                                        &nbsp;
+                                    </td>
+                                    <td style="width: 16.167%">
+                                        <button class="btn btn-lg btn-primary btn-block" href="EmployeeProfile.jsp?profileId=">Go to Profile</button>
+                                    </td>
+                                    <td style="width: 5.666%">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     <%
