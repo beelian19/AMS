@@ -131,8 +131,8 @@
             clientProjectList = ProjectDAO.getAllProjectsByCompanyName("");
             ArrayList<ArrayList<Project>> employeeProjectList = new ArrayList<>();
             employeeProjectList = ProjectDAO.getAllProjectsByEmployee("");
-            boolean displayClientGraph = true;
-            boolean displayEmployeeGraph = true;
+            boolean displayClientGraph = false;
+            boolean displayEmployeeGraph = false;
         %>
         <script>
             $(document).ready(function () {
@@ -773,7 +773,7 @@
                             if (clientList != null && !clientList.isEmpty()) {
                     %>   
                     <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                        <form action="dashboardClientServlet" method="post">
+                        <form>
                             <div class="row">
                                 <br/>
                                 <div class="col-xs-9">
@@ -837,6 +837,7 @@
                                     <td style="width: 1%">
                                         &nbsp;
                                     </td>
+                                    </form>
                                     <td style="width: 16.167%">
                                         <button id="viewPerformance" class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
                                     </td>
@@ -847,7 +848,7 @@
                                     </td>
                                 </tr>
                             </table>
-                        </form>
+
                     </div>
                     <%
                         }
@@ -859,12 +860,359 @@
                             <div class="col-xs-1 nav-toggle">&nbsp;</div>
                             <div class="col-xs-5 nav-toggle" style="text-align: center;" align="center;">
                                 <h2>Revenue</h2>
-                                <canvas id="clientRevenueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
+                                <canvas id="clientProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-1 nav-toggle">&nbsp;</div>
                             <div class="col-xs-5 nav-toggle" style="text-align: center;" align="center;">
                                 <h2>Project P&L</h2>
-                                <canvas id="clientProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
+                                <canvas id="clientOverdueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table style="width: 100%; position: absolute; bottom: 10px;">
+                                <tr>
+                                    <td style="width: 78.3%">
+                                        &nbsp;
+                                    </td>
+                                    <td style="width: 16.167%">
+                                        <button class="btn btn-lg btn-primary btn-block" href="EmployeeProfile.jsp?profileId=">Go to Profile</button>
+                                    </td>
+                                    <td style="width: 5.666%">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
+                </div>
+                <script>
+                    $(document).ready(function () {
+
+                        $('#viewPerformance').click(function () {
+                            var clientDashboardYear = document.getElementById("clientDashboardYear").value;
+                            var clientID = document.getElementById("client").value;
+                            $.ajax({
+                                url: 'ClientDashboard',
+                                data: 'clientID=' + clientID + '&' + 'year=' + clientDashboardYear,
+                                type: 'POST',
+                                success: function () {
+                                    var clientYearProfitData = "<%=request.getSession().getAttribute("clientYearProfit")%>";
+                                    var clientYearProfit = clientYearProfitData.split(",");
+                                    var clientYearLossData = "<%=request.getSession().getAttribute("clientYearLoss")%>";
+                                    var clientYearLoss = clientYearLossData.split(",");
+                                    var clientOverdueProjectData = "<%=request.getSession().getAttribute("clientOverdueProject")%>";
+                                    var clientOverdueProject = clientOverdueProjectData.split(",");
+
+                                    var barChartData = {
+                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                        datasets: [{
+                                                label: '# of Profits',
+                                                data: clientYearProfit, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                                backgroundColor: [
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)'
+                                                ],
+                                                borderWidth: 1
+                                            },
+                                            {
+                                                label: '# of Losses',
+                                                data: clientYearLoss, //[1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
+                                                backgroundColor: [
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)'
+                                                ],
+                                                borderWidth: 1
+                                            }
+                                        ]
+                                    }
+
+                                    Chart.defaults.global.tooltipCornerRadius = 0;
+                                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                    Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                    Chart.defaults.global.responsive = false;
+                                    var ctx = document.getElementById("clientProfitAndLossChart").getContext("2d");
+                                    var clientProfitAndLossChart = new Chart(ctx, {
+                                        type: 'bar',
+                                        data: barChartData,
+                                        scaleShowVerticalLines: false
+                                    });
+
+                                    var barChartData = {
+                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                        datasets: [{
+                                                label: '# of Punctual Projects',
+                                                data: clientOverdueProject, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                                backgroundColor: [
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)'
+                                                ],
+                                                borderWidth: 1
+                                            },
+                                            {
+                                                label: '# of Overdue Projects',
+                                                data: clientOverdueProject, //[1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
+                                                backgroundColor: [
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)'
+                                                ],
+                                                borderWidth: 1
+                                            }
+                                        ]
+                                    }
+
+                                    Chart.defaults.global.tooltipCornerRadius = 0;
+                                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                    Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                    Chart.defaults.global.responsive = false;
+                                    var ctx = document.getElementById("clientOverdueChart").getContext("2d");
+                                    var clientProfitAndLossChart = new Chart(ctx, {
+                                        type: 'bar',
+                                        data: barChartData,
+                                        scaleShowVerticalLines: false
+                                    });
+
+                                }
+                            });
+                        });
+                    }
+                    );
+                </script>
+                <!-- ############################################### END OF CLIENT PERFORMANCE SECTION ###############################################-->                    
+
+
+                <!-- ############################################### START OF EMPLOYEE PERFORMANCE SECTION ###############################################-->
+                <div id="Employee" class="tabcontent container-fluid" align='center' style="text-align: center;">
+                    <% // this is to check if we're supposed to show the list of employees or the graphs page
+                        if (!displayEmployeeGraph) {
+                            // check if employeelist is null or empty
+                            if (employeeList != null && !employeeList.isEmpty()) {
+                                System.out.println("Employee List Size: " + employeeList.size());
+                    %>
+                    <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                        <form>
+                            <div class="row">
+                                <br/>
+                                <div class="col-xs-6">
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="dashboardSelect">
+                                        <select name="employeeDashboardMonth" class="clientDashboard" id="employeeDashboardMonth">
+                                            <option class="clientDashboard" disabled selected value>-- Please Select Month --</option>
+                                            <option class="clientDashboard" value="01">January</option>
+                                            <option class="clientDashboard" value="02">February</option>
+                                            <option class="clientDashboard" value="03">March</option>
+                                            <option class="clientDashboard" value="04">April</option>
+                                            <option class="clientDashboard" value="05">May</option>
+                                            <option class="clientDashboard" value="06">June</option>
+                                            <option class="clientDashboard" value="07">July</option>
+                                            <option class="clientDashboard" value="08">August</option>
+                                            <option class="clientDashboard" value="09">September</option>
+                                            <option class="clientDashboard" value="10">October</option>
+                                            <option class="clientDashboard" value="11">November</option>
+                                            <option class="clientDashboard" value="12">December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="dashboardSelect">
+                                        <select name="employeeDashboardYear" class="clientDashboard" id="employeeDashboardYear" required>
+                                            <option class="clientDashboard" disabled selected value>-- Please Select Year --</option>
+                                            <option class="clientDashboard" value="2014">2014</option>
+                                            <option class="clientDashboard" value="2014">2015</option>
+                                            <option class="clientDashboard" value="2014">2016</option>
+                                            <option class="clientDashboard" value="2014">2017</option>
+                                            <option class="clientDashboard" value="2014">2018</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/><br/>
+                            <table id='datatable2' align="center">
+                                <thead>
+                                    <tr>
+                                        <th width="16.67%">Name</th>
+                                        <th width="16.67%">Position</th>
+                                        <th width="16.67%">Email</th>
+                                        <th width="16.67%">Number</th>
+                                        <th width="16.67%">Admin Access</th>
+                                        <th width="16.67%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        for (int i = 0; i < employeeList.size(); i++) {
+                                    %>
+                                    <tr style="text-align: left;">
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getName()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getPosition()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getEmail()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getNumber()%>
+                                        </td>
+                                        <td width="16.67%">
+                                            <%=employeeList.get(i).getIsAdmin()%>
+                                        </td>
+                                        <td width="16.67%" align="center">
+                                            <input type="radio" name="employee" id='empName' value='<%=employeeList.get(i).getName()%>' required>
+                                        </td>
+                                    </tr>
+                                    <%
+                                        }
+                                    %>
+                                </tbody>
+                            </table>
+                            <br/><br/>
+                            <table style="width: 100%" align="right">
+                                <tr>
+                                    <td style="width: 61%">
+                                        &nbsp;
+                                    </td>
+                                    <td style="width: 16.167%">
+                                        <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
+                                    </td>
+                                    <td style="width: 1%">
+                                        &nbsp;
+                                    </td>
+                                    </form>
+                                    <td style="width: 16.167%">
+                                        <button id='btnViewPerformance' class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <br/><br/>
+                                    </td>
+                                </tr>
+                            </table>
+                    </div>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <div class="container-fluid" style="text-align: center;">
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
+                            <div class="col-xs-5 nav-toggle" href="#revenueTable" style="text-align: center;" align="center;">
+                                <h2>Revenue</h2>
+                                <canvas id="employeeRevenueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
+                            </div>
+                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
+                            <div class="col-xs-5 nav-toggle" href="#ProfitAndLossTable" style="text-align: center;" align="center;">
+                                <h2>Project P&L</h2>
+                                <canvas id="employeeProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                         </div>
                         <div class="row">
@@ -951,7 +1299,7 @@
                                         Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
                                         Chart.defaults.global.animationEasing = "easeInOutElastic";
                                         Chart.defaults.global.responsive = false;
-                                        var ctx = document.getElementById("clientRevenueChart").getContext("2d");
+                                        var ctx = document.getElementById("employeeRevenueChart").getContext("2d");
                                         //ctx.height = 500;
                                         var RevenueChart = new Chart(ctx, {
                                             type: 'line',
@@ -1089,7 +1437,7 @@
                                         Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
                                         Chart.defaults.global.animationEasing = "easeInOutElastic";
                                         Chart.defaults.global.responsive = false;
-                                        var ctx = document.getElementById("clientProfitAndLossChart").getContext("2d");
+                                        var ctx = document.getElementById("employeeProfitAndLossChart").getContext("2d");
                                         var clientProfitAndLossChart = new Chart(ctx, {
                                             type: 'bar',
                                             data: barChartData,
@@ -1102,186 +1450,6 @@
                                 });
                             });
                         </script>
-                    </div>
-                    <%
-                        }
-                    %>
-                </div>
-                <script>
-                    $(document).ready(function () {
-
-                        $('#viewPerformance').click(function () {
-                            var clientDashboardYear = document.getElementById("clientDashboardYear").value;
-                            var clientID = document.getElementById("client").value;
-                            $.ajax({
-                                url: 'ClientDashboard',
-                                data: 'clientID=' + clientID + '&' + 'year=' + clientDashboardYear,
-                                type: 'POST',
-                                success: function () {
-                                    var clientYearProfitData = "<%=request.getSession().getAttribute("clientYearProfit")%>";
-                                    var clientYearProfit = clientYearProfitData.split(",");
-                                    var clientYearLossData = "<%=request.getSession().getAttribute("clientYearLoss")%>";
-                                    var clientYearLoss = clientYearLossData.split(",");
-                                    var clientOverdueProjectData = "<%=request.getSession().getAttribute("clientOverdueProject")%>";
-                                    var clientOverdueProject = clientOverdueProjectData.split(",");
-                                }
-                            });
-                        });
-                    }
-                    );
-                </script>
-                <!-- ############################################### END OF CLIENT PERFORMANCE SECTION ###############################################-->                    
-
-
-                <!-- ############################################### START OF EMPLOYEE PERFORMANCE SECTION ###############################################-->
-                <div id="Employee" class="tabcontent container-fluid" align='center' style="text-align: center;">
-                    <% // this is to check if we're supposed to show the list of employees or the graphs page
-                        if (!displayEmployeeGraph) {
-                            // check if employeelist is null or empty
-                            if (employeeList != null && !employeeList.isEmpty()) {
-                                System.out.println("Employee List Size: " + employeeList.size());
-                    %>
-                    <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                        <form action = "refreshTokenServlet" method = "post">
-                            <div class="row">
-                                <br/>
-                                <div class="col-xs-6">
-                                </div>
-                                <div class="col-xs-3">
-                                    <div class="dashboardSelect">
-                                        <select name="employeeDashboardMonth" class="clientDashboard" id="employeeDashboardMonth">
-                                            <option class="clientDashboard" disabled selected value>-- Please Select Month --</option>
-                                            <option class="clientDashboard" value="01">January</option>
-                                            <option class="clientDashboard" value="02">February</option>
-                                            <option class="clientDashboard" value="03">March</option>
-                                            <option class="clientDashboard" value="04">April</option>
-                                            <option class="clientDashboard" value="05">May</option>
-                                            <option class="clientDashboard" value="06">June</option>
-                                            <option class="clientDashboard" value="07">July</option>
-                                            <option class="clientDashboard" value="08">August</option>
-                                            <option class="clientDashboard" value="09">September</option>
-                                            <option class="clientDashboard" value="10">October</option>
-                                            <option class="clientDashboard" value="11">November</option>
-                                            <option class="clientDashboard" value="12">December</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-3">
-                                    <div class="dashboardSelect">
-                                        <select name="employeeDashboardYear" class="clientDashboard" id="employeeDashboardYear" required>
-                                            <option class="clientDashboard" disabled selected value>-- Please Select Year --</option>
-                                            <option class="clientDashboard" value="2014">2014</option>
-                                            <option class="clientDashboard" value="2014">2015</option>
-                                            <option class="clientDashboard" value="2014">2016</option>
-                                            <option class="clientDashboard" value="2014">2017</option>
-                                            <option class="clientDashboard" value="2014">2018</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <br/><br/>
-                            <table id='datatable2' align="center">
-                                <thead>
-                                    <tr>
-                                        <th width="16.67%">Name</th>
-                                        <th width="16.67%">Position</th>
-                                        <th width="16.67%">Email</th>
-                                        <th width="16.67%">Number</th>
-                                        <th width="16.67%">Admin Access</th>
-                                        <th width="16.67%"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <%
-                                        for (int i = 0; i < employeeList.size(); i++) {
-                                    %>
-                                    <tr style="text-align: left;">
-                                        <td width="16.67%">
-                                            <%=employeeList.get(i).getName()%>
-                                        </td>
-                                        <td width="16.67%">
-                                            <%=employeeList.get(i).getPosition()%>
-                                        </td>
-                                        <td width="16.67%">
-                                            <%=employeeList.get(i).getEmail()%>
-                                        </td>
-                                        <td width="16.67%">
-                                            <%=employeeList.get(i).getNumber()%>
-                                        </td>
-                                        <td width="16.67%">
-                                            <%=employeeList.get(i).getIsAdmin()%>
-                                        </td>
-                                        <td width="16.67%" align="center">
-                                            <input type="radio" name="employee" id='empName' value='<%=employeeList.get(i).getName()%>' required>
-                                        </td>
-                                    </tr>
-                                    <%
-                                        }
-                                    %>
-                                </tbody>
-                            </table>
-                            <br/><br/>
-                            <table style="width: 100%" align="right">
-                                <tr>
-                                    <td style="width: 61%">
-                                        &nbsp;
-                                    </td>
-                                    <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block" type="reset">Reset</button>
-                                    </td>
-                                    <td style="width: 1%">
-                                        &nbsp;
-                                    </td>
-                                    <td style="width: 16.167%">
-                                        <button id='btnViewPerformance' class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <br/><br/>
-                                    </td>
-                                </tr>
-                            </table>
-                        </form>
-                    </div>
-                    <%
-                        }
-                    } else {
-                    %>
-                    <div class="container-fluid" style="text-align: center;">
-                        <br/>
-                        <div class="row">
-                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
-                            <div class="col-xs-5 nav-toggle" href="#revenueTable" style="text-align: center;" align="center;">
-                                <h2>Revenue</h2>
-                                <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
-                            </div>
-                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
-                            <div class="col-xs-5 nav-toggle" href="#ProfitAndLossTable" style="text-align: center;" align="center;">
-                                <h2>Project P&L</h2>
-                                <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <table style="width: 100%; position: absolute; bottom: 10px;">
-                                <tr>
-                                    <td style="width: 78.3%">
-                                        &nbsp;
-                                    </td>
-                                    <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block" href="EmployeeProfile.jsp?profileId=">Go to Profile</button>
-                                    </td>
-                                    <td style="width: 5.666%">
-                                        &nbsp;
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <br/>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
                     </div>
                     <%
                         }
@@ -1303,6 +1471,7 @@
                                     var employeeOverdue = employeeOverdueData.split(",");
                                     var employeeTimeExceedData = "<%=request.getSession().getAttribute("employeeTimeExceed")%>";
                                     var employeeTimeExceed = employeeTimeExceedData.split(",");
+
                                 }
                             });
                         });
