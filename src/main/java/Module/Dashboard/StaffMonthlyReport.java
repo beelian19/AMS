@@ -5,7 +5,6 @@
  */
 package Module.Dashboard;
 
-
 import DAO.ProjectDAO;
 import Entity.Employee;
 import Entity.Project;
@@ -35,28 +34,41 @@ public class StaffMonthlyReport extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-       Employee employee = null;
-       ArrayList<Project> projectList = new ArrayList(); 
-       int[] overdueList = new int[12];
-       int[] exceededList = new int[12];
-       
-       if (request.getParameter("employeeName") == null || request.getParameter("Year") == null || request.getParameter("Month") == null ) {
+
+        Employee employee = null;
+        ArrayList<Project> projectList = new ArrayList();
+        int[] overdueList = new int[12];
+        int[] exceededList = new int[12];
+
+        if (request.getParameter("employeeName") == null || request.getParameter("Year") == null || request.getParameter("Month") == null) {
             request.setAttribute("employee", employee);
         } else {
             String employeeName = (String) request.getParameter("employeeName");
             String year = (String) request.getParameter("Year");
             String month = (String) request.getParameter("Month");
-            projectList = ProjectDAO.getStaffMonthlyReport(employeeName,month,year);
+            projectList = ProjectDAO.getStaffMonthlyReport(employeeName, month, year);
             overdueList = ProjectDAO.getOverdueProjectPerStaff(year, employeeName);
             exceededList = ProjectDAO.getTimeExceededPerStaff(year, employeeName);
-            
+
         }
-        request.setAttribute("employeeProjectList", projectList);
-        request.setAttribute("employeeOverdue", overdueList);
-        request.setAttribute("employeeTimeExceed", exceededList);
-        RequestDispatcher rd = request.getRequestDispatcher("Dashboard.jsp");
-        rd.forward(request, response);
+
+        ArrayList<Integer> overdue = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = overdueList[i];
+            overdue.add(value);
+        }
+
+        ArrayList<Integer> exceed = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = exceededList[i];
+            exceed.add(value);
+        }
+
+        request.getSession().setAttribute("employeeProjectList", projectList);
+        request.getSession().setAttribute("employeeOverdue", overdue);
+        request.getSession().setAttribute("employeeTimeExceed", exceed);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
