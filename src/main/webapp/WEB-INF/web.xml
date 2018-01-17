@@ -164,6 +164,10 @@
         <servlet-name>clearResultsServlet</servlet-name>
         <servlet-class>Module.Expense.clearResultsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>saveResultsServlet</servlet-name>
+        <servlet-class>Module.Expense.saveResultsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
@@ -327,6 +331,10 @@
     <servlet-mapping>
         <servlet-name>clearResultsServlet</servlet-name>
         <url-pattern>/clearResultsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveResultsServlet</servlet-name>
+        <url-pattern>/saveResultsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
