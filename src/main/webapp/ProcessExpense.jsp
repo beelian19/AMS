@@ -4,6 +4,9 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="Entity.PaymentLine"%>
+<%@page import="Entity.Payment"%>
+<%@page import="Entity.PaymentFactory"%>
 <%@page import="DAO.ProjectDAO"%>
 <%@page import="Entity.Project"%>
 <%@page import="Entity.Token"%>
@@ -11,7 +14,6 @@
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="Entity.Excel"%>
 <%@page import="java.util.Arrays"%>
-<%@page import="Account.QBOPurchaseHelper"%>
 <%@page import="org.apache.poi.ss.usermodel.Workbook"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entity.Employee"%>
@@ -38,74 +40,43 @@
         </script>
     </head>
     <body width="100%" style='background-color: #F0F8FF;'>
-        <%            
-            // Ensure that the workbook is there, if not redirect to UploadExpense.jsp
-            if (request.getSession().getAttribute("excel") == null) {
-                request.setAttribute("UploadExcelResponse", "Missing excel attribute at ProcessExpense.jsp");
-                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
-                rd.forward(request, response);
-            }
-            Excel excel = (Excel) request.getSession().getAttribute("excel");
-
-            Boolean canProceed = false;
-            // Get all the data 
-            // These are the new stuff
-            String clientSelected = "debug";
-            String projectId = "";
-            Project project = null;
-            if (request.getSession().getAttribute("invoiceProjectId") == null) {
-                request.setAttribute("UploadExcelResponse", "Missing project attribute at ProcessExpense.jsp");
-                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
-                rd.forward(request, response);
-            } else {
-                projectId = (String) request.getSession().getAttribute("invoiceProjectId");
-                project = ProjectDAO.getProjectByID(projectId);
-                clientSelected = project.getCompanyName();
-                canProceed = true;
+        <%            PaymentFactory pf = (request.getSession().getAttribute("paymentFactory") != null) ? (PaymentFactory) request.getSession().getAttribute("paymentFactory") : null;
+            if (pf == null) {
+                request.getSession().setAttribute("status", "Error: Null PaymentFactory at ProcessExpense.jsp");
+                request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
             }
 
-            String chargedAccount = excel.getChargedAccountName();
-            String clientName = excel.getCompanyName();
-            String chargedAccountNumber = excel.getChargedAccountNumber();
-            String fromDate = excel.getFromDate();
-            String toDate = excel.getToDate();
-            String totalInvoices = excel.getNumberOfInvoices() + "";
-            String numInvoicesProcessing = excel.getLineItemsCount() + "";
+            String chargedAccount = pf.getChargedAccountName();
+            Client client = (request.getAttribute("expenseClient") != null) ? (Client) request.getAttribute("expenseClient") : null;
+            if (client == null) {
+                request.getSession().setAttribute("status", "Error: Null Client at ProcessExpense.jsp");
+                request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
+            }
+
+            Boolean canProceed = true;
+
+            String clientName = client.getCompanyName();
+            String chargedAccountNumber = pf.getChargedAccountName();
             String realmid = null;
-            realmid = ClientDAO.getClientRealmid(clientSelected);
-            if (realmid == null || realmid.trim().equals("")) {
+            realmid = client.getRealmid();
+            if (realmid == null || realmid.isEmpty()) {
                 realmid = "---No realmid detected---";
                 canProceed = false;
-                //set canproceed to false;
             }
-            Token token = null;
-            //todo GEt QBO or XERO
-            if (project != null) {
-                token = TokenDAO.getToken(ClientDAO.getClientByCompanyName(clientSelected).getClientID());
-            }
-
-            if (token == null) {
-                request.setAttribute("UploadExcelResponse", "Token is not found for project id: " + projectId);
-                RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
-                rd.forward(request, response);
-            }
+            Token token = pf.getToken();
 
             if (token.getInUse()) {
-                request.setAttribute("UploadExcelResponse", "Access token QBO is in use. Only one user may use is at one time");
+                request.getSession().setAttribute("status", "Error: Access token QBO is in use for " + clientName + ". Only one user may use is at one time");
                 RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
                 rd.forward(request, response);
                 return;
             }
-            int numberOfItems = 0;
-            String[][] lineItems = new String[1][1];
-            lineItems[0][0] = "No lineItems detected";
-            if (excel.getInitialized()) {
-                lineItems = (String[][]) excel.getLineItems();
-                numberOfItems = lineItems.length;
-            } else {
-                canProceed = false;
-            }
 
+            List<Payment> preList = pf.getPrePayments();
+            if (preList == null || preList.isEmpty()) {
+                request.getSession().setAttribute("status", "Error: No payment objects found");
+                request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
+            }
 
         %>
         <!--
@@ -122,10 +93,10 @@
             <div class="container-fluid" width="100%" height="100%">
                 <jsp:include page="StatusMessage.jsp"/>
                 <div class="container-fluid" style="text-align: center;margin-top: <%=session.getAttribute("margin")%>" width="100%" height='100%'>
-                    <%                        if (clientSelected != "") {
+                    <%                        if (clientName != "") {
                     %>
                     <h2 style="text-align: center">
-                        Invoices for <%=clientSelected%>
+                        Invoices for <%=clientName%>
                     </h2>
                     <%
                     } else {
@@ -143,7 +114,7 @@
                             <tr>
                                 <td width="20%" style="padding-left: 2%; padding-right: 2%">
                                     <label Style="whitespace: nowrap" style="overflow-x:auto">
-                                        Charged Account
+                                        Charged Account Name
                                     </label>
                                 </td>
                                 <td width="20%" style="padding-left: 2%; padding-right: 2%" style="overflow-x:auto">
@@ -169,49 +140,14 @@
                                 </td>
                                 <td width="20%" style="padding-left: 2%; padding-right: 2%">
                                     <label Style="whitespace: nowrap" style="overflow-x:auto">
-                                        Client Account Id
+                                        Client Realmid
                                     </label>
                                 </td>
                                 <td width="20%" style="padding-left: 2%; padding-right: 2%" style="overflow-x:auto">
                                     <%=realmid%>
                                 </td>
                             </tr>
-                            <tr>
-                                <td width="20%" style="padding-left: 2%; padding-right: 2%">
-                                    <label Style="whitespace: nowrap" style="overflow-x:auto">
-                                        Invoices From Date
-                                    </label>
-                                </td>
-                                <td width="20%" style="padding-left: 2%; padding-right: 2%" style="overflow-x:auto">
-                                    <%=fromDate%>
-                                </td>
-                                <td width="20%" style="padding-left: 2%; padding-right: 2%">
-                                    <label Style="whitespace: nowrap" style="overflow-x:auto">
-                                        Invoices To Date
-                                    </label>
-                                </td>
-                                <td width="20%" style="padding-left: 2%; padding-right: 2%" style="overflow-x:auto">
-                                    <%=toDate%>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="20%" style="padding-left: 2%; padding-right: 2%">
-                                    <label Style="whitespace: nowrap" style="overflow-x:auto">
-                                        Total Valid Invoices
-                                    </label>
-                                </td>
-                                <td width="20%" style="padding-left: 2%; padding-right: 2%" style="overflow-x:auto">
-                                    <%=numInvoicesProcessing%>
-                                </td>
-                                <td width="20%" style="padding-left: 2%; padding-right: 2%">
-                                    <label Style="whitespace: nowrap" style="overflow-x:auto">
-                                        Total Contained Invoices
-                                    </label>
-                                </td>
-                                <td width="20%" style="padding-left: 2%; padding-right: 2%" style="overflow-x:auto">
-                                    <%=totalInvoices%>
-                                </td>
-                            </tr>
+
                         </table>  
                     </div>
                     <br/>
@@ -219,79 +155,91 @@
                     <table id="datatable" style="border: #FFFFFF; text-align:center; width: 100%; overflow:auto">
                         <thead>
                             <tr>
-                                <th width="3%" Style="text-align:center">#</th>
-                                <th width="10%">Transaction Date</th>
-                                <th width="7%">Account #</th>
-                                <th width="7%">Account</th>
-                                <th width="7%">Description</th>
-                                <th width="7%">Vendor</th>
-                                <th width="7%">Ref Number</th>
-                                <th width="7%">Location</th>
-                                <th width="7%">Payment Method</th>
-                                <th width="7%">Amount ex GST</th>
-                                <th width="7%">GST Type</th>
-                                <th width="7%">Amount inc GST</th>
-                                <th width="7%">Memo</th>
+                                <th width="2%" Style="text-align:center">xl#</th>
+                                <th width="8%">Transaction Date</th>
+                                <th width="6%">Reference No</th>
+                                <th width="6%">Account Name</th>
+                                <th width="6%">Account Number</th>
+                                <th width="6%">Vendor</th>
+                                <th width="6%">GST Type </th>
+                                <th width="6%">Amount excl GST</th>
+                                <th width="6%">Amount incl GST</th>
+                                <th width="6%">Line Desc.</th>
+                                <th width="6%">Payment Method</th>
+                                <th width="6%">Location</th>
+                                <th width="7%">Class</th>
+                                <th width="6%">Customer</th>
+                                <th width="6%">Memo</th>
+                                <th width="12%">Init Message</th>
                             </tr>
                         </thead>
                         <tbody>
                             <%
-                                if (numberOfItems != 0) {
+                                if (preList != null) {
                                     String colorCode;
-                                    for (String[] row : lineItems) {
-                                        if (row[1] == null || row[13] == null) {
-                                            break;
-                                        }
-
-                                        if (row[13].equals("1")) {
-                                            colorCode = "#ffffff";
-                                        } else {
-                                            colorCode = "#ffb6c1";
-                                        }
+                                    int xlRow = 2;
+                                    for (Payment p : preList) {
+                                        for (PaymentLine pl : p.getLines()) {
+                                            xlRow ++;
+                                            if (p.checkPayment() && pl.checkPaymentLine()) {
+                                                colorCode = "#ffffff";
+                                            } else {
+                                                colorCode = "#ffb6c1";
+                                            }
                             %>
                             <tr style="background-color: <%=colorCode%>">
 
-                                <td style="font-size: 14px; text-align:center ">
-                                    <%=row[0]%>
+                                <td style="font-size: 10px; text-align:center ">
+                                    <%=xlRow%>
                                 </td>
-                                <td style="font-size: 14px; text-align:center; font-weight:bold ">
-                                    <%=(row[1] == null) ? "---Needed---" : row[1]%>
+                                <td style="font-size: 10px; text-align:center; font-weight:bold ">
+                                    <%=(p.getDateString() == null) ? "---Needed---" : p.getDateString()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[2] == null) ? "---Needed---" : row[2]%>
+                                <td style="font-size: 10px;">
+                                    <%=(p.getReferenceNumber() == null) ? "No reference number" : p.getReferenceNumber()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[3] == null) ? "---Needed ---" : row[3]%>
+                                <td style="font-size: 10px;">
+                                    <%=(pl.getAccountName() == null) ? "No Account Name" : pl.getAccountName()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[4] == null) ? "-" : row[4]%>
+                                <td style="font-size: 10px;">
+                                    <%=(pl.getAccountNumber() == null) ? "---Needed---" : pl.getAccountNumber()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[5] == null) ? "---Needed---" : row[5]%>
+                                <td style="font-size: 10px;">
+                                    <%=(p.getVendor() == null) ? "---Needed---" : p.getVendor()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[6] == null) ? "-" : row[6]%>
+                                <td style="font-size: 10px;">
+                                    <%=(pl.getTax() == null) ? "---Needed---" : pl.getTax()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[7] == null) ? "-" : row[7]%>
+                                <td style="font-size: 10px;">
+                                    <%=(pl.getExTaxAmount() == null) ? "---Needed---" : (pl.getExTaxAmount() < 0.0) ? pl.getExTaxAmount() + "(Negative)" : pl.getExTaxAmount()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[8] == null) ? "---Needed---" : row[8]%>
+                                <td style="font-size: 10px;">
+                                    <%=(pl.getIncTaxAmount() == null) ? "---Needed---" : (pl.getIncTaxAmount() < 0.0) ? pl.getIncTaxAmount() + "(Negative)" : pl.getIncTaxAmount()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[9] == null) ? "---Needed---" : (row[9].contains("-")) ? row[9] + "(Negative)" : row[9]%>
+                                <td style="font-size: 10px;">
+                                    <%=(pl.getLineDescription() == null) ? "No Line Desc." : pl.getLineDescription()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[10] == null) ? "---Needed---" : row[10]%>
+                                <td style="font-size: 10px;">
+                                    <%=(p.getPaymentMethod() == null) ? "Non Found. CASH inserted" : p.getPaymentMethod()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[11] == null) ? "---Needed---" : row[11]%>
+                                <td style="font-size: 10px;">
+                                    <%=(p.getLocation() == null) ? "No Location Found" : p.getLocation()%>
                                 </td>
-                                <td style="font-size: 14px;">
-                                    <%=(row[12] == null) ? "-" : StringUtils.substring(row[12], 0, 15) + "..."%>
+                                <td style="font-size: 10px;">
+                                    <%=(pl.getQBOLineClass() == null) ? "No Class Found" : pl.getQBOLineClass()%>
+                                </td>
+                                <td style="font-size: 10px;">
+                                    <%=(pl.getQBOLineCustomer()== null) ? "No Customer Found" : pl.getQBOLineCustomer()%>
+                                </td>
+                                <td style="font-size: 10px;">
+                                    <%=(p.getMemo() == null) ? "No Memo Found" : StringUtils.substring(p.getMemo(), 0, 15) + "..."%>
+                                </td>
+                                <td style="font-size: 10px;">
+                                    <%=(pl.getInitStatus().trim().equals("Init:")) ? "-" : pl.getInitStatus()%>
                                 </td>
                             </tr>
                             <%
+                                        }
                                     }
                                 }
                             %>
@@ -316,13 +264,13 @@
                                 <%
                                     if (canProceed) {
                                 %>
-                                <form action = "QBOExecutePurchase" method = "post">
+                                <form action = "ExecuteExpense" method = "post">
                                     <button name="ProcessExpense" value="Submit" class="btn btn-lg btn-primary btn-block btn-success" type="submit">Confirm</button>
                                 </form>
                                 <%
                                 } else {
                                 %>
-                                <form action = "Dank memes" method = "post">
+                                <form action = "UploadExpense.jsp" method = "post">
                                     <button name="ProcessExpense" value="Submit" class="btn btn-lg btn-primary btn-block btn-success" type="submit" disabled>Confirm</button>
                                 </form>
                                 <%
