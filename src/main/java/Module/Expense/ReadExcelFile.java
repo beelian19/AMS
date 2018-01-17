@@ -181,9 +181,9 @@ public class ReadExcelFile extends HttpServlet {
                     pf.setToken(token);
 
                     request.getSession().setAttribute("paymentFactory", pf);
-                    request.setAttribute("expenseClient", client);
-                    //request.getRequestDispatcher("ProcessExpense.jsp").forward(request, response);
-                    request.getRequestDispatcher("XERORedirect").forward(request, response);
+                    request.getSession().setAttribute("paymentClient", client);
+                    request.getRequestDispatcher("ProcessExpense.jsp").forward(request, response);
+                    //request.getRequestDispatcher("XERORedirect").forward(request, response);
                 }
 
             } catch (FileUploadException fue) {
