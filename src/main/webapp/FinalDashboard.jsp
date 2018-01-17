@@ -859,12 +859,12 @@
                         <div class="row">
                             <div class="col-xs-1 nav-toggle">&nbsp;</div>
                             <div class="col-xs-5 nav-toggle" style="text-align: center;" align="center;">
-                                <h2>Revenue</h2>
+                                <h2>Project P&L</h2>
                                 <canvas id="clientProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-1 nav-toggle">&nbsp;</div>
                             <div class="col-xs-5 nav-toggle" style="text-align: center;" align="center;">
-                                <h2>Project P&L</h2>
+                                <h2>Project Overdue</h2>
                                 <canvas id="clientOverdueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                         </div>
@@ -875,6 +875,7 @@
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
+                                        <br/>
                                         <button class="btn btn-lg btn-primary btn-block" href="ClientProfile.jsp?profileId=">Go to Profile</button>
                                     </td>
                                     <td style="width: 5.666%">
