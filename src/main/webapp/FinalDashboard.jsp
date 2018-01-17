@@ -576,13 +576,13 @@
                                     var profitableProjects = profitableProjectsData.split(",");
                                     var lossProjectsData = "<%=request.getSession().getAttribute("yearLoss")%>";
                                     var lossProjects = lossProjectsData.split(",");
-                                    //var profitData = "<=request.getSession().getAttribute("profit")%>";
-                                    //var profit = profitData.split(",");
+                                    var totalCompletedList = "<%=request.getSession().getAttribute("totalCompletedList")%>";
+                                    var totalCompletedProjects = totalCompletedList.split(",");
                                     var barChartData = {
                                         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                         datasets: [{
                                                 label: '# of Projects',
-                                                data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                                data: totalCompletedProjects, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                                 backgroundColor: [
                                                     'rgba(255, 99, 132, 0.2)',
                                                     'rgba(255, 99, 132, 0.2)',
@@ -708,11 +708,15 @@
                                 success: function () {
                                     var overdueProject = "<%=request.getSession().getAttribute("overdueProject")%>";
                                     var overdue = overdueProject.split(",");
+                                    var ontimeProject = "<%=request.getSession().getAttribute("ontimeProject")%>";
+                                    var ontime = ontimeProject.split(",");
+                                    var completedProject = "<%=request.getSession().getAttribute("completedProject")%>";
+                                    var completed = completedProject.split(",");
                                     var barChartData = {
                                         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                         datasets: [{
                                                 label: '# of Projects',
-                                                data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                                data: completed, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                                 backgroundColor: [
                                                     'rgba(255, 99, 132, 0.2)',
                                                     'rgba(255, 99, 132, 0.2)',
@@ -745,7 +749,7 @@
                                             },
                                             {
                                                 label: '# of Projects On Time',
-                                                data: [1, 3, 4, 5, 2, 3, 1, 3, 4, 5, 2, 3],
+                                                data: ontime, //[1, 3, 4, 5, 2, 3, 1, 3, 4, 5, 2, 3],
                                                 backgroundColor: [
                                                     'rgba(54, 162, 235, 0.2)',
                                                     'rgba(54, 162, 235, 0.2)',
