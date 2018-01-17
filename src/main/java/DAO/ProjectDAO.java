@@ -1176,9 +1176,7 @@ public class ProjectDAO {
                 } else {
                     incomplete.add(proj);
                 }
-
             }
-
             return complete;
         }
     }

@@ -888,7 +888,7 @@
                                             <%=clientList.get(i).getCompanyName()%>
                                         </td>
                                         <td width="40.0%" align="right">
-                                            <input type="radio" name="client" value='<%=clientList.get(i)%>' required>
+                                            <input type="radio" name="client" id="client" value='<%=clientList.get(i).getClientID()%>' required>
                                         </td>
                                     </tr>
                                     <%
@@ -910,7 +910,7 @@
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
+                                        <button id="viewPerformance" class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -944,6 +944,29 @@
                         }
                     %>
                 </div>
+                <script>
+                    $(document).ready(function () {
+
+                        $('#viewPerformance').click(function () {
+                            var clientDashboardYear = document.getElementById("clientDashboardYear").value;
+                            var clientID = document.getElementById("client").value;
+                            $.ajax({
+                                url: 'ClientDashboard',
+                                data: 'clientID=' + clientID + '&' + 'year=' + clientDashboardYear,
+                                type: 'POST',
+                                success: function () {
+                                    var clientYearProfitData = "<%=request.getSession().getAttribute("clientYearProfit")%>";
+                                    var clientYearProfit = clientYearProfitData.split(",");
+                                    var clientYearLossData = "<%=request.getSession().getAttribute("clientYearLoss")%>";
+                                    var clientYearLoss = clientYearLossData.split(",");
+                                    var clientOverdueProjectData = "<%=request.getSession().getAttribute("clientOverdueProject")%>";
+                                    var clientOverdueProject = clientOverdueProjectData.split(",");
+                                }
+                            });
+                        });
+                    }
+                    );
+                </script>
                 <!-- ############################################### END OF CLIENT PERFORMANCE SECTION ###############################################-->                    
 
 
@@ -1026,7 +1049,7 @@
                                             <%=employeeList.get(i).getIsAdmin()%>
                                         </td>
                                         <td width="16.67%" align="center">
-                                            <input type="radio" name="employee" value='<%=employeeList.get(i)%>' required>
+                                            <input type="radio" name="employee" id='empName' value='<%=employeeList.get(i).getName()%>' required>
                                         </td>
                                     </tr>
                                     <%
@@ -1047,7 +1070,7 @@
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
-                                        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
+                                        <button id='btnViewPerformance' class="btn btn-lg btn-primary btn-block btn-success" type="submit">View Performance</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1081,6 +1104,28 @@
                         }
                     %>
                 </div>
+                <script>
+                    $(document).ready(function () {
+
+                        $('#btnViewPerformance').click(function () {
+                            var employeeDashboardMonth = document.getElementById("employeeDashboardMonth").value;
+                            var employeeDashboardYear = document.getElementById("employeeDashboardYear").value;
+                            var empName = document.getElementById("empName").value;
+                            $.ajax({
+                                url: 'StaffMonthlyReport',
+                                data: 'employeeName=' + empName + '&' + 'Year=' + employeeDashboardYear + '&' + 'Month=' + employeeDashboardMonth,
+                                type: 'POST',
+                                success: function () {
+                                    var employeeOverdueData = "<%=request.getSession().getAttribute("employeeOverdue")%>";
+                                    var employeeOverdue = employeeOverdueData.split(",");
+                                    var employeeTimeExceedData = "<%=request.getSession().getAttribute("employeeTimeExceed")%>";
+                                    var employeeTimeExceed = employeeTimeExceedData.split(",");
+                                }
+                            });
+                        });
+                    }
+                    );
+                </script>
             </div>
         </div>
     </nav>

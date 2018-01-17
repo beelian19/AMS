@@ -34,11 +34,13 @@ public class ClientDashboard extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         ArrayList<ArrayList<Integer>> profitabilityList = new ArrayList();
-
+        
+        String clientID = request.getParameter("clientID");
+        String year = request.getParameter("year");
         //take in clientID and year as parameters
-        profitabilityList = ProjectDAO.getCompanyMonthlyProfitability("4","2017");
+        profitabilityList = ProjectDAO.getCompanyMonthlyProfitability(clientID,year);
         int[] overdueList = new int[12];
-        overdueList = ProjectDAO.getClientOverdueProjectPerYear("4","2017");
+        overdueList = ProjectDAO.getClientOverdueProjectPerYear(clientID,year);
         
         ArrayList<Integer> overdue = new ArrayList();
 
