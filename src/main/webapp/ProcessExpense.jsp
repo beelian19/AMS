@@ -47,7 +47,7 @@
             }
 
             String chargedAccount = pf.getChargedAccountName();
-            Client client = (request.getAttribute("expenseClient") != null) ? (Client) request.getAttribute("expenseClient") : null;
+            Client client = (request.getSession().getAttribute("paymentClient") != null) ? (Client) request.getAttribute("expenseClient") : null;
             if (client == null) {
                 request.getSession().setAttribute("status", "Error: Null Client at ProcessExpense.jsp");
                 request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
@@ -180,7 +180,7 @@
                                     int xlRow = 2;
                                     for (Payment p : preList) {
                                         for (PaymentLine pl : p.getLines()) {
-                                            xlRow ++;
+                                            xlRow++;
                                             if (p.checkPayment() && pl.checkPaymentLine()) {
                                                 colorCode = "#ffffff";
                                             } else {
@@ -229,7 +229,7 @@
                                     <%=(pl.getQBOLineClass() == null) ? "No Class Found" : pl.getQBOLineClass()%>
                                 </td>
                                 <td style="font-size: 10px;">
-                                    <%=(pl.getQBOLineCustomer()== null) ? "No Customer Found" : pl.getQBOLineCustomer()%>
+                                    <%=(pl.getQBOLineCustomer() == null) ? "No Customer Found" : pl.getQBOLineCustomer()%>
                                 </td>
                                 <td style="font-size: 10px;">
                                     <%=(p.getMemo() == null) ? "No Memo Found" : StringUtils.substring(p.getMemo(), 0, 15) + "..."%>
