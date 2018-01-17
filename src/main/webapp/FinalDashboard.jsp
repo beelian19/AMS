@@ -422,15 +422,15 @@
                                     var salesData = "<%=request.getSession().getAttribute("sales")%>";
                                     var sales = salesData.split(",");
                                     sales[0] = sales[0].substring("1");
-                                    sales[11] = sales[11].substring("0", sales[11].length-1);
+                                    sales[11] = sales[11].substring("0", sales[11].length - 1);
                                     var costData = "<%=request.getSession().getAttribute("cost")%>";
                                     var cost = costData.split(",");
                                     cost[0] = cost[0].substring("1");
-                                    cost[11] = cost[11].substring("0", cost[11].length-1);
+                                    cost[11] = cost[11].substring("0", cost[11].length - 1);
                                     var profitData = "<%=request.getSession().getAttribute("profit")%>";
                                     var profit = profitData.split(",");
                                     profit[0] = profit[0].substring("1");
-                                    profit[11] = profit[11].substring("0", profit[11].length-1);
+                                    profit[11] = profit[11].substring("0", profit[11].length - 1);
                                     var lineChartData = {
                                         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                         datasets: [
@@ -509,15 +509,15 @@
                                     var profitableProjectsData = "<%=request.getSession().getAttribute("yearProfit")%>";
                                     var profitableProjects = profitableProjectsData.split(",");
                                     profitableProjects[0] = profitableProjects[0].substring("1");
-                                    profitableProjects[11] = profitableProjects[11].substring("0", profitableProjects[11].length-1);
+                                    profitableProjects[11] = profitableProjects[11].substring("0", profitableProjects[11].length - 1);
                                     var lossProjectsData = "<%=request.getSession().getAttribute("yearLoss")%>";
                                     var lossProjects = lossProjectsData.split(",");
                                     lossProjects[0] = lossProjects[0].substring("1");
-                                    lossProjects[11] = lossProjects[11].substring("0", lossProjects[11].length-1);
+                                    lossProjects[11] = lossProjects[11].substring("0", lossProjects[11].length - 1);
                                     var totalCompletedList = "<%=request.getSession().getAttribute("totalCompletedList")%>";
                                     var totalCompletedProjects = totalCompletedList.split(",");
-                                    totalCompletedProjects[0] =totalCompletedProjects[0].substring("1");
-                                    totalCompletedProjects[11] = totalCompletedProjects[11].substring("0", totalCompletedProjects[11].length-1);
+                                    totalCompletedProjects[0] = totalCompletedProjects[0].substring("1");
+                                    totalCompletedProjects[11] = totalCompletedProjects[11].substring("0", totalCompletedProjects[11].length - 1);
                                     var barChartData = {
                                         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                         datasets: [{
@@ -649,15 +649,15 @@
                                     var overdueProject = "<%=request.getSession().getAttribute("overdueProject")%>";
                                     var overdue = overdueProject.split(",");
                                     overdue[0] = overdue[0].substring("1");
-                                    overdue[11] = overdue[11].substring("0",overdue[11].length-1);
+                                    overdue[11] = overdue[11].substring("0", overdue[11].length - 1);
                                     var ontimeProject = "<%=request.getSession().getAttribute("ontimeProject")%>";
                                     var ontime = ontimeProject.split(",");
                                     ontime[0] = ontime[0].substring("1");
-                                    ontime[11] = ontime[11].substring("0",ontime[11].length-1);
+                                    ontime[11] = ontime[11].substring("0", ontime[11].length - 1);
                                     var completedProject = "<%=request.getSession().getAttribute("completedProject")%>";
                                     var completed = completedProject.split(",");
                                     completed[0] = completed[0].substring("1");
-                                    completed[11] = completed[11].substring("0",completed[11].length-1);
+                                    completed[11] = completed[11].substring("0", completed[11].length - 1);
                                     var barChartData = {
                                         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                         datasets: [{
@@ -924,18 +924,23 @@
                                 var clientYearProfitData = "<%=request.getSession().getAttribute("clientYearProfit")%>";
                                 var clientYearProfit = clientYearProfitData.split(",");
                                 clientYearProfit[0] = clientYearProfit[0].substring("1");
-                                clientYearProfit[11] = clientYearProfit[11].substring("0",clientYearProfit[11].length-1);
+                                clientYearProfit[11] = clientYearProfit[11].substring("0", clientYearProfit[11].length - 1);
                                 //console.log(clientYearProfit[11]);
                                 var clientYearLossData = "<%=request.getSession().getAttribute("clientYearLoss")%>";
                                 var clientYearLoss = clientYearLossData.split(",");
                                 clientYearLoss[0] = clientYearLoss[0].substring("1");
-                                clientYearLoss[11] = clientYearLoss[11].substring("0",clientYearLoss[11].length-1);
+                                clientYearLoss[11] = clientYearLoss[11].substring("0", clientYearLoss[11].length - 1);
                                 //console.log(clientYearLoss);
                                 var clientOverdueProjectData = "<%=request.getSession().getAttribute("clientOverdueProject")%>";
                                 var clientOverdueProject = clientOverdueProjectData.split(",");
                                 clientOverdueProject[0] = clientOverdueProject[0].substring("1");
-                                clientOverdueProject[11] = clientOverdueProject[11].substring("0", clientOverdueProject[11].length-1);
-                                console.log(clientOverdueProject);
+                                clientOverdueProject[11] = clientOverdueProject[11].substring("0", clientOverdueProject[11].length - 1);
+                                //console.log(clientOverdueProject);
+                                var clientOnTimeProjectData = "<%=request.getSession().getAttribute("clientOnTimeProject")%>";
+                                var clientOnTimeProject = clientOnTimeProjectData.split(",");
+                                clientOnTimeProject[0] = clientOnTimeProject[0].substring("1");
+                                clientOnTimeProject[11] = clientOnTimeProject[11].substring("0", clientOnTimeProject[11].length-1);
+                                //console.log(clientOnTimeProject);
                                 var barChartData = {
                                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                     datasets: [{
@@ -1023,7 +1028,7 @@
                                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                     datasets: [{
                                             label: '# of Punctual Projects',
-                                            data: clientOverdueProject, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                            data: clientOnTimeProject, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                             backgroundColor: [
                                                 'rgba(54, 162, 235, 0.2)',
                                                 'rgba(54, 162, 235, 0.2)',
