@@ -38,7 +38,10 @@ public class OverdueProjectPerYear extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         int[] overdueList = new int[12];
+        int[] ontimeList = ProjectDAO.getOnTimeProjectPerYear("2017");
+        int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear("2017");
         overdueList = ProjectDAO.getOverdueProjectPerYear("2017");
+        
         //request.setAttribute("overdueList", overdueList);
         //RequestDispatcher rd = request.getRequestDispatcher("FinalDashboard.jsp");
         //rd.forward(request, response);
@@ -48,9 +51,24 @@ public class OverdueProjectPerYear extends HttpServlet {
             int value = overdueList[i];
             overdue.add(value);
         }
+        
+         ArrayList<Integer> ontime = new ArrayList();
 
+        for (int i = 0; i < 12; i++) {
+            int value = ontimeList[i];
+            ontime.add(value);
+        }
+        
+         ArrayList<Integer> completed = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = completedList[i];
+            completed.add(value);
+        }
         //out.print(overdue);
         request.getSession().setAttribute("overdueProject", overdue);
+        request.getSession().setAttribute("ontimeProject", ontime);
+        request.getSession().setAttribute("completedProject", ontime);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

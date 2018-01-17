@@ -38,12 +38,21 @@ public class CompletedProjectMonthlyProfitability extends HttpServlet {
         ArrayList<ArrayList<Integer>> profitabilityList = new ArrayList();
 
         profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability("2017");
+        int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear("2017");
+        
+        ArrayList<Integer> completed = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = completedList[i];
+            completed.add(value);
+        }
         
         ArrayList<Integer> yearProfitList = profitabilityList.get(0);
         ArrayList<Integer> yearLossList = profitabilityList.get(1);
         
         request.getSession().setAttribute("yearProfit", yearProfitList);
         request.getSession().setAttribute("yearLoss", yearLossList);
+        request.getSession().setAttribute("totalCompletedList", completed);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

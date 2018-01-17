@@ -4,6 +4,7 @@
  */
 package Entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -18,16 +19,17 @@ public class Payment {
     private String memo; // not compulsory
     private String paymentMethod; //default is cash
     private String vendor;
+    private String location;
     private List<PaymentLine> lines;
-    
+
     private String status;
-    
-    public boolean checkPayment(){
+
+    public boolean checkPayment() {
         // Multi-lined expenses has to have a reference number
         if (lines != null && lines.size() > 1) {
-            return referenceNumber != null && date != null  && vendor != null && chargedAccountNumber != null;
+            return referenceNumber != null && date != null && vendor != null && chargedAccountNumber != null;
         }
-        return date != null && chargedAccountNumber != null  && vendor != null;
+        return date != null && chargedAccountNumber != null && vendor != null;
     }
 
     @Override
@@ -75,6 +77,14 @@ public class Payment {
         this.paymentMethod = paymentMethod;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getVendor() {
         return vendor;
     }
@@ -98,7 +108,10 @@ public class Payment {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    
-    
+
+    public String getDateString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return (date == null) ? null : sdf.format(date);
+    }
+
 }
