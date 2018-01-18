@@ -1356,18 +1356,21 @@
                                 success: function () {
                                     var employeeOverdueData = "<%=request.getSession().getAttribute("employeeOverdue")%>";
                                     var employeeOverdue = employeeOverdueData.split(",");
+                                    employeeOverdue[0] = employeeOverdue[0].substring("1");
+                                    employeeOverdue[11] = employeeOverdue[11].substring("0", employeeOverdue[11].length-1);
                                     var employeeTimeExceedData = "<%=request.getSession().getAttribute("employeeTimeExceed")%>";
                                     var employeeTimeExceed = employeeTimeExceedData.split(",");
-
+                                    employeeTimeExceed[0] = employeeTimeExceed[0].substring("1");
+                                    employeeTimeExceed[11] = employeeTimeExceed[11].substring("0", employeeTimeExceed[11].length-1);
                                     var lineChartData = {
                                         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                         datasets: [
                                             {
-                                                label: 'Revenue',
+                                                label: 'Overdue Projects',
                                                 fillColor: 'rgba(255, 99, 132, 0.2)',
                                                 strokeColor: 'rgba(220,180,0,1)',
                                                 pointColor: 'rgba(220,180,0,1)',
-                                                data: sales, //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                                data: employeeOverdue, //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
                                                 backgroundColor: [
                                                     'rgba(255, 99, 132, 0.2)'
                                                 ],
@@ -1377,11 +1380,11 @@
                                                 borderWidth: 1
                                             },
                                             {
-                                                label: 'Profit',
+                                                label: 'Time Exceeded Projects',
                                                 fillColor: 'rgba(54, 162, 235, 0.2)',
                                                 strokeColor: 'rgba(66,180,0,1)',
                                                 pointColor: 'rgba(66,180,0,1)',
-                                                data: profit, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
+                                                data: employeeTimeExceed, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
                                                 backgroundColor: [
                                                     'rgba(153, 102, 255, 0.2)'
                                                 ],
