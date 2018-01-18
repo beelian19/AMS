@@ -130,7 +130,7 @@ public class PaymentFactory {
                         paymentInitMessage += "Missing charged account number: ";
                     }
                     
-                    // Set the location
+                    // Set the location (optional)
                     varCell = row.getCell(11);
                     String location = getStringValue(varCell);
                     if (location != null) {
