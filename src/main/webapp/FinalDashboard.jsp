@@ -148,8 +148,6 @@
             String profileUrl2 = "";
             ArrayList<ArrayList<Project>> clientProjectList = new ArrayList<>();
             clientProjectList = ProjectDAO.getAllProjectsByCompanyName("");
-            ArrayList<Project> employeeProjectList = new ArrayList<>();
-            //employeeProjectList = ProjectDAO.getStaffMonthlyReport(employeeName, month, year);
             boolean displayClientGraph = true;
             boolean displayEmployeeGraph = true;
         %>
@@ -207,7 +205,7 @@
                             <h2>Project P&L</h2>
                             <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                         </div>
-                            <br/><br/>
+                        <br/><br/>
                         <div class="col-xs-1">&nbsp;</div>
                         <div class="col-xs-5 displayChartsTable" data-target="#ProjectsOverdueChartTable" style="text-align: center;" align="center;">
                             <h2>Project Overdue</h2>
@@ -1219,7 +1217,7 @@
                                     <%
                                         }
                                     %>
-                                    <br/><br/>
+                                <br/><br/>
                                 </tbody>
                             </table>
                             <table style="width: 100%; position: relative; bottom: 0px;">
@@ -1254,7 +1252,7 @@
                         <div class="row">
                             <div class="col-xs-1">&nbsp;</div>
                             <div class="col-xs-5" style="text-align: center;" align="center;">
-                                <h2>Revenue</h2>
+                                <h2># of Projects</h2>
                                 <canvas id="employeeRevenueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-1">&nbsp;</div>
@@ -1280,31 +1278,31 @@
                                         </thead>
                                         <tbody>
                                             <%
-                                                if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
-                                                    for (int i = 0; i < employeeProjectList.size(); i++) {
-                                                        //Project p = clientProjectList.get(i);
+                                                if (request.getSession().getAttribute("employeeProjectList") != null) {
+                                                    ArrayList<Project> employeeProjectList = (ArrayList<Project>) request.getSession().getAttribute("employeeProjectList");
+                                                    //ArrayList<Project> employeeProjectList = new ArrayList();
+                                                    if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
+                                                        for (int i = 0; i < employeeProjectList.size(); i++) {
+                                                            Project p = employeeProjectList.get(i);
                                             %>
                                             <tr>
                                                 <td>
-                                                    test
-                                                    <%//p.getCompanyName()%>
+                                                    <%=p.getCompanyName()%>
                                                 </td>
                                                 <td>
-                                                    test
-                                                    <%//p.getProjectTitle()%>
+                                                    <%=p.getProjectTitle()%>
                                                 </td>
                                                 <td>
-                                                    test
-                                                    <%//p.getPlannedHours()%>
+                                                    <%=p.getPlannedHours()%>
                                                 </td>
                                                 <td>
-                                                    <%//p.getEmployee1Hours() + p.getEmployee2Hours()%>
+                                                    <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
                                                 </td>
                                                 <td>
-                                                   <%//p.getPlannedHours()- p.getEmployee1Hours()-p.getEmploye2Hours()%>
+                                                    <%=p.getPlannedHours()- p.getEmployee1Hours()-p.getEmployee2Hours()%>
                                                 </td>
                                                 <td>
-                                                   <%//ProjectDAO.getTotalActualCost(p)%>
+                                                    <%=ProjectDAO.getTotalActualCost(p)%>
                                                 </td>
                                             </tr>
                                             <%
@@ -1339,96 +1337,86 @@
                         </div>
                     </div>
                     <%
+                                }
+                            }
                         }
                     %>
                 </div>
                 <script>
                     $(document).ready(function () {
 
-                        $('#btnViewPerformance').click(function () {
-                            var employeeDashboardMonth = document.getElementById("employeeDashboardMonth").value;
-                            var employeeDashboardYear = document.getElementById("employeeDashboardYear").value;
-                            var empName = document.getElementById("empName").value;
-                            $.ajax({
-                                url: 'StaffMonthlyReport',
-                                data: 'employeeName=' + empName + '&' + 'Year=' + employeeDashboardYear + '&' + 'Month=' + employeeDashboardMonth,
-                                type: 'POST',
-                                success: function () {
-                                    var employeeOverdueData = "<%=request.getSession().getAttribute("employeeOverdue")%>";
-                                    var employeeOverdue = employeeOverdueData.split(",");
-                                    employeeOverdue[0] = employeeOverdue[0].substring("1");
-                                    employeeOverdue[11] = employeeOverdue[11].substring("0", employeeOverdue[11].length-1);
-                                    var employeeTimeExceedData = "<%=request.getSession().getAttribute("employeeTimeExceed")%>";
-                                    var employeeTimeExceed = employeeTimeExceedData.split(",");
-                                    employeeTimeExceed[0] = employeeTimeExceed[0].substring("1");
-                                    employeeTimeExceed[11] = employeeTimeExceed[11].substring("0", employeeTimeExceed[11].length-1);
-                                    var lineChartData = {
-                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                        datasets: [
-                                            {
-                                                label: 'Overdue Projects',
-                                                fillColor: 'rgba(255, 99, 132, 0.2)',
-                                                strokeColor: 'rgba(220,180,0,1)',
-                                                pointColor: 'rgba(220,180,0,1)',
-                                                data: employeeOverdue, //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
-                                                backgroundColor: [
-                                                    'rgba(255, 99, 132, 0.2)'
-                                                ],
-                                                borderColor: [
-                                                    'rgba(255,99,132,1)'
-                                                ],
-                                                borderWidth: 1
-                                            },
-                                            {
-                                                label: 'Time Exceeded Projects',
-                                                fillColor: 'rgba(54, 162, 235, 0.2)',
-                                                strokeColor: 'rgba(66,180,0,1)',
-                                                pointColor: 'rgba(66,180,0,1)',
-                                                data: employeeTimeExceed, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
-                                                backgroundColor: [
-                                                    'rgba(153, 102, 255, 0.2)'
-                                                ],
-                                                borderColor: [
-                                                    'rgba(153, 102, 255, 0.2)'
-                                                ],
-                                                borderWidth: 1
-                                            }, {
-                                                label: 'Cost',
-                                                fillColor: 'rgba(54, 162, 235, 0.2)',
-                                                strokeColor: 'rgba(54, 162, 235, 0.2)',
-                                                pointColor: 'rgba(54, 162, 235, 0.2)',
-                                                data: cost, //[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
-                                                backgroundColor: [
-                                                    'rgba(54, 162, 235, 0.2)'
-                                                ],
-                                                borderColor: [
-                                                    'rgba(54, 162, 235, 0.2)'
-                                                ],
-                                            }
-                                        ]
-                                    };
+                        var employeeDashboardMonth = "08";//document.getElementById("employeeDashboardMonth").value;
+                        var employeeDashboardYear = "2017";//document.getElementById("employeeDashboardYear").value;
+                        var empName = "Jiayi";//document.getElementById("empName").value;
+                        $.ajax({
+                            url: 'StaffMonthlyReport',
+                            data: 'employeeName=' + empName + '&' + 'Year=' + employeeDashboardYear + '&' + 'Month=' + employeeDashboardMonth,
+                            type: 'POST',
+                            success: function () {
+                                var employeeOverdueData = "<%=request.getSession().getAttribute("employeeOverdue")%>";
+                                var employeeOverdue = employeeOverdueData.split(",");
+                                employeeOverdue[0] = employeeOverdue[0].substring("1");
+                                employeeOverdue[11] = employeeOverdue[11].substring("0", employeeOverdue[11].length - 1);
+                                console.log(employeeOverdue);
+                                var employeeTimeExceedData = "<%=request.getSession().getAttribute("employeeTimeExceed")%>";
+                                var employeeTimeExceed = employeeTimeExceedData.split(",");
+                                employeeTimeExceed[0] = employeeTimeExceed[0].substring("1");
+                                employeeTimeExceed[11] = employeeTimeExceed[11].substring("0", employeeTimeExceed[11].length - 1);
+                                console.log(employeeTimeExceed);
+                                var lineChartData = {
+                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                    datasets: [
+                                        {
+                                            label: 'Overdue Projects',
+                                            fillColor: 'rgba(255, 99, 132, 0.2)',
+                                            strokeColor: 'rgba(220,180,0,1)',
+                                            pointColor: 'rgba(220,180,0,1)',
+                                            data: employeeOverdue, //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(255,99,132,1)'
+                                            ],
+                                            borderWidth: 1
+                                        },
+                                        {
+                                            label: 'Time Exceeded Projects',
+                                            fillColor: 'rgba(54, 162, 235, 0.2)',
+                                            strokeColor: 'rgba(66,180,0,1)',
+                                            pointColor: 'rgba(66,180,0,1)',
+                                            data: employeeTimeExceed, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
+                                            backgroundColor: [
+                                                'rgba(153, 102, 255, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(153, 102, 255, 0.2)'
+                                            ],
+                                            borderWidth: 1
+                                        }
+                                    ]
+                                };
 
-                                    Chart.defaults.global.tooltipYPadding = 16;
-                                    Chart.defaults.global.tooltipCornerRadius = 0;
-                                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                                    Chart.defaults.global.animationEasing = "easeInOutElastic";
-                                    Chart.defaults.global.responsive = false;
-                                    var ctx = document.getElementById("employeeRevenueChart").getContext("2d");
-                                    //ctx.height = 500;
-                                    var RevenueChart = new Chart(ctx, {
-                                        type: 'line',
-                                        data: lineChartData,
-                                        pointDotRadius: 5,
-                                        bezierCurve: false,
-                                        scaleShowVerticalLines: false
-                                    });
+                                Chart.defaults.global.tooltipYPadding = 16;
+                                Chart.defaults.global.tooltipCornerRadius = 0;
+                                Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                Chart.defaults.global.responsive = false;
+                                var ctx = document.getElementById("employeeRevenueChart").getContext("2d");
+                                //ctx.height = 500;
+                                var RevenueChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: lineChartData,
+                                    pointDotRadius: 5,
+                                    bezierCurve: false,
+                                    scaleShowVerticalLines: false
+                                });
 
-                                },
-                                error: function (data) {
-                                    console.log(data);
-                                }
-                            });
+                            },
+                            error: function (data) {
+                                console.log(data);
+                            }
                         });
                     }
                     );
@@ -1455,22 +1443,22 @@
 </script>
 
 <script>
-        // this is for collapsing and hiding the tables
+    // this is for collapsing and hiding the tables
     $(function () {
-    $('.displayChartsTable').on('click', function () {
-        var $this = $(this);
-        $('.displayChartsTable').removeClass("activePerformanceChart");
-        $this.addClass("activePerformanceChart");
-        // Use the id in the data-target attribute
-        $target = $($this.data('target'));
-        $(".target").not($target).fadeOut();
-        $target.toggle(); 
-        
-        $('html,body').animate({
-        scrollTop: $target.offset().top},
-        'fast');
+        $('.displayChartsTable').on('click', function () {
+            var $this = $(this);
+            $('.displayChartsTable').removeClass("activePerformanceChart");
+            $this.addClass("activePerformanceChart");
+            // Use the id in the data-target attribute
+            $target = $($this.data('target'));
+            $(".target").not($target).fadeOut();
+            $target.toggle();
+
+            $('html,body').animate({
+                scrollTop: $target.offset().top},
+                    'fast');
+        });
     });
-});
 </script>
 <jsp:include page="Footer.html"/>
 </html>
