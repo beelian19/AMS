@@ -117,6 +117,25 @@
             }
 
             /* end of styling for month date field in dashboard */
+
+
+            /* this section is for the selecting charts and making the datatables appear*/
+            #revenueTable {
+                display:none;
+                cursor:pointer;
+            }
+            #ProfitAndLossTable {
+                display:none;
+                cursor:pointer;
+            }
+            #ProjectsOverdueChartTable {
+                display:none;
+                cursor:pointer;
+            }
+            .activePerformanceChart {
+                border: 2px solid blue;
+            }
+            /* end of section */
         </style>
         <%            DecimalFormat df = new DecimalFormat("#.00");
             ArrayList<Employee> employeeList = new ArrayList<>();
@@ -178,25 +197,26 @@
                 <div id="Abundant" class="tabcontent container-fluid" style="text-align: center;">
                     <br/>
                     <div class="row">
-                        <div class="col-xs-1 nav-toggle">&nbsp;</div>
-                        <div class="col-xs-5 nav-toggle" href="#revenueTable" style="text-align: center;" align="center;">
+                        <div class="col-xs-1">&nbsp;</div>
+                        <div class="col-xs-5 displayChartsTable" data-target="#revenueTable" style="text-align: center;" align="center;">
                             <h2>Revenue</h2>
                             <canvas id="RevenueChart" style="width: 500px; height: 500px; text-align: center;" align="center"></canvas>
                         </div>
-                        <div class="col-xs-1 nav-toggle">&nbsp;</div>
-                        <div class="col-xs-5 nav-toggle" href="#ProfitAndLossTable" style="text-align: center;" align="center;">
+                        <div class="col-xs-1">&nbsp;</div>
+                        <div class="col-xs-5 displayChartsTable" data-target="#ProfitAndLossTable" style="text-align: center;" align="center;">
                             <h2>Project P&L</h2>
                             <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                         </div>
-                        <div class="col-xs-1 nav-toggle">&nbsp;</div>
-                        <div class="col-xs-5 nav-toggle" href="#ProjectsOverdueChartTable" style="text-align: center;" align="center;">
+                            <br/><br/>
+                        <div class="col-xs-1">&nbsp;</div>
+                        <div class="col-xs-5 displayChartsTable" data-target="#ProjectsOverdueChartTable" style="text-align: center;" align="center;">
                             <h2>Project Overdue</h2>
                             <canvas id="ProjectsOverdueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                         </div>
                     </div>
                     <div class="row">
                         <br/>
-                        <div class="col-xs-12" id="revenueTable" style="display:none">
+                        <div class="col-xs-12 target" id="revenueTable" style="display:none">
                             <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
                                 <h3>Revenue</h3>
                                 <table id='datatable4' align="center" style="text-align: left;">
@@ -276,7 +296,7 @@
                                 <br/>
                             </div>
                         </div>
-                        <div class="col-xs-12" id="ProfitAndLossTable" style="display:none">
+                        <div class="col-xs-12 target" id="ProfitAndLossTable" style="display:none">
                             <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
                                 <h3>Profit and Loss</h3>
                                 <table id='datatable5' align="center" style="text-align: left;">
@@ -353,7 +373,7 @@
                                 <br/>
                             </div>
                         </div>
-                        <div class="col-xs-12" id="ProjectsOverdueChartTable" style="display:none">
+                        <div class="col-xs-12 target" id="ProjectsOverdueChartTable" style="display:none">
                             <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
                                 <h3>Project Overdue</h3>
                                 <table id='datatable6' align="center" style="text-align: left;">
@@ -875,13 +895,13 @@
                     <div class="container-fluid" style="text-align: center;">
                         <br/>
                         <div class="row">
-                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
-                            <div class="col-xs-5 nav-toggle" style="text-align: center;" align="center;">
+                            <div class="col-xs-1">&nbsp;</div>
+                            <div class="col-xs-5 displayChartsTable" style="text-align: center;" align="center;">
                                 <h2>Project P&L</h2>
                                 <canvas id="clientProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
-                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
-                            <div class="col-xs-5 nav-toggle" style="text-align: center;" align="center;">
+                            <div class="col-xs-1">&nbsp;</div>
+                            <div class="col-xs-5 displayChartsTable" style="text-align: center;" align="center;">
                                 <h2>Project Overdue</h2>
                                 <canvas id="clientOverdueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
@@ -939,7 +959,7 @@
                                 var clientOnTimeProjectData = "<%=request.getSession().getAttribute("clientOnTimeProject")%>";
                                 var clientOnTimeProject = clientOnTimeProjectData.split(",");
                                 clientOnTimeProject[0] = clientOnTimeProject[0].substring("1");
-                                clientOnTimeProject[11] = clientOnTimeProject[11].substring("0", clientOnTimeProject[11].length-1);
+                                clientOnTimeProject[11] = clientOnTimeProject[11].substring("0", clientOnTimeProject[11].length - 1);
                                 //console.log(clientOnTimeProject);
                                 var barChartData = {
                                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -1232,13 +1252,13 @@
                     <div class="container-fluid" style="text-align: center;">
                         <br/>
                         <div class="row">
-                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
-                            <div class="col-xs-5 nav-toggle" href="#revenueTable" style="text-align: center;" align="center;">
+                            <div class="col-xs-1">&nbsp;</div>
+                            <div class="col-xs-5 displayChartsTable" data-target="#revenueTable" style="text-align: center;" align="center;">
                                 <h2>Revenue</h2>
                                 <canvas id="employeeRevenueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
-                            <div class="col-xs-1 nav-toggle">&nbsp;</div>
-                            <div class="col-xs-5 nav-toggle" href="#ProfitAndLossTable" style="text-align: center;" align="center;">
+                            <div class="col-xs-1">&nbsp;</div>
+                            <div class="col-xs-5 displayChartsTable" data-target="#ProfitAndLossTable" style="text-align: center;" align="center;">
                                 <h2>Project P&L</h2>
                                 <canvas id="employeeProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
@@ -1433,17 +1453,24 @@
         evt.currentTarget.className += " active";
     }
 </script>
-<script>
-    // this is for collapsing and hiding the tables
-    $(document).ready(function () {
-        $('.nav-toggle').click(function () {
-            //get collapse content selector
-            var collapse_content_selector = $(this).attr('href');
-            $(collapse_content_selector).slideToggle("fast", function () {
 
-            });
-        });
+<script>
+        // this is for collapsing and hiding the tables
+    $(function () {
+    $('.displayChartsTable').on('click', function () {
+        var $this = $(this);
+        $('.displayChartsTable').removeClass("activePerformanceChart");
+        $this.addClass("activePerformanceChart");
+        // Use the id in the data-target attribute
+        $target = $($this.data('target'));
+        $(".target").not($target).fadeOut();
+        $target.toggle(); 
+        
+        $('html,body').animate({
+        scrollTop: $target.offset().top},
+        'fast');
     });
+});
 </script>
 <jsp:include page="Footer.html"/>
 </html>
