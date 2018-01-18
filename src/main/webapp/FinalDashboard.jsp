@@ -148,8 +148,8 @@
             String profileUrl2 = "";
             ArrayList<ArrayList<Project>> clientProjectList = new ArrayList<>();
             clientProjectList = ProjectDAO.getAllProjectsByCompanyName("");
-            ArrayList<ArrayList<Project>> employeeProjectList = new ArrayList<>();
-            employeeProjectList = ProjectDAO.getAllProjectsByEmployee("");
+            ArrayList<Project> employeeProjectList = new ArrayList<>();
+            //employeeProjectList = ProjectDAO.getStaffMonthlyReport(employeeName, month, year);
             boolean displayClientGraph = true;
             boolean displayEmployeeGraph = true;
         %>
@@ -1270,11 +1270,12 @@
                                     <table id='datatable8' align="center" style="text-align: left;">
                                         <thead>
                                             <tr>
-                                                <th width="20.00%">Completion Date</th>
-                                                <th width="20.00%">Project Name</th>
-                                                <th width="20.00%">Hours Assigned</th>
-                                                <th width="20.00%">Hours Actual</th>
-                                                <th width="20.00%">Staff</th>
+                                                <th width="16.66%">Company Name</th>
+                                                <th width="16.66%">Project Name</th>
+                                                <th width="16.66%">Hours Assigned</th>
+                                                <th width="16.66%">Hours Actual</th>
+                                                <th width="16.66%">Difference</th>
+                                                <th width="16.66%">Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1286,7 +1287,7 @@
                                             <tr>
                                                 <td>
                                                     test
-                                                    <%//p.getDateCompleted()%>
+                                                    <%//p.getCompanyName()%>
                                                 </td>
                                                 <td>
                                                     test
@@ -1300,14 +1301,10 @@
                                                     <%//p.getEmployee1Hours() + p.getEmployee2Hours()%>
                                                 </td>
                                                 <td>
-                                                    <%//p.getEmployee1()%>
-                                                    <% //if (!p.getEmployee2().toLowerCase().equals("na")) {
-                                                        out.println(" and ");
-                                                    %>
-                                                    <%//p.getEmployee2()%>
-                                                    <%
-                                                        }
-                                                    %>
+                                                   <%//p.getPlannedHours()- p.getEmployee1Hours()-p.getEmploye2Hours()%>
+                                                </td>
+                                                <td>
+                                                   <%//ProjectDAO.getTotalActualCost(p)%>
                                                 </td>
                                             </tr>
                                             <%
