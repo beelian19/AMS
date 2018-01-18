@@ -886,7 +886,6 @@
                                     </td>
                                 </tr>
                             </table>
-
                     </div>
                     <%
                         }
@@ -896,17 +895,18 @@
                         <br/>
                         <div class="row">
                             <div class="col-xs-1">&nbsp;</div>
-                            <div class="col-xs-5 displayChartsTable" style="text-align: center;" align="center;">
+                            <div class="col-xs-5" style="text-align: center;" align="center;">
                                 <h2>Project P&L</h2>
                                 <canvas id="clientProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-1">&nbsp;</div>
-                            <div class="col-xs-5 displayChartsTable" style="text-align: center;" align="center;">
+                            <div class="col-xs-5" style="text-align: center;" align="center;">
                                 <h2>Project Overdue</h2>
                                 <canvas id="clientOverdueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                         </div>
                         <div class="row">
+                            <br/><br/>
                             <table style="width: 100%; position: relative; bottom: 0px;">
                                 <tr>
                                     <td style="width: 78.3%">
@@ -1219,10 +1219,10 @@
                                     <%
                                         }
                                     %>
+                                    <br/><br/>
                                 </tbody>
                             </table>
-                            <br/>
-                            <table style="width: 100%" align="right">
+                            <table style="width: 100%; position: relative; bottom: 0px;">
                                 <tr>
                                     <td style="width: 61%">
                                         &nbsp;
@@ -1253,12 +1253,12 @@
                         <br/>
                         <div class="row">
                             <div class="col-xs-1">&nbsp;</div>
-                            <div class="col-xs-5 displayChartsTable" data-target="#revenueTable" style="text-align: center;" align="center;">
+                            <div class="col-xs-5" style="text-align: center;" align="center;">
                                 <h2>Revenue</h2>
                                 <canvas id="employeeRevenueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-1">&nbsp;</div>
-                            <div class="col-xs-5 displayChartsTable" data-target="#ProfitAndLossTable" style="text-align: center;" align="center;">
+                            <div class="col-xs-5" style="text-align: center;" align="center;">
                                 <h2>Project P&L</h2>
                                 <canvas id="employeeProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
@@ -1318,7 +1318,7 @@
                                     <br/>
                                 </div>
                             </div>
-                            <br/>
+                            <br/><br/>
                         </div>
                         <div class="row">
                             <table style="width: 100%; position: relative; bottom: 0px;">
