@@ -37,7 +37,7 @@ public class ReadExcelFile extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        /*
         List<String> messages = new ArrayList<>();
         if (!ServletFileUpload.isMultipartContent(request)) {
             messages.add("Request parameter not multipart");
@@ -102,6 +102,7 @@ public class ReadExcelFile extends HttpServlet {
             request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
 
         }
+        */
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -179,7 +180,8 @@ public class ReadExcelFile extends HttpServlet {
                     }
                     request.getSession().setAttribute("paymentFactory", pf);
                     request.getSession().setAttribute("paymentClient", client);
-                    request.getRequestDispatcher("ProcessExpense.jsp").forward(request, response);
+                    response.sendRedirect("ProcessExpense.jsp");
+                    return;
                     //request.getRequestDispatcher("XERORedirect").forward(request, response);
                 }
 

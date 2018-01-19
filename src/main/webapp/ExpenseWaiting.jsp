@@ -21,7 +21,7 @@
                 <jsp:include page="StatusMessage.jsp"/>
                 <div class="container-fluid" style="text-align: center; margin-top: <%=session.getAttribute("margin")%>" width="100%" height='100%'>
                     <h4>Expense is still processing please wait</h4>
-                    <input type="button" onclick="location.href='ExpenseResult.jsp';" value="Go Back to Expense Result" />
+                    <input type="button" onclick="location.href='ExpenseProc.jsp';" value="Start" />
                 </div>
             </nav>
         </nav>

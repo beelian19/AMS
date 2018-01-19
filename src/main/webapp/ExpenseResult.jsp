@@ -31,7 +31,7 @@
     <head>
         <title>Invoice Results | Abundant Accounting Management System</title>
         <%            
-            
+            /*
             Future<PaymentFactory> qboFuture;
             if (request.getSession().getAttribute("expenseFuture") == null) {
                 request.getSession().setAttribute("status", "Error: No job running found");
@@ -54,8 +54,11 @@
                 response.sendRedirect("UploadExpense.jsp");
                 return;
             }
-
-            Client client = (request.getSession().getAttribute("paymentClient") != null) ? (Client) request.getAttribute("expenseClient") : null;
+            */
+            PaymentFactory pf = (PaymentFactory) request.getSession().getAttribute("pfResult");
+            
+            Client client = (request.getSession().getAttribute("paymentClient") != null) ? (Client) request.getSession().getAttribute("paymentClient") : null;
+            
             if (client == null) {
                 request.getSession().setAttribute("status", "Error: Null Client at ExpenseResult.jsp");
                 request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);

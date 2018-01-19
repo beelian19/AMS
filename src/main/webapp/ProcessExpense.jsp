@@ -77,6 +77,8 @@
                 request.getSession().setAttribute("status", "Error: No payment objects found");
                 request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
             }
+            
+            //System.out.println("NUMBER OF PAYMENTS: " + preList.size());
 
         %>
         <!--
@@ -234,7 +236,7 @@
                                 <td style="font-size: 10px;">
                                     <%=(p.getMemo() == null) ? "No Memo Found" : StringUtils.substring(p.getMemo(), 0, 15) + "..."%>
                                 </td>
-                                <td style="font-size: 10px;">
+                                <td style="font-size: 8px;">
                                     <%=(pl.getInitStatus().trim().equals("Init:")) ? "-" : pl.getInitStatus()%>
                                 </td>
                             </tr>
@@ -264,7 +266,7 @@
                                 <%
                                     if (canProceed) {
                                 %>
-                                <form action = "ExecuteExpense" method = "post">
+                                <form action = "ExecuteExpenses" method = "post">
                                     <button name="ProcessExpense" value="Submit" class="btn btn-lg btn-primary btn-block btn-success" type="submit">Confirm</button>
                                 </form>
                                 <%

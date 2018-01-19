@@ -42,7 +42,7 @@ public class clearResultsServlet extends HttpServlet {
             }
         }
         if (request.getSession().getAttribute("paymentClient") != null) {
-            request.getSession().removeAttribute("expenseFuture");
+            request.getSession().removeAttribute("paymentClient");
         }
 
         request.getSession().setAttribute("status", "Results cleared!");

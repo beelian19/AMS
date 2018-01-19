@@ -10,9 +10,12 @@ import Entity.Token;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +39,7 @@ public class ExecuteExpenses extends HttpServlet {
         try {
             
             PaymentFactory pf = (request.getSession().getAttribute("paymentFactory") != null) ? (PaymentFactory) request.getSession().getAttribute("paymentFactory") : null;
+            
             if (pf == null) {
                 throw new IllegalArgumentException("No payment factory found at ExecuteExpenses servlet");
             } else if (pf.getPrePayments() == null || pf.getPrePayments().isEmpty()) {
@@ -54,8 +58,9 @@ public class ExecuteExpenses extends HttpServlet {
                 // QBO
                 case "qbo":
                     QBOCallable qboCallable = new QBOCallable(pf);
-                    Future<PaymentFactory> qboFuture = executorService.submit(qboCallable);
-                    request.getSession().setAttribute("expenseFuture", qboFuture);
+                    //request.getSession().removeAttribute("paymentFactory");
+                    PaymentFactory pfR = executorService.submit(qboCallable).get();
+                    request.getSession().setAttribute("pfResult", pfR);
                     break;
                 // XERO
                 case "xero":
@@ -73,15 +78,20 @@ public class ExecuteExpenses extends HttpServlet {
 
             // Set future into request session
             // Callable has been successfully created
-            response.sendRedirect("ExpenseResults.jsp");
+            response.sendRedirect("ExpenseResult.jsp");
             return;
 
         } catch (NullPointerException npe) {
+            npe.printStackTrace();
             messages.add("NullPointerException caught" + npe.getMessage());
         } catch (IllegalArgumentException iae) {
             messages.add("IllegalArgumentException caught" + iae.getMessage());
         } catch (IOException ioe) {
             messages.add("IOException caught" + ioe.getMessage());
+        } catch (InterruptedException ie) {
+            messages.add("InterruptedException caught" + ie.getMessage());
+        } catch (ExecutionException ee) {
+            messages.add("ExecutionException caught" + ee.getMessage());
         }
 
         request.setAttribute("messages", messages);

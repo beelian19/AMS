@@ -243,7 +243,7 @@ public class QBODAO {
             while (itr.hasNext()) {
                 Customer c = itr.next();
                 if (c != null && c.getDisplayName() != null) {
-                    if (c.getDisplayName().trim().toLowerCase().equals(customer.trim())) {
+                    if (c.getDisplayName().trim().toLowerCase().equals(customer.toLowerCase().trim())) {
                         ReferenceType cref = new ReferenceType();
                         cref.setValue(c.getId());
                         return cref;
@@ -263,7 +263,7 @@ public class QBODAO {
             while (itr.hasNext()) {
                 com.intuit.ipp.data.Class c = itr.next();
                 if (c != null && c.getName() != null) {
-                    if (c.getName().trim().toLowerCase().equals(classn.trim())) {
+                    if (c.getName().trim().toLowerCase().equals(classn.toLowerCase().trim())) {
                         ReferenceType cref = new ReferenceType();
                         cref.setValue(c.getId());
                         return cref;
@@ -295,16 +295,16 @@ public class QBODAO {
     }
 
     private ReferenceType getBankReference(String txnAccountChargedNumber) {
-        if (!bankAccounts.isEmpty()) {
-            Iterator<Account> itr = bankAccounts.iterator();
+        if (!allAccounts.isEmpty()) {
+            Iterator<Account> itr = allAccounts.iterator();
             while (itr.hasNext()) {
                 Account account = itr.next();
-                if (account != null && account.getAcctNum() != null) {
-                    if (account.getAcctNum().equals(txnAccountChargedNumber)) {
+                if (account != null) {
+                    if (account.getAcctNum() != null && account.getAcctNum().equals(txnAccountChargedNumber)) {
                         ReferenceType bankRef = new ReferenceType();
                         bankRef.setValue(account.getId());
                         return bankRef;
-                    }
+                    } 
                 }
             }
         }
@@ -316,12 +316,12 @@ public class QBODAO {
             Iterator<Account> itr = expenseAccounts.iterator();
             while (itr.hasNext()) {
                 Account account = itr.next();
-                if (account != null && account.getAcctNum() != null) {
-                    if (account.getAcctNum().equals(expenseAccountNumber)) {
+                if (account != null) {
+                    if (account.getAcctNum() != null && account.getAcctNum().equals(expenseAccountNumber)) {
                         ReferenceType accRef = new ReferenceType();
                         accRef.setValue(account.getId());
                         return accRef;
-                    }
+                    } 
                 }
             }
         }
@@ -333,12 +333,16 @@ public class QBODAO {
             Iterator<Account> itr = allAccounts.iterator();
             while (itr.hasNext()) {
                 Account account = itr.next();
-                if (account != null && account.getAcctNum() != null) {
-                    if (account.getAcctNum().equals(accountNumber)) {
+                if (account != null) {
+                    if (account.getAcctNum() != null && account.getAcctNum().equals(accountNumber)) {
                         ReferenceType accRef = new ReferenceType();
                         accRef.setValue(account.getId());
                         return accRef;
-                    }
+                    } else if (account.getName().contains(accountNumber.trim())) {
+                        ReferenceType accRef = new ReferenceType();
+                        accRef.setValue(account.getId());
+                        return accRef;
+                    }   
                 }
             }
         }
@@ -372,13 +376,14 @@ public class QBODAO {
             while (itr.hasNext()) {
                 TaxCode tc = itr.next();
                 if (tc != null && tc.getName() != null) {
-                    if (tc.getName().contains("NR") && nrReference == null) {
+                    String tcName = tc.getName().replaceAll("[^a-zA-Z]", "");
+                    if (tcName.equals("NR") && nrReference == null) {
                         nrReference = new ReferenceType();
                         nrReference.setValue(tc.getId());
-                    } else if (tc.getName().contains("TX") && txReference == null) {
+                    } else if (tcName.equals("TX") && txReference == null) {
                         txReference = new ReferenceType();
                         txReference.setValue(tc.getId());
-                    } else if (tc.getName().contains("IM") && imReference == null) {
+                    } else if (tcName.equals("IM") && imReference == null) {
                         imReference = new ReferenceType();
                         imReference.setValue(tc.getId());
                     }
@@ -620,6 +625,35 @@ public class QBODAO {
         departments = findAllDepartments();
         classes = findAllClasses();
         customers = findAllCustomers();
+        
+        
+        /*
+        for (Account a: allAccounts) {
+            System.out.println("Name" + a.getName());
+            System.out.println("Number:" + a.getAcctNum());
+            System.out.println("numberextn:" + a.getAcctNumExtn());
+            System.out.println("type" + a.getAccountType());
+            System.out.println("id" + a.getId());
+            System.out.println("banknum" + a.getBankNum());
+            System.out.println("" + a.toString());
+        }
+        
+        /*
+        System.out.println("Class!!!!!!!");
+        for (com.intuit.ipp.data.Class c: classes) {
+            System.out.println("Name" + c.getName());
+        }
+        System.out.println("Customer!!!!!!");
+        for (Customer cu : customers){
+            System.out.println("Name" + cu.getDisplayName());
+        }
+        */
+        
+        for (TaxCode t : taxCodes){
+            System.out.println("Name"+t.getName());
+            System.out.println("string " + t.toString());
+        }
+        
 
         initError = "";
         // Check for valid lists
@@ -665,7 +699,7 @@ public class QBODAO {
     public List<Payment> submitPrePayments(List<Payment> prePayments, int chargedAccountNumber) {
         List<Payment> postPayments = new ArrayList<>();
         // Get the charged account reference
-        ReferenceType bankReference = getBankReference(String.valueOf(chargedAccountNumber));
+        ReferenceType bankReference = getAccountReference(String.valueOf(chargedAccountNumber));
 
         for (Payment pre : prePayments) {
             String status = "";
@@ -813,7 +847,7 @@ public class QBODAO {
             }
 
             purchase.setLine(lineList);
-            
+
             if (status.isEmpty()) {
                 try {
                     Purchase savedPurchase = dataService.add(purchase);
@@ -821,14 +855,15 @@ public class QBODAO {
                     List<com.intuit.ipp.data.Error> list = ex.getErrorList();
                     status = "error: ";
                     for (com.intuit.ipp.data.Error er : list) {
-                        status+= er.getMessage();
+                        status += er.getMessage();
                     }
-                } 
-            
+                    pre.setStatus(status);
+                }
+                pre.setStatus("success");
             } else {
                 String notProcessed = "Not processed due to " + status;
                 pre.setStatus(notProcessed);
-            }     
+            }
             //set results into status
             postPayments.add(pre);
         }

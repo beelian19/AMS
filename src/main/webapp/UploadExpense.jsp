@@ -4,6 +4,8 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.util.concurrent.Future"%>
+<%@page import="Entity.PaymentFactory"%>
 <%@page import="java.util.Collections"%>
 <%@page import="Entity.Project"%>
 <%@page import="DAO.ProjectDAO"%>
@@ -20,9 +22,17 @@
     <head>
         <title>Upload Expense | Abundant Accounting Management System</title>
     </head>
-    <%        String expenseJobRunning = (String) session.getAttribute("expenseJobRunning");
+    <%        
+        String expenseJobRunning;
+        Future<PaymentFactory> qboFuture;
+        if (request.getSession().getAttribute("expenseFuture") != null) {
+            expenseJobRunning = "run";
+        } else {
+            expenseJobRunning = null;
+        }
+        
         if (expenseJobRunning != null) {
-            session.setAttribute("status", "Error: Please try again later, there is an expense job currently running");
+            session.setAttribute("status", "Please wait: please try again later as there is an expense job currently running");
         }
         List<String> errors = (request.getAttribute("messages") != null) ? (List<String>) request.getAttribute("messages") : null;
 
