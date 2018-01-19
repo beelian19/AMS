@@ -304,7 +304,7 @@ public class QBODAO {
                         ReferenceType bankRef = new ReferenceType();
                         bankRef.setValue(account.getId());
                         return bankRef;
-                    } 
+                    }
                 }
             }
         }
@@ -321,7 +321,7 @@ public class QBODAO {
                         ReferenceType accRef = new ReferenceType();
                         accRef.setValue(account.getId());
                         return accRef;
-                    } 
+                    }
                 }
             }
         }
@@ -342,12 +342,29 @@ public class QBODAO {
                         ReferenceType accRef = new ReferenceType();
                         accRef.setValue(account.getId());
                         return accRef;
-                    }   
+                    }
                 }
             }
         }
         return null;
 
+    }
+
+    private ReferenceType getAccountReferenceName(String accountName) {
+        if (!allAccounts.isEmpty()) {
+            Iterator<Account> itr = allAccounts.iterator();
+            while (itr.hasNext()) {
+                Account account = itr.next();
+                if (account != null) {
+                    if (account.getName() != null && account.getName().toLowerCase().trim().contains(accountName.toLowerCase().trim())) {
+                        ReferenceType accRef = new ReferenceType();
+                        accRef.setValue(account.getId());
+                        return accRef;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private ReferenceType getPaymentMethodReference(String paymentMethod) {
@@ -625,8 +642,7 @@ public class QBODAO {
         departments = findAllDepartments();
         classes = findAllClasses();
         customers = findAllCustomers();
-        
-        
+
         /*
         for (Account a: allAccounts) {
             System.out.println("Name" + a.getName());
@@ -647,13 +663,11 @@ public class QBODAO {
         for (Customer cu : customers){
             System.out.println("Name" + cu.getDisplayName());
         }
-        */
-        
-        for (TaxCode t : taxCodes){
-            System.out.println("Name"+t.getName());
+         */
+        for (TaxCode t : taxCodes) {
+            System.out.println("Name" + t.getName());
             System.out.println("string " + t.toString());
         }
-        
 
         initError = "";
         // Check for valid lists
@@ -760,6 +774,9 @@ public class QBODAO {
                 }
             }
 
+            purchase.setGlobalTaxCalculation(GlobalTaxCalculationEnum.TAX_INCLUSIVE);
+            
+            
             List<PaymentLine> paymentLines = pre.getLines();
             List<Line> lineList = new ArrayList<>();
 
@@ -810,7 +827,13 @@ public class QBODAO {
                     ReferenceType accReference = getAccountReference(String.valueOf(pl.getAccountNumber()));
                     if (accReference != null) {
                         abeld.setAccountRef(accReference);
-                    } else {
+                    } else if (pl.getAccountName() != null) {
+                        accReference = getAccountReferenceName(pl.getAccountName());
+                        if (accReference != null) {
+                            abeld.setAccountRef(accReference);
+                        }
+                    }
+                    if (accReference == null) {
                         status += "-Invalid expense account" + pl.getAccountNumber() + "-";
                     }
                 }
@@ -828,7 +851,9 @@ public class QBODAO {
                     } else if (taxCode.contains("IM")) {
                         abeld.setTaxCodeRef(imReference);
                         hasTax = true;
-                    } else {
+                    } else if (taxCode.contains("No")) {
+                        hasTax = false;
+                    }else {
                         status += "-Invalid Tax Code-";
                     }
                 } else {
