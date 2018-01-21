@@ -15,7 +15,7 @@ public class Token {
 
     /**
      * Generic constructor. Only used for retrieving all tokens from database
-     * 
+     *
      * @param accType
      * @param ClientId
      * @param ClientSecret
@@ -25,7 +25,7 @@ public class Token {
      * @param companyId
      * @param xeroToken
      * @param xeroTokenSecret
-     * @param xeroTokenHandle 
+     * @param xeroTokenHandle
      */
     public Token(String accType, String ClientId, String ClientSecret, String redirectUri, String refreshToken, String inUse, int companyId, String xeroToken, String xeroTokenSecret, String xeroTokenHandle) {
         this.accType = accType;
@@ -39,16 +39,17 @@ public class Token {
         this.xeroTokenSecret = xeroTokenSecret;
         this.xeroTokenHandle = xeroTokenHandle;
     }
-    
+
     /**
      * Constructor for QBO Token
+     *
      * @param accType
      * @param ClientId
      * @param ClientSecret
      * @param redirectUri
      * @param refreshToken
      * @param inUse
-     * @param companyId 
+     * @param companyId
      */
     public Token(String accType, String ClientId, String ClientSecret, String redirectUri, String refreshToken, String inUse, int companyId) {
         this.accType = accType;
@@ -65,13 +66,14 @@ public class Token {
 
     /**
      * Constructor for XERO Token
+     *
      * @param accType
      * @param redirectUri
      * @param inUse
      * @param companyId
      * @param xeroToken
      * @param xeroTokenSecret
-     * @param xeroTokenHandle 
+     * @param xeroTokenHandle
      */
     public Token(String accType, String redirectUri, String inUse, int companyId, String xeroToken, String xeroTokenSecret, String xeroTokenHandle) {
         this.accType = accType;
@@ -85,7 +87,32 @@ public class Token {
         this.xeroTokenSecret = xeroTokenSecret;
         this.xeroTokenHandle = xeroTokenHandle;
     }
+    
+    /**
+     * Check if Token is valid. (Only for QBO)
+     * @return 
+     */
+    public Boolean isComplete(){
+        if (ClientSecret == null || ClientSecret.equals("NA")) {
+            return false;
+        } else if  (ClientId == null || ClientId.equals("NA")) {
+            return false;
+        } else if (redirectUri == null || redirectUri.equals("NA")) {
+            return false;
+        } else if (inUse == null || inUse.equals("NA")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
+    @Override
+    public String toString() {
+        return "Token{" + "ClientId=" + ClientId + ", ClientSecret=" + ClientSecret + ", redirectUri=" + redirectUri + ", inUse=" + inUse + '}';
+    }
+
+    
+    
     public String getAccType() {
         return accType;
     }
@@ -118,18 +145,20 @@ public class Token {
         this.redirectUri = redirectUri;
     }
 
+    public String getInUse() {
+        return inUse;
+    }
     
-    
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+    public String getTaxEnabled(){
+        return inUse;
     }
 
     public void setInUse(String inUse) {
-        if (inUse.equals("1")) {
-            this.inUse = "1";
-        } else {
-            this.inUse = "0";
-        }
+        this.inUse = inUse;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
     public int getCompanyId() {
@@ -162,18 +191,6 @@ public class Token {
 
     public void setXeroTokenHandle(String xeroTokenHandle) {
         this.xeroTokenHandle = xeroTokenHandle;
-    }
-
-    /**
-     *
-     * @return true if token is in use
-     */
-    public Boolean getInUse() {
-        return inUse.equals("1");
-    }
-
-    public String getInUseString() {
-        return inUse;
     }
 
 }

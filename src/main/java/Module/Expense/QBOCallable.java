@@ -59,7 +59,7 @@ public class QBOCallable implements Callable<PaymentFactory> {
                 // return ef
             } else {
                 // Submit expenses
-                postPayments = qbodao.submitPrePayments(prePayments, pf.getChargedAccountNumber());
+                postPayments = qbodao.submitPrePayments(prePayments, pf.getChargedAccountNumber(), true);
             }
 
         } catch (OAuthException oae) {

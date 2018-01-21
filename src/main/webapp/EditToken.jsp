@@ -12,22 +12,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Token | Abundant Accounting Management System</title>
-        <%
-                String clientId = (request.getAttribute("clientId") != null) ? (String) request.getAttribute("clientId") : "Null";
-                String clientSecret = (request.getAttribute("clientSecret") != null) ? (String) request.getAttribute("clientSecret") : "Null";
-                String redirectURI = (request.getAttribute("redirectURI") != null) ? (String) request.getAttribute("redirectURI") : "Null";
-                if (request.getAttribute("companyId") == null) {
-                    request.getSession().setAttribute("status", "Error: No company id parsed at EditToken.jsp");
-                    request.getRequestDispatcher("TokenOverview.jsp").forward(request, response);
-                }
-                String companyId = (String) request.getAttribute("companyId");
-                Client client = ClientDAO.getClientById(companyId);
-                if (client == null) {
-                    request.getSession().setAttribute("status", "Error: No company with company AMS id of " + companyId);
-                    request.getRequestDispatcher("TokenOverview.jsp").forward(request, response);
-                }
-                String clientName = client.getCompanyName();
-            
+        <%            String clientId = (request.getAttribute("clientId") != null) ? (String) request.getAttribute("clientId") : "NA";
+            String clientSecret = (request.getAttribute("clientSecret") != null) ? (String) request.getAttribute("clientSecret") : "NA";
+            String taxEnabled = (request.getAttribute("taxEnabled") != null) ? (String) request.getAttribute("taxEnabled") : "NA";
+            String redirectURI = (request.getAttribute("redirectURI") != null) ? (String) request.getAttribute("redirectURI") : "NA";
+            if (request.getAttribute("companyId") == null) {
+                request.getSession().setAttribute("status", "Error: No company id parsed at EditToken.jsp");
+                request.getRequestDispatcher("TokenOverview.jsp").forward(request, response);
+            }
+            String companyId = (String) request.getAttribute("companyId");
+            Client client = ClientDAO.getClientById(companyId);
+            if (client == null) {
+                request.getSession().setAttribute("status", "Error: No company with company AMS id of " + companyId);
+                request.getRequestDispatcher("TokenOverview.jsp").forward(request, response);
+            }
+            String clientName = client.getCompanyName();
+
         %>
 
     </head>
@@ -91,17 +91,26 @@
                                     <td width="15%">
                                     </td>
                                     <td>
+                                        <label for="companyId">Tax Enabled (y/n) &nbsp;<font color="red">*</font></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="taxEnabled" id="taxEnabled" class="text ui-widget-content ui-corner-all" value='<%=taxEnabled%>'  required>
+                                    </td>
+                                    <td width="1%">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="1%">
+                                    </td>
+                                    <td>
                                         <label for="companyId">Company ID&nbsp;<font color="red">*</font></label>
                                     </td>
                                     <td>
                                         <%=companyId%>
                                         <input type="text" name="companyId" id="companyId" class="text ui-widget-content ui-corner-all" value='<%=companyId%>' hidden required>
                                     </td>
-                                    <td width="1%">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="7">
+
+                                    <td colspan="5">
                                         <br/>
                                     </td>
                                 </tr>

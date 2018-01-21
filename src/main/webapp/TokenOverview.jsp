@@ -61,7 +61,7 @@
                                             <%=c.getCompanyName()%>
                                         </td>
                                         <td>
-                                            <input type="radio" name="ClientId" value='<%=c.getClientID()%>' required>
+                                            <input type="radio" name="companyId" value='<%=c.getClientID()%>' required>
                                         </td>
                                     </tr>
                                     <%

@@ -1124,7 +1124,7 @@ public class ProjectDAO {
         ArrayList<Project> projectList = new ArrayList<>();
         ArrayList<Project> incomplete = new ArrayList<>();
         ArrayList<Project> complete = new ArrayList<>();
-        
+
         Project project;
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE employee1 = ? OR employee2 = ? and MONTH(end)=? and YEAR(end)=?");
@@ -1227,7 +1227,7 @@ public class ProjectDAO {
 
                 //check here if profit or loss 
                 double status = getProfit(project);
-                
+
                 //add into respective month arraylist based on month retrieved 
                 switch (month) {
                     case 0:
@@ -1322,21 +1322,21 @@ public class ProjectDAO {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
         //combine the 2 arrays
-        
+
         ArrayList<Integer> yearProfitList = new ArrayList();
         ArrayList<Integer> yearLossList = new ArrayList();
-        
-        for(int i = 0; i < 12; i++) {
+
+        for (int i = 0; i < 12; i++) {
             int value = yearProfit[i];
             yearProfitList.add(value);
         }
-        
-        for(int i = 0; i < 12; i++) {
+
+        for (int i = 0; i < 12; i++) {
             int value = yearLoss[i];
             yearLossList.add(value);
         }
         ArrayList<ArrayList<Integer>> complete = new ArrayList();
-        
+
         complete.add(yearProfitList);
         complete.add(yearLossList);
         return complete;
@@ -1372,7 +1372,7 @@ public class ProjectDAO {
         Double[] totalSalesList = new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         HashMap<String, ArrayList<Project>> projectList = getCompletedProjectList();
         HashMap<String, Double> costPerHourPerStaffList = EmployeeDAO.getCostPerHourPerStaff();
-        
+
         DecimalFormat decimal = new DecimalFormat("#.##");
 
         for (String empName : projectList.keySet()) {
@@ -1389,76 +1389,127 @@ public class ProjectDAO {
                 String month = dateCompleted.substring(5, 7);
 
                 if (year.equals(selectedYear)) {
-                    
+
                     switch (month) {
                         case "01":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
+
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[0] += value;
                             break;
                         case "02":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
+
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[1] += value;
                             break;
                         case "03":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[2] += value;
                             break;
                         case "04":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[3] += value;
                             break;
                         case "05":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[4] += value;
                             break;
                         case "06":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
+
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[5] += value;
                             break;
                         case "07":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[6] += value;
                             break;
                         case "08":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[7] += value;
                             break;
                         case "09":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[8] += value;
                             break;
                         case "10":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[9] += value;
                             break;
                         case "11":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[10] += value;
                             break;
                         case "12":
-                            value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            if (!p.getEmployee2().equals("NA")) {
+                                value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
+                            } else {
+                                value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
+                            }
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[11] += value;
@@ -1475,7 +1526,7 @@ public class ProjectDAO {
         Double[] totalActualCostList = new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         HashMap<String, ArrayList<Project>> projectList = getCompletedProjectList();
         HashMap<String, Double> costPerHourPerStaffList = EmployeeDAO.getCostPerHourPerStaff();
-        
+
         DecimalFormat decimal = new DecimalFormat("#.##");
 
         for (String empName : projectList.keySet()) {
@@ -1493,14 +1544,14 @@ public class ProjectDAO {
 
                 String emp1 = p.getEmployee1();
                 String emp2 = p.getEmployee2();
-                
+
                 if (year.equals(selectedYear)) {
-                    
+
                     switch (month) {
                         case "01":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1510,7 +1561,7 @@ public class ProjectDAO {
                         case "02":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1521,7 +1572,7 @@ public class ProjectDAO {
                         case "03":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1532,7 +1583,7 @@ public class ProjectDAO {
                         case "04":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1543,7 +1594,7 @@ public class ProjectDAO {
                         case "05":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1554,7 +1605,7 @@ public class ProjectDAO {
                         case "06":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1565,7 +1616,7 @@ public class ProjectDAO {
                         case "07":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1576,7 +1627,7 @@ public class ProjectDAO {
                         case "08":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1587,7 +1638,7 @@ public class ProjectDAO {
                         case "09":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1598,7 +1649,7 @@ public class ProjectDAO {
                         case "10":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1609,7 +1660,7 @@ public class ProjectDAO {
                         case "11":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1620,7 +1671,7 @@ public class ProjectDAO {
                         case "12":
                             if (emp1.equals(empName)) {
                                 value = p.getEmployee1Hours() * costPerHourPerStaffList.get(empName);
-                            } 
+                            }
                             if (emp2.equals(empName)) {
                                 value = p.getEmployee2Hours() * costPerHourPerStaffList.get(empName);
                             }
@@ -1642,11 +1693,12 @@ public class ProjectDAO {
         Double[] salesList = getSales(selectedYear);
         Double[] actualCostList = getActualCost(selectedYear);
 
-        for(int i = 0; i < 12; i++) {
+        for (int i = 0; i < 12; i++) {
             totalProfitList[i] = salesList[i] - actualCostList[i];
         }
         return totalProfitList;
     }
+
     public static int[] getOverdueProjectPerStaff(String year, String name) {
 
         int[] numList = new int[12];
@@ -1753,7 +1805,12 @@ public class ProjectDAO {
             emp2CostPerHour = costPerHourPerStaffList.get(emp2);
         }
 
-        sales = (emp1CostPerHour * (plannedHours / 2.0)) + (emp2CostPerHour * (plannedHours / 2.0));
+        if (emp2.equals("NA")) {
+            sales = emp1CostPerHour * plannedHours;
+        } else {
+            sales = (emp1CostPerHour * (plannedHours / 2.0)) + (emp2CostPerHour * (plannedHours / 2.0));
+        }
+
         DecimalFormat df = new DecimalFormat("#.##");
         sales = Double.valueOf(df.format(sales));
 
@@ -1772,7 +1829,7 @@ public class ProjectDAO {
 
         return profit;
     }
-    
+
     public static int[] getOnTimeProjectPerYear(String year) {
 
         int[] numList = new int[12];
@@ -1798,7 +1855,7 @@ public class ProjectDAO {
         }
         return numList;
     }
-    
+
     public static int[] getTotalCompletedProjectPerYear(String year) {
 
         int[] numList = new int[12];
@@ -1806,7 +1863,7 @@ public class ProjectDAO {
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (projectReviewStatus=?) GROUP BY MONTH(end)");
             stmt.setString(1, year);
-            stmt.setString(2,"complete");
+            stmt.setString(2, "complete");
             //date for start
             //date for end 
             ResultSet rs = stmt.executeQuery();
@@ -1825,13 +1882,13 @@ public class ProjectDAO {
         }
         return numList;
     }
-     
-     public static ArrayList<ArrayList<Integer>> getCompanyMonthlyProfitability(String clientId, String year) {
+
+    public static ArrayList<ArrayList<Integer>> getCompanyMonthlyProfitability(String clientId, String year) {
 
         //array of profit project count per month and array of loss project count per month
         Client client = ClientDAO.getClientById(clientId);
         String companyName = client.getCompanyName();
-        
+
         int yearProfit[] = new int[12];
         int yearLoss[] = new int[12];
 
@@ -1876,7 +1933,7 @@ public class ProjectDAO {
 
                 //check here if profit or loss 
                 double status = getProfit(project);
-                
+
                 //add into respective month arraylist based on month retrieved 
                 switch (month) {
                     case 0:
@@ -1971,28 +2028,28 @@ public class ProjectDAO {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
         //combine the 2 arrays
-        
+
         ArrayList<Integer> yearProfitList = new ArrayList();
         ArrayList<Integer> yearLossList = new ArrayList();
-        
-        for(int i = 0; i < 12; i++) {
+
+        for (int i = 0; i < 12; i++) {
             int value = yearProfit[i];
             yearProfitList.add(value);
         }
-        
-        for(int i = 0; i < 12; i++) {
+
+        for (int i = 0; i < 12; i++) {
             int value = yearLoss[i];
             yearLossList.add(value);
         }
         ArrayList<ArrayList<Integer>> complete = new ArrayList();
-        
+
         complete.add(yearProfitList);
         complete.add(yearLossList);
         return complete;
     }
-     
+
     public static int[] getClientOverdueProjectPerYear(String clientid, String year) {
-        
+
         Client client = ClientDAO.getClientById(clientid);
         String companyName = client.getCompanyName();
         int[] numList = new int[12];
@@ -2000,37 +2057,8 @@ public class ProjectDAO {
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted > end) and companyName = ? GROUP BY MONTH(end)");
             stmt.setString(1, year);
-            stmt.setString(2,companyName);
-            
-            //date for start
-            //date for end 
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                String month = rs.getString("MONTH");
-                Integer monthInt = Integer.parseInt(month);
-                String count = rs.getString("COUNT");
-                Integer countInt = Integer.parseInt(count);
-                numList[monthInt - 1] = countInt;
+            stmt.setString(2, companyName);
 
-            }
-        } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
-        }
-        return numList;
-    } 
-    
-    public static int[] getClientOnTimeProjectPerYear(String clientid, String year) {
-        
-        Client client = ClientDAO.getClientById(clientid);
-        String companyName = client.getCompanyName();
-        int[] numList = new int[12];
-
-        try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted < end) and companyName = ? GROUP BY MONTH(end)");
-            stmt.setString(1, year);
-            stmt.setString(2,companyName);
             //date for start
             //date for end 
             ResultSet rs = stmt.executeQuery();
@@ -2049,6 +2077,34 @@ public class ProjectDAO {
         }
         return numList;
     }
-    
-    
+
+    public static int[] getClientOnTimeProjectPerYear(String clientid, String year) {
+
+        Client client = ClientDAO.getClientById(clientid);
+        String companyName = client.getCompanyName();
+        int[] numList = new int[12];
+
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted < end) and companyName = ? GROUP BY MONTH(end)");
+            stmt.setString(1, year);
+            stmt.setString(2, companyName);
+            //date for start
+            //date for end 
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String month = rs.getString("MONTH");
+                Integer monthInt = Integer.parseInt(month);
+                String count = rs.getString("COUNT");
+                Integer countInt = Integer.parseInt(count);
+                numList[monthInt - 1] = countInt;
+
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        return numList;
+    }
+
 }

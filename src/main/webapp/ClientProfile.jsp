@@ -515,7 +515,13 @@
                                         &nbsp;
                                     </td>
                                     <td>
-                                        <input type="text" name="gstSubmissionEdit" id="gstSubmissionEdit" value="<%=client.getGstSubmission()%>" class="text ui-widget-content ui-corner-all" required>
+                                        <select name='gstSubmissionEdit' id="gstSubmissionEdit" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                            <option disabled selected value> -- select an option --  </option>
+                                            <option value="na">NA</option>
+                                            <option value="m">Monthly</option>
+                                            <option value="q">Quarterly</option>
+                                            <option value="s">Semi Annual</option>
+                                        </select> 
                                     </td>
                                 </tr>
                                 <tr>
@@ -525,13 +531,68 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="reviewer">MGMT ACC&nbsp;<font color="red">*</font></label>
+                                        <label>Management Account Frequency&nbsp;<font color="red">*</font></label>
                                     </td>
                                     <td width="1%">
                                         &nbsp;
                                     </td>
                                     <td>
-                                        <input type="text" name="mgmtAccEdit" id="mgmtAccEdit" value="<%=client.getMgmtAcc()%>" class="text ui-widget-content ui-corner-all" required>
+                                        <select name='mgmtAccEdit' id="mgmtAccEdit" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                            <option disabled selected value> -- select an option --  </option>
+                                            <option value="na">NA</option>
+                                            <option value="m">Monthly</option>
+                                            <option value="q">Quarterly</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Management Account Days&nbsp;<font color="red">*</font></label>
+                                    </td>
+                                    <td width="1%">
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        <select name='mgmtNumberEdit' id="mgmtNumberEdit" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                            <option disabled selected value> -- select an option --  </option>
+                                            <option value="na">NA</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                            <option value="18">18</option>
+                                            <option value="19">19</option>
+                                            <option value="20">20</option>
+                                            <option value="21">21</option>
+                                            <option value="22">22</option>
+                                            <option value="23">23</option>
+                                            <option value="24">24</option>
+                                            <option value="25">25</option>
+                                            <option value="26">26</option>
+                                            <option value="27">27</option>
+                                            <option value="28">28</option>
+                                            <option value="29">29</option>
+                                            <option value="30">30</option>
+                                            <option value="31">31</option>
+                                        </select> 
                                     </td>
                                 </tr>
                                 <tr>
@@ -591,9 +652,13 @@
                 return;
             }
             if ($('#mgmtAccEdit').val().trim() == "") {
-                alert("Management Acct Required");
+                alert("Management Acct Frequency Required");
                 return;
-            } else {
+            }if ($('#mgmtNumberEdit').val().trim() == "") {
+                alert("Management Acct Days Required");
+                return;
+            }
+            else {
                 var number = $('#officeContactEdit').val();
                 var email = $('#emailEdit').val();
                 var director = $('#directorEdit').val();
@@ -604,12 +669,13 @@
 
                 var officeAddress = $('#addressEdit').val();
                 var gstSubmission = $('#gstSubmissionEdit').val();
-                var mgmtAcc = $('#mgmtAccEdit').val();
+                var mgmtAcc = $('#mgmtAccEdit').val(); //frequency
+                var mgmtNumber = $('#mgmtNumberEdit').val(); //number
 
 
                 $.ajax({
                     type: 'POST',
-                    data: 'officeContact=' + number + '&' + 'contactEmailAddress=' + email + '&' + 'director=' + director + '&' + 'secretary=' + secretary + '&' + 'accountant=' + accountant + '&' + 'uen=' + uen + '&' + 'realmid=' + realmid + '&' + 'officeAddress=' + officeAddress + '&' + 'gstSubmission=' + gstSubmission + '&' + 'mgmtAcc=' + mgmtAcc,
+                    data: 'officeContact=' + number + '&' + 'contactEmailAddress=' + email + '&' + 'director=' + director + '&' + 'secretary=' + secretary + '&' + 'accountant=' + accountant + '&' + 'uen=' + uen + '&' + 'realmid=' + realmid + '&' + 'officeAddress=' + officeAddress + '&' + 'gstSubmission=' + gstSubmission + '&' + 'mgmtFrequency=' + mgmtAcc + '&' + 'mgmtNumber=' + mgmtNumber,
                     url: 'UpdateClientServlet',
                     success: function () {
                         location.reload();
