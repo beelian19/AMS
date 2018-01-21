@@ -53,7 +53,7 @@ public class QBOCallable implements Callable<PaymentFactory> {
             Context context = new Context(oauth, ServiceType.QBO, realmid);
             DataService service = new DataService(context);
             QBODAO qbodao = new QBODAO(service);
-            String initErrors = qbodao.init();
+            String initErrors = qbodao.init(true);
             if (qbodao.getInitHasError()) {
                 processMessage.add("QBO init errors: " + initErrors);
                 // return ef

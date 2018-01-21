@@ -80,6 +80,9 @@
                 request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
             }
             
+            int numberProcessing = pf.getPurchases().size();
+            
+            
             //System.out.println("NUMBER OF PAYMENTS: " + preList.size());
 
         %>
@@ -159,7 +162,7 @@
                     <table id="datatable" style="border: #FFFFFF; text-align:center; width: 100%; overflow:auto">
                         <thead>
                             <tr>
-                                <th width="2%" Style="text-align:center">xl#</th>
+                                <th width="2%" Style="text-align:center">#</th>
                                 <th width="8%">Transaction Date</th>
                                 <th width="6%">Reference No</th>
                                 <th width="6%">Account Name</th>
@@ -181,11 +184,12 @@
                             <%
                                 if (preList != null) {
                                     String colorCode;
-                                    int xlRow = 2;
+                                    int xlRow = 0;
                                     for (Payment p : preList) {
+                                        xlRow++;
                                         for (PaymentLine pl : p.getLines()) {
-                                            xlRow++;
-                                            if (p.checkPayment() && pl.checkPaymentLine()) {
+                                            
+                                            if (!pl.getInitStatus().contains("!")) {
                                                 colorCode = "#ffffff";
                                             } else {
                                                 colorCode = "#ffb6c1";
@@ -269,7 +273,7 @@
                                     if (canProceed) {
                                 %>
                                 <form action = "ExecuteExpenses" method = "post">
-                                    <button name="ProcessExpense" value="Submit" class="btn btn-lg btn-primary btn-block btn-success" type="submit">Confirm</button>
+                                    <button name="ProcessExpense" value="Submit" class="btn btn-lg btn-primary btn-block btn-success" type="submit">Confirm <%=numberProcessing%> Payments</button>
                                 </form>
                                 <%
                                 } else {

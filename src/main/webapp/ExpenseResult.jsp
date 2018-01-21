@@ -112,34 +112,6 @@
                     ###########################################################################################################################
                     -->         
                     <br/>
-                    <div align="center">
-                        <%
-                            if (!processMessage.isEmpty()) {
-
-                        %>
-                        <table width="60%" height="60%" style='border-bottom: #1b6d85; border-top: #1b6d85' cellpadding="10">
-                            <tr>
-                                <td width="50%">
-                                    <label Style="whitespace: nowrap" style="overflow-x:auto">
-                                        Processing errors
-                                    </label>
-                                </td>
-                            </tr>
-                            <%                                for (String error : processMessage) {
-                            %>
-                            <tr>
-                                <td width="20%">
-                                    <%=error%>
-                                </td>
-                            </tr>
-
-                            <%
-                                    }
-                                }
-                            %>      
-                        </table> 
-                    </div>
-                    <br/>
                     <br/>
                     <!--
                     ###########################################################################################################################

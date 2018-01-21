@@ -35,14 +35,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Icon
  */
 public class QBODAO {
+
+    private List<Purchase> purchases;
 
     // DataService
     private DataService dataService;
@@ -84,6 +84,14 @@ public class QBODAO {
         return returnList;
     }
 
+    public List<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<Purchase> purchases) {
+        this.purchases = purchases;
+    }
+
     // Queries
     private final String ACCOUNT_TYPE_QUERY = "select * from account where accounttype = '%s'";
     private final String ACCOUNT_ALL = "select * from account";
@@ -123,7 +131,7 @@ public class QBODAO {
      */
     private <T extends IEntity> T executeQuery(String query, Class<T> qboType) {
         try {
-            
+
             final QueryResult queryResult = dataService.executeQuery(query);
             final List<? extends IEntity> entities = queryResult.getEntities();
             if (entities.isEmpty()) {
@@ -216,7 +224,7 @@ public class QBODAO {
      * @return
      */
     private ReferenceType getVendorReference(String txnSupplierName) {
-        if (txnSupplierName == null) {
+        if (txnSupplierName == null || vendors == null) {
             return null;
         }
         if (!vendors.isEmpty()) {
@@ -236,7 +244,7 @@ public class QBODAO {
     }
 
     private ReferenceType getCustomerReference(String customer) {
-        if (customer == null) {
+        if (customer == null || customers == null) {
             return null;
         }
         if (!customers.isEmpty()) {
@@ -256,7 +264,7 @@ public class QBODAO {
     }
 
     private ReferenceType getClassReference(String classn) {
-        if (classn == null) {
+        if (classn == null || classes == null) {
             return null;
         }
         if (!classes.isEmpty()) {
@@ -276,7 +284,7 @@ public class QBODAO {
     }
 
     private ReferenceType getLocationReference(String location) {
-        if (location == null) {
+        if (location == null || departments == null) {
             return null;
         }
         if (!departments.isEmpty()) {
@@ -330,6 +338,9 @@ public class QBODAO {
     }
 
     private ReferenceType getAccountReference(String accountNumber) {
+        if (allAccounts == null) {
+            return null;
+        }
         if (!allAccounts.isEmpty()) {
             Iterator<Account> itr = allAccounts.iterator();
             while (itr.hasNext()) {
@@ -433,6 +444,208 @@ public class QBODAO {
         }
 
         return processedExpenses;
+    }
+
+    public List<Payment> reviewPayments(List<Payment> prePayments, int chargedAccountNumber, boolean isTaxEnabled) {
+        List<Payment> reviewedPayments = new ArrayList<>();
+        List<Purchase> prePurchases = new ArrayList<>();
+
+        ReferenceType bankReference = getAccountReference(String.valueOf(chargedAccountNumber));
+
+        for (Payment pre : prePayments) {
+            boolean process = true;
+            String status = "";
+            Payment reviewedPayment = pre;
+            Purchase purchase = new Purchase();
+
+            // Set charged account number (required)
+            if (bankReference != null) {
+                purchase.setAccountRef(bankReference);
+            } else {
+                status += "-!" + chargedAccountNumber + " account number invalid-";
+                process = false;
+            }
+
+            // Set date (required)
+            if (pre.getDate() != null) {
+                purchase.setTxnDate(pre.getDate());
+            } else {
+                status += "-!No Date-";
+                process = false;
+            }
+
+            // Set reference number
+            if (pre.getReferenceNumber() != null || !pre.getReferenceNumber().isEmpty()) {
+                purchase.setDocNumber(pre.getReferenceNumber());
+            } else {
+                status += "-!No Ref Number-";
+                process = false;
+            }
+
+            // Set memo (optional)
+            if (pre.getMemo() != null) {
+                purchase.setPrivateNote(pre.getMemo());
+            }
+
+            // Set payment method (optional)
+            purchase.setPaymentType(PaymentTypeEnum.CASH);
+            if (pre.getPaymentMethod() != null) {
+                ReferenceType paymentMethodReference = getPaymentMethodReference(pre.getPaymentMethod().trim());
+                if (paymentMethodReference != null) {
+                    purchase.setPaymentMethodRef(paymentMethodReference);
+                }
+            }
+
+            // Set vendor (required)
+            if (pre.getVendor() != null) {
+                ReferenceType vendorReference = getVendorReference(pre.getVendor().trim());
+                if (vendorReference != null) {
+                    purchase.setEntityRef(vendorReference);
+                } else {
+                    status += "-!" + pre.getVendor() + "vendor invalid-";
+                    process = false;
+                }
+            } else {
+                status += "-!No Vendor-";
+                process = false;
+            }
+
+            // Set location (optional)
+            if (pre.getLocation() != null) {
+                ReferenceType locationReference = getLocationReference(pre.getLocation().trim());
+                if (locationReference != null) {
+                    purchase.setDepartmentRef(locationReference);
+                } else {
+                    status += "-" + pre.getLocation() + " location not valid-";
+                }
+            }
+
+            List<PaymentLine> paymentLines = pre.getLines();
+            List<PaymentLine> reviewedLines = new ArrayList<>();
+            List<Line> lineList = new ArrayList<>();
+
+            if (isTaxEnabled) {
+                purchase.setGlobalTaxCalculation(GlobalTaxCalculationEnum.TAX_INCLUSIVE);
+            } else {
+                purchase.setGlobalTaxCalculation(GlobalTaxCalculationEnum.NOT_APPLICABLE);
+            }
+
+            for (PaymentLine pl : paymentLines) {
+                String paymentLineStatus = "";
+                Line line = new Line();
+
+                line.setDetailType(LineDetailTypeEnum.ACCOUNT_BASED_EXPENSE_LINE_DETAIL);
+                AccountBasedExpenseLineDetail abeld = new AccountBasedExpenseLineDetail();
+                // Set line description (optional)
+                if (pl.getLineDescription() != null) {
+                    line.setDescription(pl.getLineDescription());
+                }
+
+                BigDecimal exclTaxAmount = BigDecimal.valueOf(0.0);
+                BigDecimal incTaxAmount = BigDecimal.valueOf(0.0);
+
+                if (pl.getExTaxAmount() == 0.0 || pl.getIncTaxAmount() == 0.0) {
+                    paymentLineStatus += "-!Missing Amounts-";
+                    process = false;
+                } else {
+                    exclTaxAmount = BigDecimal.valueOf(pl.getExTaxAmount()).setScale(2, BigDecimal.ROUND_HALF_UP);
+                    incTaxAmount = BigDecimal.valueOf(pl.getIncTaxAmount()).setScale(2, BigDecimal.ROUND_HALF_UP);
+                }
+
+                // Set line amount (required)
+                line.setAmount(exclTaxAmount);
+
+                // Customer (optional)
+                if (pl.getQBOLineCustomer() != null) {
+                    ReferenceType customerReference = getCustomerReference(pl.getQBOLineCustomer());
+                    if (customerReference != null) {
+                        abeld.setCustomerRef(customerReference);
+                    } else {
+                        paymentLineStatus += "-" + pl.getQBOLineCustomer() + " customer not valid-";
+                    }
+                }
+
+                //Class (optional)
+                if (pl.getQBOLineClass() != null) {
+                    ReferenceType classReference = getClassReference(pl.getQBOLineClass());
+                    if (classReference != null) {
+                        abeld.setClassRef(classReference);
+                    } else {
+                        paymentLineStatus += "-" + pl.getQBOLineClass() + " class not valid-";
+                    }
+                }
+
+                //AccountRef (required)
+                if (pl.getAccountNumber() == 0 || pl.getAccountNumber() == null) {
+                    paymentLineStatus += "-!Missing expense account-";
+                    process = false;
+                } else {
+                    ReferenceType accReference = getAccountReference(String.valueOf(pl.getAccountNumber()));
+                    if (accReference != null) {
+                        abeld.setAccountRef(accReference);
+                    } else if (pl.getAccountName() != null) {
+                        accReference = getAccountReferenceName(pl.getAccountName());
+                        if (accReference != null) {
+                            abeld.setAccountRef(accReference);
+                        }
+                    }
+                    if (accReference == null) {
+                        process = false;
+                        paymentLineStatus += "-!" + pl.getAccountNumber() + pl.getAccountName() + " not valid-";
+                    }
+                }
+
+                boolean hasTax = false;
+                if (pl.getTax() == null) {
+                    paymentLineStatus += "-!Missing Tax Code-";
+                    process = false;
+                } else if (isTaxEnabled) {
+                    String taxCode = pl.getTax();
+                    if (taxCode.contains("TX")) {
+                        abeld.setTaxCodeRef(txReference);
+                        hasTax = true;
+                    } else if (taxCode.contains("NR")) {
+                        abeld.setTaxCodeRef(nrReference);
+                    } else if (taxCode.contains("IM")) {
+                        abeld.setTaxCodeRef(imReference);
+                        hasTax = true;
+                    } else {
+                        status += "-!Invalid Tax Code-";
+                    }
+                } else {
+                    hasTax = false;
+                }
+
+                //Tax Amount (Only if have tax)
+                if (hasTax && pl.getExTaxAmount() != 0.0) {
+                    BigDecimal taxed = incTaxAmount.subtract(exclTaxAmount);
+                    abeld.setTaxAmount(taxed);
+                    abeld.setTaxInclusiveAmt(incTaxAmount);
+                }
+
+                line.setAccountBasedExpenseLineDetail(abeld);
+                lineList.add(line);
+
+                if (paymentLineStatus.contains("!") || status.contains("!")) {
+                    paymentLineStatus += "!* present. Will not be processed";
+                }
+
+                pl.setInitStatus(status + paymentLineStatus);
+                reviewedLines.add(pl);
+
+            }
+
+            reviewedPayment.setLines(reviewedLines);
+            purchase.setLine(lineList);
+
+            // Add to the list FOR PAYMENT AND PURCHASE
+            if (process) {
+                prePurchases.add(purchase);
+            }
+            reviewedPayments.add(reviewedPayment);
+        }
+        this.purchases = prePurchases;
+        return reviewedPayments;
     }
 
     /**
@@ -634,15 +847,27 @@ public class QBODAO {
         return returnList;
     }
 
-    public String init() {
+    public String init(boolean taxEnabled) {
+
+        initError = "";
+
         // Initialize all vendors
         allAccounts = findAllAccounts();
         vendors = findAllVendors();
-        //taxCodes = findAllTaxCodes();
         paymentMethods = findAllPaymentMethods();
-        //departments = findAllDepartments();
-        //classes = findAllClasses();
-        //customers = findAllCustomers();
+        departments = findAllDepartments();
+        classes = findAllClasses();
+        customers = findAllCustomers();
+
+        if (taxEnabled) {
+            taxCodes = findAllTaxCodes();
+            if (!initializeTaxcodeReferences()) {
+                initError += "|taxCode init fail|";
+                initHasError = true;
+            }
+        } else {
+            taxCodes = null;
+        }
 
         /*
         for (Account a: allAccounts) {
@@ -665,32 +890,40 @@ public class QBODAO {
             System.out.println("Name" + cu.getDisplayName());
         }
          */
-        /*
+ /*
         for (TaxCode t : taxCodes) {
             System.out.println("Name" + t.getName());
             System.out.println("string " + t.toString());
         }
-        */
-
-        initError = "";
+         */
         // Check for valid lists
         if (vendors == null) {
             initError += "|vendors list is null|";
         }
-        //if (!initializeTaxcodeReferences()) {
-        //    initError += "|taxCode init fail|";
-        //}
-        if (paymentMethods == null) {
-            initError += "|paymentMethods list is null|";
-        }
-        //if (departments == null) {
-        //    initError += "|departments list is null|";
-        //}
-        
-        //add check for customer and class
-        if (!initError.equals("")) {
+
+        if (allAccounts == null) {
+            initError += "|no accounts found|";
             initHasError = true;
         }
+
+        if (paymentMethods == null) {
+            initError += "|paymentMethods list is null|";
+            initHasError = true;
+        }
+        // location
+        if (departments == null) {
+            initError += "|departments list is null|";
+        }
+
+        // customer 
+        if (customers == null) {
+            initError += "|customers list is null|";
+        }
+        // class
+        if (classes == null) {
+            initError += "|classes list is null|";
+        }
+
         return initError;
     }
 
@@ -708,7 +941,6 @@ public class QBODAO {
         }
     }
 
-    
     public List<Payment> submitPrePayments(List<Payment> prePayments, int chargedAccountNumber, boolean noTax) {
         List<Payment> postPayments = new ArrayList<>();
         // Get the charged account reference
@@ -774,8 +1006,7 @@ public class QBODAO {
             }
 
             purchase.setGlobalTaxCalculation(GlobalTaxCalculationEnum.NOT_APPLICABLE);
-            
-            
+
             List<PaymentLine> paymentLines = pre.getLines();
             List<Line> lineList = new ArrayList<>();
 
@@ -865,8 +1096,7 @@ public class QBODAO {
 
         return postPayments;
     }
-    
-    
+
     /**
      * Returns processed Payment objects
      *
@@ -939,8 +1169,7 @@ public class QBODAO {
             }
 
             purchase.setGlobalTaxCalculation(GlobalTaxCalculationEnum.TAX_INCLUSIVE);
-            
-            
+
             List<PaymentLine> paymentLines = pre.getLines();
             List<Line> lineList = new ArrayList<>();
 
@@ -1017,7 +1246,7 @@ public class QBODAO {
                         hasTax = true;
                     } else if (taxCode.contains("NO")) {
                         hasTax = false;
-                    }else {
+                    } else {
                         status += "-Invalid Tax Code-";
                     }
                 } else {

@@ -5,6 +5,7 @@
  */
 package Entity;
 
+import com.intuit.ipp.data.Purchase;
 import com.intuit.ipp.services.DataService;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,7 @@ public class PaymentFactory {
     private Calendar completionDate;
     private List<Payment> prePayments;
     private List<Payment> postPayments;
+    private List<Purchase> purchases;
     private String chargedAccountName;
     private int chargedAccountNumber;
     private long timeElapsed;
@@ -507,6 +509,13 @@ public class PaymentFactory {
         this.dataService = dataService;
     }
 
-    
+    public List<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<Purchase> purchases) {
+        this.purchases = purchases;
+    }
+
     
 }

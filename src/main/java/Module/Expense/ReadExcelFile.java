@@ -1,6 +1,7 @@
 package Module.Expense;
 
 import DAO.ClientDAO;
+import DAO.QBODAO;
 import DAO.TokenDAO;
 import Entity.Client;
 import Entity.Payment;
@@ -19,11 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -103,15 +99,14 @@ public class ReadExcelFile extends HttpServlet {
                     }
 
                     boolean isTaxEnabled = token.getTaxEnabled().equals("y");
-                    
+
                     // Convert Payment into respective accounting objects
                     switch (token.getAccType().toLowerCase()) {
                         // QBO
                         case "qbo":
                             // Get the data service and purchase objects
                             List<Payment> prePayments = pf.getPrePayments();
-                            List<Payment> postPayments = new ArrayList<>();
-                            List<String> processMessage = new ArrayList<>();
+                            List<Payment> reviewedPayments = new ArrayList<>();
 
                             String refreshToken = token.getRefreshToken();
                             if (refreshToken == null || refreshToken.isEmpty()) {
@@ -132,9 +127,21 @@ public class ReadExcelFile extends HttpServlet {
                                 oauth = new OAuth2Authorizer(accessToken);
                                 Context context = new Context(oauth, ServiceType.QBO, realmid);
                                 DataService service = new DataService(context);
-                                pf.setDataService(service);
-                                
-                                
+
+                                // Convert to purchase objects and imput comments into the pre Payment line status
+                                QBODAO qbodao = new QBODAO(service);
+
+                                String qboInitErrors = qbodao.init(isTaxEnabled);
+                                if (qbodao.getInitHasError()) {
+                                    servletMessages.add("QBO init errors: " + qboInitErrors);
+                                } else {
+                                    // Create and store the List of purchases in qbodao
+                                    reviewedPayments = qbodao.reviewPayments(prePayments, pf.getChargedAccountNumber(), isTaxEnabled);
+                                    pf.setDataService(service);
+                                    pf.setPrePayments(reviewedPayments);
+                                    pf.setPurchases(qbodao.getPurchases());
+                                    
+                                }
                             } catch (OAuthException ex) {
                                 throw new IllegalArgumentException("Refresh token failed @ ReadExcelFile");
                             } catch (FMSException ex) {
@@ -143,6 +150,8 @@ public class ReadExcelFile extends HttpServlet {
                                     servletMessages.add("FMSException caught " + er.getMessage());
                                 });
                                 throw new IllegalArgumentException("Intuit error");
+                            } catch (IllegalArgumentException iae) {
+                                throw new IllegalArgumentException("Null qbo data service @ ReadExcelFile");
                             }
 
                             //request.getSession().setAttribute("pfResult", pfR);
@@ -157,7 +166,6 @@ public class ReadExcelFile extends HttpServlet {
                     request.getSession().setAttribute("paymentClient", client);
                     response.sendRedirect("ProcessExpense.jsp");
                     return;
-                    //request.getRequestDispatcher("XERORedirect").forward(request, response);
                 }
 
             } catch (FileUploadException fue) {

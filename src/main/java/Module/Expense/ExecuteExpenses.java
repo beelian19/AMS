@@ -5,17 +5,21 @@
  */
 package Module.Expense;
 
+import Entity.Payment;
 import Entity.PaymentFactory;
+import Entity.PaymentLine;
 import Entity.Token;
+import com.intuit.ipp.core.IEntity;
+import com.intuit.ipp.data.Fault;
+import com.intuit.ipp.data.OperationEnum;
+import com.intuit.ipp.data.Purchase;
+import com.intuit.ipp.exception.FMSException;
+import com.intuit.ipp.services.BatchOperation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,20 +41,67 @@ public class ExecuteExpenses extends HttpServlet {
         List<String> messages = new ArrayList<>();
         messages.add("Errors from ExecuteExpenses");
         try {
-            
+
             PaymentFactory pf = (request.getSession().getAttribute("paymentFactory") != null) ? (PaymentFactory) request.getSession().getAttribute("paymentFactory") : null;
-            
+
             if (pf == null) {
                 throw new IllegalArgumentException("No payment factory found at ExecuteExpenses servlet");
             } else if (pf.getPrePayments() == null || pf.getPrePayments().isEmpty()) {
                 throw new IllegalArgumentException("No payments found in payment factory");
             }
-            
+
             Token token = pf.getToken();
             if (token == null) {
                 throw new IllegalArgumentException("No token found");
             }
 
+            if (pf.getPurchases() == null || pf.getDataService() == null) {
+                throw new IllegalArgumentException("Purchases//Data Service not found");
+            }
+            List<Purchase> purchases = pf.getPurchases();
+            BatchOperation batchOperation = new BatchOperation();
+
+            for (Purchase p : purchases) {
+                batchOperation.addEntity(p, OperationEnum.CREATE, p.getDocNumber());
+            }
+
+            pf.getDataService().executeBatch(batchOperation);
+            
+            // failures
+            Map<String, Fault> faults = batchOperation.getFaultResult();
+            // success
+            Map<String, IEntity> entities = batchOperation.getEntityResult();
+
+            List<Payment> prePayments = pf.getPrePayments();
+            List<Payment> resultPayments = new ArrayList<>();
+            
+            for (Payment pre : prePayments){
+                String ref = pre.getReferenceNumber();
+                if (ref == null) {
+                    pre.setStatus("error: not processed");
+                } else if (faults.containsKey(ref)) {
+                    String purError = "error: processed with fault: ";
+                    Fault fault = faults.get(ref);
+                    List<com.intuit.ipp.data.Error> errors = fault.getError();
+                    for (com.intuit.ipp.data.Error e : errors){
+                        purError += "-" + e.getMessage() + "-";
+                    }
+                    pre.setStatus(purError);
+                } else if (entities.containsKey(ref)){
+                    pre.setStatus("success");
+                } else {
+                    String notProcessedReason = "error: not processed ";
+                    for (PaymentLine pl : pre.getLines()){
+                        notProcessedReason += pl.getInitStatus();
+                    }
+                    pre.setStatus(notProcessedReason);
+                }
+                resultPayments.add(pre);
+            }
+
+            pf.setPostPayments(resultPayments);
+            request.getSession().setAttribute("pfResult", pf);
+            /*
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             
             // Call QBO or XERO callable and redirect
@@ -69,13 +120,14 @@ public class ExecuteExpenses extends HttpServlet {
                     Future<ExpenseFactory> xeroFuture = executorService.submit(xeroCallable);
                     request.getSession().setAttribute("expenseFuture", xeroFuture);
                     break;
-                    */
+                    
                     throw new IllegalArgumentException("XERO not supported yet");
 
                 default:
                     throw new IllegalArgumentException("No account type of " + token.getAccType() + " found");
             }
 
+             */
             // Set future into request session
             // Callable has been successfully created
             response.sendRedirect("ExpenseResult.jsp");
@@ -88,10 +140,16 @@ public class ExecuteExpenses extends HttpServlet {
             messages.add("IllegalArgumentException caught" + iae.getMessage());
         } catch (IOException ioe) {
             messages.add("IOException caught" + ioe.getMessage());
-        } catch (InterruptedException ie) {
-            messages.add("InterruptedException caught" + ie.getMessage());
-        } catch (ExecutionException ee) {
-            messages.add("ExecutionException caught" + ee.getMessage());
+        } catch (FMSException ex) {
+            List<com.intuit.ipp.data.Error> erlist = ex.getErrorList();
+            if (erlist != null && !erlist.isEmpty()) {
+                messages.add("FMSException {");
+                erlist.stream().forEach((er) -> {
+                    messages.add(er.getMessage());
+                });
+                messages.add("}");
+            }
+
         }
 
         request.setAttribute("messages", messages);
