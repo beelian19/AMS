@@ -5,6 +5,7 @@
  */
 package Entity;
 
+import com.intuit.ipp.services.DataService;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
@@ -37,6 +38,7 @@ public class PaymentFactory {
     private List<String> initMessages;
     private List<String> processMessages;
     private Token token;
+    private DataService dataService;
 
     /**
      * Initializes all the required information for expenses and returns a List
@@ -495,6 +497,14 @@ public class PaymentFactory {
 
     public void setToken(Token token) {
         this.token = token;
+    }
+
+    public DataService getDataService() {
+        return dataService;
+    }
+
+    public void setDataService(DataService dataService) {
+        this.dataService = dataService;
     }
 
     

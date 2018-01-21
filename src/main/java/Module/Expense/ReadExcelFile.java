@@ -3,12 +3,27 @@ package Module.Expense;
 import DAO.ClientDAO;
 import DAO.TokenDAO;
 import Entity.Client;
+import Entity.Payment;
 import Entity.PaymentFactory;
 import Entity.Token;
+import com.intuit.ipp.core.Context;
+import com.intuit.ipp.core.ServiceType;
+import com.intuit.ipp.exception.FMSException;
+import com.intuit.ipp.security.IAuthorizer;
+import com.intuit.ipp.security.OAuth2Authorizer;
+import com.intuit.ipp.services.DataService;
+import com.intuit.oauth2.client.OAuth2PlatformClient;
+import com.intuit.oauth2.data.BearerTokenResponse;
+import com.intuit.oauth2.exception.OAuthException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -87,13 +102,49 @@ public class ReadExcelFile extends HttpServlet {
                         throw new IllegalArgumentException("Invalid " + token.toString());
                     }
 
+                    boolean isTaxEnabled = token.getTaxEnabled().equals("y");
+                    
                     // Convert Payment into respective accounting objects
                     switch (token.getAccType().toLowerCase()) {
                         // QBO
                         case "qbo":
-                            QBOCallable qboCallable = new QBOCallable(pf);
-                            //request.getSession().removeAttribute("paymentFactory");
-                            //PaymentFactory pfR = executorService.submit(qboCallable).get();
+                            // Get the data service and purchase objects
+                            List<Payment> prePayments = pf.getPrePayments();
+                            List<Payment> postPayments = new ArrayList<>();
+                            List<String> processMessage = new ArrayList<>();
+
+                            String refreshToken = token.getRefreshToken();
+                            if (refreshToken == null || refreshToken.isEmpty()) {
+                                throw new IllegalArgumentException("Expired Token. Please refresh token for " + client.getCompanyName());
+                            }
+                            String accessToken = "";
+                            String realmid = pf.getRealmid();
+                            QBOoauth2ClientFactory factory = new QBOoauth2ClientFactory(token);
+                            OAuth2PlatformClient OAuth2client = factory.getOAuth2PlatformClient();
+
+                            try {
+                                BearerTokenResponse bearerTokenResponse = OAuth2client.refreshToken(refreshToken);
+                                refreshToken = bearerTokenResponse.getRefreshToken();
+                                accessToken = bearerTokenResponse.getAccessToken();
+                                token.setRefreshToken(refreshToken);
+                                TokenDAO.updateToken(token);
+                                IAuthorizer oauth;
+                                oauth = new OAuth2Authorizer(accessToken);
+                                Context context = new Context(oauth, ServiceType.QBO, realmid);
+                                DataService service = new DataService(context);
+                                pf.setDataService(service);
+                                
+                                
+                            } catch (OAuthException ex) {
+                                throw new IllegalArgumentException("Refresh token failed @ ReadExcelFile");
+                            } catch (FMSException ex) {
+                                List<com.intuit.ipp.data.Error> erlist = ex.getErrorList();
+                                erlist.stream().forEach((er) -> {
+                                    servletMessages.add("FMSException caught " + er.getMessage());
+                                });
+                                throw new IllegalArgumentException("Intuit error");
+                            }
+
                             //request.getSession().setAttribute("pfResult", pfR);
                             break;
                         case "xero":

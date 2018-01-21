@@ -26,7 +26,7 @@ public class QBOCallable implements Callable<PaymentFactory> {
         this.pf = pf;
     }
 
-    // Process and submit expenses to quickbooks
+    // Create QBO's Purchase objects and initiates QBO's data service 
     @Override
     public PaymentFactory call() throws Exception {
 
