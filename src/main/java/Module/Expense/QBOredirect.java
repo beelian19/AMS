@@ -11,8 +11,6 @@ import com.intuit.oauth2.client.OAuth2PlatformClient;
 import com.intuit.oauth2.data.BearerTokenResponse;
 import com.intuit.oauth2.exception.OAuthException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -76,7 +74,7 @@ public class QBOredirect extends HttpServlet {
             access_token = bearerTokenResponse.getAccessToken();
             refresh_token = bearerTokenResponse.getRefreshToken();
             if (refresh_token == null) {
-                refresh_token = "na";
+                refresh_token = "NA";
             }
             token.setRefreshToken(refresh_token);
             updateSuccess = TokenDAO.updateToken(token);

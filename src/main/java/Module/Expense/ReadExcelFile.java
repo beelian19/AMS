@@ -27,103 +27,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ReadExcelFile extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        /*
-        List<String> messages = new ArrayList<>();
-        if (!ServletFileUpload.isMultipartContent(request)) {
-            messages.add("Request parameter not multipart");
-        } else {
-            try {
-                List<FileItem> fileItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-
-                // Ensure that fileItems is not null
-                if (fileItems == null) {
-                    throw new IllegalArgumentException("No file uploaded");
-                } else if (fileItems.size() != 1) {
-                    throw new IllegalArgumentException("Multiple file uploaded");
-                }
-
-                // Get the excel file
-                FileItem excelFileItem = fileItems.get(0);
-                if (!excelFileItem.getName().endsWith("xlsx")) {
-                    throw new IllegalArgumentException("Only xlsx file type is accepted");
-                }
-
-                try (InputStream excelStream = excelFileItem.getInputStream()) {
-                    Workbook excelWorkbook = new XSSFWorkbook(excelStream);
-
-                    // Initialize ExpenseFactory object
-                    ExpenseFactory ef = new ExpenseFactory(excelWorkbook);
-
-                    // Ensure that data is correctly initialized
-                    if (!ef.init()) {
-                        throw new IllegalArgumentException("Excel file was not initialized correctly");
-                    }
-
-                    // Get client associated with the UEN number
-                    Client client = ClientDAO.getClientByUEN(ef.getUEN().trim());
-                    if (client == null) {
-                        throw new IllegalArgumentException("No client in database with UEN: " + ef.getUEN());
-                    } else {
-                        ef.setClientName(client.getCompanyName());
-                        ef.setRealmid(client.getRealmid().trim());
-                    }
-
-                    Token token = TokenDAO.getToken(client.getClientID());
-                    if (token == null) {
-                        throw new IllegalArgumentException("No token in database with company id " + client.getClientID());
-                    }
-
-                    request.getSession().setAttribute("expenseFactory", ef);
-                    request.getSession().setAttribute("expenseClient", client);
-                    request.setAttribute("expenseToken", token);
-                    request.getRequestDispatcher("ProcessExpense.jsp").forward(request, response);
-                    return;
-                }
-
-            } catch (FileUploadException fue) {
-                messages.add("FileUploadException found: " + fue.getMessage());
-            } catch (IllegalArgumentException iae) {
-                messages.add("IllegalArgumentException: " + iae.getMessage());
-            } catch (RuntimeException re) {
-                messages.add("RuntimeException found: " + re.getMessage());
-            }
-
-            request.setAttribute("messages", messages);
-            request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
-
-        }
-        */
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        List<String> servletMessages = new ArrayList<>();
-        servletMessages.add("doGet and processRequest not supported");
-        request.setAttribute("messages", servletMessages);
-        request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
-    }
-
-    /**
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
@@ -168,16 +71,37 @@ public class ReadExcelFile extends HttpServlet {
 
                     if (client == null) {
                         throw new IllegalArgumentException("No client in database with UEN: " + pf.getUEN());
-                    } else {
+                    } else if (client.getRealmid() != null && client.getRealmid().length() >= 5) {
                         pf.setRealmid(client.getRealmid().trim());
+                    } else {
+                        throw new IllegalArgumentException("Invalid realmid: " + client.getRealmid() + ". Please update for " + client.getCompanyName());
                     }
 
+                    // Get token associated with the client id
                     Token token = TokenDAO.getToken(client.getClientID());
                     if (token == null) {
                         throw new IllegalArgumentException("No token in database with company id " + client.getClientID() + ". Please edit accordingly for " + client.getCompanyName());
-                    } else {
+                    } else if (token.isComplete()) {
                         pf.setToken(token);
+                    } else {
+                        throw new IllegalArgumentException("Invalid " + token.toString());
                     }
+
+                    // Convert Payment into respective accounting objects
+                    switch (token.getAccType().toLowerCase()) {
+                        // QBO
+                        case "qbo":
+                            QBOCallable qboCallable = new QBOCallable(pf);
+                            //request.getSession().removeAttribute("paymentFactory");
+                            //PaymentFactory pfR = executorService.submit(qboCallable).get();
+                            //request.getSession().setAttribute("pfResult", pfR);
+                            break;
+                        case "xero":
+                            throw new IllegalArgumentException("XERO not supported yet");
+                        default:
+                            throw new IllegalArgumentException("No account type of " + token.getAccType() + " found. QBO or XERO expected.");
+                    }
+
                     request.getSession().setAttribute("paymentFactory", pf);
                     request.getSession().setAttribute("paymentClient", client);
                     response.sendRedirect("ProcessExpense.jsp");

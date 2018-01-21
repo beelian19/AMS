@@ -40,40 +40,44 @@ public class ResetToken extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // get clientId from request parameter
-        if (request.getParameter("ClientId") == null || request.getParameter("ClientId").isEmpty()) {
+        if (request.getParameter("companyId") == null || request.getParameter("companyId").isEmpty()) {
             request.getSession().setAttribute("status", "Error: Missing client id");
             response.sendRedirect("TokenOverview.jsp");
+            return;
         }
+        
+        String clientId = (String) request.getParameter("companyId");
 
         // Check if is for edit
         if (request.getParameter("edit") != null) {
-            String clientId = (String) request.getParameter("ClientId");
             Token token = TokenDAO.getToken(clientId);
             if (token == null) {
-                request.setAttribute("cliendId", "Na");
-                request.setAttribute("clientSecret", "Na");
-                request.setAttribute("redirectURI", "Na");
+                request.setAttribute("cliendId", "NA");
+                request.setAttribute("clientSecret", "NA");
+                request.setAttribute("redirectURI", "NA");
+                request.setAttribute("taxEnabled", "NA");
                 request.setAttribute("companyId", clientId);
             } else {
                 request.setAttribute("clientId", token.getClientId());
                 request.setAttribute("clientSecret", token.getClientSecret());
                 request.setAttribute("redirectURI", token.getRedirectUri());
+                request.setAttribute("taxEnabled", token.getTaxEnabled());
                 request.setAttribute("companyId", clientId);
             }
 
             request.getRequestDispatcher("EditToken.jsp").forward(request, response);
+            return;
         }
 
         // check if token exist for this client id
-        String clientId = (String) request.getParameter("ClientId");
         Token token = TokenDAO.getToken(clientId);
 
         // check if token exist for the client
         if (token == null) {
-            request.getSession().setAttribute("status", "Error: Company id " + clientId + " does not have a token. Please create a token for the company before resetting it.");
+            request.getSession().setAttribute("status", "Error: Company id " + clientId + " does not have a token. Please edit in a token for the company before resetting it.");
             response.sendRedirect("TokenOverview.jsp");
             // if token type is QBO
-        } else if (token.getAccType().equals("QBO")) {
+        } else if (token.getAccType().toUpperCase().equals("QBO")) {
             List<Scope> scopes = new ArrayList<>();
             scopes.add(Scope.Accounting);
             QBOoauth2ClientFactory factory = new QBOoauth2ClientFactory(token);
@@ -90,7 +94,7 @@ public class ResetToken extends HttpServlet {
             }
             // if token type is XERO
         } else if (token.getAccType().equals("XERO")) {
-
+            /*
             request.getSession().setAttribute("tokenClientId", clientId);
 
             Config config = JsonConfig.getInstance();
@@ -102,10 +106,7 @@ public class ResetToken extends HttpServlet {
             OAuthRequestToken requestToken = new OAuthRequestToken(config);
             requestToken.execute();
 
-            /**
-             * TokenStorage storage = new TokenStorage();
-             * storage.save(response,requestToken.getAll());
-             */
+
             token.setXeroToken(requestToken.getTempToken());
             token.setXeroTokenSecret(requestToken.getTempTokenSecret());
             TokenDAO.updateToken(token);
@@ -114,6 +115,9 @@ public class ResetToken extends HttpServlet {
             OAuthAuthorizeToken authToken = new OAuthAuthorizeToken(config, requestToken.getTempToken());
 
             response.sendRedirect(authToken.getAuthUrl());
+            */
+            request.getSession().setAttribute("status", "Error: XERO not supported yet");
+            response.sendRedirect("TokenOverview.jsp");
         } else {
             request.getSession().setAttribute("status", "Error: Token retreived has an unknown account type: " + token.getAccType());
             response.sendRedirect("TokenOverview.jsp");

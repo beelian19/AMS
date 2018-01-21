@@ -83,7 +83,7 @@ public class TokenDAO {
             stmt.setString(3, token.getClientSecret());
             stmt.setString(4, token.getRedirectUri());
             stmt.setString(5, token.getRefreshToken());
-            stmt.setString(6, "0");
+            stmt.setString(6, token.getTaxEnabled());
             stmt.setInt(7, token.getCompanyId());
             stmt.setString(8, token.getXeroToken());
             stmt.setString(9, token.getXeroTokenSecret());
@@ -103,7 +103,7 @@ public class TokenDAO {
             stmt.setString(2, token.getClientSecret());
             stmt.setString(3, token.getRedirectUri());
             stmt.setString(4, token.getRefreshToken());
-            stmt.setString(5, token.getInUseString());
+            stmt.setString(5, token.getTaxEnabled());
             stmt.setString(6, token.getXeroToken());
             stmt.setString(7, token.getXeroTokenSecret());
             stmt.setString(8, token.getXeroTokenHandle());
