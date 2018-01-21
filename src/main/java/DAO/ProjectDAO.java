@@ -1392,29 +1392,29 @@ public class ProjectDAO {
 
                     switch (month) {
                         case "01":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
                             }
-                            
+
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[0] += value;
                             break;
                         case "02":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
                             }
-                            
+
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[1] += value;
                             break;
                         case "03":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
@@ -1424,7 +1424,7 @@ public class ProjectDAO {
                             totalSalesList[2] += value;
                             break;
                         case "04":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
@@ -1434,7 +1434,7 @@ public class ProjectDAO {
                             totalSalesList[3] += value;
                             break;
                         case "05":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
@@ -1444,18 +1444,18 @@ public class ProjectDAO {
                             totalSalesList[4] += value;
                             break;
                         case "06":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
                             }
-                            
+
                             value = Double.valueOf(decimal.format(value));
 
                             totalSalesList[5] += value;
                             break;
                         case "07":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
@@ -1465,7 +1465,7 @@ public class ProjectDAO {
                             totalSalesList[6] += value;
                             break;
                         case "08":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
@@ -1475,7 +1475,7 @@ public class ProjectDAO {
                             totalSalesList[7] += value;
                             break;
                         case "09":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
@@ -1485,7 +1485,7 @@ public class ProjectDAO {
                             totalSalesList[8] += value;
                             break;
                         case "10":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
@@ -1495,7 +1495,7 @@ public class ProjectDAO {
                             totalSalesList[9] += value;
                             break;
                         case "11":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
@@ -1505,7 +1505,7 @@ public class ProjectDAO {
                             totalSalesList[10] += value;
                             break;
                         case "12":
-                            if(!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) {
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
                             } else {
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
@@ -1805,13 +1805,12 @@ public class ProjectDAO {
             emp2CostPerHour = costPerHourPerStaffList.get(emp2);
         }
 
-        if (emp1.equals("NA")) {
-            sales = emp2CostPerHour * plannedHours;
-        } else if (emp2.equals("NA")) {
+        if (emp2.equals("NA")) {
             sales = emp1CostPerHour * plannedHours;
-        } else if (!emp1.equals("NA") && !emp2.equals("NA")) {
+        } else {
             sales = (emp1CostPerHour * (plannedHours / 2.0)) + (emp2CostPerHour * (plannedHours / 2.0));
         }
+
         DecimalFormat df = new DecimalFormat("#.##");
         sales = Double.valueOf(df.format(sales));
 
