@@ -1444,7 +1444,7 @@
                                 var completedProjects = completedProjectsData.split(",");
                                 completedProjects[0] = completedProjects[0].substring("1");
                                 completedProjects[11] = completedProjects[11].substring("0", completedProjects[11].length - 1);
-                                console.log(completedProjects);
+                                //console.log(completedProjects);
                                 var barChartData = {
                                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                     datasets: [{
@@ -1610,7 +1610,7 @@
                                         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                         datasets: [{
                                                 label: '# of Projects',
-                                                data: totalCompletedProjects, 
+                                                data: completedProjects, 
                                                 backgroundColor: [
                                                     'rgba(153, 102, 255, 0.3)',
                                                     'rgba(153, 102, 255, 0.3)',
@@ -1657,7 +1657,7 @@
                                             },
                                             {
                                                 label: '# of Projects on TIme',
-                                                data: onTimeProjects,
+                                                data: employeeTimeExceed,
                                                 backgroundColor: [
                                                     'rgba(255, 99, 132, 0.3)',
                                                     'rgba(255, 99, 132, 0.3)',
