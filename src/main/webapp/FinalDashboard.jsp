@@ -722,7 +722,9 @@
                                 url: 'OverdueProjectPerYear',
                                 method: 'POST',
                                 success: function () {
+                                    console.log("done");
                                     var overdueProject = "<%=request.getSession().getAttribute("overdueProject")%>";
+                                    console.log(overdueProject);
                                     var overdue = overdueProject.split(",");
                                     overdue[0] = overdue[0].substring("1");
                                     overdue[11] = overdue[11].substring("0", overdue[11].length - 1);
@@ -1813,7 +1815,7 @@
         });
     });
 </script>
-
+<!--
 <script>
     // hiding and showing the client or employee graph/list page ** this is not completed **
     function KPIs(evt, KPI) {
@@ -1830,6 +1832,7 @@
         evt.currentTarget.className += " active";
     }
 </script>
+
 
 <jsp:include page="Footer.html"/>
 </html>
