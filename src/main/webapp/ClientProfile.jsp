@@ -669,13 +669,13 @@
 
                 var officeAddress = $('#addressEdit').val();
                 var gstSubmission = $('#gstSubmissionEdit').val();
-                var mgmtAcc = $('#mgmtAccEdit').val();
-                var mgmtNumber = $('#mgmtNumberEdit').val();
+                var mgmtAcc = $('#mgmtAccEdit').val(); //frequency
+                var mgmtNumber = $('#mgmtNumberEdit').val(); //number
 
 
                 $.ajax({
                     type: 'POST',
-                    data: 'officeContact=' + number + '&' + 'contactEmailAddress=' + email + '&' + 'director=' + director + '&' + 'secretary=' + secretary + '&' + 'accountant=' + accountant + '&' + 'uen=' + uen + '&' + 'realmid=' + realmid + '&' + 'officeAddress=' + officeAddress + '&' + 'gstSubmission=' + gstSubmission + '&' + 'mgmtAcc=' + mgmtAcc + '&' + 'mgmtNumber=' + mgmtNumber,
+                    data: 'officeContact=' + number + '&' + 'contactEmailAddress=' + email + '&' + 'director=' + director + '&' + 'secretary=' + secretary + '&' + 'accountant=' + accountant + '&' + 'uen=' + uen + '&' + 'realmid=' + realmid + '&' + 'officeAddress=' + officeAddress + '&' + 'gstSubmission=' + gstSubmission + '&' + 'mgmtFrequency=' + mgmtAcc + '&' + 'mgmtNumber=' + mgmtNumber,
                     url: 'UpdateClientServlet',
                     success: function () {
                         location.reload();

@@ -196,9 +196,16 @@ public class Timeline {
                 mgtTimeline = "na";
                 actualMgtTimeline = "na";
             } else {
-                String managementDays = mgt.substring(1);
-                int mgtDays;
-                switch (managementDays) {
+                String managementDays = mgt.substring(2);
+                int numDays = Integer.parseInt(managementDays);
+                int mgtDays = 0;
+                for(int i = 1; i <=31; i++){
+                    if(i == numDays){
+                        mgtDays = numDays; 
+                        break;
+                    }
+                }
+                /*switch (managementDays) {
                     case "7":
                         mgtDays = 7;
                         break;
@@ -211,7 +218,7 @@ public class Timeline {
                     default:
                         mgtDays = 28;
                         break;
-                }
+                }*/
                 mgt = mgt.substring(0, 1);
 
                 switch (mgt) {
