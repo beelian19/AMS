@@ -48,7 +48,9 @@ public class AddClientServlet extends HttpServlet {
             String financialYearEnd = request.getParameter("financialYearEnd");
             String gst = request.getParameter("gstSubmission");
             String director = request.getParameter("director");
-            String mgmtAcc = request.getParameter("mgmtAcc");
+            String mgmtFrequency = request.getParameter("mgmtFrequency");
+            String mgmtNumber = request.getParameter("mgmtNumber");
+            String mgmtAcc = mgmtFrequency + mgmtNumber;
             
             String secretary = request.getParameter("secretaryName");
             String directorEmail = request.getParameter("secretaryEmail");
