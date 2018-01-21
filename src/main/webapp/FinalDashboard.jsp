@@ -272,7 +272,15 @@
                                                 <%=totalActualCost%>
                                             </td>
                                             <td>
+                                                <% if (profit < 0) {
+                                                %>
+                                                <font color ="red"><%=profit%></font>
+                                                <%} else {
+                                                %>
                                                 <%=profit%>
+                                                <%
+                                                    }
+                                                %>
                                             </td>
                                             <td>
                                                 <%=p.getEmployee1()%>
@@ -349,7 +357,15 @@
                                                 <%=ProjectDAO.getTotalActualCost(p)%>
                                             </td>
                                             <td>
+                                                <% if (ProjectDAO.getProfit(p) < 0) {
+                                                %>
+                                                <font color ="red"><%=ProjectDAO.getProfit(p)%></font>
+                                                <%} else {
+                                                %>
                                                 <%=ProjectDAO.getProfit(p)%>
+                                                <%
+                                                    }
+                                                %>
                                             </td>
                                             <td>
                                                 <%=p.getEmployee1()%>
@@ -1245,7 +1261,7 @@
                     </div>
                     <%
                         }
-                    } else {
+                    } else
                     %>
                     <div class="container-fluid" style="text-align: center;">
                         <br/>
@@ -1299,7 +1315,7 @@
                                                     <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
                                                 </td>
                                                 <td>
-                                                    <%=p.getPlannedHours()- p.getEmployee1Hours()-p.getEmployee2Hours()%>
+                                                    <%=p.getPlannedHours() - p.getEmployee1Hours() - p.getEmployee2Hours()%>
                                                 </td>
                                                 <td>
                                                     <%=ProjectDAO.getTotalActualCost(p)%>
@@ -1337,7 +1353,6 @@
                         </div>
                     </div>
                     <%
-                                }
                             }
                         }
                     %>
