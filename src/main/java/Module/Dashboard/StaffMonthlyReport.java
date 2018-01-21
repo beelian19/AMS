@@ -46,7 +46,7 @@ public class StaffMonthlyReport extends HttpServlet {
         } else {
             String employeeName = (String) request.getParameter("employeeName");
             String year = (String) request.getParameter("Year");
-            projectList = ProjectDAO.getStaffMonthlyReport(employeeName, "9", year);
+            projectList = ProjectDAO.getStaffMonthlyReport(employeeName,year);
             overdueList = ProjectDAO.getOverdueProjectPerStaff(year, employeeName);
             exceededList = ProjectDAO.getTimeExceededPerStaff(year, employeeName);
             completedList = ProjectDAO.getCompletedProjectPerYear(year, employeeName);

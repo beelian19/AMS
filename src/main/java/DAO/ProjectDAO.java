@@ -1119,7 +1119,7 @@ public class ProjectDAO {
 
     }
 
-    public static ArrayList<Project> getStaffMonthlyReport(String employeeName, String month, String year) {
+    public static ArrayList<Project> getStaffMonthlyReport(String employeeName, String year) {
 
         ArrayList<Project> projectList = new ArrayList<>();
         ArrayList<Project> incomplete = new ArrayList<>();
@@ -1127,11 +1127,10 @@ public class ProjectDAO {
 
         Project project;
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE employee1 = ? OR employee2 = ? and MONTH(end)=? and YEAR(end)=?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE employee1 = ? OR employee2 = ? and YEAR(end)=?");
             stmt.setString(1, employeeName);
             stmt.setString(2, employeeName);
-            stmt.setString(3, month);
-            stmt.setString(4, year);
+            stmt.setString(3, year);
             //date for start
             //date for end 
             ResultSet rs = stmt.executeQuery();
