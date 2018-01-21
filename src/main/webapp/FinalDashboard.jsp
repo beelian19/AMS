@@ -143,7 +143,7 @@
             ArrayList<Client> clientList = new ArrayList<>();
             clientList = ClientDAO.getAllClient();
             ArrayList<Project> projectList = new ArrayList<>();
-            projectList = ProjectDAO.getAllProjects();
+            projectList = ProjectDAO.getAllProjectsFiltered().get(0);
             String profileUrl = "ProjectProfile.jsp?projectID=";
             String profileUrl2 = "";
             ArrayList<ArrayList<Project>> clientProjectList = new ArrayList<>();
