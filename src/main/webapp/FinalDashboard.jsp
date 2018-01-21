@@ -1357,12 +1357,12 @@
                                 var employeeOverdue = employeeOverdueData.split(",");
                                 employeeOverdue[0] = employeeOverdue[0].substring("1");
                                 employeeOverdue[11] = employeeOverdue[11].substring("0", employeeOverdue[11].length - 1);
-                                console.log(employeeOverdue);
+                                //console.log(employeeOverdue);
                                 var employeeTimeExceedData = "<%=request.getSession().getAttribute("employeeTimeExceed")%>";
                                 var employeeTimeExceed = employeeTimeExceedData.split(",");
                                 employeeTimeExceed[0] = employeeTimeExceed[0].substring("1");
                                 employeeTimeExceed[11] = employeeTimeExceed[11].substring("0", employeeTimeExceed[11].length - 1);
-                                console.log(employeeTimeExceed);
+                                //console.log(employeeTimeExceed);
                                 var lineChartData = {
                                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                     datasets: [
