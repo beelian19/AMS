@@ -15,7 +15,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="DAO.DashboardDAO"%>
 <%@include file="Protect.jsp"%>
-<%@include file="AdminAccessOnly.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -138,7 +137,8 @@
             }
             /* end of section */
         </style>
-        <%            DecimalFormat df = new DecimalFormat("#.00");
+        <%            
+            DecimalFormat df = new DecimalFormat("#.00");
         %>
         <script>
             $(document).ready(function () {
@@ -165,12 +165,12 @@
                         <div class="col-xs-1">&nbsp;</div>
                         <div class="col-xs-5" style="text-align: center;" align="center;">
                             <h2>Project Overdue</h2>
-                            <!--<canvas id="employeeRevenueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>-->
+                            <canvas id="employeeRevenueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                         </div>
                         <div class="col-xs-1">&nbsp;</div>
                         <div class="col-xs-5" style="text-align: center;" align="center;">
                             <h2>Project Time</h2>
-                            <!--<canvas id="employeeProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>-->
+                            <canvas id="employeeProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                         </div>
                     </div>
                     <div class="row">
@@ -218,9 +218,9 @@
                                             </td>
                                         </tr>
                                         <%
+                                                    }
+                                                }
                                             }
-                                        }
-}
                                         %>
                                     </tbody>
                                 </table>
