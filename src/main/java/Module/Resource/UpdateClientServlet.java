@@ -50,7 +50,10 @@ public class UpdateClientServlet extends HttpServlet {
             String secretary = request.getParameter("secretary");
             String accountant = request.getParameter("accountant");
             String realMid = request.getParameter("realmid");
-            String mgmtAcc = request.getParameter("mgmtAcc");
+            String mgmtFrequency = request.getParameter("mgmtFrequency");
+            String mgmtNumber = request.getParameter("mgmtNumber");
+            
+            String mgmtAcc = mgmtFrequency + mgmtNumber;
           
             ClientDAO clientDAO = new ClientDAO();
 
