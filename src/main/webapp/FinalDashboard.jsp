@@ -1601,6 +1601,167 @@
                                     bezierCurve: false,
                                     scaleShowVerticalLines: false
                                 });
+                                
+                                var barChartData2 = {
+                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                        datasets: [{
+                                                label: '# of Projects',
+                                                data: totalCompletedProjects, 
+                                                backgroundColor: [
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)'
+                                                ],
+                                                fillColor: [
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)'
+                                                ],
+                                                borderWidth: 1
+                                            },
+                                            {
+                                                label: '# of Projects on TIme',
+                                                data: onTimeProjects,
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)'
+                                                ],fillColor: [
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)'
+                                                ],
+                                                borderWidth: 1
+                                            },
+                                            {
+                                                label: '# of projects Overdue',
+                                                data: employeeOverdue, 
+                                                backgroundColor: [
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)'
+                                                ],
+                                                fillColor: [
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)'
+                                                ],
+                                                borderWidth: 1
+                                            }
+                                        ]
+                                    };
+
+                                Chart.defaults.global.tooltipYPadding = 16;
+                                Chart.defaults.global.tooltipCornerRadius = 0;
+                                Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                Chart.defaults.global.responsive = false;
+                                var ctx = document.getElementById("employeeProfitAndLossChart").getContext("2d");
+                                //ctx.height = 500;
+                                var employeeProfitAndLossChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: barChartData2,
+                                    pointDotRadius: 5,
+                                    bezierCurve: false,
+                                    scaleShowVerticalLines: false
+                                });
                             },
                             error: function (data) {
                                 console.log(data);
@@ -1648,5 +1809,23 @@
         });
     });
 </script>
+
+<script>
+    // hiding and showing the client or employee graph/list page ** this is not completed **
+    function KPIs(evt, KPI) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("employeeClientPage");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("employeeClientPage");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(KPI).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
 <jsp:include page="Footer.html"/>
 </html>
