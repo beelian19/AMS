@@ -1422,7 +1422,7 @@
                 </div>
                 <script>
                     $(document).ready(function () {
-                        var employeeDashboardMonth = "09";//document.getElementById("employeeDashboardMonth").value;
+                        var employeeDashboardMonth = "11";//document.getElementById("employeeDashboardMonth").value;
                         var employeeDashboardYear = "2017";//document.getElementById("employeeDashboardYear").value;
                         var empName = "Jiayi";//document.getElementById("empName").value;
                         $.ajax({
@@ -1444,7 +1444,7 @@
                                 var completedProjects = completedProjectsData.split(",");
                                 completedProjects[0] = completedProjects[0].substring("1");
                                 completedProjects[11] = completedProjects[11].substring("0", completedProjects[11].length - 1);
-                                //console.log(completedProjects);
+                                console.log(completedProjects);
                                 var barChartData = {
                                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                     datasets: [{
@@ -1599,7 +1599,7 @@
                                 var ctx = document.getElementById("employeeRevenueChart").getContext("2d");
                                 //ctx.height = 500;
                                 var RevenueChart = new Chart(ctx, {
-                                    type: 'line',
+                                    type: 'bar',
                                     data: barChartData,
                                     pointDotRadius: 5,
                                     bezierCurve: false,

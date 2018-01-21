@@ -41,13 +41,12 @@ public class StaffMonthlyReport extends HttpServlet {
         int[] exceededList = new int[12];
         int[] completedList = new int[12];
 
-        if (request.getParameter("employeeName") == null || request.getParameter("Year") == null || request.getParameter("Month") == null) {
+        if (request.getParameter("employeeName") == null || request.getParameter("Year") == null) {
             request.setAttribute("employee", employee);
         } else {
             String employeeName = (String) request.getParameter("employeeName");
             String year = (String) request.getParameter("Year");
-            String month = (String) request.getParameter("Month");
-            projectList = ProjectDAO.getStaffMonthlyReport(employeeName, month, year);
+            projectList = ProjectDAO.getStaffMonthlyReport(employeeName, "9", year);
             overdueList = ProjectDAO.getOverdueProjectPerStaff(year, employeeName);
             exceededList = ProjectDAO.getTimeExceededPerStaff(year, employeeName);
             completedList = ProjectDAO.getCompletedProjectPerYear(year, employeeName);
