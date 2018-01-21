@@ -196,7 +196,7 @@ public class Timeline {
                 mgtTimeline = "na";
                 actualMgtTimeline = "na";
             } else {
-                String managementDays = mgt.substring(1);
+                String managementDays = mgt.substring(2);
                 int numDays = Integer.parseInt(managementDays);
                 int mgtDays = 0;
                 for(int i = 1; i <=31; i++){
