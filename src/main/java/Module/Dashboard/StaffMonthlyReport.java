@@ -39,16 +39,17 @@ public class StaffMonthlyReport extends HttpServlet {
         ArrayList<Project> projectList = new ArrayList();
         int[] overdueList = new int[12];
         int[] exceededList = new int[12];
+        int[] completedList = new int[12];
 
-        if (request.getParameter("employeeName") == null || request.getParameter("Year") == null || request.getParameter("Month") == null) {
+        if (request.getParameter("employeeName") == null || request.getParameter("Year") == null) {
             request.setAttribute("employee", employee);
         } else {
             String employeeName = (String) request.getParameter("employeeName");
             String year = (String) request.getParameter("Year");
-            String month = (String) request.getParameter("Month");
-            projectList = ProjectDAO.getStaffMonthlyReport(employeeName, month, year);
+            projectList = ProjectDAO.getStaffMonthlyReport(employeeName, "9", year);
             overdueList = ProjectDAO.getOverdueProjectPerStaff(year, employeeName);
             exceededList = ProjectDAO.getTimeExceededPerStaff(year, employeeName);
+            completedList = ProjectDAO.getCompletedProjectPerYear(year, employeeName);
 
         }
 
@@ -65,10 +66,18 @@ public class StaffMonthlyReport extends HttpServlet {
             int value = exceededList[i];
             exceed.add(value);
         }
+        
+        ArrayList<Integer> completed = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = completedList[i];
+            completed.add(value);
+        }
 
         request.getSession().setAttribute("employeeProjectList", projectList);
         request.getSession().setAttribute("employeeOverdue", overdue);
         request.getSession().setAttribute("employeeTimeExceed", exceed);
+        request.getSession().setAttribute("completedList", completed);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

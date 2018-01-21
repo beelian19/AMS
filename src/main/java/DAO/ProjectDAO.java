@@ -1367,6 +1367,34 @@ public class ProjectDAO {
         }
         return numList;
     }
+    
+    public static int[] getCompletedProjectPerYear(String year, String empName) {
+
+        int[] numList = new int[12];
+
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and employee1=? or employee2=? and `projectReviewStatus` = 'completed' GROUP BY MONTH(end)");
+            stmt.setString(1, year);
+            stmt.setString(2, empName);
+            stmt.setString(3, empName);
+            //date for start
+            //date for end 
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String month = rs.getString("MONTH");
+                Integer monthInt = Integer.parseInt(month);
+                String count = rs.getString("COUNT");
+                Integer countInt = Integer.parseInt(count);
+                numList[monthInt - 1] = countInt;
+
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        return numList;
+    }
 
     public static Double[] getSales(String selectedYear) {
         Double[] totalSalesList = new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
