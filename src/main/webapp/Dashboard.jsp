@@ -461,9 +461,12 @@
                                     </thead>
                                     <tbody>
                                         <%
-                                            if (request.getSession().getAttribute("employeeProjectList") != null) {
-                                                ArrayList<Project> employeeProjectList = (ArrayList<Project>) request.getSession().getAttribute("employeeProjectList");
-                                                //ArrayList<Project> employeeProjectList = new ArrayList();
+                                            if (request.getSession().getAttribute("year") != null) {
+                                                String employeeName = (String) request.getSession().getAttribute("employeeName");
+                                                String year = (String) request.getParameter("year");
+                                                
+                                                ArrayList<Project> employeeProjectList = ProjectDAO.getSpecificStaffReport(employeeName,year);
+                                                
                                                 if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
                                                     for (int i = 0; i < employeeProjectList.size(); i++) {
                                                         Project p = employeeProjectList.get(i);
