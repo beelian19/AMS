@@ -160,19 +160,290 @@
                 </div>
                 <!-- ############################################### START OF EMPLOYEE PERFORMANCE SECTION ###############################################-->
                 <div class="container-fluid" style="text-align: center;">
-                    <br/>
                     <div class="row">
                         <div class="col-xs-1">&nbsp;</div>
+                        <div class="col-xs-5" style="text-align: center;" align="right;">
+                            <h2>Project Overview</h2>
+                            <h4 style="text-align: center;" align="center;">(# of Projects)</h4>
+                            <canvas id="employeeProjectNumbersChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
+                        </div>
                         <div class="col-xs-5" style="text-align: center;" align="center;">
-                            <h2>Project Overdue</h2>
-                            <canvas id="employeeRevenueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
+                            <h2>Project Overview</h2>
+                            <h4 style="text-align: center;" align="center;">(# of Hours)</h4>
+                            <canvas id="employeeProjectHoursChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                         </div>
                         <div class="col-xs-1">&nbsp;</div>
-                        <div class="col-xs-5" style="text-align: center;" align="center;">
-                            <h2>Project Time</h2>
-                            <canvas id="employeeProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
-                        </div>
                     </div>
+                    <script>
+                        $(document).ready(function () {
+                            $.ajax({
+                                url: 'SalesGraph',
+                                method: 'POST',
+                                success: function () {
+                                    var salesData = "<%=request.getSession().getAttribute("sales")%>";
+                                    var sales = salesData.split(",");
+                                    sales[0] = sales[0].substring("1");
+                                    sales[11] = sales[11].substring("0", sales[11].length - 1);
+                                    var costData = "<%=request.getSession().getAttribute("cost")%>";
+                                    var cost = costData.split(",");
+                                    cost[0] = cost[0].substring("1");
+                                    cost[11] = cost[11].substring("0", cost[11].length - 1);
+                                    var profitData = "<%=request.getSession().getAttribute("profit")%>";
+                                    var profit = profitData.split(",");
+                                    profit[0] = profit[0].substring("1");
+                                    profit[11] = profit[11].substring("0", profit[11].length - 1);
+                                    var lineChartData = {
+                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                        datasets: [
+                                            {
+                                                label: '# of Projects',
+                                                fillColor: 'rgba(255, 99, 132, 0.2)',
+                                                strokeColor: 'rgba(220,180,0,1)',
+                                                pointColor: 'rgba(220,180,0,1)',
+                                                data: [80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                                backgroundColor: [
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)'
+                                                ],
+                                                fillColor: [
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)',
+                                                    'rgba(153, 102, 255, 0.3)'
+                                                ],
+                                                borderWidth: 1
+                                            },
+                                            {
+                                                label: '# of Overdue Projects',
+                                                fillColor: 'rgba(54, 162, 235, 0.2)',
+                                                strokeColor: 'rgba(66,180,0,1)',
+                                                pointColor: 'rgba(66,180,0,1)',
+                                                data: [20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)'
+                                                ],fillColor: [
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)',
+                                                    'rgba(255, 99, 132, 0.3)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)',
+                                                    'rgba(255,99,132,0.3)'
+                                                ],
+                                                borderWidth: 1
+                                            }, {
+                                                label: '# of Projects on Time',
+                                                fillColor: 'rgba(54, 162, 235, 0.2)',
+                                                strokeColor: 'rgba(54, 162, 235, 0.2)',
+                                                pointColor: 'rgba(54, 162, 235, 0.2)',
+                                                data: [60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
+                                                backgroundColor: [
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)'
+                                                ],
+                                                fillColor: [
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)',
+                                                    'rgba(54, 162, 235, 0.3)'
+                                                ],
+                                                borderWidth: 1
+                                            }
+                                        ]
+                                    };
+
+                                    Chart.defaults.global.tooltipYPadding = 16;
+                                    Chart.defaults.global.tooltipCornerRadius = 0;
+                                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                    Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                    Chart.defaults.global.responsive = false;
+                                    var ctx = document.getElementById("employeeProjectNumbersChart").getContext("2d");
+                                    //ctx.height = 500;
+                                    var employeeProjectNumbersChart = new Chart(ctx, {
+                                        type: 'bar',
+                                        data: lineChartData,
+                                        pointDotRadius: 5,
+                                        bezierCurve: false,
+                                        scaleShowVerticalLines: false
+                                    });
+                                },
+                                error: function (data) {
+                                    console.log("Error: " + data);
+                                }
+                            });
+                        });
+
+                    </script>
+                    <script>
+                        $(document).ready(function () {
+                            $.ajax({
+                                url: 'SalesGraph',
+                                method: 'POST',
+                                success: function () {
+                                    var salesData = "<%=request.getSession().getAttribute("sales")%>";
+                                    var sales = salesData.split(",");
+                                    sales[0] = sales[0].substring("1");
+                                    sales[11] = sales[11].substring("0", sales[11].length - 1);
+                                    var costData = "<%=request.getSession().getAttribute("cost")%>";
+                                    var cost = costData.split(",");
+                                    cost[0] = cost[0].substring("1");
+                                    cost[11] = cost[11].substring("0", cost[11].length - 1);
+                                    var profitData = "<%=request.getSession().getAttribute("profit")%>";
+                                    var profit = profitData.split(",");
+                                    profit[0] = profit[0].substring("1");
+                                    profit[11] = profit[11].substring("0", profit[11].length - 1);
+                                    var lineChartData = {
+                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                        datasets: [
+                                            {
+                                                label: 'Planned Hours',
+                                                fillColor: 'rgba(255, 99, 132, 0.2)',
+                                                strokeColor: 'rgba(220,180,0,1)',
+                                                pointColor: 'rgba(220,180,0,1)',
+                                                data: [80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.2)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255,99,132,1)'
+                                                ],
+                                                borderWidth: 1
+                                            },
+                                            {
+                                                label: 'Actual Hours',
+                                                fillColor: 'rgba(54, 162, 235, 0.2)',
+                                                strokeColor: 'rgba(66,180,0,1)',
+                                                pointColor: 'rgba(66,180,0,1)',
+                                                data: [20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],//profit, 
+                                                backgroundColor: [
+                                                    'rgba(153, 102, 255, 0.2)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(153, 102, 255, 0.2)'
+                                                ],
+                                                borderWidth: 1
+                                            }
+                                        ]
+                                    };
+
+                                    Chart.defaults.global.tooltipYPadding = 16;
+                                    Chart.defaults.global.tooltipCornerRadius = 0;
+                                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                    Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                    Chart.defaults.global.responsive = false;
+                                    var ctx = document.getElementById("employeeProjectHoursChart").getContext("2d");
+                                    //ctx.height = 500;
+                                    var employeeProjectHoursChart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: lineChartData,
+                                        pointDotRadius: 5,
+                                        bezierCurve: false,
+                                        scaleShowVerticalLines: false
+                                    });
+                                },
+                                error: function (data) {
+                                    console.log("Error: " + data);
+                                }
+                            });
+                        });
+
+                    </script>
                     <div class="row">
                         <br/><br/>
                         <div class="col-xs-12" id="employeeProjectOverdueTable">
