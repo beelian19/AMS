@@ -327,7 +327,14 @@
             <table align="right" class="container-fluid">
                 <tr>
                     <td>
+                        <%
+                        if (sessionUserIsAdmin.equals("yes")) {
+                        %> 
                         <a href="FinalDashboard.jsp" class="btn btn-default btn-lg neck-button black">Dashboard &emsp;</a>
+                        <%} else {
+                        %>
+                        <a href="Dashboard.jsp" class="btn btn-default btn-lg neck-button black">Dashboard &emsp;</a>
+                        <%}%>
                     </td>
                     <td>
                         <div class="dropdown">

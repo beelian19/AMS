@@ -348,7 +348,14 @@
             <table align="right" class="container-fluid">
                 <tr>
                     <td>
+                        <%
+                        if (sessionUserIsAdmin.equals("yes")) {
+                        %> 
                         <a href="FinalDashboard.jsp" class="btn btn-default btn-lg neck-button black">Dashboard &emsp;</a>
+                        <%} else {
+                        %>
+                        <a href="Dashboard.jsp" class="btn btn-default btn-lg neck-button black">Dashboard &emsp;</a>
+                        <%}%>
                     </td>
                     <td>
                         <div class="dropdown">
@@ -406,7 +413,7 @@
                                 <li><a href="CreateUser.jsp">Add New Employee</a></li>
                                 <li><a href="EmployeeOverview.jsp">View All Employees</a></li>
                                 <!--<li><a href="ViewAllTimesheet.jsp">View All Timesheets</a></li>-->
-                                
+
                                 <!--<li><a href="CreateTask.jsp">Create Task</a></li>-->
                                 <%
                                     }
