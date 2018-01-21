@@ -65,12 +65,14 @@
             }
             Token token = pf.getToken();
 
+            /*
             if (token.getInUse()) {
                 request.getSession().setAttribute("status", "Error: Access token QBO is in use for " + clientName + ". Only one user may use is at one time");
                 RequestDispatcher rd = request.getRequestDispatcher("UploadExpense.jsp");
                 rd.forward(request, response);
                 return;
             }
+            */
 
             List<Payment> preList = pf.getPrePayments();
             if (preList == null || preList.isEmpty()) {

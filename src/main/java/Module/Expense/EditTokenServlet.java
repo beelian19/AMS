@@ -39,15 +39,24 @@ public class EditTokenServlet extends HttpServlet {
             String clientSecret = request.getParameter("clientSecret");
             String redirectURI = request.getParameter("redirectURI");
             String companyId = request.getParameter("companyId");
+            String taxEnabled = request.getParameter("taxEnabled");
 
             Client client = ClientDAO.getClientById(companyId);
             if (client == null) {
                 throw new IllegalArgumentException(companyId);
             }
-            Integer companyIdInt = Integer.parseInt(companyId);
+            
+            if (taxEnabled.equals("y") || taxEnabled.equals("Y")) {
+                taxEnabled = "y";
+            } else {
+                taxEnabled = "n";
+            }
+            
             Token token = TokenDAO.getToken(companyId);
+            Integer companyIdInt = Integer.parseInt(companyId);
+            
             if (token == null) {
-                token = new Token("QBO", clientKey, clientSecret, redirectURI, "na", "0", companyIdInt);
+                token = new Token("QBO", clientKey, clientSecret, redirectURI, "NA", taxEnabled, companyIdInt);
                 if (TokenDAO.createToken(token)) {
                     request.getSession().setAttribute("status", "Token created for " + client.getCompanyName());
                 } else {
@@ -57,7 +66,7 @@ public class EditTokenServlet extends HttpServlet {
                 token.setClientId(clientKey);
                 token.setClientSecret(clientSecret);
                 token.setRedirectUri(redirectURI);
-                token.setInUse("0");
+                token.setInUse(taxEnabled);
                 if (TokenDAO.updateToken(token)) {
                     request.getSession().setAttribute("status", "Token updated for " + client.getCompanyName());
                 } else {
