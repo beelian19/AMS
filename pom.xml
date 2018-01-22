@@ -15,6 +15,13 @@
     </properties>
     
     <dependencies>
+        <!--
+                <dependency>
+                    <groupId>xerces</groupId>
+                    <artifactId>xercesImpl</artifactId>
+                    <version>2.11.0</version>
+                </dependency>
+        -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -62,6 +69,7 @@
             <version>3.0.5</version>
         </dependency>
 
+
         <dependency>
             <groupId>com.intuit.quickbooks-online</groupId>
             <artifactId>oauth2-platform-api</artifactId>
@@ -76,36 +84,33 @@
         </dependency>
         -->
 
-        <dependency>
-            <groupId>com.intuit.quickbooks-online</groupId>
-            <artifactId>ipp-v3-java-data</artifactId>
-            <version>3.0.5</version>
-        </dependency>
         <!--
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.11.0</version>
-        </dependency>
+                <dependency>
+                    <groupId>com.intuit.quickbooks-online</groupId>
+                    <artifactId>ipp-v3-java-data</artifactId>
+                    <version>3.0.5</version>
+                </dependency>
         -->
+        <!--
         <dependency>
             <groupId>com.xero</groupId>
             <artifactId>xero-java-sdk</artifactId>
             <version>0.6.2</version>
         </dependency>
+        -->
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>xero-java-mvn-repo</id>
-            <url>https://raw.github.com/XeroAPI/Xero-Java/mvn-repo/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-    
+    <!--
+     <repositories>
+         <repository>
+             <id>xero-java-mvn-repo</id>
+             <url>https://raw.github.com/XeroAPI/Xero-Java/mvn-repo/</url>
+             <snapshots>
+                 <enabled>true</enabled>
+                 <updatePolicy>always</updatePolicy>
+             </snapshots>
+         </repository>
+     </repositories>
+    --> 
     <build>
         <plugins>
             <plugin>

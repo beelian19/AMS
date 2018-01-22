@@ -10,9 +10,9 @@ import Entity.Payment;
 import Entity.PaymentFactory;
 import Entity.SampleData;
 import Entity.Token;
-import com.xero.api.Config;
-import com.xero.api.JsonConfig;
-import com.xero.api.OAuthAccessToken;
+//import com.xero.api.Config;
+//import com.xero.api.JsonConfig;
+//import com.xero.api.OAuthAccessToken;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -71,7 +71,7 @@ public class XERORedirect extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("ResetToken.jsp");
             rd.forward(request, response);
         }
-
+        /*
         String verifier = request.getParameter("oauth_verifier");
         Config config = JsonConfig.getInstance();
         config.setAuthCallBackUrl(token.getRedirectUri());
@@ -79,7 +79,8 @@ public class XERORedirect extends HttpServlet {
         config.setConsumerSecret(token.getClientSecret());
         OAuthAccessToken accessToken = new OAuthAccessToken(config);
         accessToken.build(verifier, token.getXeroToken(), token.getXeroTokenSecret()).execute();
-    }
+        */
+        }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -31,6 +31,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+
 /**
  *
  * @author icon
@@ -116,7 +117,6 @@ public class ReadExcelFile extends HttpServlet {
                             String realmid = pf.getRealmid();
                             QBOoauth2ClientFactory factory = new QBOoauth2ClientFactory(token);
                             OAuth2PlatformClient OAuth2client = factory.getOAuth2PlatformClient();
-
                             try {
                                 BearerTokenResponse bearerTokenResponse = OAuth2client.refreshToken(refreshToken);
                                 refreshToken = bearerTokenResponse.getRefreshToken();
@@ -132,6 +132,7 @@ public class ReadExcelFile extends HttpServlet {
                                 QBODAO qbodao = new QBODAO(service);
 
                                 String qboInitErrors = qbodao.init(isTaxEnabled);
+                                
                                 if (qbodao.getInitHasError()) {
                                     servletMessages.add("QBO init errors: " + qboInitErrors);
                                 } else {
@@ -152,6 +153,8 @@ public class ReadExcelFile extends HttpServlet {
                                 throw new IllegalArgumentException("Intuit error");
                             } catch (IllegalArgumentException iae) {
                                 throw new IllegalArgumentException("Null qbo data service @ ReadExcelFile");
+                            } catch (NoClassDefFoundError c) {
+                                throw new IllegalArgumentException(c.getMessage());
                             }
 
                             //request.getSession().setAttribute("pfResult", pfR);
