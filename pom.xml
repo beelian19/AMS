@@ -66,17 +66,23 @@
             <artifactId>oauth2-platform-api</artifactId>
             <version>3.0.0</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>com.intuit.quickbooks-online</groupId>
             <artifactId>ipp-java-qbapihelper</artifactId>
             <version>3.0.0</version>
         </dependency>
+        -->
         <dependency>
             <groupId>com.intuit.quickbooks-online</groupId>
             <artifactId>ipp-v3-java-data</artifactId>
             <version>3.0.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.11.0</version>
+        </dependency>
         <dependency>
             <groupId>com.xero</groupId>
             <artifactId>xero-java-sdk</artifactId>
