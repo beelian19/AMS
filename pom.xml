@@ -59,13 +59,15 @@
         <dependency>
             <groupId>com.intuit.quickbooks-online</groupId>
             <artifactId>ipp-v3-java-devkit</artifactId>
-            <version>3.0.0</version>
+            <version>3.0.5</version>
         </dependency>
+
         <dependency>
             <groupId>com.intuit.quickbooks-online</groupId>
             <artifactId>oauth2-platform-api</artifactId>
-            <version>3.0.0</version>
+            <version>3.0.5</version>
         </dependency>
+
         <!--
         <dependency>
             <groupId>com.intuit.quickbooks-online</groupId>
@@ -77,7 +79,7 @@
         <dependency>
             <groupId>com.intuit.quickbooks-online</groupId>
             <artifactId>ipp-v3-java-data</artifactId>
-            <version>3.0.0</version>
+            <version>3.0.5</version>
         </dependency>
         <!--
         <dependency>
