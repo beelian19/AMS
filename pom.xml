@@ -4,7 +4,7 @@
 
     <groupId>com</groupId>
     <artifactId>AMS</artifactId>
-    <version>1.1</version>
+    <version>1</version>
     <packaging>war</packaging>
 
     <name>AMS</name>
@@ -15,13 +15,13 @@
     </properties>
     
     <dependencies>
-        <!--
-                <dependency>
-                    <groupId>xerces</groupId>
-                    <artifactId>xercesImpl</artifactId>
-                    <version>2.11.0</version>
-                </dependency>
-        -->
+
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -91,26 +91,26 @@
                     <version>3.0.5</version>
                 </dependency>
         -->
-        <!--
+        
         <dependency>
             <groupId>com.xero</groupId>
             <artifactId>xero-java-sdk</artifactId>
             <version>0.6.2</version>
         </dependency>
-        -->
+        
     </dependencies>
-    <!--
-     <repositories>
-         <repository>
-             <id>xero-java-mvn-repo</id>
-             <url>https://raw.github.com/XeroAPI/Xero-Java/mvn-repo/</url>
-             <snapshots>
-                 <enabled>true</enabled>
-                 <updatePolicy>always</updatePolicy>
-             </snapshots>
-         </repository>
-     </repositories>
-    --> 
+    
+    <repositories>
+        <repository>
+            <id>xero-java-mvn-repo</id>
+            <url>https://raw.github.com/XeroAPI/Xero-Java/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+    
     <build>
         <plugins>
             <plugin>

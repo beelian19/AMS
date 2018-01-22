@@ -4,7 +4,8 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="org.codehaus.plexus.util.StringUtils"%>
+<%@page import="java.util.Map"%>
+
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
@@ -46,7 +47,7 @@
             String profileUrl2 = "";
             String clientProfileUrl = "ClientProfile.jsp?profileId=";
             String clientProfileUrl2 = "";
-            HashMap<String, String> projTypeHash = new HashMap();
+            Map<String, String> projTypeHash = new HashMap();
             projTypeHash.put("tax", "Tax");
             projTypeHash.put("eci", "ECI");
             projTypeHash.put("gst", "GST");

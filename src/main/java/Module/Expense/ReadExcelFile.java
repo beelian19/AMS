@@ -153,8 +153,6 @@ public class ReadExcelFile extends HttpServlet {
                                 throw new IllegalArgumentException("Intuit error");
                             } catch (IllegalArgumentException iae) {
                                 throw new IllegalArgumentException("Null qbo data service @ ReadExcelFile");
-                            } catch (NoClassDefFoundError c) {
-                                throw new IllegalArgumentException(c.getMessage());
                             }
 
                             //request.getSession().setAttribute("pfResult", pfR);
