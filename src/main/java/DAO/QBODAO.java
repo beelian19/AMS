@@ -12,6 +12,7 @@ import Entity.Payment;
 import Entity.PaymentLine;
 import com.intuit.ipp.core.IEntity;
 import com.intuit.ipp.data.Account;
+
 import com.intuit.ipp.data.AccountBasedExpenseLineDetail;
 import com.intuit.ipp.data.AccountTypeEnum;
 import com.intuit.ipp.data.Customer;
@@ -35,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -162,6 +165,15 @@ public class QBODAO {
         String query = ACCOUNT_ALL;
         return (List<Account>) executeQueryList(dataService,
                 query, com.intuit.ipp.data.Account.class);
+    }
+    
+    private List<Account> findAllAccounts2(){
+        try {
+            List<Account> accounts = (List<Account>) dataService.findAll(new Account());
+            return accounts;
+        } catch (FMSException ex) {
+            return null;
+        }
     }
 
     /**
@@ -852,7 +864,7 @@ public class QBODAO {
         initError = "";
 
         // Initialize all vendors
-        allAccounts = findAllAccounts();
+        allAccounts = findAllAccounts2();
         vendors = findAllVendors();
         paymentMethods = findAllPaymentMethods();
         departments = findAllDepartments();
