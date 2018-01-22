@@ -29,8 +29,6 @@ public class PaymentFactory {
     private String excelClientName;
     private String realmid;
     private String UEN;
-    private Calendar creationDate;
-    private Calendar completionDate;
     private List<Payment> prePayments;
     private List<Payment> postPayments;
     private List<Purchase> purchases;
@@ -54,7 +52,6 @@ public class PaymentFactory {
         //Switch statements to add in more file types
 
         initMessages = excelInit();
-        creationDate = Calendar.getInstance();
 
         return UEN != null && prePayments != null && chargedAccountNumber != 0;
     }
@@ -388,22 +385,6 @@ public class PaymentFactory {
         this.workbook = workbook;
     }
 
-    /**
-     * Get the number of hours spent processing the Payment objects in this
-     * object
-     *
-     * @return
-     */
-    public long getHoursTaken() {
-        long hours;
-        try {
-            hours = ChronoUnit.HOURS.between(creationDate.toInstant(), completionDate.toInstant());
-        } catch (NullPointerException npe) {
-            npe.printStackTrace();
-            return 0;
-        }
-        return hours;
-    }
 
     public String getExcelClientName() {
         return excelClientName;
@@ -429,13 +410,6 @@ public class PaymentFactory {
         this.UEN = UEN;
     }
 
-    public Calendar getCompletionDate() {
-        return completionDate;
-    }
-
-    public void setCompletionDate(Calendar completionDate) {
-        this.completionDate = completionDate;
-    }
 
     public List<Payment> getPrePayments() {
         return prePayments;
