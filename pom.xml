@@ -72,6 +72,12 @@
             <version>3.0.0</version>
         </dependency>
         <dependency>
+            <groupId>com.intuit.quickbooks-online</groupId>
+            <artifactId>ipp-v3-java-data</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.xero</groupId>
             <artifactId>xero-java-sdk</artifactId>
             <version>0.6.2</version>
