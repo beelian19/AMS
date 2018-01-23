@@ -41,6 +41,14 @@
             access.add("yes");
             access.add("no");
 
+            ArrayList<String> positions = new ArrayList();
+            positions.add("Full-time Employee");
+            positions.add("Part-time Employee");
+            positions.add("Intern");
+            positions.add("Contract Employee");
+            positions.add("Ex-Employee");
+            positions.add("Accountant");
+            positions.add("IT Executive");
             ArrayList<Project> incompletedProjectList = (ArrayList<Project>) request.getAttribute("incompletedProject");
             //System.out.println("SIZE--------------"+incompletedProjectList.size());
             ArrayList<Project> completedProjectList = (ArrayList<Project>) request.getAttribute("completedProject");
@@ -710,7 +718,17 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" name="positionEdit" id="positionEdit" value="<%=employee.getPosition()%>" class="text ui-widget-content ui-corner-all" required>
+                                    <select name='positionEdit' id="isAdminEdit" class="form-control" required autofocus>
+                                        <option value="<%=employee.getPosition()%>"><%=employee.getPosition()%></option>
+                                        <%
+                                            //System.out.println(nameList);
+                                            for (int i = 0; i < positions.size(); i++) {
+                                                if (!positions.get(i).equals(employee.getPosition())) {
+                                                    out.println("<option value='" + positions.get(i) + "'>" + positions.get(i) + "</option>");
+                                                }
+                                            }
+                                        %>
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
@@ -726,7 +744,16 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" name="supervisorEdit" id="supervisorEdit" value="<%=employee.getIsSupervisor()%>" class="text ui-widget-content ui-corner-all" required>
+                                    <select name='supervisorEdit' id="supervisorEdit" class="form-control" required autofocus>
+                                        <option value="<%=employee.getIsSupervisor()%>"><%=employee.getIsSupervisor()%></option>
+                                        <%
+                                            for (int i = 0; i < access.size(); i++) {
+                                                if (!access.get(i).equals(employee.getIsSupervisor())) {
+                                                    out.println("<option value='" + access.get(i) + "'>" + access.get(i) + "</option>");
+                                                }
+                                            }
+                                        %>
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
@@ -753,35 +780,35 @@
 <!-- End of Modal-->
 <script>
     $('#btnSave').click(function () {
-        if ($('#mobileNumberEdit').val().trim() == "") {
+        if ($('#mobileNumberEdit').val() === "") {
             alert("Mobile Number Required");
             return;
         }
-        if ($('#emailEdit').val().trim() == "") {
+        if ($('#emailEdit').val() === "") {
             alert("Email Required");
             return;
         }
-        if ($('#bankAccountEdit').val().trim() == "") {
+        if ($('#bankAccountEdit').val() === "") {
             alert("Bank Account Required");
             return;
         }
-        if ($('#nationalityEdit').val().trim() == "") {
+        if ($('#nationalityEdit').val() === "") {
             alert("Nationality Required");
             return;
         }
-        if ($('#salaryEdit').val().trim() == "") {
+        if ($('#salaryEdit').val() === "") {
             alert("Salary Required");
             return;
         }
-        if ($('#isAdminEdit').val().trim() == "") {
+        if ($('#isAdminEdit').val() === "") {
             alert("Admin Access Required");
             return;
         }
-        if ($('#positionEdit').val().trim() == "") {
+        if ($('#positionEdit').val() === "") {
             alert("position Required");
             return;
         }
-        if ($('#supervisorEdit').val().trim() == "") {
+        if ($('#supervisorEdit').val() === "") {
             alert("Supervisor Required");
             return;
         } else {

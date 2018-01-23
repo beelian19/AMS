@@ -451,7 +451,7 @@
                         $(document).ready(function () {
                             $.ajax({
                                 url: 'SalesGraph',
-                                method: 'POST',
+                                type: 'POST',
                                 success: function () {
                                     var salesData = "<%=request.getSession().getAttribute("sales")%>";
                                     var sales = salesData.split(",");
@@ -538,7 +538,7 @@
                         $(document).ready(function () {
                             $.ajax({
                                 url: 'CompletedProjectMonthlyProfitability',
-                                method: 'POST',
+                                type: 'POST',
                                 success: function () {
                                     var profitableProjectsData = "<%=request.getSession().getAttribute("yearProfit")%>";
                                     var profitableProjects = profitableProjectsData.split(",");
@@ -719,7 +719,7 @@
                         $(document).ready(function () {
                             $.ajax({
                                 url: 'OverdueProjectPerYear',
-                                method: 'POST',
+                                type: 'POST',
                                 success: function () {
                                     console.log("done");
                                     var overdueProject = "<%=request.getSession().getAttribute("overdueProject")%>";
@@ -1449,7 +1449,6 @@
                                 var completedProjects = completedProjectsData.split(",");
                                 completedProjects[0] = completedProjects[0].substring("1");
                                 completedProjects[11] = completedProjects[11].substring("0", completedProjects[11].length - 1);
-
                                 //console.log(completedProjects);
                                 var barChartData = {
                                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],

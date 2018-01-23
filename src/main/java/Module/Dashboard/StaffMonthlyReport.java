@@ -40,17 +40,28 @@ public class StaffMonthlyReport extends HttpServlet {
         int[] overdueList = new int[12];
         int[] exceededList = new int[12];
         int[] completedList = new int[12];
+        ArrayList<Double> actualHours = new ArrayList();
+        ArrayList<Double> plannedHours = new ArrayList();
 
         if (request.getParameter("employeeName") == null || request.getParameter("Year") == null) {
             request.setAttribute("employee", employee);
         } else {
             String employeeName = (String) request.getParameter("employeeName");
             String year = (String) request.getParameter("Year");
-            projectList = ProjectDAO.getStaffMonthlyReport(employeeName,year);
+            projectList = ProjectDAO.getStaffMonthlyReport(employeeName, year);
             overdueList = ProjectDAO.getOverdueProjectPerStaff(year, employeeName);
             exceededList = ProjectDAO.getTimeExceededPerStaff(year, employeeName);
             completedList = ProjectDAO.getCompletedProjectPerYear(year, employeeName);
 
+            for (Project p : projectList) {
+                actualHours.add(p.getPlannedHours() / 2.0);
+                if (p.getEmployee1().equals(employeeName)) {
+                    plannedHours.add(p.getEmployee1Hours());
+                } 
+                if (p.getEmployee2().equals(employeeName)) {
+                    plannedHours.add(p.getEmployee2Hours());
+                }
+            }
         }
 
         ArrayList<Integer> overdue = new ArrayList();
@@ -66,7 +77,7 @@ public class StaffMonthlyReport extends HttpServlet {
             int value = exceededList[i];
             exceed.add(value);
         }
-        
+
         ArrayList<Integer> completed = new ArrayList();
 
         for (int i = 0; i < 12; i++) {
@@ -78,6 +89,8 @@ public class StaffMonthlyReport extends HttpServlet {
         request.getSession().setAttribute("employeeOverdue", overdue);
         request.getSession().setAttribute("employeeTimeExceed", exceed);
         request.getSession().setAttribute("completedList", completed);
+        request.getSession().setAttribute("actualHours", actualHours);
+        request.getSession().setAttribute("plannedHours", plannedHours);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
