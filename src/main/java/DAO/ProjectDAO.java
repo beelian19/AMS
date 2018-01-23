@@ -2134,6 +2134,34 @@ public class ProjectDAO {
         return numList;
     }
     
+    public static int[] getOnTimeCompletedProjectEmployee (String empName, String year) {
+
+        int[] numList = new int[12];
+
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT month(end) month,count(*) count from project where employee1=? or employee2=? and year(end) =? and (end <= dateCompleted) GROUP by month(end)");
+            stmt.setString(1, empName);
+            stmt.setString(2, empName);
+            stmt.setString(3, year);
+            //date for start
+            //date for end 
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String month = rs.getString("MONTH");
+                Integer monthInt = Integer.parseInt(month);
+                String count = rs.getString("COUNT");
+                Integer countInt = Integer.parseInt(count);
+                numList[monthInt - 1] = countInt;
+
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        return numList;
+    }
+    
     public static ArrayList<Project> getSpecificStaffReport(String employeeName,String year) {
 
         ArrayList<Project> projectList = new ArrayList<>();

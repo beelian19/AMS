@@ -40,6 +40,7 @@ public class StaffMonthlyReport extends HttpServlet {
         int[] overdueList = new int[12];
         int[] exceededList = new int[12];
         int[] completedList = new int[12];
+        int[] inTimeList = new int[12];
         ArrayList<Double> actualHours = new ArrayList();
         ArrayList<Double> plannedHours = new ArrayList();
 
@@ -52,7 +53,7 @@ public class StaffMonthlyReport extends HttpServlet {
             overdueList = ProjectDAO.getOverdueProjectPerStaff(year, employeeName);
             exceededList = ProjectDAO.getTimeExceededPerStaff(year, employeeName);
             completedList = ProjectDAO.getCompletedProjectPerYear(year, employeeName);
-
+            inTimeList = ProjectDAO.getOnTimeCompletedProjectEmployee(employeeName, year);
             for (Project p : projectList) {
                 actualHours.add(p.getPlannedHours() / 2.0);
                 if (p.getEmployee1().equals(employeeName)) {
@@ -84,6 +85,13 @@ public class StaffMonthlyReport extends HttpServlet {
             int value = completedList[i];
             completed.add(value);
         }
+        
+        ArrayList<Integer> inTime = new ArrayList();
+        
+        for(int i = 0; i < 12; i++) {
+            int value = inTimeList[i];
+            inTime.add(value);
+        }
 
         request.getSession().setAttribute("employeeProjectList", projectList);
         request.getSession().setAttribute("employeeOverdue", overdue);
@@ -91,6 +99,7 @@ public class StaffMonthlyReport extends HttpServlet {
         request.getSession().setAttribute("completedList", completed);
         request.getSession().setAttribute("actualHours", actualHours);
         request.getSession().setAttribute("plannedHours", plannedHours);
+        request.getSession().setAttribute("inTime", inTime);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

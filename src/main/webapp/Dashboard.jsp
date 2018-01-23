@@ -187,16 +187,17 @@
                         employeeOverdue[0] = employeeOverdue[0].substring("1");
                         employeeOverdue[11] = employeeOverdue[11].substring("0", employeeOverdue[11].length - 1);
                         //console.log(employeeOverdue);
-                        var employeeTimeExceedData = "<%=request.getSession().getAttribute("employeeTimeExceed")%>";
-                        var employeeTimeExceed = employeeTimeExceedData.split(",");
-                        employeeTimeExceed[0] = employeeTimeExceed[0].substring("1");
-                        employeeTimeExceed[11] = employeeTimeExceed[11].substring("0", employeeTimeExceed[11].length - 1);
+                        var inTimeData = "<%=request.getSession().getAttribute("inTime")%>";
+                        var inTime = inTimeData.split(",");
+                        inTime[0] = inTime[0].substring("1");
+                        inTime[11] = inTime[11].substring("0", inTime[11].length - 1);
                         //console.log(employeeTimeExceed);
                         var completedProjectsData = "<%=request.getSession().getAttribute("completedList")%>";
                         var completedProjects = completedProjectsData.split(",");
                         completedProjects[0] = completedProjects[0].substring("1");
                         completedProjects[11] = completedProjects[11].substring("0", completedProjects[11].length - 1);
                         //console.log(completedProjects);
+                        
                         var lineChartData = {
                             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                             datasets: [
@@ -303,7 +304,7 @@
                                     fillColor: 'rgba(54, 162, 235, 0.2)',
                                     strokeColor: 'rgba(54, 162, 235, 0.2)',
                                     pointColor: 'rgba(54, 162, 235, 0.2)',
-                                    data: [60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
+                                    data: inTime,//[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
                                     backgroundColor: [
                                         'rgba(54, 162, 235, 0.3)',
                                         'rgba(54, 162, 235, 0.3)',
