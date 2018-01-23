@@ -31,36 +31,18 @@
     <head>
         <title>Invoice Results | Abundant Accounting Management System</title>
         <%            
-            /*
-            Future<PaymentFactory> qboFuture;
-            if (request.getSession().getAttribute("expenseFuture") == null) {
-                request.getSession().setAttribute("status", "Error: No job running found");
-                response.sendRedirect("UploadExpense.jsp");
-                return;
-            }
-            qboFuture = (Future<PaymentFactory>) request.getSession().getAttribute("expenseFuture");
-            if (!qboFuture.isDone()) {
-                request.getSession().setAttribute("status", "Payment job is still running");
-                response.sendRedirect("UploadExpense.jsp");
-                return;
-            }
-
-            PaymentFactory pf = null;
-
-            try {
-                pf = qboFuture.get();
-            } catch (InterruptedException | ExecutionException ex) {
-                request.getSession().setAttribute("status", "Error: Critical error " + ex.getMessage());
-                response.sendRedirect("UploadExpense.jsp");
-                return;
-            }
-            */
-            PaymentFactory pf = (PaymentFactory) request.getSession().getAttribute("pfResult");
+            PaymentFactory pf = (request.getSession().getAttribute("paymentFactory")!= null )? (PaymentFactory) request.getSession().getAttribute("pfResult") : null;
             
             Client client = (request.getSession().getAttribute("paymentClient") != null) ? (Client) request.getSession().getAttribute("paymentClient") : null;
             
             if (client == null) {
                 request.getSession().setAttribute("status", "Error: Null Client at ExpenseResult.jsp");
+                request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
+                return;
+            }
+            
+            if (pf == null) {
+                request.getSession().setAttribute("status", "Error: No file uploaded to ExpenseResult.jsp");
                 request.getRequestDispatcher("UploadExpense.jsp").forward(request, response);
                 return;
             }
