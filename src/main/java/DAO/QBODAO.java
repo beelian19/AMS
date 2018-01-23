@@ -97,7 +97,8 @@ public class QBODAO {
 
     // Queries
     private final String ACCOUNT_TYPE_QUERY = "select * from account where accounttype = '%s'";
-    private final String ACCOUNT_ALL = "select * from account";
+    private final String ACCOUNT_ALL = "SELECT * FROM account MAXRESULTS 1000";
+    
 
     /**
      * Type-generic query method which returns the whole list from a query and
@@ -180,19 +181,19 @@ public class QBODAO {
      *
      */
     private List<Department> findAllDepartments() {
-        String query = "select * from department";
+        String query = "select * from department MAXRESULTS 1000";
         return (List<Department>) executeQueryList(dataService, query,
                 com.intuit.ipp.data.Department.class);
     }
 
     private List<com.intuit.ipp.data.Class> findAllClasses() {
-        String query = "select * from class";
+        String query = "select * from class MAXRESULTS 1000";
         return (List<com.intuit.ipp.data.Class>) executeQueryList(dataService, query,
                 com.intuit.ipp.data.Class.class);
     }
 
     private List<Customer> findAllCustomers() {
-        String query = "select * from customer";
+        String query = "select * from customer MAXRESULTS 1000";
         return (List<Customer>) executeQueryList(dataService, query,
                 com.intuit.ipp.data.Customer.class);
     }
@@ -203,7 +204,7 @@ public class QBODAO {
      * @return List<Vendor>
      */
     private List<Vendor> findAllVendors() {
-        String query = "select * from vendor";
+        String query = "select * from vendor MAXRESULTS 1000";
         return (List<Vendor>) executeQueryList(dataService, query,
                 com.intuit.ipp.data.Vendor.class);
     }
@@ -864,7 +865,7 @@ public class QBODAO {
         initError = "";
 
         // Initialize all vendors
-        allAccounts = findAllAccounts2();
+        allAccounts = findAllAccounts();
         vendors = findAllVendors();
         paymentMethods = findAllPaymentMethods();
         departments = findAllDepartments();
@@ -881,17 +882,19 @@ public class QBODAO {
             taxCodes = null;
         }
 
-        /*
+        
         for (Account a: allAccounts) {
             System.out.println("Name" + a.getName());
+            System.out.println("fullyqualifiedname" + a.getFullyQualifiedName());
+            System.out.println("finame" + a.getFIName());
             System.out.println("Number:" + a.getAcctNum());
             System.out.println("numberextn:" + a.getAcctNumExtn());
             System.out.println("type" + a.getAccountType());
             System.out.println("id" + a.getId());
             System.out.println("banknum" + a.getBankNum());
-            System.out.println("" + a.toString());
+            System.out.println("------------");
         }
-        
+        /*
         /*
         System.out.println("Class!!!!!!!");
         for (com.intuit.ipp.data.Class c: classes) {
