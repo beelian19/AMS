@@ -5,10 +5,7 @@
  */
 package Module.Expense;
 
-import Entity.PaymentFactory;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.concurrent.Future;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,18 +28,15 @@ public class clearResultsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Future<PaymentFactory> qboFuture;
-        if (request.getSession().getAttribute("expenseFuture") != null) {
-            qboFuture = (Future<PaymentFactory>) request.getSession().getAttribute("expenseFuture");
-            if (!qboFuture.isDone()) {
-                request.getSession().setAttribute("status", "Payment job is still running");
-                response.sendRedirect("UploadExpense.jsp");
-            } else {
-                request.getSession().removeAttribute("expenseFuture");
-            }
-        }
+        
         if (request.getSession().getAttribute("paymentClient") != null) {
             request.getSession().removeAttribute("paymentClient");
+        }
+        if (request.getSession().getAttribute("paymentFactory") != null) {
+            request.getSession().removeAttribute("paymentFactory");
+        }
+        if (request.getSession().getAttribute("pfResult") != null) {
+            request.getSession().removeAttribute("pfResult");
         }
 
         request.getSession().setAttribute("status", "Results cleared!");

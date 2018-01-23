@@ -144,7 +144,7 @@ public class ReadExcelFile extends HttpServlet {
                                     
                                 }
                             } catch (OAuthException ex) {
-                                throw new IllegalArgumentException("Refresh token failed @ ReadExcelFile");
+                                throw new IllegalArgumentException("Refresh token failed @ ReadExcelFile" + ex.getMessage());
                             } catch (FMSException ex) {
                                 List<com.intuit.ipp.data.Error> erlist = ex.getErrorList();
                                 erlist.stream().forEach((er) -> {

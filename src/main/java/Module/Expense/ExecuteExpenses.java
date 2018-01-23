@@ -78,7 +78,7 @@ public class ExecuteExpenses extends HttpServlet {
             for (Payment pre : prePayments){
                 String ref = pre.getReferenceNumber();
                 if (ref == null) {
-                    pre.setStatus("error: not processed");
+                    pre.setStatus("error: not processed with no reference");
                 } else if (faults.containsKey(ref)) {
                     String purError = "error: processed with fault: ";
                     Fault fault = faults.get(ref);
