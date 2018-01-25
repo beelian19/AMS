@@ -63,9 +63,9 @@
             Employee rev = EmployeeDAO.getEmployee(p.getProjectReviewer());
             String clientProfileUrl = "ClientProfile.jsp?profileId=";
             String clientProfileUrl2 = "";
-            String assignedEmployee1ProfileUrl = "StaffProfile.jsp?profileName=";
-            String assignedEmployee2ProfileUrl = "StaffProfile.jsp?profileName=";
-            String reviewerProfileUrl1 = "StaffProfile.jsp?profileName=";
+            String assignedEmployee1ProfileUrl = "EmployeeProfile.jsp?profileName=";
+            String assignedEmployee2ProfileUrl = "EmployeeProfile.jsp?profileName=";
+            String reviewerProfileUrl1 = "EmployeeProfile.jsp?profileName=";
             String reviewerProfileUrl2 = "";
             EmployeeDAO empDAO = new EmployeeDAO();
             ArrayList<String> supList = empDAO.getAllSupervisor();
@@ -147,58 +147,41 @@
                                         <td colspan="3">
                                             &nbsp;
                                         </td>
-
                                     </tr>
                                     <!--Create Task is HERE!!!!!-->
+                                    <%
+                                        if (isAdHoc) {
+                                    %>
                                     <tr>
-                                        <td>
+                                        <td colspan="3" align="center">
+                                            <button id="create-task" style="font-size: 12px;" style="width: 50%;"/>Create Task</button>
+                                        </td>
+                                    </tr>
+                                    <%
+                                        }
+                                        if (canReview || canComplete) {
+                                    %>
+                                    <tr style="text-align:center;">
+                                    <form action="UpdateProjectCompletionStatus" method="post">
+                                        <td colspan="3" align="center">
                                             <%
-                                                if (isAdHoc) {
+                                                if (canReview) {
                                             %>
-                                            <button id="create-task" style="font-size: 12px;">Create Task</button>
+                                            <input type="submit" name="review" value="Review" style="width: 50%;"/>
+                                            <%
+                                                }
+                                            %>
+                                            <%
+                                                if (canComplete) {
+                                            %>
+                                            <input type="submit" name="complete" value="Complete" style="width: 50%;"/>
                                             <%
                                                 }
                                             %>
                                         </td>
-                                    </tr>
-                                    <!--Create Task is HERE!!!!!-->
-                                    <tr>
-                                        <td colspan="3">
-                                            &nbsp;
-                                        </td>
-
-                                    </tr>
-                                    <%
-                                        if (canReview || canComplete) {
-                                    %>
-                                    <form action="UpdateProjectCompletionStatus" method="post">
-                                        <tr>
-                                            <td>
-                                                <%
-                                                    if (canReview) {
-                                                %>
-
-                                                <input type="submit" name="review" value="Review"/>
-                                                <%
-                                                    }
-                                                %>
-                                            </td>
-                                            <td width="1%">
-                                                &nbsp;
-                                            </td>
-                                            <td>
-                                                <%
-                                                    if (canComplete) {
-                                                %>
-                                                <input type="submit" name="complete" value="Complete"/>
-                                                <%
-                                                    }
-                                                %>
-
-                                            </td>
-                                        </tr>
                                         <input type='hidden' id='projectIden' value='<%=p.getProjectID()%>' name='projectIden'/>
                                     </form>
+                                    </tr>
                                     <tr>
                                         <td colspan="3">
                                             &nbsp;
@@ -210,7 +193,7 @@
                                 </table>
                             </div>
                         </div>
-
+                    </nav>
                 </div>
             </div>
         </div>
@@ -277,7 +260,7 @@
                                     <td width="1%">
                                     </td>
                                     <td>
-                                        <label>No. of Invoices</label>
+                                        <label>No. of Invoices: </label>
                                     </td>
                                     <td>
                                         <!--<=%p.getNumberOfInvoices()%>-->
@@ -300,7 +283,7 @@
                                     <td width="1%">
                                     </td>
                                     <td>
-                                        <label>Remarks</label>
+                                        <label>Remarks: </label>
                                     </td>
                                     <td>
                                         <%=p.getProjectRemarks()%>
@@ -345,16 +328,13 @@
                                                 if (!p.getEmployee1().equals("NA")) {
                                                     assignedEmployee1ProfileUrl = assignedEmployee1ProfileUrl + emp1.getEmployeeID();
                                             %>
-
                                             <a href='<%=assignedEmployee1ProfileUrl%>'>
                                                 <%=p.getEmployee1()%>
                                             </a>
                                             <%
                                             } else {
                                             %>
-
                                             <label> <%=p.getEmployee1()%> </label>
-
                                             <%
                                                 }
                                             %>
@@ -375,9 +355,7 @@
                                             <%
                                             } else {
                                             %>
-
                                             <label> <%=p.getEmployee2()%> </label>
-
                                             <%
                                                 }
                                             %>    
@@ -393,7 +371,7 @@
                                         <td width="1%">
                                         </td>
                                         <td>
-                                            <label>Employee 2 Hours Spent:: </label>
+                                            <label>Employee 2 Hours Spent:</label>
                                         </td>
                                         <% if (p.getEmployee2().toLowerCase().contains("na")) {
 
@@ -410,20 +388,22 @@
                                         <%
                                             }
                                         %>
-
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6">
+                                            &nbsp;
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="5">
                                             &nbsp;
                                         </td>
-                                        <td>
+                                        <td align="right;">
                                             <input type='hidden' id='projectIden' value='<%=p.getProjectID()%>' name='projectIden'/>
-                                            <button style="font-size: 10.5px;">Update Hours</button>
+                                            <button style="font-size: 12px;">Update</button>
                                         </td>
                                     </tr>
                                 </table>
-                                <!--<input type='hidden'  id='projectIden' name='projectIden' value='<=p.getProjectID()%>'/>
-                                <input type="submit" value="Submit"/>-->
                             </form>
                         </div>
                     </td>
@@ -1077,8 +1057,8 @@
         var taskRemarks = document.getElementById("remarkCreate").value;
 
         //if (project == "") {
-            //alert("Project Field Required");
-            //return;
+        //alert("Project Field Required");
+        //return;
         //}
         if (taskTitle == "") {
             alert("Title Field Required");

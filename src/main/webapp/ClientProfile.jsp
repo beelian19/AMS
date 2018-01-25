@@ -4,6 +4,7 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entity.Project"%>
 <%@page import="Entity.Employee"%>
@@ -79,6 +80,7 @@
             String profileUrl2 = "";
             String assignedEmployeeURL = "EmployeeProfile.jsp?profileName=";;
             String assignedEmployeeURL2 = "";
+            DecimalFormat df = new DecimalFormat("#.00");
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%=clientName%>&nbsp;Profile | Abundant Accounting Management System</title>
@@ -245,10 +247,11 @@
                                     <table width="100%" style="cellpadding: 2%" id="datatable">
                                         <thead>
                                             <tr>
-                                                <th width="25%">Project Title</th>
-                                                <th width="25%">Due Date</th>
-                                                <th width="25%">Status</th>
-                                                <th width="25%">Review Status</th>
+                                                <th width="20%">Project Title</th>
+                                                <th width="20%">Due Date</th>
+                                                <th width="20%">Status</th>
+                                                <th width="20%">Assigned Hours</th>
+                                                <th width="20%">Review Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -268,6 +271,9 @@
                                                 </td>
                                                 <td>
                                                     <%=p.getProjectStatus()%>
+                                                </td>
+                                                <td>
+                                                    <%=p.getPlannedHours()%>
                                                 </td>
                                                 <td>
                                                     <%=p.getProjectReviewStatus()%>
@@ -307,10 +313,11 @@
                                     <table width="100%" style="cellpadding: 2%" id="datatable2">
                                         <thead>
                                             <tr>
-                                                <th width="25%">Project Title</th>
-                                                <th width="25%">End Date</th>
-                                                <th width="25%">Assigned Employee</th>
-                                                <th width="25%">Hours</th>
+                                                <th width="20%">Project Title</th>
+                                                <th width="20%">End Date</th>
+                                                <th width="20%">Assigned Employees</th>
+                                                <th width="20%">Assigned Hours</th>
+                                                <th width="20%">Hours</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -348,11 +355,9 @@
                                                     <%
                                                         }
                                                     %>
-
-
-
-
-
+                                                </td>
+                                                <td>
+                                                    <%=p.getPlannedHours()%>
                                                 </td>
                                                 <td>
                                                     <%=p.getEmployee2Hours() + p.getEmployee1Hours()%>
@@ -518,15 +523,19 @@
                                         <select name='gstSubmissionEdit' id="gstSubmissionEdit" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                             <%
                                                 String gstSubmission = client.getGstSubmission().toLowerCase();
-                                                switch(gstSubmission){
-                                                    case "na": gstSubmission = "NA";
-                                                    break;
-                                                    case "m": gstSubmission = "Monthly";
-                                                    break;
-                                                    case "q": gstSubmission = "Quarterly";
-                                                    break;
-                                                    case "s": gstSubmission = "Semi Annual";
-                                                    break;
+                                                switch (gstSubmission) {
+                                                    case "na":
+                                                        gstSubmission = "NA";
+                                                        break;
+                                                    case "m":
+                                                        gstSubmission = "Monthly";
+                                                        break;
+                                                    case "q":
+                                                        gstSubmission = "Quarterly";
+                                                        break;
+                                                    case "s":
+                                                        gstSubmission = "Semi Annual";
+                                                        break;
                                                 }
                                             %>
                                             <option value= '<%=gstSubmission%>' disabled selected hidden><%=gstSubmission%></option>
@@ -553,17 +562,20 @@
                                         <select name='mgmtAccEdit' id="mgmtAccEdit" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                             <%
                                                 String mgmtAcct = client.getMgmtAcc().toLowerCase();
-                                                if(!mgmtAcct.contains("na")){
-                                                    mgmtAcct = mgmtAcct.substring(0, mgmtAcct.length()-2);
+                                                if (!mgmtAcct.contains("na")) {
+                                                    mgmtAcct = mgmtAcct.substring(0, mgmtAcct.length() - 2);
                                                 }
-                                                
-                                                switch(mgmtAcct){
-                                                    case "na": mgmtAcct = "NA";
-                                                    break;
-                                                    case "m": mgmtAcct = "Monthly";
-                                                    break;
-                                                    case "q": mgmtAcct = "Quarterly";
-                                                    break;
+
+                                                switch (mgmtAcct) {
+                                                    case "na":
+                                                        mgmtAcct = "NA";
+                                                        break;
+                                                    case "m":
+                                                        mgmtAcct = "Monthly";
+                                                        break;
+                                                    case "q":
+                                                        mgmtAcct = "Quarterly";
+                                                        break;
                                                 }
                                             %>
                                             <option value= '<%=mgmtAcct%>' disabled selected hidden><%=mgmtAcct%></option>
@@ -588,7 +600,7 @@
                                     <td>
                                         <select name='mgmtNumberEdit' id="mgmtNumberEdit" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                             <option disabled selected value> -- select an option --  </option>
-                                            <option value="<%=client.getMgmtAcc().substring(client.getMgmtAcc().length()-2, client.getMgmtAcc().length())%>" disabled selected hidden><%=client.getMgmtAcc().substring(client.getMgmtAcc().length()-2, client.getMgmtAcc().length())%></option>
+                                            <option value="<%=client.getMgmtAcc().substring(client.getMgmtAcc().length() - 2, client.getMgmtAcc().length())%>" disabled selected hidden><%=client.getMgmtAcc().substring(client.getMgmtAcc().length() - 2, client.getMgmtAcc().length())%></option>
                                             <option value="na">NA</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -683,11 +695,11 @@
             if ($('#mgmtAccEdit').val().trim() == "") {
                 alert("Management Acct Frequency Required");
                 return;
-            }if ($('#mgmtNumberEdit').val().trim() == "") {
+            }
+            if ($('#mgmtNumberEdit').val().trim() == "") {
                 alert("Management Acct Days Required");
                 return;
-            }
-            else {
+            } else {
                 var number = $('#officeContactEdit').val();
                 var email = $('#emailEdit').val();
                 var director = $('#directorEdit').val();
