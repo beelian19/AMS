@@ -11,13 +11,30 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login | Abundant Accounting Management System</title>
+        <style>
+            .loginbackground { 
+                /* The image used */
+                background-image: url("images/login.jpg");
+
+                /* Full height */
+                height: 86.5%; 
+                width: 100%;
+                position: absolute;
+                
+
+                /* Center and scale the image nicely */
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        </style>
     </head>
     <body width="100%" style='background-color: #F0F8FF;'>
-        <nav class="container-fluid" width="100%" height="100%" style='padding-left: 0px; padding-right: 0px; margin-bottom: 0%'>
+        <nav class="container-fluid" width="100%" height="100%" style='padding-left: 0px; padding-right: 0px; margin-bottom: 0%; padding-bottom: 0px;'>
             <div class="nav-bar-header-plain" width="100%">
                 <jsp:include page="Header-Plain.jsp"/>
             </div>
-            <div class="container-fluid" width="100%" height="100%" style='padding-left: 0px; padding-right: 0px;'>
+            <div class="loginbackground container-fluid" width="100%" height="100%" style='padding-left: 0px; padding-right: 0px;'>
                 <jsp:include page="StatusMessage.jsp"/>
                 <div style="margin-top: <%=session.getAttribute("margin")%>">
                     <div class="card card-container">
