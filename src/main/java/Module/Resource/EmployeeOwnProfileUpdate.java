@@ -47,10 +47,8 @@ public class EmployeeOwnProfileUpdate extends HttpServlet {
         boolean status = empDAO.updateOwnEmployeeProfile(employeeID,emailAddress,mobileNumber, bankAccount,password);
         
            if (status == true) {
-                System.out.println("UPDATE IS SUCCESSFUL");
                 request.setAttribute("updateStatus", "Successful");
             } else {
-                System.out.println("UPDATE IS UNSUCCESSFUL");
                 request.setAttribute("updateStatus", "Unsuccessful");
             }
     }

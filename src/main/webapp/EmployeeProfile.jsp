@@ -95,7 +95,7 @@
                 <div class="container-fluid" width="100%" height="100%" style='padding-left: 0px; padding-right: 0px;'>
                     <jsp:include page="StatusMessage.jsp"/>
                     <nav class="navbar navbar-default navbar-center container-fluid navbar-profile-page" style="margin-top: <%=session.getAttribute("margin")%>; overflow:auto">
-                        <div class="container-fluid" style="text-align: center;">
+                        <div id="thisDiv" class="container-fluid" style="text-align: center;">
                             <div class="container-fluid" align="center">
                                 <br/><br/>
                                 <!-- Staff image -->
@@ -129,7 +129,7 @@
 </div>
 </nav>
 <nav class="navbar navbar-default navbar-center container-fluid navbar-profile-page" style="overflow:auto">
-    <div class="container-fluid" style="text-align: left">
+    <div id="thisDiv1" class="container-fluid" style="text-align: left">
         <div class="container-fluid">
             <table width="100%">
                 <tr>
@@ -856,9 +856,6 @@
             var isAdmin = $('#isAdminEdit').val();
             var position = $('#positionEdit').val(); 
             var supervisor = $('#supervisorEdit').val();
-            
-            console.log("Position: "+position);
-
             $.ajax({
                 type: 'POST',
                 data: 'mobileNumber=' + number + '&' + 'emailAddress=' + email + '&' + 'bankAccount=' + bankAccount + '&' + 'nationality=' + nationality + '&' + 'currentSalary=' + salary + '&' + 'id=' + id + '&' + 'isAdmin=' + isAdmin + '&' + 'position=' + position + '&' + 'supervisor=' + supervisor,
@@ -866,7 +863,9 @@
                 success: function () {
                     $('#editProfileModal').modal('hide');
                     alert('Details Updated');
-                    location.reload();
+                    //location.reload();
+                    $("#thisDiv").load(location.href + " #thisDiv>*", "");
+                    $("#thisDiv1").load(location.href + " #thisDiv1>*", "");
                 },
                 error: function () {
                     alert('Fail to Edit Details');
