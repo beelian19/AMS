@@ -60,6 +60,7 @@ public class CreateNewProject extends HttpServlet {
             String assignedEmployee1 = request.getParameter("emp1");
             String assignedEmployee2 = request.getParameter("emp2");
             String reviewer = request.getParameter("reviewer");
+            double assignedHours = Double.parseDouble(request.getParameter("assignedHours"));
             String frequency = "";
             HttpSession session = request.getSession();
             
@@ -105,7 +106,7 @@ public class CreateNewProject extends HttpServlet {
             project.setFrequency(frequency);
             project.setDateCompleted(cal4.getTime());
             project.setMonthlyHours(Project.getYearMonth()+"=0.0-0.0");
-            project.setPlannedHours(0.0);
+            project.setPlannedHours(assignedHours);
 
             //this is the method to get start date....minus 1 day logic
             if (internalDeadline.length() == 0) {

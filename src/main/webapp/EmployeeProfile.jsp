@@ -753,7 +753,7 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <select name='positionEdit' id="isAdminEdit" class="form-control" required autofocus>
+                                    <select name='positionEdit' id="positionEdit" class="form-control" required autofocus>
                                         <option value="<%=employee.getPosition()%>"><%=employee.getPosition()%></option>
                                         <%
                                             //System.out.println(nameList);
@@ -854,17 +854,19 @@
             var salary = $('#salaryEdit').val();
             var id = $('#id').val();
             var isAdmin = $('#isAdminEdit').val();
-            var position = $('#positionEdit').val();
+            var position = $('#positionEdit').val(); 
             var supervisor = $('#supervisorEdit').val();
+            
+            console.log("Position: "+position);
 
             $.ajax({
                 type: 'POST',
                 data: 'mobileNumber=' + number + '&' + 'emailAddress=' + email + '&' + 'bankAccount=' + bankAccount + '&' + 'nationality=' + nationality + '&' + 'currentSalary=' + salary + '&' + 'id=' + id + '&' + 'isAdmin=' + isAdmin + '&' + 'position=' + position + '&' + 'supervisor=' + supervisor,
                 url: 'EmployeeProfileUpdate',
                 success: function () {
-                    location.reload();
-                    alert('Details Updated');
                     $('#editProfileModal').modal('hide');
+                    alert('Details Updated');
+                    location.reload();
                 },
                 error: function () {
                     alert('Fail to Edit Details');

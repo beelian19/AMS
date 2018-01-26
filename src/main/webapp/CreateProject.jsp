@@ -311,7 +311,6 @@
                                     </td>
                                     <td>
                                         <input type="number" name='plannedHours' id="plannedHours" class="form-control" autofocus style='display: block; width:100%' required>
-                                        </input>
                                     </td>
                                     <td width="1%">
                                     </td>
@@ -383,6 +382,7 @@
                 var emp1 = document.getElementById("assignedEmployee1").value;
                 var emp2 = document.getElementById("assignedEmployee2").value;
                 var reviewer = document.getElementById("reviewer").value;
+                var assignedHours = document.getElementById("plannedHours").value;
 
                 if (title === "") {
                     alert("Project Title required");
@@ -401,9 +401,10 @@
                         url: 'CreateNewProject',
                         data: 'title=' + title + '&' + 'companyName=' + companyName + '&' + 'remarks=' + remarks + '&' + 'projectType=' + projectType + '&' + 'recommendedInternal=' + recommendedInternal
                                 + '&' + 'internal=' + internal + '&' + 'recommendedExternal=' + recommendedExternal + '&' + 'external=' + external
-                                + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer + '&' + 'clientID=' + clientID,
+                                + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer + '&' + 'clientID=' + clientID + '&' + 'assignedHours=' + assignedHours,
                         type: 'POST',
-                        success: function () {
+                        success: function (data) {
+                            console.log(data);
                             var string = "ClientProfile.jsp?profileId=" + clientID;
                             console.log(string);
                             window.location = string;
