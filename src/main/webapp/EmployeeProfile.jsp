@@ -163,7 +163,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <strong> Salary: </strong>
+                                        <strong> Monthly Overhead: </strong>
                                     </td>
                                     <td>
                                         <%
@@ -670,7 +670,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="reviewer">Salary&nbsp;<font color="red">*</font></label>
+                                    <label for="reviewer">Monthly Overhead&nbsp;<font color="red">*</font></label>
                                 </td>
                                 <td width="1%">
                                     &nbsp;

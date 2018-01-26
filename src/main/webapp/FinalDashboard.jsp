@@ -1430,6 +1430,9 @@
                         var employeeDashboardMonth = document.getElementById("employeeDashboardMonth").value;
                         var employeeDashboardYear = document.getElementById("employeeDashboardYear").value;
                         var empName = document.getElementById("empName").value;
+                        console.log("Month: "+employeeDashboardMonth);
+                        console.log("Year: "+employeeDashboardYear);
+                        console.log("Name: "+empName);
                         $.ajax({
                             url: 'StaffMonthlyReport',
                             data: 'employeeName=' + empName + '&' + 'Year=' + employeeDashboardYear,

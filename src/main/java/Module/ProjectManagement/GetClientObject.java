@@ -40,7 +40,6 @@ public class GetClientObject extends HttpServlet {
 
         /* TODO output your page here. You may use following sample code. */
         String companyName = request.getParameter("companyName");
-        
         if (companyName == null) {
             companyName = (String) request.getSession().getAttribute("CreateProjectCompanyName");
             if (companyName == null) {
@@ -52,17 +51,12 @@ public class GetClientObject extends HttpServlet {
         }
 
         Client client = ClientDAO.getClientByCompanyName(companyName);
+        
         Timeline timeline = new Timeline(client);
         boolean check = timeline.initAll();
         HashMap<String, String> allTimeLines = timeline.getAllTimelines();
 
         JSONObject json = timeline.getAllTimelinesJSONObject();
-
-//        request.setAttribute("json", json);
-//        request.setAttribute("client", client);
-//        request.setAttribute("allTimeLines", allTimeLines);
-//        RequestDispatcher rd = request.getRequestDispatcher("CreateProject.jsp");
-//        rd.forward(request, response);
 
         request.getSession().setAttribute("json", json);
         request.getSession().setAttribute("client", client);

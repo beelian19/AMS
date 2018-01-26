@@ -144,6 +144,10 @@
                 $('#datatable1').DataTable();
             })
         </script>
+        <%
+          String profileUrl = "ProjectProfile.jsp?projectID=";
+          String profileUrl2 = "";
+        %>
     </head>
     <script src="js/Chart.min.js"></script>
     <script src="js/Chart.bundle.min.js"></script>
@@ -477,7 +481,10 @@
                                                 <%=p.getCompanyName()%>
                                             </td>
                                             <td>
-                                                <%=p.getProjectTitle()%>
+                                                <% profileUrl2 = profileUrl + p.getProjectID();%>
+                                                <a href=<%=profileUrl2%>>
+                                                    <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
+                                                </a>
                                             </td>
                                             <td>
                                                 <%=p.getPlannedHours()%>

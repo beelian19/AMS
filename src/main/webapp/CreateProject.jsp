@@ -404,12 +404,14 @@
                                 + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer + '&' + 'clientID=' + clientID,
                         type: 'POST',
                         success: function () {
-                            var string = "/AMS/ClientProfile.jsp?profileId=" + clientID;
-                            window.location.href = string;
+                            var string = "ClientProfile.jsp?profileId=" + clientID;
+                            console.log(string);
+                            window.location = string;
                         },
                         error: function () {
-                            var string = "/AMS/ClientProfile.jsp?profileId=" + clientID;
-                            window.location.href = string;
+                            var string = "ClientProfile.jsp?profileId=" + clientID;
+                            console.log(string);
+                            window.location = string;
                         }
                     });
                 }
