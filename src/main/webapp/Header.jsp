@@ -234,7 +234,7 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
         <script src="js/jquery.min.js"></script>
-        <script src='css/bootstrap.min.css' rel="stylesheet" type="text/css"/>
+        <script src='css/bootstrap.min.css' rel="stylesheet" type="text/css"></script>
         <script src="js/bootstrap.min.js"></script>     
 
         <script src='js/moment.min.js'></script>

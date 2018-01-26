@@ -7,11 +7,7 @@ package Module.Dashboard;
 
 import DAO.ProjectDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +32,6 @@ public class OverdueProjectPerYear extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        PrintWriter out = response.getWriter();
         int[] overdueList = new int[12];
         int[] ontimeList = ProjectDAO.getOnTimeProjectPerYear("2017");
         int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear("2017");
@@ -65,7 +60,6 @@ public class OverdueProjectPerYear extends HttpServlet {
             int value = completedList[i];
             completed.add(value);
         }
-        //out.print(overdue);
         request.getSession().setAttribute("overdueProject", overdue);
         request.getSession().setAttribute("ontimeProject", ontime);
         request.getSession().setAttribute("completedProject", completed);

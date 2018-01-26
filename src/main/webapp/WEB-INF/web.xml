@@ -121,7 +121,7 @@
         <servlet-class>Module.ProjectManagement.UpdateProjectHours</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CreateProject</servlet-name>
+        <servlet-name>CreateNewProject</servlet-name>
         <servlet-class>Module.ProjectManagement.CreateNewProject</servlet-class>
     </servlet>
     <servlet>
@@ -293,8 +293,8 @@
         <url-pattern>/UpdateProjectHours</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CreateProject</servlet-name>
-        <url-pattern>/CreateProject</url-pattern>
+        <servlet-name>CreateNewProject</servlet-name>
+        <url-pattern>/CreateNewProject</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ResetToken</servlet-name>

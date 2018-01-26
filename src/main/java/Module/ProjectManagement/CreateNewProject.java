@@ -169,7 +169,6 @@ public class CreateNewProject extends HttpServlet {
             } else {
                 session.setAttribute("status", "Error: Failed to create project "+title);
             }
-
         } catch (ParseException e) {
             System.out.println("CreateNewProject: Error- " + e.getMessage());
         }

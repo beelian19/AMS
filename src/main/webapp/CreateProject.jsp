@@ -349,76 +349,74 @@
                     </div>
                 </div>
             </div>
-        </nav>      
-        <script>
-            $(document).ready(function () {
-                var options = $("#recommendedInternalDeadline").html();
-                $("#projectTypeCreate").change(function (e) {
-                    var text = $("#projectTypeCreate :selected").text();
-                    $("#recommendedInternalDeadline").html(options);
-                    $('#recommendedInternalDeadline :not([value^="' + text + '"])').remove();
-                });
-
-                var options1 = $("#recommendedExternalDeadline").html();
-                $("#projectTypeCreate").change(function (e) {
-                    var text1 = $("#projectTypeCreate :selected").text();
-                    $("#recommendedExternalDeadline").html(options1);
-                    $('#recommendedExternalDeadline :not([value^="' + text1 + '"])').remove();
-                });
-            });
-
-        </script>
-        <script>
-            $('#btnCreateProject').click(function () {
-                var clientID = document.getElementById("profileId").value;
-                var title = document.getElementById("projectTitleCreate").value;
-                var companyName = document.getElementById("companyNameCreate").value;
-                var remarks = document.getElementById("remarksCreate").value;
-                var projectType = document.getElementById("projectTypeCreate").value;
-                var recommendedInternal = $("#recommendedInternalDeadline option:selected").html();
-                var internal = document.getElementById("internalDeadlineCreate").value;
-                var recommendedExternal = $("#recommendedExternalDeadline option:selected").html();
-                var external = document.getElementById("externalDeadlineCreate").value;
-                var emp1 = document.getElementById("assignedEmployee1").value;
-                var emp2 = document.getElementById("assignedEmployee2").value;
-                var reviewer = document.getElementById("reviewer").value;
-                var assignedHours = document.getElementById("plannedHours").value;
-
-                if (title === "") {
-                    alert("Project Title required");
-                } else if (companyName === "") {
-                    alert("Company Name required");
-                } else if (emp1 === "") {
-                    alert("Assigned Employee required");
-                } else if (emp2 === "") {
-                    alert("Second Employee required");
-                } else if (reviewer === "") {
-                    alert("Reviewer required");
-                } else if (remarks === "") {
-                    alert("Remarks required");
-                } else {
-                    $.ajax({
-                        url: 'CreateNewProject',
-                        data: 'title=' + title + '&' + 'companyName=' + companyName + '&' + 'remarks=' + remarks + '&' + 'projectType=' + projectType + '&' + 'recommendedInternal=' + recommendedInternal
-                                + '&' + 'internal=' + internal + '&' + 'recommendedExternal=' + recommendedExternal + '&' + 'external=' + external
-                                + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer + '&' + 'clientID=' + clientID + '&' + 'assignedHours=' + assignedHours,
-                        type: 'POST',
-                        success: function (data) {
-                            console.log(data);
-                            var string = "ClientProfile.jsp?profileId=" + clientID;
-                            console.log(string);
-                            window.location = string;
-                        },
-                        error: function () {
-                            var string = "ClientProfile.jsp?profileId=" + clientID;
-                            console.log(string);
-                            window.location = string;
-                        }
+            <script>
+                $(document).ready(function () {
+                    var options = $("#recommendedInternalDeadline").html();
+                    $("#projectTypeCreate").change(function (e) {
+                        var text = $("#projectTypeCreate :selected").text();
+                        $("#recommendedInternalDeadline").html(options);
+                        $('#recommendedInternalDeadline :not([value^="' + text + '"])').remove();
                     });
-                }
 
-            });
-        </script>
+                    var options1 = $("#recommendedExternalDeadline").html();
+                    $("#projectTypeCreate").change(function (e) {
+                        var text1 = $("#projectTypeCreate :selected").text();
+                        $("#recommendedExternalDeadline").html(options1);
+                        $('#recommendedExternalDeadline :not([value^="' + text1 + '"])').remove();
+                    });
+
+                    $('#btnCreateProject').click(function () {
+                        var clientID = document.getElementById("profileId").value;
+                        var title = document.getElementById("projectTitleCreate").value;
+                        var companyName = document.getElementById("companyNameCreate").value;
+                        var remarks = document.getElementById("remarksCreate").value;
+                        var projectType = document.getElementById("projectTypeCreate").value;
+                        var recommendedInternal = $("#recommendedInternalDeadline option:selected").html();
+                        var internal = document.getElementById("internalDeadlineCreate").value;
+                        var recommendedExternal = $("#recommendedExternalDeadline option:selected").html();
+                        var external = document.getElementById("externalDeadlineCreate").value;
+                        var emp1 = document.getElementById("assignedEmployee1").value;
+                        var emp2 = document.getElementById("assignedEmployee2").value;
+                        var reviewer = document.getElementById("reviewer").value;
+                        var assignedHours = document.getElementById("plannedHours").value;
+
+                        if (title === "") {
+                            alert("Project Title required");
+                        } else if (companyName === "") {
+                            alert("Company Name required");
+                        } else if (emp1 === "") {
+                            alert("Assigned Employee required");
+                        } else if (emp2 === "") {
+                            alert("Second Employee required");
+                        } else if (reviewer === "") {
+                            alert("Reviewer required");
+                        } else if (remarks === "") {
+                            alert("Remarks required");
+                        } else {
+                            $.ajax({
+                                url: 'CreateNewProject',
+                                type: 'POST',
+                                data: 'title=' + title + '&' + 'companyName=' + companyName + '&' + 'remarks=' + remarks + '&' + 'projectType=' + projectType + '&' +
+                                        'recommendedInternal=' + recommendedInternal + '&' + 'internal=' + internal + '&' + 'recommendedExternal=' + recommendedExternal + '&' +
+                                        'external=' + external + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer + '&' + 'clientID=' + clientID + '&' + 'assignedHours=' + assignedHours,
+                                success: function () {
+                                    console.log("This is the data in success function: ");
+                                    alert("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                                },
+                                error: function () {
+                                    var string = "http://localhost:8084/AMS/ClientProfile.jsp?profileId=" + clientID;
+                                    console.log("ERRORRRRRRRRRRRRRRR");
+                                    //window.location = string;
+                                    alert(string);
+                                    window.location.replace(string);
+                                }
+                            });
+                        }
+
+                    });
+                });
+            </script>
+        </nav>    
     </body>
     <jsp:include page="Footer.html"/>
 </html>
