@@ -4,6 +4,10 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.util.Map"%>
+<%@page import="Entity.Token"%>
+<%@page import="Entity.Token"%>
+<%@page import="DAO.TokenDAO"%>
 <%@page import="Entity.Client"%>
 <%@page import="DAO.ClientDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -26,6 +30,7 @@
         <%             
             ArrayList<Client> clientList;
             clientList = ClientDAO.getAllClient();
+            Map<Integer, Token> tokenMap = TokenDAO.getAllTokenMap();
         %>
     </head>
     <body width="100%" style='background-color: #F0F8FF;'>
@@ -44,7 +49,8 @@
                                     <tr>
                                         <th>Client ID</th>
                                         <th>Company Name</th>
-                                        <th></th>
+                                        <th>Has Token</th>
+                                        <th>Select</th>
                                     </tr> 
                                 </thead>
                                 <tbody>
@@ -59,6 +65,9 @@
                                         </td>
                                         <td>
                                             <%=c.getCompanyName()%>
+                                        </td>
+                                        <td>
+                                            <%=(tokenMap.get(c.getClientID()) != null) ? "Y" : "N"%>
                                         </td>
                                         <td>
                                             <input type="radio" name="companyId" value='<%=c.getClientID()%>' required>
