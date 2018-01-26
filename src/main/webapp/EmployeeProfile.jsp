@@ -165,11 +165,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-<<<<<<< HEAD
                                         <strong> Monthly Overhead: </strong>
-=======
-                                        <strong> Monthly Overhead </strong>
->>>>>>> 1ad7956aeeeb3de49957dc522782c61a334c1e6c
                                     </td>
                                     <td>
                                         <%
