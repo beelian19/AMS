@@ -275,7 +275,7 @@
                                         <%
                                             reviewerProfileUrl2 = reviewerProfileUrl1 + rev.getEmployeeID();
                                             //System.out.println(reviewerProfileUrl2);
-%>
+                                        %>
                                         <a href='<%=reviewerProfileUrl2%>'>
                                             <%=p.getProjectReviewer()%>
                                         </a>
@@ -697,7 +697,7 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" name="projectStartEdit" id="projectStartEdit" placeholder="yyyy-MM-dd" value="<%=p.getStart()%>" class="text ui-widget-content ui-corner-all" required>
+                                    <input name="projectStartEdit" id="projectStartEdit" value="<%=p.getStart()%>" type="text" class="text ui-widget-content ui-corner-all" onfocus="(this.type = 'date')" onblur="(this.type = 'text')" id="date">
                                 </td>
                             </tr>
                             <tr>
@@ -714,7 +714,7 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" name="projectEndEdit" id="projectEndEdit" placeholder="yyyy-MM-dd" value="<%=p.getEnd()%>" class="text ui-widget-content ui-corner-all" required>
+                                    <input name="projectEndEdit" id="projectEndEdit" value="<%=p.getEnd()%>" type="text" class="text ui-widget-content ui-corner-all" onfocus="(this.type='date')" onblur="(this.type='text')" id="date">
                                 </td>
                             </tr>  
                             <tr>
@@ -782,7 +782,6 @@
                                                 }
                                             }
                                         %>
-                                        <option value="na">NA</option>
                                     </select>
                                 </td>
                             </tr>
@@ -1140,11 +1139,11 @@
             $.ajax({
                 type: 'POST',
                 data: 'projectID=' + projectID + '&' + 'projectTitle=' + projectTitle + '&' + 'startDate=' + startDate + '&' + 'endDate=' + endDate + '&' + 'projectRemarks=' + projectRemarks + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'projectReviewer=' + projectReviewer,
-                url: 'UpdateProject',
+                url: 'UpdateProjectDetailsfromModal',
                 success: function () {
-                    location.reload();
                     alert('Details Updated');
                     $('#editProfileModal').modal('hide');
+                    location.reload();
                 },
                 error: function () {
                     alert('Fail to Edit Details');
