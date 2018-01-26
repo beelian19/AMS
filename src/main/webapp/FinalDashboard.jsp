@@ -908,10 +908,9 @@
                             // Checks if clientlist is null or isempty
                             if (clientList != null && !clientList.isEmpty()) {
                     %>   
-                    <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                    <div class="container-fluid clientDatatableDiv" style="text-align: center; width:80%; height:80%;">
                         <form>
                             <div class="row">
-                                <br/>
                                 <div class="col-xs-9">
                                 </div>
                                 <div class="col-xs-3">
@@ -961,8 +960,12 @@
                                 </tbody>
                             </table>
                             <p style="text-align: left;"> *all data are updated as of this month</p>
-                            <br/><br/><br/>
                             <table style="width: 100%" align="right">
+                                <tr>
+                                    <td colspan="4">
+                                        <br/><br/>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td style="width: 61%">
                                         &nbsp;
@@ -989,7 +992,7 @@
                         }
                     } else {
                     %>
-                    <div class="container-fluid" style="text-align: center;">
+                    <div class="container-fluid clientChartsDiv" style="text-align: center;">
                         <br/>
                         <div class="row">
                             <div class="col-xs-1">&nbsp;</div>
@@ -1012,7 +1015,10 @@
                                     </td>
                                     <td style="width: 16.167%">
                                         <br/>
-                                        <button class="btn btn-lg btn-primary btn-block" href="ClientProfile.jsp?profileId=">Go to Profile</button>
+                                        <%
+                                            String clientProfileUrl = "ClientProfile.jsp?profileId=" + request.getParameter("client");
+                                        %>
+                                        <button class="btn btn-lg btn-primary btn-block" onclick="window.location = '<%=clientProfileUrl%>';">Go to Profile</button>
                                     </td>
                                     <td style="width: 5.666%">
                                         &nbsp;
@@ -1224,7 +1230,13 @@
                                     data: barChartData,
                                     scaleShowVerticalLines: false
                                 });
-
+                                //this is to tell if we should display the charts!!
+                                var displayClientCharts = true;
+                                var clientDatatable;
+                                clientDatatable = document.getElementsByClassName("clientDatatableDiv");
+                                clientDatatable[0].style.display = "none";
+                                clientDatatable = document.getElementsByClassName("clientChartsDiv");
+                                clientDatatable[0].style.display = "block";
                             }
                         });
                     });
@@ -1257,7 +1269,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <br/><br/>
                             <table id='datatable2' align="center">
                                 <thead>
                                     <tr>
@@ -1300,6 +1311,11 @@
                                 </tbody>
                             </table>
                             <table style="width: 100%; position: relative; bottom: 0px;">
+                                <tr>
+                                    <td colspan="4">
+                                        <br/><br/>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td style="width: 61%">
                                         &nbsp;
@@ -1406,7 +1422,7 @@
                                             String employeeName = request.getParameter("employee");
                                             String employeeProfileUrl = "EmployeeProfile.jsp?profileName=" + employeeName.toLowerCase();
                                         %>
-                                        <button class="btn btn-lg btn-primary btn-block" onclick="window.location='<%=employeeProfileUrl%>';">Go to Profile</button>
+                                        <button class="btn btn-lg btn-primary btn-block" onclick="window.location = '<%=employeeProfileUrl%>';">Go to Profile</button>
                                     </td>
                                     <td style="width: 5.666%">
                                         &nbsp;

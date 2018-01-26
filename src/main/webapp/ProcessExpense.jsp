@@ -204,10 +204,10 @@
                                     <%=(p.getDateString() == null) ? "---Needed---" : p.getDateString()%>
                                 </td>
                                 <td style="font-size: 10px;">
-                                    <%=(p.getReferenceNumber() == null) ? "No reference number" : p.getReferenceNumber()%>
+                                    <%=(p.getReferenceNumber() == null) ? "---No ref number---" : p.getReferenceNumber()%>
                                 </td>
                                 <td style="font-size: 10px;">
-                                    <%=(pl.getAccountName() == null) ? "No Account Name" : pl.getAccountName()%>
+                                    <%=(pl.getAccountName() == null) ? "---No Account Name---" : pl.getAccountName()%>
                                 </td>
                                 <td style="font-size: 10px;">
                                     <%=(pl.getAccountNumber() == null) ? "---Needed---" : pl.getAccountNumber()%>
@@ -225,22 +225,22 @@
                                     <%=(pl.getIncTaxAmount() == null) ? "---Needed---" : (pl.getIncTaxAmount() < 0.0) ? pl.getIncTaxAmount() + "(Negative)" : pl.getIncTaxAmount()%>
                                 </td>
                                 <td style="font-size: 10px;">
-                                    <%=(pl.getLineDescription() == null) ? "No Line Desc." : pl.getLineDescription()%>
+                                    <%=(pl.getLineDescription() == null) ? "---" : pl.getLineDescription()%>
                                 </td>
                                 <td style="font-size: 10px;">
-                                    <%=(p.getPaymentMethod() == null) ? "Non Found. CASH inserted" : p.getPaymentMethod()%>
+                                    <%=(p.getPaymentMethod() == null) ? "---" : p.getPaymentMethod()%>
                                 </td>
                                 <td style="font-size: 10px;">
-                                    <%=(p.getLocation() == null) ? "No Location Found" : p.getLocation()%>
+                                    <%=(p.getLocation() == null) ? "---" : p.getLocation()%>
                                 </td>
                                 <td style="font-size: 10px;">
-                                    <%=(pl.getQBOLineClass() == null) ? "No Class Found" : pl.getQBOLineClass()%>
+                                    <%=(pl.getQBOLineClass() == null) ? "---" : pl.getQBOLineClass()%>
                                 </td>
                                 <td style="font-size: 10px;">
-                                    <%=(pl.getQBOLineCustomer() == null) ? "No Customer Found" : pl.getQBOLineCustomer()%>
+                                    <%=(pl.getQBOLineCustomer() == null) ? "---" : pl.getQBOLineCustomer()%>
                                 </td>
                                 <td style="font-size: 10px;">
-                                    <%=(p.getMemo() == null) ? "No Memo Found" : StringUtils.substring(p.getMemo(), 0, 15) + "..."%>
+                                    <%=(p.getMemo() == null) ? "---" : StringUtils.substring(p.getMemo(), 0, 15) + "..."%>
                                 </td>
                                 <td style="font-size: 8px;">
                                     <%=(pl.getInitStatus().trim().equals("Init:")) ? "-" : pl.getInitStatus()%>

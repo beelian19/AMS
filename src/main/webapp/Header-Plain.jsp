@@ -114,7 +114,7 @@
             }
             
             .card {
-                background-color: #034C75;
+                background-color: #F0F8FF;
                 /* just in case there no content*/
                 padding: 20px 20px 20px;
                 margin: 0 auto 25px;
@@ -126,6 +126,7 @@
                 -moz-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
                 -webkit-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
                 box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+                opacity: 0.95;
             }
 
             .profile-img-card {

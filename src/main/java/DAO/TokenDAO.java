@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Utility.ConnectionManager;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TokenDAO {
 
@@ -73,6 +75,13 @@ public class TokenDAO {
             System.out.println(ex.getMessage());
         }
         return tokenList;
+    }
+    
+    public static Map<Integer, Token> getAllTokenMap(){
+        ArrayList<Token> tokenList = getAllToken();
+        Map<Integer, Token> tokenMap = tokenList.stream().collect(
+                                                                Collectors.toMap(t -> t.getCompanyId(), t -> t));
+        return tokenMap;
     }
 
     public static boolean createToken(Token token) {

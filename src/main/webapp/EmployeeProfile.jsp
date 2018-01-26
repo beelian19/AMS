@@ -4,6 +4,7 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="DAO.ProjectDAO"%>
 <%@page import="Entity.Client"%>
 <%@page import="DAO.ClientDAO"%>
@@ -69,6 +70,7 @@
 
             String clientProfileUrl = "ClientProfile.jsp?profileId=";
             String clientProfileUrl2 = "";
+            DecimalFormat df = new DecimalFormat("#.00");
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%=employeeName%>&nbsp;Profile | Abundant Accounting Management System</title>
@@ -163,7 +165,11 @@
                                 </tr>
                                 <tr>
                                     <td>
+<<<<<<< HEAD
                                         <strong> Monthly Overhead: </strong>
+=======
+                                        <strong> Monthly Overhead </strong>
+>>>>>>> 1ad7956aeeeb3de49957dc522782c61a334c1e6c
                                     </td>
                                     <td>
                                         <%
@@ -249,10 +255,11 @@
                             <table width="100%" style="cellpadding: 2%" id="datatable3">
                                 <thead>
                                     <tr>
-                                        <th width="25.0%">Project Title</th>
-                                        <th width="25.0%">Company Name</th>
-                                        <th width="25.0%">Deadline</th>
-                                        <th width="25.0%">Hours Spent</th>
+                                        <th width="20.0%">Project Title</th>
+                                        <th width="20.0%">Company Name</th>
+                                        <th width="20.0%">Deadline</th>
+                                        <th width="20.0">Hours Assigned</th>
+                                        <th width="20.0%">Hours Spent</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -288,7 +295,17 @@
                                         </td>
                                         <td>
                                             <%=p.getEnd()%>
-                                        </td>    
+                                        </td>   
+                                        <td>
+                                            <%
+                                                double assignedHours = p.getPlannedHours();
+                                                if(!p.getEmployee2().toLowerCase().equals("na")){
+                                                    out.println(df.format(assignedHours/2.0));
+                                                }else{
+                                                    out.println(df.format(assignedHours));
+                                                }
+                                            %>
+                                        </td>
                                         <td>
                                             <% ProjectDAO pDAO = new ProjectDAO();
                                                 double hours = pDAO.getHoursPerEmployeeByProject(p.getProjectID(), employeeName);
@@ -330,10 +347,11 @@
                             <table width="100%" style="cellpadding: 2%" id="datatable">
                                 <thead>
                                     <tr>
-                                        <th width="25.0%">Project Title</th>
-                                        <th width="25.0%">Company Name</th>
-                                        <th width="25.0%">Deadline</th>
-                                        <th width="25.0%">Hours Spent</th>
+                                        <th width="20.0%">Project Title</th>
+                                        <th width="20.0%">Company Name</th>
+                                        <th width="20.0%">Deadline</th>
+                                        <th width="20.0%">Hours Assigned</th>
+                                        <th width="20.0%">Hours Spent</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -370,6 +388,16 @@
                                         <td>
                                             <%=p.getEnd()%>
                                         </td> 
+                                        <td>
+                                            <%
+                                                double assignedHours = p.getPlannedHours();
+                                                if(!p.getEmployee2().toLowerCase().equals("na")){
+                                                    out.println(df.format(assignedHours/2.0));
+                                                }else{
+                                                    out.println(df.format(assignedHours));
+                                                }
+                                            %>
+                                        </td>
                                         <td>
                                             <% ProjectDAO pDAO = new ProjectDAO();
                                                 double hours = pDAO.getHoursPerEmployeeByProject(p.getProjectID(), employeeName);
@@ -411,10 +439,11 @@
                             <table width="100%" style="cellpadding: 2%" id="datatable2">
                                 <thead>
                                     <tr>
-                                        <th width="25.0%">Project Title</th>
-                                        <th width="25.0%">Company Name</th>
-                                        <th width="25.0%">Deadline</th>
-                                        <th width="25.0%">Hours Spent</th>
+                                        <th width="20.0%">Project Title</th>
+                                        <th width="20.0%">Company Name</th>
+                                        <th width="20.0%">Deadline</th>
+                                        <th width="20.0%">Hours Assigned</th>
+                                        <th width="20.0%">Hours Spent</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -451,6 +480,16 @@
                                         <td>
                                             <%=p.getEnd()%>
                                         </td> 
+                                        <td>
+                                            <%
+                                                double assignedHours = p.getPlannedHours();
+                                                if(!p.getEmployee2().toLowerCase().equals("na")){
+                                                    out.println(df.format(assignedHours/2.0));
+                                                }else{
+                                                    out.println(df.format(assignedHours));
+                                                }
+                                            %>
+                                        </td>
                                         <td>
                                             <% ProjectDAO pDAO = new ProjectDAO();
                                                 double hours = pDAO.getHoursPerEmployeeByProject(p.getProjectID(), employeeName);
@@ -797,7 +836,7 @@
             return;
         }
         if ($('#salaryEdit').val() === "") {
-            alert("Salary Required");
+            alert("Monthly Overhead Required");
             return;
         }
         if ($('#isAdminEdit').val() === "") {
