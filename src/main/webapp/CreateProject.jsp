@@ -396,24 +396,24 @@
                             $.ajax({
                                 url: 'CreateNewProject',
                                 type: 'POST',
-                                contentType: "application/json; charset=utf-8",
                                 data: 'title=' + title + '&' + 'companyName=' + companyName + '&' + 'remarks=' + remarks + '&' + 'projectType=' + projectType + '&' +
                                         'recommendedInternal=' + recommendedInternal + '&' + 'internal=' + internal + '&' + 'recommendedExternal=' + recommendedExternal + '&' +
                                         'external=' + external + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer + '&' + 'clientID=' + clientID + '&' + 'assignedHours=' + assignedHours,
+
                                 success: function () {
                                     console.log("This is the data in success function: ");
                                     alert("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                                    window.location.assign("http://localhost:8084/AMS/ClientProfile.jsp?profileId=1");
                                 },
                                 error: function () {
                                     var string = "http://localhost:8084/AMS/ClientProfile.jsp?profileId=" + clientID;
                                     console.log("ERRORRRRRRRRRRRRRRR");
                                     //window.location = string;
                                     alert(string);
-                                    window.location.replace(string);
+                                    window.location.assign("http://localhost:8084/AMS/ClientProfile.jsp?profileId=1");
                                 }
                             });
                         }
-
                     });
                 });
             </script>

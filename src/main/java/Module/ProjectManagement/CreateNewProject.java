@@ -63,26 +63,26 @@ public class CreateNewProject extends HttpServlet {
             double assignedHours = Double.parseDouble(request.getParameter("assignedHours"));
             String frequency = "";
             HttpSession session = request.getSession();
-            
-            if(recommendedInternalDeadline.equals("na") || recommendedExternalDeadline.equals("na")) {
+
+            if (recommendedInternalDeadline.equals("na") || recommendedExternalDeadline.equals("na")) {
                 session.setAttribute("status", "Error: Incorrect project type selected.");
                 return;
             }
             Client client = ClientDAO.getClientByCompanyName(companyName);
-            switch(projectType) {
-                case "tax" : 
+            switch (projectType) {
+                case "tax":
                     frequency = "y";
                     break;
-                case "eci" :
+                case "eci":
                     frequency = "y";
                     break;
-                case "gst" :
+                case "gst":
                     frequency = client.getGstSubmission().substring(0, 1);
                     break;
-                case "management" :
+                case "management":
                     frequency = client.getMgmtAcc().substring(0, 1);
                     break;
-                case "final" :
+                case "final":
                     frequency = "y";
                     break;
                 default://Secretarial
@@ -105,7 +105,7 @@ public class CreateNewProject extends HttpServlet {
             project.setProjectReviewer(reviewer);
             project.setFrequency(frequency);
             project.setDateCompleted(cal4.getTime());
-            project.setMonthlyHours(Project.getYearMonth()+"=0.0-0.0");
+            project.setMonthlyHours(Project.getYearMonth() + "=0.0-0.0");
             project.setPlannedHours(assignedHours);
 
             //this is the method to get start date....minus 1 day logic
@@ -165,9 +165,9 @@ public class CreateNewProject extends HttpServlet {
             }
             boolean check = ProjectDAO.createProject(project);
             if (check) {
-                session.setAttribute("status", "Success: Project "+title+" Created.");
+                session.setAttribute("status", "Success: Project " + title + " Created.");
             } else {
-                session.setAttribute("status", "Error: Failed to create project "+title);
+                session.setAttribute("status", "Error: Failed to create project " + title);
             }
         } catch (ParseException e) {
             System.out.println("CreateNewProject: Error- " + e.getMessage());
