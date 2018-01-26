@@ -396,6 +396,7 @@
                             $.ajax({
                                 url: 'CreateNewProject',
                                 type: 'POST',
+                                contentType: "application/json; charset=utf-8",
                                 data: 'title=' + title + '&' + 'companyName=' + companyName + '&' + 'remarks=' + remarks + '&' + 'projectType=' + projectType + '&' +
                                         'recommendedInternal=' + recommendedInternal + '&' + 'internal=' + internal + '&' + 'recommendedExternal=' + recommendedExternal + '&' +
                                         'external=' + external + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer + '&' + 'clientID=' + clientID + '&' + 'assignedHours=' + assignedHours,
