@@ -541,7 +541,7 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" name="employeeMobileNumberEdit" id="employeeMobileNumberEdit" value="<%=employee.getNumber()%>" class="text ui-widget-content ui-corner-all" required>
+                                    <input type="number" name="employeeMobileNumberEdit" id="employeeMobileNumberEdit" value="<%=employee.getNumber()%>" class="text ui-widget-content ui-corner-all" required>
                                 </td>
                             </tr>
                             <tr>
@@ -557,7 +557,7 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" name="employeeEmailEdit" id="employeeEmailEdit" value="<%=employee.getEmail()%>" class="text ui-widget-content ui-corner-all" required>
+                                    <input type="email" name="employeeEmailEdit" id="employeeEmailEdit" value="<%=employee.getEmail()%>" class="text ui-widget-content ui-corner-all" required>
                                 </td>
                             </tr>
                             <tr>

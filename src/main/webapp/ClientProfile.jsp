@@ -423,7 +423,7 @@
                                         &nbsp;
                                     </td>
                                     <td>
-                                        <input type="text" name="emailEdit" id="emailEdit" value="<%=client.getContactEmailAddress()%>" class="text ui-widget-content ui-corner-all" required>
+                                        <input type="email" name="emailEdit" id="emailEdit" value="<%=client.getContactEmailAddress()%>" class="text ui-widget-content ui-corner-all" required>
                                     </td>
                                 </tr>
                                 <tr>
