@@ -77,7 +77,7 @@
                                         <label>Office Contact&nbsp;<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <input type="text" name='officeContact' id="officeContact" placeholder="Office Contact" onkeypress="return numbersonly(event)" onkeyup="return limitlength(this, 9)" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%'>
+                                        <input type="text" name='officeContact' id="officeContact" placeholder="Office Contact" onkeypress="return numbersonly(event)" onkeyup="return limitlength(this, 8)" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%'>
                                     </td>
                                     <td width="1%">
                                     </td>
@@ -293,7 +293,7 @@
                                        <label>Director's Number&nbsp;</label>
                                     </td>
                                     <td>
-                                        <input type="text" name='secretaryNumber' id="secretaryNumber" placeholder="Director's Number" onkeypress="return numbersonly(event)" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
+                                        <input type="text" name='secretaryNumber' id="secretaryNumber" placeholder="Director's Number" onkeypress="return numbersonly(event)" onkeyup="return limitlength(this, 8)" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
                                     </td>
                                     <td width="15%">
                                     </td>
@@ -353,7 +353,7 @@
                                        <label>Accountant Number&nbsp;</label>
                                     </td>
                                     <td>
-                                        <input type="text" name='accountantNumber' id="accountantNumber" placeholder="Accountant Number" onkeypress="return numbersonly(event)" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
+                                        <input type="text" name='accountantNumber' id="accountantNumber" placeholder="Accountant Number" onkeypress="return numbersonly(event)" onkeyup="return limitlength(this, 8)" class="text ui-widget-content ui-corner-all" autofocus style='display: block; width:100%'>
                                     </td>
                                     <td colspan="4">
                                     </td>
