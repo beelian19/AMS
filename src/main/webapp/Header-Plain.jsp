@@ -118,7 +118,7 @@
                 /* just in case there no content*/
                 padding: 20px 20px 20px;
                 margin: 0 auto 25px;
-                margin-top: 50px;
+                margin-top: 10px;
                 /* shadows and rounded borders */
                 -moz-border-radius: 5px;
                 -webkit-border-radius: 5px;
