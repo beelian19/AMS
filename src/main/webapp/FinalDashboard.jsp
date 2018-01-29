@@ -35,28 +35,32 @@
             }
 
             /* Style the buttons inside the tab */
-            .tab button {
+            .tablinks{
                 background-color: inherit;
                 float: left;
                 border: none;
                 outline: none;
                 cursor: pointer;
-                padding: 14px 16px;
+                padding: 12px 14px;
                 transition: 0.3s;
                 font-size: 15px;
                 font-weight: bold;
             }
 
             /* Change background color of buttons on hover */
-            .tab button:hover {
+            .tab a:hover {
                 background-color: #ddd;
             }
 
             /* Create an active/current tablink class */
-            .tab button.active {
+            .tab a:active {
                 background-color: RGB(68, 114, 196);
                 color: #ffffff;
-                font-weight: bold;
+            }
+            
+            .tab a:focus {
+                background-color: RGB(68, 114, 196);
+                color: #ffffff;
             }
 
             /* Style the tab content */
@@ -79,7 +83,6 @@
             }
 
             /* Styling for month date fields in dashboard */
-
             .dashboardSelect{
                 display:flex;
                 flex-direction: column;
@@ -116,9 +119,7 @@
                 position:relative;
                 pointer-events:all;
             }
-
             /* end of styling for month date field in dashboard */
-
 
             /* this section is for the selecting charts and making the datatables appear*/
             #revenueTable {
@@ -136,6 +137,27 @@
             .activePerformanceChart {
                 border: 2px solid blue;
             }
+            /* end of section */
+
+
+            /* this section is to remove the underline from <a> */
+            a:link{
+                /* Applies to all unvisited links */
+                text-decoration:  none !important;
+               
+            } 
+            a:visited {
+                /* Applies to all visited links */
+                text-decoration:  none !important;
+            } 
+            a:hover   {
+                /* Applies to links under the pointer */
+                text-decoration:  none !important;
+            } 
+            a:active  {
+                /* Applies to activated links */
+                text-decoration:  none !important;
+            } 
             /* end of section */
         </style>
         <%            DecimalFormat df = new DecimalFormat("#.00");
@@ -156,8 +178,6 @@
                 $('#datatable6').DataTable();
                 $('#datatable7').DataTable();
                 $('#datatable8').DataTable();
-                $('#datatable9').DataTable();
-                $('#datatable10').DataTable();
             })
         </script>
     </head>
@@ -173,16 +193,16 @@
                 <div class="container-fluid" style="text-align: center; width: 100%; height: 100%; margin-top: <%=session.getAttribute("margin")%>">
                     <h1>Your Dashboard</h1><br/>
                     <center>
-                        <div class="tab wrap" style="width: 70%">
+                        <div class="tab wrap" style="width: 80%">
                             <div class="nav nav-tabs" id="myTab">
-                                <div style="float: right; width: 33%">
-                                    <a class="tablinks btn-block" href="#Client" onclick="onclickingheaders()" aria-controls="Client" role="tab" data-toggle="tab">Client</a>
+                                <div style="float: right; width: 33.333%">
+                                    <a class="tablinks btn-block button" href="#Client" onclick="onclickingheaders()" aria-controls="Client" role="tab" data-toggle="tab">Client</a>
                                 </div>
-                                <div style="float: right; width: 33%">
-                                    <a class="tablinks btn-block" href="#Employee" onclick="onclickingheaders()" aria-controls="Employee" role="tab" data-toggle="tab">Employee</a>
+                                <div style="float: right; width: 33.333%">
+                                    <a class="tablinks btn-block button" href="#Employee" onclick="onclickingheaders()" aria-controls="Employee" role="tab" data-toggle="tab">Employee</a>
                                 </div>
-                                <div style="float: right; width: 33%">
-                                    <a class="tablinks btn-block" href="#Abundant" onclick="onclickingheaders()" aria-controls="Abundant" role="tab" data-toggle="tab">Abundant</a>
+                                <div style="float: right; width: 33.333%">
+                                    <a class="tablinks btn-block button" href="#Abundant" onclick="onclickingheaders()" aria-controls="Abundant" role="tab" data-toggle="tab">Abundant</a>
                                 </div>
                             </div>
                         </div>
@@ -445,89 +465,89 @@
                             </div>
                         </div>
                         <script>
-            $(document).ready(function () {
-                $.ajax({
-                    url: 'SalesGraph',
-                    type: 'POST',
-                    success: function () {
-                        var salesData = "<%=request.getSession().getAttribute("sales")%>";
-                        var sales = salesData.split(",");
-                        sales[0] = sales[0].substring("1");
-                        sales[11] = sales[11].substring("0", sales[11].length - 1);
-                        var costData = "<%=request.getSession().getAttribute("cost")%>";
-                        var cost = costData.split(",");
-                        cost[0] = cost[0].substring("1");
-                        cost[11] = cost[11].substring("0", cost[11].length - 1);
-                        var profitData = "<%=request.getSession().getAttribute("profit")%>";
-                        var profit = profitData.split(",");
-                        profit[0] = profit[0].substring("1");
-                        profit[11] = profit[11].substring("0", profit[11].length - 1);
-                        var lineChartData = {
-                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                            datasets: [
-                                {
-                                    label: 'Revenue',
-                                    fillColor: 'rgba(153, 102, 255, 0.3)',
-                                    strokeColor: 'rgba(153, 102, 255, 1)',
-                                    pointColor: 'rgba(153, 102, 255, 1)',
-                                    data: sales,
-                                    backgroundColor: [
-                                        'rgba(153, 102, 255, 0.3)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(153, 102, 255, 0.3)'
-                                    ],
-                                    borderWidth: 1
-                                },
-                                {
-                                    label: 'Profit',
-                                    fillColor: 'rgba(255, 99, 132, 0.3)',
-                                    strokeColor: 'rgba(220,180,0,1)',
-                                    pointColor: 'rgba(220,180,0,1)',
-                                    data: profit,
-                                    backgroundColor: [
-                                        'rgba(255, 99, 132, 0.3)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(255,99,132,0.3)'
-                                    ],
-                                    borderWidth: 1
-                                }, {
-                                    label: 'Cost',
-                                    fillColor: 'rgba(54, 162, 235, 0.3)',
-                                    strokeColor: 'rgba(54, 162, 235, 1)',
-                                    pointColor: 'rgba(54, 162, 235, 1)',
-                                    data: cost,
-                                    backgroundColor: [
-                                        'rgba(54, 162, 235, 0.3)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(54, 162, 235, 0.3)'
-                                    ],
-                                }
-                            ]
-                        };
-                        Chart.defaults.global.tooltipYPadding = 16;
-                        Chart.defaults.global.tooltipCornerRadius = 0;
-                        Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                        Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                        Chart.defaults.global.animationEasing = "easeInOutElastic";
-                        Chart.defaults.global.responsive = false;
-                        var ctx = document.getElementById("RevenueChart").getContext("2d");
-                        //ctx.height = 500;
-                        var RevenueChart = new Chart(ctx, {
-                            type: 'line',
-                            data: lineChartData,
-                            pointDotRadius: 5,
-                            bezierCurve: false,
-                            scaleShowVerticalLines: false
-                        });
-                    },
-                    error: function (data) {
-                        console.log("Error: " + data);
-                    }
-                });
-            });
+                            $(document).ready(function () {
+                                $.ajax({
+                                    url: 'SalesGraph',
+                                    type: 'POST',
+                                    success: function () {
+                                        var salesData = "<%=request.getSession().getAttribute("sales")%>";
+                                        var sales = salesData.split(",");
+                                        sales[0] = sales[0].substring("1");
+                                        sales[11] = sales[11].substring("0", sales[11].length - 1);
+                                        var costData = "<%=request.getSession().getAttribute("cost")%>";
+                                        var cost = costData.split(",");
+                                        cost[0] = cost[0].substring("1");
+                                        cost[11] = cost[11].substring("0", cost[11].length - 1);
+                                        var profitData = "<%=request.getSession().getAttribute("profit")%>";
+                                        var profit = profitData.split(",");
+                                        profit[0] = profit[0].substring("1");
+                                        profit[11] = profit[11].substring("0", profit[11].length - 1);
+                                        var lineChartData = {
+                                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                            datasets: [
+                                                {
+                                                    label: 'Revenue',
+                                                    fillColor: 'rgba(153, 102, 255, 0.3)',
+                                                    strokeColor: 'rgba(153, 102, 255, 1)',
+                                                    pointColor: 'rgba(153, 102, 255, 1)',
+                                                    data: sales,
+                                                    backgroundColor: [
+                                                        'rgba(153, 102, 255, 0.3)'
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(153, 102, 255, 0.3)'
+                                                    ],
+                                                    borderWidth: 1
+                                                },
+                                                {
+                                                    label: 'Profit',
+                                                    fillColor: 'rgba(255, 99, 132, 0.3)',
+                                                    strokeColor: 'rgba(220,180,0,1)',
+                                                    pointColor: 'rgba(220,180,0,1)',
+                                                    data: profit,
+                                                    backgroundColor: [
+                                                        'rgba(255, 99, 132, 0.3)'
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(255,99,132,0.3)'
+                                                    ],
+                                                    borderWidth: 1
+                                                }, {
+                                                    label: 'Cost',
+                                                    fillColor: 'rgba(54, 162, 235, 0.3)',
+                                                    strokeColor: 'rgba(54, 162, 235, 1)',
+                                                    pointColor: 'rgba(54, 162, 235, 1)',
+                                                    data: cost,
+                                                    backgroundColor: [
+                                                        'rgba(54, 162, 235, 0.3)'
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(54, 162, 235, 0.3)'
+                                                    ],
+                                                }
+                                            ]
+                                        };
+                                        Chart.defaults.global.tooltipYPadding = 16;
+                                        Chart.defaults.global.tooltipCornerRadius = 0;
+                                        Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                        Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                        Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                        Chart.defaults.global.responsive = false;
+                                        var ctx = document.getElementById("RevenueChart").getContext("2d");
+                                        //ctx.height = 500;
+                                        var RevenueChart = new Chart(ctx, {
+                                            type: 'line',
+                                            data: lineChartData,
+                                            pointDotRadius: 5,
+                                            bezierCurve: false,
+                                            scaleShowVerticalLines: false
+                                        });
+                                    },
+                                    error: function (data) {
+                                        console.log("Error: " + data);
+                                    }
+                                });
+                            });
                         </script>
                         <script>
                             $(document).ready(function () {
@@ -1813,35 +1833,35 @@
 </body>
 <script>
 //can delete this entire function 
-/*
-    // this is for toggling between the 3 main pages
-    function KPIs(evt, KPI) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        var clientChartDiv, employeeChartDiv, clientDatatableDiv, employeeDatatableDiv;
-        clientChartDiv = document.getElementsByClassName("clientChartsDiv");
-        employeeChartDiv = document.getElementsByClassName("employeeChartsDiv");
-        clientDatatableDiv = document.getElementsByClassName("clientDatatableDiv");
-        employeeDatatableDiv = document.getElementsByClassName("employeeDatatableDiv");
-
-//*************************** REMINDER: TO UNCOMMENT THIS SECTION WHEN EVERYTHING WORKS ********************************************
-        //clientChartDiv[0].style.display = "none";
-        //employeeChartDiv[0].style.display = "none";
-        //clientDatatableDiv[0].style.display = "block";
-        //employeeDatatableDiv[0].style.display = "block";
-
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(KPI).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
- */
+    /*
+     // this is for toggling between the 3 main pages
+     function KPIs(evt, KPI) {
+     var i, tabcontent, tablinks;
+     tabcontent = document.getElementsByClassName("tabcontent");
+     for (i = 0; i < tabcontent.length; i++) {
+     tabcontent[i].style.display = "none";
+     }
+     
+     var clientChartDiv, employeeChartDiv, clientDatatableDiv, employeeDatatableDiv;
+     clientChartDiv = document.getElementsByClassName("clientChartsDiv");
+     employeeChartDiv = document.getElementsByClassName("employeeChartsDiv");
+     clientDatatableDiv = document.getElementsByClassName("clientDatatableDiv");
+     employeeDatatableDiv = document.getElementsByClassName("employeeDatatableDiv");
+     
+     //*************************** REMINDER: TO UNCOMMENT THIS SECTION WHEN EVERYTHING WORKS ********************************************
+     //clientChartDiv[0].style.display = "none";
+     //employeeChartDiv[0].style.display = "none";
+     //clientDatatableDiv[0].style.display = "block";
+     //employeeDatatableDiv[0].style.display = "block";
+     
+     tablinks = document.getElementsByClassName("tablinks");
+     for (i = 0; i < tablinks.length; i++) {
+     tablinks[i].className = tablinks[i].className.replace(" active", "");
+     }
+     document.getElementById(KPI).style.display = "block";
+     evt.currentTarget.className += " active";
+     }
+     */
 </script>
 
 <script>
