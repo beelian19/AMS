@@ -672,7 +672,7 @@
                                 var $description = $('<div/>');
                                 $description.append($('<p/>').html('<b>Title: </b><a href=ProjectProfile.jsp?projectID=' + calEvent.projectID + '>' + calEvent.title + '</a>'));
                                 $description.append($('<p/>').html('<b>Company Name: </b>' + calEvent.companyName));
-                                $description.append($('<p/>').html('<b>Assigned Employees: </b>' + calEvent.assignedEmployee1 + ' & ' + calEvent.assignedEmployee2));
+                                $description.append($('<p/>').html('<b>Assigned Employees: </b>' + calEvent.employee1 + ' & ' + calEvent.employee2));
 
                                 $description.append($('<p/>').html('<b>Project Reviewer: </b>' + calEvent.projectReviewer));
                                 $description.append($('<p/>').html('<b>Task Reviewer: </b>' + calEvent.reviewer));
@@ -686,7 +686,7 @@
                                 var $description = $('<div/>');
                                 $description.append($('<p/>').html('<b>Title: </b><a href=ProjectProfile.jsp?projectID=' + calEvent.projectID + '>' + calEvent.title + '</a>'));
                                 $description.append($('<p/>').html('<b>Company Name: </b>' + calEvent.companyName));
-                                $description.append($('<p/>').html('<b>Assigned Employees: </b>' + calEvent.assignedEmployee1 + ' & ' + calEvent.assignedEmployee2));
+                                $description.append($('<p/>').html('<b>Assigned Employees: </b>' + calEvent.employee1 + ' & ' + calEvent.employee2));
                                 if (projectType === 'tax') {
                                     $description.append($('<p/>').html('<b>Project Type: </b>Tax'));
                                 } else if (projectType === 'eci') {

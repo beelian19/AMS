@@ -401,16 +401,12 @@
                                         'external=' + external + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer + '&' + 'clientID=' + clientID + '&' + 'assignedHours=' + assignedHours,
 
                                 success: function () {
-                                    console.log("This is the data in success function: ");
-                                    alert("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                                    window.location.assign("http://localhost:8084/AMS/ClientProfile.jsp?profileId=1");
+                                    var string = "http://localhost:8084/AMS/ClientProfile.jsp?profileId=" + clientID;
+                                    window.location.assign(string);
                                 },
                                 error: function () {
                                     var string = "http://localhost:8084/AMS/ClientProfile.jsp?profileId=" + clientID;
-                                    console.log("ERRORRRRRRRRRRRRRRR");
-                                    //window.location = string;
-                                    alert(string);
-                                    window.location.assign("http://localhost:8084/AMS/ClientProfile.jsp?profileId=1");
+                                    window.location.assign(string);
                                 }
                             });
                         }
