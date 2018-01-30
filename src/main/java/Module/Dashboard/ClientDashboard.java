@@ -37,6 +37,8 @@ public class ClientDashboard extends HttpServlet {
         
         String clientID = request.getParameter("clientID");
         String year = request.getParameter("year");
+        System.out.println("Client ID: "+clientID);
+        System.out.println("Year: "+year);
         //take in clientID and year as parameters
         profitabilityList = ProjectDAO.getCompanyMonthlyProfitability(clientID,year);
         int[] overdueList = new int[12];

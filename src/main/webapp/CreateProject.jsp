@@ -334,7 +334,7 @@
                                         &nbsp;
                                     </td>
                                     <td style="width: 16.167%">
-                                        <button id="btnCreateProject" class="btn btn-lg btn-primary btn-block btn-success" type="submit">Create</button>
+                                        <button id="btnCreateProject" class="btn btn-lg btn-primary btn-block btn-success" type="button">Create</button>
                                     </td>
                                     <td style="width: 5.666%">
                                         &nbsp;
