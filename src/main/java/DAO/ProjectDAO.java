@@ -1414,7 +1414,6 @@ public class ProjectDAO {
                 String dateCompleted = df.format(p.getDateCompleted());
                 String year = dateCompleted.substring(0, 4);
                 String month = dateCompleted.substring(5, 7);
-
                 if (year.equals(selectedYear)) {
 
                     switch (month) {

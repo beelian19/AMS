@@ -472,14 +472,17 @@
                                     success: function () {
                                         var salesData = "<%=request.getSession().getAttribute("sales")%>";
                                         var sales = salesData.split(",");
+                                        //console.log("Sales: "+sales);
                                         sales[0] = sales[0].substring("1");
                                         sales[11] = sales[11].substring("0", sales[11].length - 1);
                                         var costData = "<%=request.getSession().getAttribute("cost")%>";
                                         var cost = costData.split(",");
+                                        //console.log("Cost: "+cost);
                                         cost[0] = cost[0].substring("1");
                                         cost[11] = cost[11].substring("0", cost[11].length - 1);
                                         var profitData = "<%=request.getSession().getAttribute("profit")%>";
                                         var profit = profitData.split(",");
+                                        //console.log("Profit: "+profit);
                                         profit[0] = profit[0].substring("1");
                                         profit[11] = profit[11].substring("0", profit[11].length - 1);
                                         var lineChartData = {
@@ -1033,9 +1036,14 @@
                                         </td>
                                         <td style="width: 16.167%">
                                             <%
-                                                String clientProfileUrl = "ClientProfile.jsp?profileId=" + request.getParameter("client");
+                                                if(request.getSession().getAttribute("clientID") != null) {
+                                                    
+                                                String clientProfileUrl = "ClientProfile.jsp?profileId=" + (String) request.getSession().getAttribute("clientID");
                                             %>
                                             <button class="btn btn-lg btn-primary btn-block" onclick="window.location = '<%=clientProfileUrl%>';">Go to Profile</button>
+                                            <%
+                                                }
+                                            %>
                                         </td>
                                         <td style="width: 5.666%">
                                             &nbsp;
@@ -1443,13 +1451,18 @@
                                         <td style="width: 1%">
                                             &nbsp;
                                         </td>
-                                        <!--<td style="width: 16.167%">
-                                            <
-                                                String employeeName = request.getParameter("employeeName");
-                                                String employeeProfileUrl = "EmployeeProfile.jsp?profileName=" + employeeName.toLowerCase();
+                                        <td style="width: 16.167%">
+                                            <%
+                                                if (request.getSession().getAttribute("empName") != null) {
+                                                    String employeeName = (String) request.getSession().getAttribute("empName");
+                                                    String employeeProfileUrl = "EmployeeProfile.jsp?profileName=" + employeeName.toLowerCase();
+
                                             %>
-                                            <button class="btn btn-lg btn-primary btn-block" onclick="window.location = '<=employeeProfileUrl%>';">Go to Profile</button>
-                                        </td>-->
+                                            <button class="btn btn-lg btn-primary btn-block" onclick="window.location = '<%=employeeProfileUrl%>';">Go to Profile</button>
+                                            <%
+                                                }
+                                            %>
+                                        </td>
                                         <td style="width: 5.666%">
                                             &nbsp;
                                         </td>
@@ -1468,12 +1481,8 @@
                     </div>
                     <script>
                         $('#btnViewEmpPerformance').click(function () {
-
                             var employeeDashboardYear = document.getElementById('employeeDashboardYear').value;
                             var empName = $('input[name=empName]:checked').val(); //document.getElementById("empName").value;
-                            
-                            console.log("Year: "+employeeDashboardYear);
-                            console.log("Employee Name: "+empName);
 
                             $.ajax({
                                 url: 'StaffMonthlyReport',
@@ -1495,7 +1504,6 @@
                                     completedProjects[0] = completedProjects[0].substring("1");
                                     completedProjects[11] = completedProjects[11].substring("0", completedProjects[11].length - 1);
                                     //console.log(completedProjects);
-
                                     //this is to tell if we should display the charts!!
                                     var displayEmployeeCharts = true;
                                     var employeeDatatable;

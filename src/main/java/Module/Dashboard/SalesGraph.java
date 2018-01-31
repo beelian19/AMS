@@ -6,9 +6,6 @@
 package Module.Dashboard;
 
 import DAO.ProjectDAO;
-import static Utility.JsonFormatter.convertObjectToElement;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;

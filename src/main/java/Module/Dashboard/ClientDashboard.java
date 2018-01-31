@@ -68,6 +68,8 @@ public class ClientDashboard extends HttpServlet {
         
         request.getSession().setAttribute("clientOverdueProject", overdue);
         request.getSession().setAttribute("clientOnTimeProject", ontime);
+        
+        request.getSession().setAttribute("clientID", clientID);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
