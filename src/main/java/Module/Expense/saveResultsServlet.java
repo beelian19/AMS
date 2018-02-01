@@ -5,10 +5,11 @@
  */
 package Module.Expense;
 
+import DAO.EmployeeDAO;
 import Entity.Client;
+import Entity.Employee;
 import Entity.Payment;
 import Entity.PaymentFactory;
-import Entity.SampleData;
 import java.io.IOException;
 import java.io.InputStream;
 import static java.lang.String.format;
@@ -16,8 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -55,6 +54,15 @@ public class saveResultsServlet extends HttpServlet {
 
         Client client = (request.getSession().getAttribute("paymentClient") != null) ? (Client) request.getSession().getAttribute("paymentClient") : null;
 
+        String to = "abundantms2017@gmail.com";
+        
+        if (request.getSession().getAttribute("userId") != null) {
+            Employee cur = EmployeeDAO.getEmployeeByID((String) request.getSession().getAttribute("userId"));
+            if (cur != null) {
+                to = cur.getEmail().trim();
+            }
+        }
+        
         List<Payment> post;
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
@@ -95,9 +103,7 @@ public class saveResultsServlet extends HttpServlet {
                                 return new PasswordAuthentication(from, pass);
                             }
                         };
-                        Session session1 = Session.getDefaultInstance(m_properties, authenticator);
-                        //String to = "pm@abaccounting.com.sg";
-                        String to = "minoo.ye.2015@sis.smu.edu.sg";
+                        Session session1 = Session.getDefaultInstance(m_properties, authenticator);                  
                         MimeMessage message = new MimeMessage(session1);
                         message.setFrom(new InternetAddress(from));
                         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
@@ -110,7 +116,7 @@ public class saveResultsServlet extends HttpServlet {
                         }
                         message.setText(msg);
                         Transport.send(message);
-                        request.getSession().setAttribute("status", "Success: Results sent");
+                        request.getSession().setAttribute("status", "Success: Results sent to " + to);
                     } catch (MessagingException ex) {
                         request.getSession().setAttribute("status", "Error: MessagingException " + ex.getMessage());
                     } finally {

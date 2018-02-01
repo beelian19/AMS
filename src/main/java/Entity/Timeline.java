@@ -302,13 +302,21 @@ public class Timeline {
             return false;
         }
     }
-
-    private int nextQuarterMonth(int current, int target) {
-        switch (target) {
-            case 0:
-            case 3:
-            case 6:
-            case 9:
+    
+    
+    /**
+     * Returns the company's financial year end month and the current month, return the next quarter (3 months) month's deadline from 0-11
+     * 
+     * @param current
+     * @param financialYearEndMonth
+     * @return 
+     */
+    private int nextQuarterMonth(int current, int financialYearEndMonth) {
+        switch (financialYearEndMonth) {
+            case 0: //Jan
+            case 3: //Apr
+            case 6: //Jul
+            case 9: //Oct
                 if (current <= 2) {
                     return 3;
                 } else if (current <= 5) {
@@ -318,10 +326,11 @@ public class Timeline {
                 } else {
                     return 0;
                 }
-            case 1:
-            case 4:
-            case 7:
-            case 10:
+                
+            case 1: //Feb
+            case 4: //May
+            case 7: //Aug
+            case 10://Nov
                 if (current == 10 || current == 11 || current == 0) {
                     return 1;
                 } else if (current <= 3) {
@@ -331,7 +340,7 @@ public class Timeline {
                 } else {
                     return 10;
                 }
-            default:
+            default: //Mar Jun Sep Dec
                 if (current <= 1 || current == 11) {
                     return 2;
                 } else if (current <= 4) {
