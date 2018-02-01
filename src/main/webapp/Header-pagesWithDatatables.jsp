@@ -212,13 +212,10 @@
         <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <link href='css/bootstrap.min.css' rel="stylesheet"/>
 
-
-        <script src='css/bootstrap.min.css' rel="stylesheet" type="text/css"/>
-        <script src="js/bootstrap.min.js"></script>     
-
-        <script src='js/moment.min.js'></script>
     </head>
     <body width="100%" cellpadding="0%">
         <%
@@ -328,7 +325,7 @@
                 <tr>
                     <td>
                         <%
-                        if (sessionUserIsAdmin.equals("yes")) {
+                            if (sessionUserIsAdmin.equals("yes")) {
                         %> 
                         <a href="FinalDashboard.jsp" class="btn btn-default btn-lg neck-button black">Dashboard &emsp;</a>
                         <%} else {
@@ -344,7 +341,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="UploadExpense.jsp">QuickBooks</a></li>
-                                 <!--<li><a href="ExpenseResult.jsp">Results</a></li>-->
+                                <!--<li><a href="ExpenseResult.jsp">Results</a></li>-->
                                 <li><a href="TokenOverview.jsp">Tokens</a></li>
                             </ul>
                         </div>
@@ -392,7 +389,7 @@
                                 <li><a href="CreateUser.jsp">Add New Employee</a></li>
                                 <li><a href="EmployeeOverview.jsp">View All Employees</a></li>
                                 <!--<li><a href="ViewAllTimesheet.jsp">View All Timesheets</a></li>-->
-                                
+
                                 <!--<li><a href="CreateTask.jsp">Create Task</a></li>-->
                                 <%
                                     }
@@ -403,6 +400,7 @@
                 </tr>
             </table>
         </div>
+        <br/><br/><br/>
         <!-- end of neck -->
     </body> 
 </html>

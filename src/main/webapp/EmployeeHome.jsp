@@ -20,8 +20,7 @@
     <head>
         <title>Employee Home Page | Abundant Accounting Management System</title>
 
-        <%            
-            String empId = (String) session.getAttribute("userId");
+        <%            String empId = (String) session.getAttribute("userId");
             EmployeeDAO empDAO = new EmployeeDAO();
             Employee employee = empDAO.getEmployeeByID(empId);
             String supervisor = employee.getIsSupervisor();
@@ -50,20 +49,20 @@
                                 <div align="center">
                                     <table style="width: 100%">
                                         <tr>
-                                            <div align="left" style="width: 70%">
-                                                <td style="width: 2%; text-align: left; float: bottom;">
-                                                    <strong>Legend:&emsp;</strong>
-                                                </td>
-                                                <td style="background-color: #FFD700; text-align: center; width: 18%" align="left">
-                                                    Incomplete
-                                                </td>
-                                                <td style="background-color: #6495ED; text-align: center; width: 18%" align="left">
-                                                    Waiting for review
-                                                </td>
-                                                <td style="background-color: #32CD32; text-align: center; width: 18%" align="left">
-                                                    Completed
-                                                </td>
-                                            </div>
+                                        <div align="left" style="width: 70%">
+                                            <td style="width: 2%; text-align: left; float: bottom;">
+                                                <strong>Legend:&emsp;</strong>
+                                            </td>
+                                            <td style="background-color: #FFD700; text-align: center; width: 18%" align="left">
+                                                Incomplete
+                                            </td>
+                                            <td style="background-color: #6495ED; text-align: center; width: 18%" align="left">
+                                                Waiting for review
+                                            </td>
+                                            <td style="background-color: #32CD32; text-align: center; width: 18%" align="left">
+                                                Completed
+                                            </td>
+                                        </div>
                                         </tr>
                                     </table>
                                 </div>
@@ -165,7 +164,6 @@
                 GenerateCalendar();
                 function GenerateCalendar() {
                     var calendar = $('#calendar').fullCalendar({
-
                         businessHours: {
                             // days of week. an array of zero-based day of week integers (0=Sunday)
                             dow: [1, 2, 3, 4, 5], // Monday - Friday
@@ -184,7 +182,6 @@
                         eventLimit: true,
                         fixedWeekCount: false,
                         events: "DisplayProjectForEmpHome",
-
                         eventRender: function (event, element, view) {
                             //when project first created yellow color
                             var taskStatus = event.taskStatus;
@@ -540,4 +537,7 @@
         </script>
     </body>
     <jsp:include page="Footer.html"/>
+    <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <link href='css/bootstrap.min.css' rel="stylesheet"/>
 </html>

@@ -349,7 +349,7 @@
                 <tr>
                     <td>
                         <%
-                        if (sessionUserIsAdmin.equals("yes")) {
+                            if (sessionUserIsAdmin.equals("yes")) {
                         %> 
                         <a href="FinalDashboard.jsp" class="btn btn-default btn-lg neck-button black">Dashboard &emsp;</a>
                         <%} else {
@@ -424,6 +424,7 @@
                 </tr>
             </table>
         </div>
+        <br/><br/><br/>
         <!-- end of neck -->
     </body>
 </html>

@@ -14,44 +14,44 @@
                 padding-right: 0px;
                 margin-right: 0px;
             }
-            
+
             .white{
                 color: #fff !important;
                 font-family: Arial;
             }
-            
+
             .dashboard-header, .dashboard-header:hover{
                 color: white;
                 text-decoration: none;
                 font-family: Arial;
                 align-items: left;
             }
-            
+
             .a{
                 text-decoration: none;
                 color: white;
             }
-            
+
             .navbar-head{
                 background-color : #034C75;
                 font-family: Arial;
             }
-            
+
             .navbar-neck{
                 background-color: #F5C904;
                 font-family: Arial;
                 width: 100%;
             }
-            
+
             .neck-button{
                 border-radius: 0 !important;
                 background-color: #F5C904 !important;
                 border-color: #F5C904 !important;
                 border-width: 0 !important;
             }
-            
+
             <!--main stuff-->
-            
+
             html, body{
                 top:0;
                 bottom:0;
@@ -62,7 +62,7 @@
                 margin-right: 0;
                 padding: 0;
             }
-            
+
             container-fluid-div{
                 margin-left: 0;
                 margin-right: 0;
@@ -71,14 +71,14 @@
                 padding-top: 0;
                 padding-bottom: 0;
             }
-            
+
             .body {
                 overflow: scroll;
                 margin: 0;
                 padding: 0;
                 height: 75%;
             }
-            
+
             footer{
                 position: absolute;
                 bottom:0;
@@ -86,14 +86,14 @@
                 right:0;
                 height: 12%;
             }
-            
+
             div{
                 padding-left: 0px;
                 padding-right: 0px;
                 padding-top: 0px;
                 padding-bottom: 0px;
             }
-            
+
             nav{
                 padding-left: 0px;
                 padding-right: 0px;
@@ -102,17 +102,17 @@
                 width: 100%;
                 height: 100%;
             }
-            
+
             .dropdown-toggle:active, .open .dropdown-toggle {
                 background-color:#034C75 !important;
             }
-            
+
             .body {
                 overflow: scroll;
                 margin: 0;
                 padding: 0;
             }
-            
+
             .card {
                 background-color: #F0F8FF;
                 /* just in case there no content*/
@@ -210,7 +210,7 @@
                 -webkit-transition: all 0.218s;
                 transition: all 0.218s;
             }
-            
+
             .container-fluid-div{
                 margin-left: 0;
                 margin-right: 0;
@@ -219,43 +219,43 @@
                 padding-top: 0;
                 padding-bottom: 0;
             }
-            
+
             .card-container.card {
                 max-width: 350px;
                 padding: 40px 40px;
             }
-            
+
             .nav-bar-header-plain{
                 width: 100% !important;
             }
-            
+
             a:link{
                 padding: 0px;
                 text-decoration: none;
                 color: white;
             }
-            
+
             a:visited {
                 /* Applies to all visited links */
                 padding: 0px;
                 text-decoration: none;
                 color: white;
             } 
-            
+
             a:hover   {
                 /* Applies to links under the pointer */
                 padding: 0px;
                 text-decoration: none;
                 color: white;
             }
-            
+
             a:active  {
                 /* Applies to activated links */
                 padding: 0px;
                 text-decoration: none;
                 color: white;
             } 
-            
+
             .reset-submit{
                 width: 60% !important;
             }
@@ -266,16 +266,16 @@
         <div class="navbar-head container-fluid" width="100%">
             <table width="100%">
                 <tr width="100%">
+                <br/>
+                <td align="left bottom" width="100%">
                     <br/>
-                    <td align="left bottom" width="100%">
-                        <br/>
-                        <a href="http://www.abaccounting.com.sg/" class="dashboard-header" width="100%" cellpadding="0%">
-                            <font size="13px" color="white">
-                                &ensp;Abundant Accounting Pte Ltd
-                            </font>
-                        </a>
-                        <br/>
-                    </td>
+                    <a href="http://www.abaccounting.com.sg/" class="dashboard-header" width="100%" cellpadding="0%">
+                        <font size="13px" color="white">
+                        &ensp;Abundant Accounting Pte Ltd
+                        </font>
+                    </a>
+                    <br/>
+                </td>
                 </tr>
             </table>
         </div>
@@ -284,7 +284,7 @@
     <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script src="js/jquery.min.js"></script>
-    <script src='css/bootstrap.min.css' rel="stylesheet" type="text/css"/>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <link href='css/bootstrap.min.css' rel="stylesheet"/>
 </html>

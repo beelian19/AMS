@@ -22,8 +22,7 @@
 <html>
     <head>
         <title>Admin Home Page | Abundant Accounting Management System</title>
-        <%            
-            EmployeeDAO empDAO = new EmployeeDAO();
+        <%            EmployeeDAO empDAO = new EmployeeDAO();
             ProjectDAO projectDAO = new ProjectDAO();
             ArrayList<Client> clientList = ClientDAO.getAllClient();
             ArrayList<Project> projectList = projectDAO.getAllIncompleteAdhocProjects();
@@ -208,7 +207,7 @@
                                                         //System.out.println("Set size: " + compNames.size());
                                                         for (String name : compNames) {
                                                             //System.out.println(name);
-%>                                                             
+                                                %>                                                             
                                                 <option value='<%=name%>'><%=name%></option>
                                                 <%
                                                         }
@@ -725,7 +724,7 @@
                                             "<b>Project Title: </b> " + calEvent.title + "<br>" + "<b>Company Name: </b> " + calEvent.companyName + "<br>" +
                                             "<b>Project Type: </b> ECI<br>" + "<b>Employees Assigned: </b>" + calEvent.employee1 + " & " + calEvent.employee2 +
                                             "<br>" + "<b>Project Reviewer: </b>" + calEvent.projectReviewer + "<br>" + "<b>External Deadline: </b>" + calEvent.actualDeadline + "<br>" +
-                                            "<b>Project Remarks: </b></br> " + calEvent.projectRemarks + 
+                                            "<b>Project Remarks: </b></br> " + calEvent.projectRemarks +
                                             '</div>';
                                 } else if (projectType === 'gst') {
                                     tooltip = '<div class="tooltipevent" style="width:400px;height:200px;background:#FFEFD5;position:absolute;z-index:10001;">' +
@@ -1166,4 +1165,7 @@
         </script>
     </body>
     <jsp:include page="Footer.html"/>
+    <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <link href='css/bootstrap.min.css' rel="stylesheet"/>
 </html>
