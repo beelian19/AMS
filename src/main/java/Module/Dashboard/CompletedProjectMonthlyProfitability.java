@@ -37,8 +37,8 @@ public class CompletedProjectMonthlyProfitability extends HttpServlet {
 
         ArrayList<ArrayList<Integer>> profitabilityList = new ArrayList();
 
-        profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability("2017");
-        int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear("2017");
+        profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability("2018");
+        int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear("2018");
         
         ArrayList<Integer> completed = new ArrayList();
 

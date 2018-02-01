@@ -4,7 +4,6 @@
     Author     : Bernitatowyg
 --%>
 
-<%@page import="Controller.EmployeeController"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

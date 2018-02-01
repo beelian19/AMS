@@ -32,7 +32,7 @@ public class SalesGraph extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String selectedYear = "2017";
+        String selectedYear = "2018";
         PrintWriter out = response.getWriter();
         Double[] salesList = ProjectDAO.getSales(selectedYear);
         Double[] costList = ProjectDAO.getActualCost(selectedYear);
