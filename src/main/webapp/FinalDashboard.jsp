@@ -212,22 +212,22 @@
                     <div id="Abundant" class="tab-pane tabcontent container-fluid" style="text-align: center;">
                         <br/>
                         <div class="row">
-                                    <br/>
-                                    <div class="col-xs-9">
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <div class="dashboardSelect">
-                                            <select name="overallAbundantDashboardYear" class="clientDashboard" id="overallAbundantDashboardYear" required>
-                                                <option class="clientDashboardOption" disabled selected value>-- Please Select Year --</option>
-                                                <option class="clientDashboardOption" value="2014">2014</option>
-                                                <option class="clientDashboardOption" value="2015">2015</option>
-                                                <option class="clientDashboardOption" value="2016">2016</option>
-                                                <option class="clientDashboardOption" value="2017">2017</option>
-                                                <option class="clientDashboardOption" value="2018">2018</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                            <br/>
+                            <div class="col-xs-9">
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="dashboardSelect">
+                                    <select name="overallAbundantDashboardYear" class="clientDashboard" id="overallAbundantDashboardYear" required>
+                                        <option class="clientDashboardOption" disabled selected value>-- Please Select Year --</option>
+                                        <option class="clientDashboardOption" value="2014">2014</option>
+                                        <option class="clientDashboardOption" value="2015">2015</option>
+                                        <option class="clientDashboardOption" value="2016">2016</option>
+                                        <option class="clientDashboardOption" value="2017">2017</option>
+                                        <option class="clientDashboardOption" value="2018">2018</option>
+                                    </select>
                                 </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-xs-1">&nbsp;</div>
                             <div class="col-xs-5 displayChartsTable" data-target="#revenueTable" style="text-align: center;" align="center;">
@@ -1053,9 +1053,9 @@
                                         </td>
                                         <td style="width: 16.167%">
                                             <%
-                                                if(request.getSession().getAttribute("clientID") != null) {
-                                                    
-                                                String clientProfileUrl = "ClientProfile.jsp?profileId=" + (String) request.getSession().getAttribute("clientID");
+                                                if (request.getSession().getAttribute("clientID") != null) {
+
+                                                    String clientProfileUrl = "ClientProfile.jsp?profileId=" + (String) request.getSession().getAttribute("clientID");
                                             %>
                                             <button class="btn btn-lg btn-primary btn-block" onclick="window.location = '<%=clientProfileUrl%>';">Go to Profile</button>
                                             <%
