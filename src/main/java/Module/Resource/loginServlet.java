@@ -46,7 +46,7 @@ public class loginServlet extends HttpServlet {
             session.setAttribute("status", "Error: Login failed! Please try again.");
             RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
             rd.forward(request, response);
-        } else if (employee.getPassword().equals(password) && !employee.getPosition().equals("Ex-Employee")) {
+        } else if (employee.getPassword().equals(password) && !employee.getPosition().equals("Ex-Employee") && employee.getEmployeeID().equals(userId)) {
             //this means that the user is not an admin
             //standardized the session attributes
             session.setAttribute("employeeName", employee.getName());
@@ -72,7 +72,7 @@ public class loginServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
             rd.forward(request, response);
         } else {
-            session.setAttribute("status", "Error: Username/Password is invalid*");
+            session.setAttribute("status", "Error: Username/Password is invalid");
             RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
             rd.forward(request, response);
         }
