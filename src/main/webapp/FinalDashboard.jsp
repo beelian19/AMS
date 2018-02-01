@@ -212,6 +212,23 @@
                     <div id="Abundant" class="tab-pane tabcontent container-fluid" style="text-align: center;">
                         <br/>
                         <div class="row">
+                                    <br/>
+                                    <div class="col-xs-9">
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="dashboardSelect">
+                                            <select name="overallAbundantDashboardYear" class="clientDashboard" id="overallAbundantDashboardYear" required>
+                                                <option class="clientDashboardOption" disabled selected value>-- Please Select Year --</option>
+                                                <option class="clientDashboardOption" value="2014">2014</option>
+                                                <option class="clientDashboardOption" value="2015">2015</option>
+                                                <option class="clientDashboardOption" value="2016">2016</option>
+                                                <option class="clientDashboardOption" value="2017">2017</option>
+                                                <option class="clientDashboardOption" value="2018">2018</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                        <div class="row">
                             <div class="col-xs-1">&nbsp;</div>
                             <div class="col-xs-5 displayChartsTable" data-target="#revenueTable" style="text-align: center;" align="center;">
                                 <h2>Revenue</h2>
@@ -464,6 +481,7 @@
                                 </div>
                             </div>
                         </div>
+                                        <!--
                         <script>
                             $(document).ready(function () {
                                 $.ajax({
@@ -913,6 +931,7 @@
                                 });
                             });
                         </script>
+                                        -->
                     </div>
 
                     <!-- ############################################### THIS PORTION IS FOR CLIENT PERFORMANCE ######################################################################-->
