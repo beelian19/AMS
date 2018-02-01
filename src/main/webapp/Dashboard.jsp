@@ -145,8 +145,8 @@
             })
         </script>
         <%
-          String profileUrl = "ProjectProfile.jsp?projectID=";
-          String profileUrl2 = "";
+            String profileUrl = "ProjectProfile.jsp?projectID=";
+            String profileUrl2 = "";
         %>
     </head>
     <script src="js/Chart.min.js"></script>
@@ -201,7 +201,7 @@
                         completedProjects[0] = completedProjects[0].substring("1");
                         completedProjects[11] = completedProjects[11].substring("0", completedProjects[11].length - 1);
                         //console.log(completedProjects);
-                        
+
                         var lineChartData = {
                             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                             datasets: [
@@ -239,20 +239,20 @@
                                         'rgba(153, 102, 255, 0.3)',
                                         'rgba(153, 102, 255, 0.3)'
                                     ],
-                                    borderColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
-                                    ],
+                                            borderColor: [
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)'
+                                            ],
                                     borderWidth: 1
                                 },
                                 {
@@ -288,27 +288,27 @@
                                         'rgba(255, 99, 132, 0.3)',
                                         'rgba(255, 99, 132, 0.3)'
                                     ],
-                                    borderColor: [
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)'
-                                    ],
+                                            borderColor: [
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)'
+                                            ],
                                     borderWidth: 1
                                 }, {
                                     label: '# of Projects on Time',
                                     fillColor: 'rgba(54, 162, 235, 0.2)',
                                     strokeColor: 'rgba(54, 162, 235, 0.2)',
                                     pointColor: 'rgba(54, 162, 235, 0.2)',
-                                    data: inTime,//[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
+                                    data: inTime, //[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
                                     backgroundColor: [
                                         'rgba(54, 162, 235, 0.3)',
                                         'rgba(54, 162, 235, 0.3)',
@@ -337,20 +337,20 @@
                                         'rgba(54, 162, 235, 0.3)',
                                         'rgba(54, 162, 235, 0.3)'
                                     ],
-                                    borderColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
-                                    ],
+                                            borderColor: [
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)'
+                                            ],
                                     borderWidth: 1
                                 }
                             ]
@@ -371,6 +371,8 @@
                             bezierCurve: false,
                             scaleShowVerticalLines: false
                         });
+                        staffMonthly();
+                        console.log("reached line 189");
                     },
                     error: function (data) {
                         console.log("Error: " + data);
@@ -378,9 +380,7 @@
                 });
             });
 
-                    </script>
-                    <script>
-                        $(document).ready(function () {
+                        function staffMonthly() {
                             var empName = "<%=request.getSession().getAttribute("employeeName")%>";
                             var year = "2017"; //need to change
                             $.ajax({
@@ -404,7 +404,7 @@
                                                 fillColor: 'rgba(255, 99, 132, 0.2)',
                                                 strokeColor: 'rgba(220,180,0,1)',
                                                 pointColor: 'rgba(220,180,0,1)',
-                                                data: plannedHours,//[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                                data: plannedHours, //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
                                                 backgroundColor: [
                                                     'rgba(255, 99, 132, 0.2)'
                                                 ],
@@ -418,7 +418,7 @@
                                                 fillColor: 'rgba(54, 162, 235, 0.2)',
                                                 strokeColor: 'rgba(66,180,0,1)',
                                                 pointColor: 'rgba(66,180,0,1)',
-                                                data: actualHours,//[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60], //profit, 
+                                                data: actualHours, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60], //profit, 
                                                 backgroundColor: [
                                                     'rgba(153, 102, 255, 0.2)'
                                                 ],
@@ -450,8 +450,7 @@
                                     console.log("Error: " + data);
                                 }
                             });
-                        });
-
+                        }
                     </script>
                     <div class="row">
                         <br/><br/>
@@ -471,7 +470,7 @@
                                     <tbody>
                                         <%
                                             if (request.getSession().getAttribute("employeeProjectList") != null) {
-                                                ArrayList<Project> employeeProjectList = (ArrayList<Project>)request.getSession().getAttribute("employeeProjectList");
+                                                ArrayList<Project> employeeProjectList = (ArrayList<Project>) request.getSession().getAttribute("employeeProjectList");
                                                 if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
                                                     for (int i = 0; i < employeeProjectList.size(); i++) {
                                                         Project p = employeeProjectList.get(i);
@@ -512,7 +511,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        <br/><br/>
     </nav>
 </body>
 <jsp:include page="Footer.html"/>

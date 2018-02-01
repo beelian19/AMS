@@ -212,13 +212,7 @@
         <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        
-        
-        <script src="js/jquery-ui.min.js" type="text/javascript"></script>
-        <script src="js/jquery.min.js" type="text/javascript"></script>
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        <link href='css/bootstrap.min.css' rel="stylesheet"/>
-
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     </head>
     <body width="100%" cellpadding="0%">
         <%
