@@ -71,7 +71,7 @@
                 </div>
             </div>
         </nav>
-        <!-- Start of Modal -->
+        <%--
         <div id="myModalAdHoc" class="modal fade" role="dialog">
             <!-- Modal content -->
             <div class="modal-dialog">
@@ -100,8 +100,6 @@
                 </div>
             </div>
         </div>
-        <!-- End of Modal-->
-        <!-- Start of Modal -->
         <div id="myModalCompanyProject" class="modal fade" role="dialog">
             <!-- Modal content -->
             <div class="modal-dialog">
@@ -121,7 +119,6 @@
                 </div>
             </div>
         </div>
-        <!-- Start of Modal -->
         <div id="myModalSave" class="modal fade" role="dialog">
             <!-- Modal content -->
             <div class="modal-dialog">
@@ -156,8 +153,7 @@
                 </div>
             </div>
         </div>
-        <!-- End of Modal-->
-
+        --%>
         <script>
             $(document).ready(function () {
                 var selectedEvent = null;
