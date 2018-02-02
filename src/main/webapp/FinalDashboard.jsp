@@ -217,7 +217,7 @@
                             </div>
                             <div class="col-xs-3">
                                 <div class="dashboardSelect">
-                                    <select name="overallAbundantDashboardYear" class="clientDashboard" id="overallAbundantDashboardYear" required>
+                                    <select name="overallAbundantDashboardYear" class="clientDashboard" id="overallAbundantDashboardYear" onchange="overallAbundantDashboardYear();"required>
                                         <option class="clientDashboardOption" disabled selected value>-- Please Select Year --</option>
                                         <option class="clientDashboardOption" value="2014">2014</option>
                                         <option class="clientDashboardOption" value="2015">2015</option>
@@ -483,8 +483,21 @@
                         </div>
                         <script>
                             $(document).ready(function () {
+                               overallAbundantDashboardYear(); 
+                            });
+                            
+                            function overallAbundantDashboardYear(){
+                                var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
+                                if (yearChosen === null || yearChosen === "") {
+                                    now = new Date
+                                    yearChosen = now.getYear();
+                                    if (yearChosen < 1900){
+                                        yearChosen=yearChosen+1900
+                                    }
+                                }
                                 $.ajax({
                                     url: 'SalesGraph',
+                                    //data: 'date' + yearChosen,                                    
                                     type: 'POST',
                                     success: function () {
                                         var salesData = "<%=request.getSession().getAttribute("sales")%>";
@@ -562,17 +575,19 @@
                                             bezierCurve: false,
                                             scaleShowVerticalLines: false
                                         });
+                                        completedProjectProfitability();
                                     },
                                     error: function (data) {
                                         console.log("Error: " + data);
                                     }
                                 });
-                            });
+                            }
                         </script>
                         <script>
-                            $(document).ready(function () {
+                            function completedProjectProfitability() {
                                 $.ajax({
-                                    url: 'CompletedProjectMonthlyProfitability',
+                                    url: 'CompletedProjectMonthlyProfitability', 
+                                    //data: 'year=' + yearChosen,
                                     type: 'POST',
                                     success: function () {
                                         var profitableProjectsData = "<%=request.getSession().getAttribute("yearProfit")%>";
@@ -743,17 +758,19 @@
                                             data: barChartData,
                                             scaleShowVerticalLines: false
                                         });
+                                        overdueProject();
                                     },
                                     error: function (data) {
                                         console.log("Error: " + data);
                                     }
                                 });
-                            });
+                            }
                         </script>
                         <script>
-                            $(document).ready(function () {
+                            function overdueProject() {
                                 $.ajax({
                                     url: 'OverdueProjectPerYear',
+                                    //data: 'year=' + yearChosen,
                                     type: 'POST',
                                     success: function () {
                                         var overdueProject = "<%=request.getSession().getAttribute("overdueProject")%>";
@@ -928,7 +945,7 @@
                                         console.log("Error: " + data);
                                     }
                                 });
-                            });
+                            }
                         </script>
                     </div>
 
@@ -1200,7 +1217,7 @@
                                         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                         datasets: [{
                                                 label: '# of Punctual Projects',
-                                                data: clientOnTimeProject, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                                                data: clientOnTimeProject,
                                                 backgroundColor: [
                                                     'rgba(54, 162, 235, 0.3)',
                                                     'rgba(54, 162, 235, 0.3)',
@@ -1233,7 +1250,7 @@
                                             },
                                             {
                                                 label: '# of Overdue Projects',
-                                                data: clientOverdueProject, //[1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
+                                                data: clientOverdueProject,
                                                 backgroundColor: [
                                                     'rgba(255, 206, 86, 0.3)',
                                                     'rgba(255, 206, 86, 0.3)',
@@ -1499,7 +1516,7 @@
                     <script>
                         $('#btnViewEmpPerformance').click(function () {
                             var employeeDashboardYear = document.getElementById('employeeDashboardYear').value;
-                            var empName = $('input[name=empName]:checked').val(); //document.getElementById("empName").value;
+                            var empName = $('input[name=empName]:checked').val();
 
                             $.ajax({
                                 url: 'StaffMonthlyReport',
@@ -1510,18 +1527,17 @@
                                     var employeeOverdue = employeeOverdueData.split(",");
                                     employeeOverdue[0] = employeeOverdue[0].substring("1");
                                     employeeOverdue[11] = employeeOverdue[11].substring("0", employeeOverdue[11].length - 1);
-                                    console.log(employeeOverdue);
+
                                     var employeeTimeExceedData = "<%=request.getSession().getAttribute("employeeTimeExceed")%>";
                                     var employeeTimeExceed = employeeTimeExceedData.split(",");
                                     employeeTimeExceed[0] = employeeTimeExceed[0].substring("1");
                                     employeeTimeExceed[11] = employeeTimeExceed[11].substring("0", employeeTimeExceed[11].length - 1);
-                                    //console.log(employeeTimeExceed);
+
                                     var completedProjectsData = "<%=request.getSession().getAttribute("completedList")%>";
                                     var completedProjects = completedProjectsData.split(",");
                                     completedProjects[0] = completedProjects[0].substring("1");
                                     completedProjects[11] = completedProjects[11].substring("0", completedProjects[11].length - 1);
-                                    //console.log(completedProjects);
-                                    //this is to tell if we should display the charts!!
+
                                     var displayEmployeeCharts = true;
                                     var employeeDatatable;
                                     employeeDatatable = document.getElementsByClassName("employeeDatatableDiv");
@@ -1680,7 +1696,7 @@
                                     Chart.defaults.global.animationEasing = "easeInOutElastic";
                                     Chart.defaults.global.responsive = false;
                                     var ctx = document.getElementById("employeeRevenueChart").getContext("2d");
-                                    //ctx.height = 500;
+
                                     var RevenueChart = new Chart(ctx, {
                                         type: 'bar',
                                         data: barChartData,
@@ -1839,7 +1855,7 @@
                                     Chart.defaults.global.animationEasing = "easeInOutElastic";
                                     Chart.defaults.global.responsive = false;
                                     var ctx = document.getElementById("employeeProfitAndLossChart").getContext("2d");
-                                    //ctx.height = 500;
+
                                     var employeeProfitAndLossChart = new Chart(ctx, {
                                         type: 'line',
                                         data: barChartData2,
@@ -1852,9 +1868,7 @@
                                     alert("Employee Error");
                                 }
                             });
-
-                        }
-                        );
+                        });
                     </script>
                     <!-- ############################################### END OF EMPLOYEE PERFORMANCE SECTION ###############################################-->
                 </div>
@@ -1862,38 +1876,6 @@
         </div>
     </nav>
 </body>
-<!--
-//can delete this entire function 
-    /*
-     // this is for toggling between the 3 main pages
-     function KPIs(evt, KPI) {
-     var i, tabcontent, tablinks;
-     tabcontent = document.getElementsByClassName("tabcontent");
-     for (i = 0; i < tabcontent.length; i++) {
-     tabcontent[i].style.display = "none";
-     }
-     
-     var clientChartDiv, employeeChartDiv, clientDatatableDiv, employeeDatatableDiv;
-     clientChartDiv = document.getElementsByClassName("clientChartsDiv");
-     employeeChartDiv = document.getElementsByClassName("employeeChartsDiv");
-     clientDatatableDiv = document.getElementsByClassName("clientDatatableDiv");
-     employeeDatatableDiv = document.getElementsByClassName("employeeDatatableDiv");
-     
-     //*************************** REMINDER: TO UNCOMMENT THIS SECTION WHEN EVERYTHING WORKS ********************************************
-     //clientChartDiv[0].style.display = "none";
-     //employeeChartDiv[0].style.display = "none";
-     //clientDatatableDiv[0].style.display = "block";
-     //employeeDatatableDiv[0].style.display = "block";
-     
-     tablinks = document.getElementsByClassName("tablinks");
-     for (i = 0; i < tablinks.length; i++) {
-     tablinks[i].className = tablinks[i].className.replace(" active", "");
-     }
-     document.getElementById(KPI).style.display = "block";
-     evt.currentTarget.className += " active";
-     }
-     */
--->
 <script>
     // this is for collapsing and hiding the tables
     $(function () {
@@ -1973,7 +1955,6 @@
             window.localStorage.removeItem("activeTab");
         }
     });
-
 </script>
 <jsp:include page="Footer.html"/>
 </html>

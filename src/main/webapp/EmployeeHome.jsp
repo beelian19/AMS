@@ -67,11 +67,11 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
                     </nav>
                 </div>
             </div>
         </nav>
-        <%--
         <div id="myModalAdHoc" class="modal fade" role="dialog">
             <!-- Modal content -->
             <div class="modal-dialog">
@@ -86,7 +86,6 @@
                         <button id='btnEdit' class='btn btn-default btn-sm pull-right' style='margin-right:5px;'>
                             <span class='glyphicon glyphicon-pencil'></span> Edit
                         </button>
-
                         <p id="pDetails"></p>
                     </div>
                     <div class="modal-footer">
@@ -114,7 +113,6 @@
                         <p id="pDetails"></p>
                     </div>
                     <div class="modal-footer">
-
                     </div>
                 </div>
             </div>
@@ -146,14 +144,12 @@
                                     </tr>
                                 </table>
                             </fieldset>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button type="button" id="btnSave" class="btn btn-success">Save</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        --%>
         <script>
             $(document).ready(function () {
                 var selectedEvent = null;
@@ -533,7 +529,4 @@
         </script>
     </body>
     <jsp:include page="Footer.html"/>
-    <script src="js/jquery-ui.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
-    <link href='css/bootstrap.min.css' rel="stylesheet"/>
 </html>

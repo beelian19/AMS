@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
     <head>
         <style type="text/css">
@@ -225,7 +224,6 @@
                     obj.value = obj.value.substring(0, maxlength);
                 }
             }
-
         </script>
         <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -365,7 +363,6 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="UploadExpense.jsp">QuickBooks</a></li>
-                                <!--<li><a href="ExpenseResult.jsp">Results</a></li>-->
                                 <li><a href="TokenOverview.jsp">Tokens</a></li>
                             </ul>
                         </div>
@@ -380,13 +377,10 @@
                                 <i class="fa fa-caret-down" style='color: black;'></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <!--<li><a href="ViewTaskServlet">View My Projects</a></li>
-                                <li><a href="TaskAssignedTableServlet">View All Tasks</a></li>-->
                                 <li><a href="ProjectAdminOverview.jsp">View All Projects</a></li>
                                     <%
                                         if (sessionUserIsAdmin.equals("yes")) {
                                     %> 
-                                <!--<li><a href="ReminderServlet">Send Reminders Now</a></li>-->
                                 <li><a href="CreateAdHocProject.jsp">Create Ad Hoc Project</a></li>
                                     <%
                                         }
@@ -406,18 +400,14 @@
                             <ul class="dropdown-menu">
                                 <li><a href="CreateClient.jsp">Add New Client</a></li>
                                 <li><a href="ClientOverview.jsp">View All Clients</a></li>
-                                <!--<li><a href="Timesheet.jsp">Manage Timesheet</a></li>-->
-                                <%
-                                    if (sessionUserIsAdmin.equals("yes")) {
-                                %> 
+                                    <%
+                                        if (sessionUserIsAdmin.equals("yes")) {
+                                    %> 
                                 <li><a href="CreateUser.jsp">Add New Employee</a></li>
                                 <li><a href="EmployeeOverview.jsp">View All Employees</a></li>
-                                <!--<li><a href="ViewAllTimesheet.jsp">View All Timesheets</a></li>-->
-
-                                <!--<li><a href="CreateTask.jsp">Create Task</a></li>-->
-                                <%
-                                    }
-                                %>
+                                    <%
+                                        }
+                                    %>
                             </ul>
                         </div>
                     </td>
@@ -427,4 +417,5 @@
         <br/><br/><br/>
         <!-- end of neck -->
     </body>
+    <jsp:include page="Footer.html"/>
 </html>
