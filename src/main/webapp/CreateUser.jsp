@@ -124,7 +124,7 @@
                                         <label>Employee Bank Account&nbsp;<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <input type="text" name='employeeBankAccount' id="employeeBankAccount" placeholder="Employee's Bank Account" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                        <input type="text" name='employeeBankAccount' id="employeeBankAccount" placeholder="Employee's Bank Account" onkeyup="return limitlength(this, 25)" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                     </td>
                                     <td width="15%">
                                     </td>
