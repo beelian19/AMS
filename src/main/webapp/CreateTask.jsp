@@ -4,6 +4,7 @@
     Author     : yemin
 --%>
 
+<%@page import="Entity.Employee"%>
 <%@page import="DAO.EmployeeDAO"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="java.util.Set"%>
@@ -19,6 +20,7 @@
         <%
             EmployeeDAO empDAO = new EmployeeDAO();
             ArrayList<String> supList = empDAO.getAllSupervisor();
+            
             ProjectDAO projectDAO = new ProjectDAO();
             ArrayList<Project> projectList = projectDAO.getAllIncompleteAdhocProjects();
         %>
