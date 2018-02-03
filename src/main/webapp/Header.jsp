@@ -414,7 +414,7 @@
                 </tr>
             </table>
         </div>
-        <br/><br/><br/>
+        <br/>
         <!-- end of neck -->
     </body>
     <jsp:include page="Footer.html"/>
