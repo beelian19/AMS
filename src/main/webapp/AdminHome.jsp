@@ -132,7 +132,7 @@
                                 <input type="text" name="endDateEdit" id="endDateEdit" placeholder="dd/mm/yyyy" type="text" class="text ui-widget-content ui-corner-all" onfocus="(this.type='date')" onblur="(this.type='text')" required>
 
                                 <label>Remarks&nbsp<font color="red">*</font></label><br>
-                                <textarea name="remarksEdit" id="remarksEdit" class="text ui-widget-content ui-corner-all" cols="56" rows="5"></textarea>
+                                <textarea name="remarksEdit" id="remarksEdit" class="text ui-widget-content ui-corner-all" cols="60" rows="5"></textarea>
                             </fieldset>
                             <div align="right">
                             <button type="button" id="btnSave" class="btn btn-success" align="right">Save</button>
