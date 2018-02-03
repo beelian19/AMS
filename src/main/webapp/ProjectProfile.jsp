@@ -260,15 +260,6 @@
                                     <td width="1%">
                                     </td>
                                     <td>
-                                        <label>No. of Invoices: </label>
-                                    </td>
-                                    <td>
-                                        <!--<=%p.getNumberOfInvoices()%>-->
-                                        Wait for Yumai for Number of Invoices
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
                                         <label>Reviewer: </label>
                                     </td>
                                     <td>
@@ -280,13 +271,15 @@
                                             <%=p.getProjectReviewer()%>
                                         </a>
                                     </td>
-                                    <td width="1%">
-                                    </td>
+                                </tr>
+                                <tr>
                                     <td>
-                                        <label>Remarks: </label>
+                                         <label>Remarks: </label>
                                     </td>
                                     <td>
                                         <%=p.getProjectRemarks()%>
+                                    </td>
+                                    <td colspan="3">
                                     </td>
                                 </tr>
                             </table>
@@ -355,7 +348,7 @@
                                             <%
                                             } else {
                                             %>
-                                            <label> <%=p.getEmployee2()%> </label>
+                                            <%=p.getEmployee2()%>
                                             <%
                                                 }
                                             %>    

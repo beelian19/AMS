@@ -126,15 +126,17 @@
                                 <input type="text" name="companyNameEdit" id="companyNameEdit" class="text ui-widget-content ui-corner-all" required readonly>
 
                                 <label for="startDate">Start Date&nbsp<font color="red">*</font></label>
-                                <input type="text" name="startDateEdit" id="startDateEdit" placeholder="dd/MM/yyyy" class="text ui-widget-content ui-corner-all" required>
+                                <input type="text" name="startDateEdit" id="startDateEdit" type="text" class="text ui-widget-content ui-corner-all" onfocus="(this.type='date')" onblur="(this.type='text')" required>
 
                                 <label for="endDate">End Date&nbsp<font color="red">*</font></label>
-                                <input type="text" name="endDateEdit" id="endDateEdit" placeholder="dd/MM/yyyy" class="text ui-widget-content ui-corner-all" required>
+                                <input type="text" name="endDateEdit" id="endDateEdit" placeholder="dd/mm/yyyy" type="text" class="text ui-widget-content ui-corner-all" onfocus="(this.type='date')" onblur="(this.type='text')" required>
 
                                 <label>Remarks&nbsp<font color="red">*</font></label><br>
                                 <textarea name="remarksEdit" id="remarksEdit" class="text ui-widget-content ui-corner-all" cols="56" rows="5"></textarea>
                             </fieldset>
-                            <button type="button" id="btnSave" class="btn btn-success">Save</button>
+                            <div align="right">
+                            <button type="button" id="btnSave" class="btn btn-success" align="right">Save</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -217,8 +219,8 @@
 
                                 $description.append($('<p/>').html('<b>Project Reviewer: </b>' + calEvent.projectReviewer));
                                 $description.append($('<p/>').html('<b>Task Reviewer: </b>' + calEvent.reviewer));
-                                $description.append($('<p/>').html('<u>Project Remarks</u></br>' + calEvent.projectRemarks));
-                                $description.append($('<p/>').html('<u>Task Remarks:</u></br>' + calEvent.taskRemarks));
+                                $description.append($('<p/>').html('<b>Project Remarks</b>' + calEvent.projectRemarks));
+                                $description.append($('<p/>').html('<b>Task Remarks:</b>' + calEvent.taskRemarks));
 
                                 $('#myModalAdHoc #pDetails').empty().html($description);
                                 $('#myModalAdHoc').modal();
@@ -243,7 +245,7 @@
                                 }
 
                                 $description.append($('<p/>').html('<b>Project Reviewer: </b>' + calEvent.projectReviewer));
-                                $description.append($('<p/>').html('<u>Project Remarks</u></br>' + calEvent.projectRemarks));
+                                $description.append($('<p/>').html('<b>Project Remarks: </b>' + calEvent.projectRemarks));
                                 $('#myModalCompanyProject #pDetails').empty().html($description);
                                 $('#myModalCompanyProject').modal();
                             }
