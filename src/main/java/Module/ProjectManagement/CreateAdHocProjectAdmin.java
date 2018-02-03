@@ -73,7 +73,8 @@ public class CreateAdHocProjectAdmin extends HttpServlet {
 //                request.setAttribute("projectID", projectId);
 //                RequestDispatcher rd = request.getRequestDispatcher("ClientOverview.jsp");
 //                rd.forward(request, response);
-                response.sendRedirect("ClientOverview.jsp");
+                
+                response.sendRedirect("ProjectProfile.jsp?projectID=" + projectId);
             } else {
                 request.getSession().setAttribute("status", "Error: Failed to create adhoc project " + title);
                 response.sendRedirect("CreateAdHocProject.jsp");
