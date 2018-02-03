@@ -123,7 +123,7 @@ public class ProjectDAO {
         for (Task t : all) {
             deadline = Calendar.getInstance();
             deadline.setTime(t.getEnd());
-            if (t.getTaskStatus().equals("completed")) {
+            if (t.getTaskStatus().equals("complete")) {
                 completed.add(t);
             } else if (Calendar.getInstance().before(deadline)) {
                 ongoing.add(t);

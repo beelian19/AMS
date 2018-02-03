@@ -29,6 +29,7 @@
             Project p = ProjectDAO.getProjectByID(pID);
 
             ArrayList<ArrayList<Task>> taskList = ProjectDAO.getAllProjectTaskFiltered(p.getProjectID());
+            
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
             Employee e = EmployeeDAO.getEmployeeByID((String) request.getSession().getAttribute("userId"));
