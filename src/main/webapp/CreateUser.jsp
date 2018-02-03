@@ -4,6 +4,7 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="DAO.EmployeeDAO"%>
 <%@page import="Entity.Employee"%>
@@ -96,9 +97,9 @@
                                     <td>
                                         <Select name='nationality' id="nationality" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                             <option disabled selected value> -- select an option -- </option>
-                                            <option value="singaporean">Singaporean</option>
+                                            <option value="foreigner">FOREIGNER</option>
                                             <option value="pr">PR</option>
-                                            <option value="foreigner">Foreigner</option>
+                                            <option value="singaporean">SINGAPOREAN</option>
                                         </Select>
                                     </td>
                                     <td width="15%">
@@ -107,7 +108,12 @@
                                         <label>Date of Birth&nbsp;<font color="red">*</font></label>
                                     </td>
                                     <td>
-                                        <input type="date" name='dob' id="dob" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
+                                        <%
+                                            int year = Calendar.getInstance().get(Calendar.YEAR);
+                                            int maxDByear = year - 16;
+                                            String maxDate = maxDByear + "-12-31";
+                                        %>
+                                        <input type="date" name='dob' id="dob" max="<%=maxDate%>" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                     </td> 
                                     <td width="1%">
                                     </td>
@@ -192,8 +198,8 @@
                                     <td>
                                         <select name='supervisor' id="supervisor" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                             <option disabled selected value> -- select an option -- </option>
-                                            <option value="yes">yes</option>
-                                            <option value="no">no</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
                                         </select>
                                     </td>
                                     <td width="15%">
@@ -221,8 +227,8 @@
                                     <td>
                                         <Select name='isAdmin' id="isAdmin" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                             <option disabled selected value> -- select an option -- </option>
-                                            <option value="yes">yes</option>
-                                            <option value="no">no</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
                                         </Select>
                                     </td> 
                                     <td colspan="4">

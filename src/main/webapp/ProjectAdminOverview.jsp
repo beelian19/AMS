@@ -4,6 +4,7 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Map"%>
 
 <%@page import="java.util.HashMap"%>
@@ -38,7 +39,7 @@
                 response.sendRedirect("ViewAllProjectAdmin");
                 return;
             }
-
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             ArrayList<Project> overdueProjectList = (ArrayList<Project>) request.getAttribute("overdueProject");
             ArrayList<Project> completedProjectList = (ArrayList<Project>) request.getAttribute("completedProject");
             ArrayList<Project> incompletedProjectList = (ArrayList<Project>) request.getAttribute("incompleteProject");
@@ -103,13 +104,13 @@
                                                 if (overdueProjectList != null && !overdueProjectList.isEmpty()) {
                                                     for (int i = 0; i < overdueProjectList.size(); i++) {
                                                         Project p = overdueProjectList.get(i);
-                                                        
+
                                             %>
                                             <tr>
                                                 <td>
                                                     <% profileUrl2 = profileUrl + p.getProjectID();%>
                                                     <a href=<%=profileUrl2%>>
-                                                        <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle() %>
+                                                        <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
                                                     </a>
                                                 </td>
                                                 <td>
@@ -131,10 +132,10 @@
                                                     %>
                                                 </td>
                                                 <td>
-                                                    <%=p.getEnd()%> 
+                                                    <%=sdf.format(p.getEnd())%> 
                                                 </td>
                                                 <td>
-                                                    <%=p.getActualDeadline()%>
+                                                    <%=sdf.format(p.getActualDeadline())%>
                                                 </td>
                                                 <td style=text-align:center>
                                                     <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
@@ -225,10 +226,10 @@
                                                     %>
                                                 </td>
                                                 <td>
-                                                    <%=p.getEnd()%>
+                                                    <%=sdf.format(p.getEnd())%>
                                                 </td>
                                                 <td>
-                                                    <%=p.getActualDeadline()%>
+                                                    <%=sdf.format(p.getActualDeadline())%>
                                                 </td>
                                                 <td style='text-align:center'>
                                                     <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
@@ -319,10 +320,10 @@
                                                     %>
                                                 </td>
                                                 <td>
-                                                    <%=p.getEnd()%>
+                                                    <%=sdf.format(p.getEnd())%>
                                                 </td>
                                                 <td>
-                                                    <%=p.getActualDeadline()%>
+                                                    <%=sdf.format(p.getActualDeadline())%>
                                                 </td>
                                                 <td style=text-align:center>
                                                     <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>

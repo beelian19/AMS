@@ -29,7 +29,7 @@
             Project p = ProjectDAO.getProjectByID(pID);
 
             ArrayList<ArrayList<Task>> taskList = ProjectDAO.getAllProjectTaskFiltered(p.getProjectID());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
             Employee e = EmployeeDAO.getEmployeeByID((String) request.getSession().getAttribute("userId"));
             String name = e.getName();
@@ -454,7 +454,7 @@
                                             <%=t.getStart()%>
                                         </td>
                                         <td>
-                                            <%=t.getEnd()%>
+                                            <%=sdf.format(p.getEnd())%>
                                         </td>
                                         <td>
                                             <%
@@ -523,7 +523,7 @@
                                             <%=t.getStart()%>
                                         </td>
                                         <td>
-                                            <%=t.getEnd()%>
+                                            <%=sdf.format(p.getEnd())%>
                                         </td>
                                         <td>
                                             <%
@@ -592,7 +592,7 @@
                                             <%=t.getStart()%>
                                         </td>
                                         <td>
-                                            <%=t.getEnd()%>
+                                            <%=sdf.format(p.getEnd())%>
                                         </td>
                                         <td>
                                             <%
@@ -697,7 +697,7 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <input name="projectStartEdit" id="projectStartEdit" value="<%=p.getStart()%>" type="text" class="text ui-widget-content ui-corner-all" onfocus="(this.type = 'date')" onblur="(this.type = 'text')" id="date">
+                                    <input name="projectStartEdit" id="projectStartEdit" value="<%=sdf.format(p.getStart())%>" type="text" class="text ui-widget-content ui-corner-all" onfocus="(this.type = 'date')" onblur="(this.type = 'text')" id="date">
                                 </td>
                             </tr>
                             <tr>
@@ -714,7 +714,7 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <input name="projectEndEdit" id="projectEndEdit" value="<%=p.getEnd()%>" type="text" class="text ui-widget-content ui-corner-all" onfocus="(this.type='date')" onblur="(this.type='text')" id="date">
+                                    <input name="projectEndEdit" id="projectEndEdit" value="<%=sdf.format(p.getEnd())%>" type="text" class="text ui-widget-content ui-corner-all" onfocus="(this.type='date')" onblur="(this.type='text')" id="date">
                                 </td>
                             </tr>  
                             <tr>
@@ -848,80 +848,6 @@
                 <form>
                     <fieldset>
                         <table>
-                            <!--companyName-->
-                            <!--<tr>
-                                <td>
-                                    <label for="companyName">Company Name&nbsp<font color="red">*</font></label>
-                                </td>
-                                <td width="1%">
-                                    &nbsp;
-                                </td>
-                                <td>
-                                    <select name='companyNameCreate' id="companyNameCreate" class="form-control" required autofocus>
-
-                                        <
-                                            if (projectList != null && projectList.size() != 0) {
-                                                ArrayList<String> compNameList = new ArrayList<>();
-                                                for (int i = 0; i < projectList.size(); i++) {
-                                                    String companyName = projectList.get(i).getCompanyName();
-                                                    //System.out.println("JSP companyName: "+companyName+"-"+companyName.length());
-                                                    compNameList.add(companyName);
-                                                }
-
-                                                Set<String> compNames = new HashSet<>(compNameList);
-                                                //System.out.println("Set size: " + compNames.size());
-                                                for (String company : compNames) {
-                                                    //System.out.println(name);
-                                        %>                                                             
-                                        <option value='<=company%>'><=company%></option>
-                            <
-                                }
-                            }
-                            %>
-                        </select>
-                    </td
-                     m>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        &nbsp;
-                    </td>
-                </tr>
-                            <!--companyName-->
-
-                            <!--Ad Hoc Projects-->
-                            <!--<tr>
-                                <td>
-                                    <label for="projects">Projects&nbsp<font color="red">*</font></label>
-                                </td>
-                                <td width="1%">
-                                    &nbsp;
-                                </td>
-                                <td>
-                                    <select name='projectCreate' id="projectCreate" class="form-control" required autofocus>
-
-                                        <
-                                            if (projectList != null && projectList.size() != 0) {
-                                                for (int i = 0; i < projectList.size(); i++) {
-                                                    String projTitle = projectList.get(i).getProjectTitle();
-                                                    String companyName = projectList.get(i).getCompanyName();
-                                        %>
-
-                                        <option value='<=companyName%>'><=projTitle%></option>
-                                        <
-                                                }
-                                            }
-                                        %>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    &nbsp;
-                                </td>
-                            </tr>
-                            <!--Ad Hoc Projects-->
-
                             <!--Task title-->
                             <tr>
                                 <td>
@@ -1046,8 +972,6 @@
         $('#myModalTask').modal();
     });
     $('#btnSaveTask').click(function () {
-        //var companyName = document.getElementById("companyNameCreate").value;
-        //var project = $("#projectCreate option:selected").html();
         var projectId = document.getElementById("projectIDCreate").value;
         var taskTitle = document.getElementById("titleCreate").value;
         var start = document.getElementById("startDateCreate").value;
@@ -1055,10 +979,6 @@
         var taskReviewer = document.getElementById("reviewerCreate").value;
         var taskRemarks = document.getElementById("remarkCreate").value;
 
-        //if (project == "") {
-        //alert("Project Field Required");
-        //return;
-        //}
         if (taskTitle == "") {
             alert("Title Field Required");
             return;

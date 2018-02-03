@@ -4,6 +4,7 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entity.Project"%>
@@ -36,7 +37,8 @@
             String sessionID = (String) session.getAttribute("userId");
             EmployeeDAO empDAO = new EmployeeDAO();
             Employee emp = empDAO.getEmployeeByID(sessionID);
-
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Client client = (Client) request.getAttribute("client");
             String clientName = "";
             if (client == null) {
@@ -267,7 +269,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <%=p.getEnd()%>
+                                                    <%=sdf.format(p.getEnd())%>
                                                 </td>
                                                 <td>
                                                     <%=p.getProjectStatus()%>
@@ -333,7 +335,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <%=p.getEnd()%>
+                                                    <%=sdf.format(p.getEnd())%>
                                                 </td>
                                                 <td>
                                                     <%
@@ -539,10 +541,10 @@
                                                 }
                                             %>
                                             <option value= '<%=gstSubmission%>' disabled selected hidden><%=gstSubmission%></option>
-                                            <option value="na">NA</option>
                                             <option value="m">Monthly</option>
                                             <option value="q">Quarterly</option>
                                             <option value="s">Semi Annual</option>
+                                            <option value="na">NA</option>
                                         </select> 
                                     </td>
                                 </tr>

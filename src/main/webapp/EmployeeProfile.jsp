@@ -4,6 +4,7 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="DAO.ProjectDAO"%>
 <%@page import="Entity.Client"%>
@@ -23,16 +24,14 @@
                 RequestDispatcher rd = request.getRequestDispatcher("StaffProfileServlet");
                 rd.forward(request, response);
             } else if (request.getAttribute("name") == null) {
-                //System.out.println("TEST==============Success");
                 // if anything null, it will force it to profile servlet to retrieve the details
-
                 String employeeID = (String) session.getAttribute("userId");
                 request.setAttribute("id", employeeID);
                 RequestDispatcher rd = request.getRequestDispatcher("StaffProfileServlet");
                 rd.forward(request, response);
             }
             String viewAllID = (String) request.getAttribute("id");
-
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             ArrayList<String> nationalities = new ArrayList();
             nationalities.add("singaporean");
             nationalities.add("PR");
@@ -51,7 +50,6 @@
             positions.add("Accountant");
             positions.add("IT Executive");
             ArrayList<Project> incompletedProjectList = (ArrayList<Project>) request.getAttribute("incompletedProject");
-            //System.out.println("SIZE--------------"+incompletedProjectList.size());
             ArrayList<Project> completedProjectList = (ArrayList<Project>) request.getAttribute("completedProject");
             ArrayList<Project> overdueProjectList = (ArrayList<Project>) request.getAttribute("overdueProject");
             String sessionID = (String) session.getAttribute("userId");
@@ -115,11 +113,9 @@
                                         }
                                     %>   
                             </div>
-
                             <h5><%=employee.getPosition()%></h5>
-                            <!-- date joined -->
-                            <h5>Joined on&nbsp;<%=employee.getDateJoined()%></h5>
-                            <h5><%=employee.getNationality()%></h5>
+                            <h5>Joined on&nbsp;<%=sdf.format(employee.getDateJoined())%></h5>
+                            <h5><%=employee.getNationality().toUpperCase()%></h5>
                             <br/>
                         </div>
                 </div>
@@ -290,7 +286,7 @@
                                             %>
                                         </td>
                                         <td>
-                                            <%=p.getEnd()%>
+                                            <%=sdf.format(p.getEnd())%>
                                         </td>   
                                         <td>
                                             <%
@@ -382,7 +378,7 @@
                                             %>
                                         </td>
                                         <td>
-                                            <%=p.getEnd()%>
+                                            <%=sdf.format(p.getEnd())%>
                                         </td> 
                                         <td>
                                             <%
@@ -474,7 +470,7 @@
                                             %>
                                         </td>
                                         <td>
-                                            <%=p.getEnd()%>
+                                            <%=sdf.format(p.getEnd())%>
                                         </td> 
                                         <td>
                                             <%

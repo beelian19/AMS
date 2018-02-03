@@ -175,10 +175,10 @@
                                     <td>
                                         <select name='gstSubmission' id="gstSubmission" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                             <option disabled selected value> -- select an option --  </option>
-                                            <option value="na">NA</option>
-                                            <option value="m">Monthly</option>
                                             <option value="q">Quarterly</option>
+                                            <option value="m">Monthly</option>
                                             <option value="s">Semi Annual</option>
+                                            <option value="na">NA</option>
                                         </select> 
                                     </td>
                                     <td width="15%">
@@ -189,9 +189,9 @@
                                     <td>
                                         <select name='mgmtFrequency' id="mgmtFrequency" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                             <option disabled selected value> -- select an option --  </option>
-                                            <option value="na">NA</option>
-                                            <option value="m">Monthly</option>
                                             <option value="q">Quarterly</option>
+                                            <option value="m">Monthly</option>
+                                            <option value="na">NA</option>
                                         </select>
                                     </td>
                                     <td width="1%">
