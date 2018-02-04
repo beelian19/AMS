@@ -63,6 +63,9 @@ public class ClientDashboard extends HttpServlet {
         ArrayList<Integer> yearProfitList = profitabilityList.get(0);
         ArrayList<Integer> yearLossList = profitabilityList.get(1);
         
+        System.out.println("ClientOnTime size: "+ontime.size());
+        System.out.println("ClientOverdue size: "+overdue.size());
+        
         request.getSession().setAttribute("clientYearProfit", yearProfitList);
         request.getSession().setAttribute("clientYearLoss", yearLossList);
         

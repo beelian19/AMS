@@ -167,7 +167,7 @@
                                         <%
                                             if (viewAllID.equals(sessionID) || employee.getIsAdmin().equals("yes")) {
                                         %>
-                                        <%=employee.getMonthlyOverhead()%>
+                                        S$<%=employee.getMonthlyOverhead()%>
                                         <%
                                         } else {
                                         %>
@@ -182,7 +182,7 @@
                                         <strong> DOB: </strong>
                                     </td>
                                     <td>
-                                        <%=employee.getDob()%>
+                                        <%=sdf.format(employee.getDob())%>
 
                                     </td>
                                 </tr>
@@ -199,7 +199,7 @@
                                         <strong> Admin Access: </strong>
                                     </td>
                                     <td>
-                                        <%=employee.getIsAdmin()%>
+                                        <%=employee.getIsAdmin().toUpperCase()%>
                                     </td>
                                 </tr>
                                 <tr>
@@ -215,7 +215,7 @@
                                         <strong> Supervisor: </strong>
                                     </td>
                                     <td>
-                                        <%=employee.getIsSupervisor()%>
+                                        <%=employee.getIsSupervisor().toUpperCase()%>
                                     </td>
                                 </tr>
                             </table>

@@ -7,7 +7,6 @@ package Module.Dashboard;
 
 import DAO.ProjectDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -32,8 +31,8 @@ public class SalesGraph extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String selectedYear = "2018";
-        PrintWriter out = response.getWriter();
+        String selectedYear = request.getParameter("year");
+        System.out.println("SalesGraph servlet: "+selectedYear);
         Double[] salesList = ProjectDAO.getSales(selectedYear);
         Double[] costList = ProjectDAO.getActualCost(selectedYear);
         Double[] profitList = ProjectDAO.getProfit(selectedYear);

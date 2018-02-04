@@ -489,15 +489,17 @@
                             function overallAbundantDashboardYear(){
                                 var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
                                 if (yearChosen === null || yearChosen === "") {
-                                    now = new Date
+                                    now = new Date;
                                     yearChosen = now.getYear();
                                     if (yearChosen < 1900){
-                                        yearChosen=yearChosen+1900
+                                        yearChosen=yearChosen+1900;
                                     }
                                 }
+                                console.log("Year Chose 1st One: "+yearChosen);
                                 $.ajax({
                                     url: 'SalesGraph',
-                                    //data: 'date' + yearChosen,                                    
+                                    async: true,
+                                    data: 'year=' + yearChosen,                                    
                                     type: 'POST',
                                     success: function () {
                                         var salesData = "<%=request.getSession().getAttribute("sales")%>";
@@ -515,6 +517,7 @@
                                         //console.log("Profit: "+profit);
                                         profit[0] = profit[0].substring("1");
                                         profit[11] = profit[11].substring("0", profit[11].length - 1);
+                                        completedProjectProfitability(yearChosen);
                                         var lineChartData = {
                                             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                             datasets: [
@@ -575,19 +578,19 @@
                                             bezierCurve: false,
                                             scaleShowVerticalLines: false
                                         });
-                                        completedProjectProfitability();
+                                        //completedProjectProfitability(yearChosen);
                                     },
                                     error: function (data) {
                                         console.log("Error: " + data);
                                     }
                                 });
                             }
-                        </script>
-                        <script>
-                            function completedProjectProfitability() {
+                            function completedProjectProfitability(yearChosen) {
+                            console.log("Year Chose 2nd One: "+yearChosen);
                                 $.ajax({
                                     url: 'CompletedProjectMonthlyProfitability', 
-                                    //data: 'year=' + yearChosen,
+                                    async: true,
+                                    data: 'year=' + yearChosen,
                                     type: 'POST',
                                     success: function () {
                                         var profitableProjectsData = "<%=request.getSession().getAttribute("yearProfit")%>";
@@ -602,6 +605,7 @@
                                         var totalCompletedProjects = totalCompletedList.split(",");
                                         totalCompletedProjects[0] = totalCompletedProjects[0].substring("1");
                                         totalCompletedProjects[11] = totalCompletedProjects[11].substring("0", totalCompletedProjects[11].length - 1);
+                                        overdueProject(yearChosen);
                                         var barChartData = {
                                             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                             datasets: [{
@@ -746,7 +750,6 @@
                                                 }
                                             ]
                                         }
-
                                         Chart.defaults.global.tooltipCornerRadius = 0;
                                         Chart.defaults.global.tooltipTitleFontStyle = "normal";
                                         Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
@@ -758,19 +761,19 @@
                                             data: barChartData,
                                             scaleShowVerticalLines: false
                                         });
-                                        overdueProject();
+                                        //overdueProject(yearChosen);
                                     },
                                     error: function (data) {
                                         console.log("Error: " + data);
                                     }
                                 });
                             }
-                        </script>
-                        <script>
-                            function overdueProject() {
+                            function overdueProject(yearChosen) {
+                            console.log("Year Chose 3rd One: "+yearChosen);
                                 $.ajax({
                                     url: 'OverdueProjectPerYear',
-                                    //data: 'year=' + yearChosen,
+                                    async: true,
+                                    data: 'year=' + yearChosen,
                                     type: 'POST',
                                     success: function () {
                                         var overdueProject = "<%=request.getSession().getAttribute("overdueProject")%>";

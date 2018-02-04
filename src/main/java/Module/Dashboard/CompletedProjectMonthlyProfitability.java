@@ -6,11 +6,8 @@
 package Module.Dashboard;
 
 import DAO.ProjectDAO;
-import Entity.Project;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +31,12 @@ public class CompletedProjectMonthlyProfitability extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        String selectedYear = request.getParameter("year");
+        System.out.println("CompletedProjectMonthlyProfitability servlet: "+selectedYear);
         ArrayList<ArrayList<Integer>> profitabilityList = new ArrayList();
 
-        profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability("2018");
-        int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear("2018");
+        profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability(selectedYear);
+        int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear(selectedYear);
         
         ArrayList<Integer> completed = new ArrayList();
 
@@ -49,6 +47,10 @@ public class CompletedProjectMonthlyProfitability extends HttpServlet {
         
         ArrayList<Integer> yearProfitList = profitabilityList.get(0);
         ArrayList<Integer> yearLossList = profitabilityList.get(1);
+        
+        System.out.println("YearProfit size: "+yearProfitList.size());
+        System.out.println("YearLoss size: "+yearLossList.size());
+        System.out.println("TotalCompleted size: "+completed.size());
         
         request.getSession().setAttribute("yearProfit", yearProfitList);
         request.getSession().setAttribute("yearLoss", yearLossList);

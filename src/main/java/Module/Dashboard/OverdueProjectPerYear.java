@@ -31,11 +31,13 @@ public class OverdueProjectPerYear extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
+        String selectedYear = request.getParameter("year");
+        System.out.println("OverdueProjectPerYear servlet: "+selectedYear);
         int[] overdueList = new int[12];
-        int[] ontimeList = ProjectDAO.getOnTimeProjectPerYear("2018");
-        int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear("2018");
-        overdueList = ProjectDAO.getOverdueProjectPerYear("2018");
+        int[] ontimeList = ProjectDAO.getOnTimeProjectPerYear(selectedYear);
+        int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear(selectedYear);
+        overdueList = ProjectDAO.getOverdueProjectPerYear(selectedYear);
         
         //request.setAttribute("overdueList", overdueList);
         //RequestDispatcher rd = request.getRequestDispatcher("FinalDashboard.jsp");
@@ -60,6 +62,9 @@ public class OverdueProjectPerYear extends HttpServlet {
             int value = completedList[i];
             completed.add(value);
         }
+        System.out.println("Overdue size: "+overdue.size());
+        System.out.println("Ontime size: "+ontime.size());
+        System.out.println("Completed size: "+completed.size());
         request.getSession().setAttribute("overdueProject", overdue);
         request.getSession().setAttribute("ontimeProject", ontime);
         request.getSession().setAttribute("completedProject", completed);
