@@ -434,11 +434,15 @@ public class ProjectDAO {
      * @return
      */
     public static HashMap<String, String> getProjectTypeAsKeyAndURLAsValue(ArrayList<Project> projects) {
-        HashMap<String, String> returnList = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>();
         String profileUrl = "ProjectProfile.jsp?projectID=";
-        projects.stream().collect(Collectors.toMap(p -> p.getProjectType(), p -> profileUrl + p.getProjectID()));
+        for (Project p : projects){
+            if (map.get(p.getProjectType()) == null){
+                map.put(p.getProjectType(), profileUrl+p.getProjectIDString());
+            }
+        }
 
-        return returnList;
+        return map;
     }
 
     /**

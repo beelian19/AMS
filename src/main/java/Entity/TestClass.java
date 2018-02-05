@@ -6,6 +6,8 @@
 package Entity;
 
 import DAO.ClientDAO;
+import DAO.ProjectDAO;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -72,8 +74,26 @@ public class TestClass {
         String s = "123456";
         System.out.println(StringUtils.substring(s, 0, 15));
     }
+    
+    public static void testOGProjectMap(){
+        ArrayList<Project> pList = new ArrayList<>();
+        for (int i = 1; i <= 2; i++){
+            Project p = new Project();
+            p.setProjectID(i);
+            p.setProjectType("Test");
+            pList.add(p);
+        }
+        
+        HashMap<String, String> pIdUrl = ProjectDAO.getProjectTypeAsKeyAndURLAsValue(pList);
+        for (String s: pIdUrl.keySet()){
+            System.out.println("Key: " + s);
+            System.out.println("Val: " + pIdUrl.get(s));
+        }
+        
+    
+    }
 
     public static void main(String[] args) {
-        testTimeline();
+        testOGProjectMap();
     }
 }
