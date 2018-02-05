@@ -6,9 +6,12 @@
 package Module.ProjectManagement;
 
 import DAO.ClientDAO;
+import DAO.ProjectDAO;
 import Entity.Client;
+import Entity.Project;
 import Entity.Timeline;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
-
 
 /**
  *
@@ -51,16 +53,20 @@ public class GetClientObject extends HttpServlet {
         }
 
         Client client = ClientDAO.getClientByCompanyName(companyName);
-        
+
         Timeline timeline = new Timeline(client);
         boolean check = timeline.initAll();
+        String errors = timeline.getErrors();
         HashMap<String, String> allTimeLines = timeline.getAllTimelines();
-
+        ArrayList<Project> onGoingProjectList = ProjectDAO.getAllIncompleteProjectsByCompanyName(client.getCompanyName());
+        HashMap<String, String> ongoingMap = ProjectDAO.getProjectTypeAsKeyAndURLAsValue(onGoingProjectList);
         JSONObject json = timeline.getAllTimelinesJSONObject();
 
         request.getSession().setAttribute("json", json);
         request.getSession().setAttribute("client", client);
         request.getSession().setAttribute("allTimeLines", allTimeLines);
+        request.getSession().setAttribute("timelineInitErrors", errors);
+        request.getSession().setAttribute("clientOnGoingUrlMap", ongoingMap);
         response.sendRedirect("CreateProject.jsp");
 
     }

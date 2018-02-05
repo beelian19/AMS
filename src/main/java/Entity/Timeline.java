@@ -8,6 +8,7 @@ package Entity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import org.json.simple.JSONObject;
 
 public class Timeline {
 
@@ -283,7 +284,7 @@ public class Timeline {
         }
 
         // If errors is empty, return true
-        isValid =  errors.equals("");
+        isValid = errors.equals("");
         return isValid;
     }
 
@@ -387,7 +388,11 @@ public class Timeline {
         }
 
     }
-    
+
+    public JSONObject getAllTimelinesJSONObject() {
+        return new JSONObject(getAllTimelines());
+    }
+
     public HashMap<String, String> getAllTimelines() {
         HashMap<String, String> hm = new HashMap<>();
         if (isValid) {
@@ -422,4 +427,10 @@ public class Timeline {
             return hm;
         }
     }
+
+    public String getErrors() {
+        return errors;
+    }
+    
+    
 }

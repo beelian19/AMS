@@ -46,6 +46,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -63,6 +64,7 @@ public class ProjectDAO {
     private static String updateProjectStatementWithSelectedFields = "UPDATE project SET title=?, start=?, end=?, projectRemarks=?, employee1=?,"
             + "employee2=?, projectReviewer=? WHERE projectID=?";
     private static String getAllIncompleteProjects = "SELECT * FROM project where projectStatus = 'incomplete' OR projectReviewStatus = 'incomplete'";
+    private static String getAllIncompleteProjectsByCompanyName = "SELECT * FROM project where ( projectStatus = 'incomplete' OR projectReviewStatus = 'incomplete' ) AND companyName = ?";
     private static String getAllIncompleteAdhocProjects = "SELECT * FROM project where ( projectStatus = 'incomplete' OR projectReviewStatus = 'incomplete'  ) AND projectType='adhoc'";
     private static String getProjectByTitleAndCompanyNameStatement = "SELECT projectID FROM project WHERE title=? AND companyName=?";
     private static String createProjectStatement = "Insert into PROJECT values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -380,6 +382,63 @@ public class ProjectDAO {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
         return projectList;
+    }
+
+    public static ArrayList<Project> getAllIncompleteProjectsByCompanyName(String companyName) {
+        ArrayList<Project> projectList = new ArrayList<>();
+        Project project;
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(getAllIncompleteProjectsByCompanyName);
+            stmt.setString(1, companyName);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                project = new Project();
+                project.setProjectID(rs.getInt("projectID"));
+                project.setProjectTitle(rs.getString("title"));
+                project.setCompanyName(rs.getString("companyName"));
+                project.setBusinessType(rs.getString("businessType"));
+                project.setStart(rs.getDate("start"));
+                project.setEnd(rs.getDate("end"));
+                project.setProjectRemarks(rs.getString("projectRemarks"));
+                project.setProjectStatus(rs.getString("projectStatus"));
+                project.setActualDeadline(rs.getDate("actualDeadline"));
+                project.setFrequency(rs.getString("frequency"));
+                project.setProjectType(rs.getString("projectType"));
+                project.setEmployee1(rs.getString("employee1"));
+                project.setEmployee2(rs.getString("employee2"));
+                project.setEmployee1Hours(rs.getDouble("employee1Hours"));
+                project.setEmployee2Hours(rs.getDouble("employee2Hours"));
+                project.setProjectReviewer(rs.getString("projectReviewer"));
+                project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
+                project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
+
+                projectList.add(project);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        return projectList;
+
+    }
+
+    /**
+     * Creates a HashMap with the key being the project type and value being the
+     * URL that directs to the project info
+     *
+     * @param projects
+     * @return
+     */
+    public static HashMap<String, String> getProjectTypeAsKeyAndURLAsValue(ArrayList<Project> projects) {
+        HashMap<String, String> returnList = new HashMap<>();
+        String profileUrl = "ProjectProfile.jsp?projectID=";
+        projects.stream().collect(Collectors.toMap(p -> p.getProjectType(), p -> profileUrl + p.getProjectID()));
+
+        return returnList;
     }
 
     /**
@@ -1366,7 +1425,7 @@ public class ProjectDAO {
         }
         return numList;
     }
-    
+
     public static int[] getCompletedProjectPerYear(String year, String empName) {
 
         int[] numList = new int[12];
@@ -2132,8 +2191,8 @@ public class ProjectDAO {
         }
         return numList;
     }
-    
-    public static int[] getOnTimeCompletedProjectEmployee (String empName, String year) {
+
+    public static int[] getOnTimeCompletedProjectEmployee(String empName, String year) {
 
         int[] numList = new int[12];
 
@@ -2160,8 +2219,8 @@ public class ProjectDAO {
         }
         return numList;
     }
-    
-    public static ArrayList<Project> getSpecificStaffReport(String employeeName,String year) {
+
+    public static ArrayList<Project> getSpecificStaffReport(String employeeName, String year) {
 
         ArrayList<Project> projectList = new ArrayList<>();
         ArrayList<Project> incomplete = new ArrayList<>();
