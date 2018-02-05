@@ -1,12 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Entity;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import org.json.simple.JSONObject;
-
 
 public class Timeline {
 
@@ -26,22 +27,371 @@ public class Timeline {
     private String finTimeline;
     private String actualSecTimeline;
     private String secTimeline;
-    private String stringFinancialYearEnd;
-    private Calendar financialYearEnd;
+    private String fye;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+    private String errors;
+
+    private Calendar nov30;
+    private Calendar mar31;
+    private Calendar feb26;
+    private Calendar fyeDate;
     private Calendar var;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private final Calendar currentCalendar = Calendar.getInstance();
+
+    private String FYEmonth;
+    private String FYEday;
+
+    private Integer currentYear;
 
     public Timeline(Client client) {
-        isCompany = client.getBusinessType().toLowerCase().equals("company");
-        stringFinancialYearEnd = client.getFinancialYearEnd().trim();
+        isCompany = client.getBusinessType().toLowerCase().contains("company");
+        fye = client.getFinancialYearEnd().trim();
         gst = client.getGstSubmission().toLowerCase().trim();
         mgt = client.getMgmtAcc().toLowerCase().trim();
+
+        this.currentYear = currentCalendar.get(Calendar.YEAR);
+
+        nov30 = Calendar.getInstance();
+        nov30.set(currentYear, 10, 30);
+
+        mar31 = Calendar.getInstance();
+        mar31.set(currentYear, 2, 31);
+
+        feb26 = Calendar.getInstance();
+        feb26.set(currentYear, 1, 26);
     }
 
+    /**
+     * Returns the FYE based on which year is required Parameters are -1, 0, 1
+     * -1 for last year, 0 for current year and 1 for next year
+     *
+     * @param base
+     * @return
+     */
+    public Calendar getFYE(int base) {
+        Calendar varC;
+        varC = Calendar.getInstance();
+        int zeroBasedMonth = Integer.valueOf(FYEmonth) - 1;
+        int year = currentYear + base;
+        varC.set(year, zeroBasedMonth, Integer.valueOf(FYEday));
+        return varC;
+    }
+
+    public Boolean initAll() {
+        try {
+
+            errors = "";
+
+            // Get FYEmonth and FYEday
+            if (getFYEMonthAndDay() == null) {
+                throw new IllegalArgumentException("Invalid financial year end found: " + fye);
+            }
+
+            // Set Tax, Eci, Fin, Sec Timeline
+            if (isCompany) {
+
+                // Set Tax
+                if (currentCalendar.after(nov30)) {
+                    actualTaxTimeline = "11-30-" + (currentYear + 1);
+                    taxTimeline = "08-30-" + (currentYear + 1);
+                } else {
+                    actualTaxTimeline = "11-30-" + currentYear;
+                    taxTimeline = "08-30-" + currentYear;
+                }
+
+                fyeDate = getFYE(0);
+                // Set Eci (3 months after FYE)
+                fyeDate.add(Calendar.MONTH, 3);
+                // If this year Eci Timeline is after current date, set as next year
+                if (currentCalendar.after(fyeDate)) {
+                    fyeDate.add(Calendar.YEAR, 1);
+                }
+                actualEciTimeline = sdf.format(fyeDate.getTime());
+                fyeDate.add(Calendar.MONTH, -1);
+                eciTimeline = sdf.format(fyeDate.getTime());
+
+                // Set Sec and Fin (6 months after FYE)
+                fyeDate = getFYE(0);
+                fyeDate.add(Calendar.MONTH, 6);
+                // If this year Eci Timeline is after current date, set as next year
+                if (currentCalendar.after(fyeDate)) {
+                    fyeDate.add(Calendar.YEAR, 1);
+                }
+                actualFinTimeline = sdf.format(fyeDate.getTime());
+                actualSecTimeline = sdf.format(fyeDate.getTime());
+                fyeDate.add(Calendar.MONTH, -3);
+                finTimeline = sdf.format(fyeDate.getTime());
+                fyeDate.set(Calendar.DAY_OF_MONTH, 15);
+                secTimeline = sdf.format(fyeDate.getTime());
+            } else {
+                // If not company type
+
+                // Set Tax
+                if (currentCalendar.after(mar31)) {
+                    actualTaxTimeline = "02-31-" + (currentYear + 1);
+                    taxTimeline = "01-28-" + (currentYear + 1);
+                } else {
+                    actualTaxTimeline = "02-31-" + currentYear;
+                    taxTimeline = "01-28-" + currentYear;
+                }
+                // Set eci
+                actualEciTimeline = "na";
+                eciTimeline = "na";
+
+                // Set sec
+                actualSecTimeline = "na";
+                secTimeline = "na";
+
+                // Set fin
+                if (currentCalendar.after(feb26)) {
+                    feb26.add(Calendar.YEAR, 1);
+                }
+                actualFinTimeline = sdf.format(feb26.getTime());
+                feb26.add(Calendar.MONTH, -3);
+                finTimeline = sdf.format(feb26.getTime());
+            }
+
+            int currentMonth = currentCalendar.get(Calendar.MONTH);
+
+            // Set Gst
+            switch (gst) {
+                case "m":
+                    // get the last day of the current month
+                    var = Calendar.getInstance();
+                    int thisYear = var.get(Calendar.YEAR);
+                    int thisMonth = var.get(Calendar.MONTH);
+                    int maxDay = var.getActualMaximum(Calendar.DAY_OF_MONTH);
+                    // Set var as the last day of the current month
+                    var.set(thisYear, thisMonth, maxDay);
+                    // If it is currently the last day of the month set the project as next year
+                    if (currentCalendar.get(Calendar.DAY_OF_MONTH) == maxDay) {
+                        var.add(Calendar.MONTH, 1);
+                    }
+                    actualGstTimeline = sdf.format(var.getTime());
+                    // internal is 7 days before
+                    var.add(Calendar.DAY_OF_MONTH, -7);
+                    gstTimeline = sdf.format(var.getTime());
+                    break;
+                case "q":
+
+                    var = Calendar.getInstance();
+
+                    // get next viable quater
+                    int nextMonth = nextQuarterMonth(currentMonth, Integer.parseInt(FYEmonth));
+                    var.set(Calendar.MONTH, nextMonth);
+                    var.set(Calendar.DAY_OF_MONTH, Integer.parseInt(FYEday));
+                    // set to next year if month crossover
+                    if (nextMonth < currentMonth) {
+                        var.add(Calendar.YEAR, 1);
+                    }
+                    // gst deadline is a month after financial period
+                    var.add(Calendar.MONTH, 1);
+
+                    actualGstTimeline = sdf.format(var.getTime());
+                    // internal deadline is 8 days before
+                    var.add(Calendar.DAY_OF_MONTH, -8);
+                    gstTimeline = sdf.format(var.getTime());
+                    break;
+
+                // THIS BROKE
+                case "s":
+                    if (Integer.parseInt(FYEmonth) < currentMonth) {
+                        if (Integer.parseInt(FYEmonth) + 6 < currentMonth) {
+                            fyeDate = getFYE(0);
+                            fyeDate.add(Calendar.MONTH, 1);
+                            fyeDate.add(Calendar.YEAR, 1);
+                            actualGstTimeline = sdf.format(fyeDate.getTime());
+                            fyeDate.add(Calendar.DAY_OF_MONTH, -8);
+                            gstTimeline = sdf.format(fyeDate.getTime());
+                        } else {
+                            fyeDate = getFYE(0);
+                            fyeDate.add(Calendar.MONTH, 7);
+                            actualGstTimeline = sdf.format(fyeDate.getTime());
+                            fyeDate.add(Calendar.DAY_OF_MONTH, -8);
+                            gstTimeline = sdf.format(fyeDate.getTime());
+                        }
+
+                    } else {
+                        // 1 month after FYE
+                        fyeDate = getFYE(0);
+                        fyeDate.add(Calendar.MONTH, 1);
+                        actualGstTimeline = sdf.format(fyeDate.getTime());
+                        fyeDate.add(Calendar.DAY_OF_MONTH, -8);
+                        gstTimeline = sdf.format(fyeDate.getTime());
+                    }
+                    break;
+                default:
+                    gstTimeline = "na";
+                    actualGstTimeline = "na";
+                    break;
+            }
+
+            if (mgt.toLowerCase().contains("na")) {
+                mgtTimeline = "na";
+                actualMgtTimeline = "na";
+            } else {
+                int mgtDays = Integer.parseInt(mgt.substring(1));
+
+                switch (mgt.substring(0, 1)) {
+                    case "m":
+                        // get the last day of the current month
+                        fyeDate = Calendar.getInstance();
+                        int thisYear = fyeDate.get(Calendar.YEAR);
+                        int thisMonth = fyeDate.get(Calendar.MONTH);
+                        fyeDate.set(Calendar.DAY_OF_MONTH, mgtDays);
+                        var = Calendar.getInstance();
+
+                        if (var.after(fyeDate)) {
+                            fyeDate.add(Calendar.MONTH, 1);
+                            actualMgtTimeline = sdf.format(fyeDate.getTime());
+                            fyeDate.add(Calendar.DAY_OF_MONTH, -7);
+                            mgtTimeline = sdf.format(fyeDate.getTime());
+                        } else {
+                            actualMgtTimeline = sdf.format(fyeDate.getTime());
+                            fyeDate.add(Calendar.DAY_OF_MONTH, -7);
+                            mgtTimeline = sdf.format(fyeDate.getTime());
+                        }
+                        break;
+
+                    case "q":
+                        var = Calendar.getInstance();
+                        // get next viable quater
+                        int nextMonth = nextQuarterMonth(currentMonth, Integer.parseInt(FYEmonth));
+                        var.set(Calendar.MONTH, nextMonth);
+                        var.set(Calendar.DAY_OF_MONTH, mgtDays);
+                        // set to next year if month crossover
+                        if (nextMonth < currentMonth) {
+                            var.add(Calendar.YEAR, 1);
+                        }
+                        // gst deadline is a month after financial period
+                        var.add(Calendar.MONTH, 1);
+                        actualMgtTimeline = sdf.format(var.getTime());
+                        var.add(Calendar.DAY_OF_MONTH, -8);
+                        mgtTimeline = sdf.format(var.getTime());
+                        break;
+
+                    default:
+                        mgtTimeline = "na";
+                        actualMgtTimeline = "na";
+                        break;
+
+                }
+            }
+
+        } catch (IllegalArgumentException | NullPointerException iae) {
+            errors += ("-Exception found: " + iae.getMessage() + "-");
+        }
+
+        // If errors is empty, return true
+        isValid =  errors.equals("");
+        return isValid;
+    }
+
+    private String getFYEMonthAndDay() {
+        if (fye == null || fye.isEmpty() || fye.length() < 6) {
+            return null;
+        }
+
+        this.FYEday = fye.substring(0, 2);
+
+        switch (fye.substring(3).toLowerCase()) {
+            case "jan":
+                this.FYEmonth = "01";
+                break;
+            case "feb":
+                this.FYEmonth = "02";
+                break;
+            case "mar":
+                this.FYEmonth = "03";
+                break;
+            case "apr":
+                this.FYEmonth = "04";
+                break;
+            case "may":
+                this.FYEmonth = "05";
+                break;
+            case "jun":
+                this.FYEmonth = "06";
+                break;
+            case "jul":
+                this.FYEmonth = "07";
+                break;
+            case "aug":
+                this.FYEmonth = "08";
+                break;
+            case "sep":
+                this.FYEmonth = "09";
+                break;
+            case "oct":
+                this.FYEmonth = "10";
+                break;
+            case "nov":
+                this.FYEmonth = "11";
+                break;
+            case "dec":
+                this.FYEmonth = "12";
+                break;
+            default:
+                return null;
+        }
+        return FYEday;
+    }
+
+    /**
+     * Returns the company's financial year end month and the current month,
+     * return the next quarter (3 months) month's deadline from 0-11
+     *
+     * @param current
+     * @param financialYearEndMonth
+     * @return
+     */
+    private int nextQuarterMonth(int current, int financialYearEndMonth) {
+        switch (financialYearEndMonth) {
+            case 0: //Jan
+            case 3: //Apr
+            case 6: //Jul
+            case 9: //Oct
+                if (current <= 2) {
+                    return 3;
+                } else if (current <= 5) {
+                    return 6;
+                } else if (current <= 8) {
+                    return 9;
+                } else {
+                    return 0;
+                }
+
+            case 1: //Feb
+            case 4: //May
+            case 7: //Aug
+            case 10://Nov
+                if (current == 10 || current == 11 || current == 0) {
+                    return 1;
+                } else if (current <= 3) {
+                    return 4;
+                } else if (current <= 6) {
+                    return 7;
+                } else {
+                    return 10;
+                }
+            default: //Mar Jun Sep Dec
+                if (current <= 1 || current == 11) {
+                    return 2;
+                } else if (current <= 4) {
+                    return 5;
+                } else if (current <= 7) {
+                    return 8;
+                } else {
+                    return 11;
+                }
+        }
+
+    }
+    
     public HashMap<String, String> getAllTimelines() {
         HashMap<String, String> hm = new HashMap<>();
         if (isValid) {
-            hm.put("stringFinancialYearEnd", stringFinancialYearEnd);
+            hm.put("stringFinancialYearEnd", fye);
             hm.put("actualEciTimeline", actualEciTimeline);
             hm.put("eciTimeline", eciTimeline);
             hm.put("actualTaxTimeline", actualTaxTimeline);
@@ -70,355 +420,6 @@ public class Timeline {
             hm.put("actualSecTimeline", "na");
             hm.put("secTimeline", "na");
             return hm;
-        }
-    }
-
-    public JSONObject getAllTimelinesJSONObject() {
-        return new JSONObject(getAllTimelines());
-    }
-
-    private Calendar getFinancialYearEnd(String yyyyMMdd) throws ParseException {
-        Date date = sdf.parse(yyyyMMdd);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal;
-    }
-
-    public Boolean initAll() {
-        try {
-            isValid = false;
-
-            String yyyyMMdd = getYearMonthDayString(stringFinancialYearEnd);
-            if (yyyyMMdd == null || yyyyMMdd.contains("na")) {
-                return false;
-            }
-
-            // Get the Calendar object of the final year end
-            financialYearEnd = getFinancialYearEnd(yyyyMMdd);
-
-            // Get the year of the financial year end
-            int year = financialYearEnd.get(Calendar.YEAR);
-
-            //Get Tax Timeline
-            if (isCompany) {
-                // actual tax timeline is 30 Nov
-                actualTaxTimeline = year + "-11-30";
-                // internal tax timeline is 3 months before actual
-                taxTimeline = year + "-08-30";
-                // actual eci timeline is 3 months after financial year end
-                var = getFinancialYearEnd(yyyyMMdd);
-                var.add(Calendar.MONTH, 3);
-                actualEciTimeline = sdf.format(var.getTime());
-                // internal eci timeline is 1 month before actial
-                var.add(Calendar.MONTH, -1);
-                eciTimeline = sdf.format(var.getTime());
-            } else {
-                // actual tax timelien is 31 march
-                actualTaxTimeline = year + "-03-31";
-                // internal tax timeline is 28 feb
-                taxTimeline = year + "-02-28";
-                // eci is na
-                actualEciTimeline = "na";
-                eciTimeline = "na";
-            }
-
-            //Get accounting timeline
-            switch (gst) {
-                case "m":
-                    // get the last day of the current month
-                    var = Calendar.getInstance();
-                    int thisYear = var.get(Calendar.YEAR);
-                    int thisMonth = var.get(Calendar.MONTH);
-                    int maxDay = var.getActualMaximum(Calendar.DAY_OF_MONTH);
-                    var.set(thisYear, thisMonth, maxDay);
-                    actualGstTimeline = sdf.format(var.getTime());
-                    // internal is 7 days before
-                    var.add(Calendar.DAY_OF_MONTH, -7);
-                    gstTimeline = sdf.format(var.getTime());
-                    break;
-                case "q":
-                    // get next viable quater
-                    var = getFinancialYearEnd(yyyyMMdd);
-                    int day = var.get(Calendar.DAY_OF_MONTH);
-                    int targetMonth = var.get(Calendar.MONTH);
-                    int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
-                    int currentYear;
-                    int nextMonth = nextQuarterMonth(currentMonth, targetMonth);
-                    // set to next year if month crossover
-                    var = Calendar.getInstance();
-                    if (nextMonth < currentMonth) {
-                        var.add(Calendar.YEAR, 1);
-                        currentYear = var.get(Calendar.YEAR);
-                    } else {
-                        currentYear = var.get(Calendar.YEAR);
-                    }
-                    var.set(currentYear, nextMonth, day);
-                    // gst deadline is a month after financial period
-                    var.add(Calendar.MONTH, 1);
-                    actualGstTimeline = sdf.format(var.getTime());
-                    // internal deadline is 8 days before
-                    var.add(Calendar.DAY_OF_MONTH, -8);
-                    gstTimeline = sdf.format(var.getTime());
-                    break;
-
-                // THIS BROKE
-                case "s":
-                    var = getFinancialYearEnd(yyyyMMdd);
-                    int sday = var.get(Calendar.DAY_OF_MONTH);
-                    // stargetMonth is either month of financial year end date or 6 months after/before
-                    int stargetMonth = var.get(Calendar.MONTH);
-                    int scurrentMonth = Calendar.getInstance().get(Calendar.MONTH);
-                    int scurrentYear = Calendar.getInstance().get(Calendar.YEAR);
-                    int snextMonth;
-                    if (scurrentMonth < stargetMonth) {
-                        snextMonth = stargetMonth;
-                    } else {
-                        var.add(Calendar.MONTH, -6);
-                        // add a year if crossover month
-                        scurrentYear = var.get(Calendar.YEAR);
-                        snextMonth = var.get(Calendar.MONTH);
-                    }
-                    var.set(scurrentYear, snextMonth, sday);
-                    // deadline is a month after financial period
-                    var.add(Calendar.MONTH, 1);
-                    actualGstTimeline = sdf.format(var.getTime());
-                    // internal deadline is 8 days before
-                    var.add(Calendar.DAY_OF_MONTH, -8);
-                    gstTimeline = sdf.format(var.getTime());
-                    break;
-                default:
-                    gstTimeline = "na";
-                    actualGstTimeline = "na";
-                    break;
-
-            }
-
-            if (mgt.contains("na")) {
-                mgtTimeline = "na";
-                actualMgtTimeline = "na";
-            } else {
-                String managementDays = mgt.substring(2);
-                int numDays = Integer.parseInt(managementDays);
-                int mgtDays = 0;
-                for(int i = 1; i <=31; i++){
-                    if(i == numDays){
-                        mgtDays = numDays; 
-                        break;
-                    }
-                }
-                /*switch (managementDays) {
-                    case "7":
-                        mgtDays = 7;
-                        break;
-                    case "15":
-                        mgtDays = 15;
-                        break;
-                    case "21":
-                        mgtDays = 21;
-                        break;
-                    default:
-                        mgtDays = 28;
-                        break;
-                }*/
-                mgt = mgt.substring(0, 1);
-
-                switch (mgt) {
-                    case "m":
-                        // get the last day of the current month
-                        var = Calendar.getInstance();
-                        // var.add(Calendar.DAY_OF_MONTH, 1);
-                        int thisYear = var.get(Calendar.YEAR);
-                        int thisMonth = var.get(Calendar.MONTH);
-                        var.set(thisYear, thisMonth, mgtDays);
-                        actualMgtTimeline = sdf.format(var.getTime());
-                        // internal is 7 days before
-                        var.add(Calendar.DAY_OF_MONTH, -7);
-                        mgtTimeline = sdf.format(var.getTime());
-                        break;
-                    case "q":
-                        // get next viable quater
-                        var = getFinancialYearEnd(yyyyMMdd);
-                        int targetMonth = var.get(Calendar.MONTH);
-                        int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
-                        int currentYear;
-                        int nextMonth = nextQuarterMonth(currentMonth, targetMonth);
-                        // set to next year if month crossover
-                        var = Calendar.getInstance();
-                        if (nextMonth < currentMonth) {
-                            var.add(Calendar.YEAR, 1);
-                            currentYear = var.get(Calendar.YEAR);
-                        } else {
-                            currentYear = var.get(Calendar.YEAR);
-                        }
-                        var.set(currentYear, nextMonth, mgtDays);
-                        // gst deadline is a month after financial period
-                        var.add(Calendar.MONTH, 1);
-                        actualMgtTimeline = sdf.format(var.getTime());
-                        // internal deadline is 8 days before
-                        var.add(Calendar.DAY_OF_MONTH, -8);
-                        mgtTimeline = sdf.format(var.getTime());
-                        break;
-
-                    default:
-                        mgtTimeline = "na";
-                        actualMgtTimeline = "na";
-                        break;
-
-                }
-            }
-
-            // final acc timeline
-            if (isCompany) {
-                var = getFinancialYearEnd(yyyyMMdd);
-                var.add(Calendar.MONTH, 3);
-                finTimeline = sdf.format(var.getTime());
-                var.add(Calendar.MONTH, 3);
-                actualFinTimeline = sdf.format(var.getTime());
-            } else {
-                var = getFinancialYearEnd(yyyyMMdd);
-                actualFinTimeline = year + "-02-26";
-                Date finDate = sdf.parse(actualFinTimeline);
-                var.setTime(finDate);
-                var.add(Calendar.MONTH, -3);
-                finTimeline = sdf.format(var.getTime());
-            }
-
-            // sec timeline
-            actualSecTimeline = "na";
-            secTimeline = "na";
-            if (isCompany) {
-                var = getFinancialYearEnd(yyyyMMdd);
-                var.add(Calendar.MONTH, 6);
-                actualSecTimeline = sdf.format(var.getTime());
-                var = getFinancialYearEnd(yyyyMMdd);
-                var.add(Calendar.MONTH, 3);
-                var.add(Calendar.DAY_OF_MONTH, 15);
-                secTimeline = sdf.format(var.getTime());
-            }
-            isValid = true;
-            return true;
-        } catch (ParseException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            return false;
-        }
-    }
-    
-    
-    /**
-     * Returns the company's financial year end month and the current month, return the next quarter (3 months) month's deadline from 0-11
-     * 
-     * @param current
-     * @param financialYearEndMonth
-     * @return 
-     */
-    private int nextQuarterMonth(int current, int financialYearEndMonth) {
-        switch (financialYearEndMonth) {
-            case 0: //Jan
-            case 3: //Apr
-            case 6: //Jul
-            case 9: //Oct
-                if (current <= 2) {
-                    return 3;
-                } else if (current <= 5) {
-                    return 6;
-                } else if (current <= 8) {
-                    return 9;
-                } else {
-                    return 0;
-                }
-                
-            case 1: //Feb
-            case 4: //May
-            case 7: //Aug
-            case 10://Nov
-                if (current == 10 || current == 11 || current == 0) {
-                    return 1;
-                } else if (current <= 3) {
-                    return 4;
-                } else if (current <= 6) {
-                    return 7;
-                } else {
-                    return 10;
-                }
-            default: //Mar Jun Sep Dec
-                if (current <= 1 || current == 11) {
-                    return 2;
-                } else if (current <= 4) {
-                    return 5;
-                } else if (current <= 7) {
-                    return 8;
-                } else {
-                    return 11;
-                }
-        }
-    }
-
-    private String getYearMonthDayString(String dayAndMonthName) {
-        if (dayAndMonthName == null) {
-            return null;
-        }
-        Calendar nextYear = Calendar.getInstance();
-        String thisYearString = String.valueOf(nextYear.get(Calendar.YEAR));
-        nextYear.add(Calendar.YEAR, 1);
-        String nextYearString = String.valueOf(nextYear.get(Calendar.YEAR));
-        String dayString = dayAndMonthName.substring(0, 2);
-        String monthString;
-        // Get monthString
-        switch (dayAndMonthName.substring(3).toLowerCase()) {
-            case "jan":
-                monthString = "01";
-                break;
-            case "feb":
-                monthString = "02";
-                break;
-            case "mar":
-                monthString = "03";
-                break;
-            case "apr":
-                monthString = "04";
-                break;
-            case "may":
-                monthString = "05";
-                break;
-            case "jun":
-                monthString = "06";
-                break;
-            case "jul":
-                monthString = "07";
-                break;
-            case "aug":
-                monthString = "08";
-                break;
-            case "sep":
-                monthString = "09";
-                break;
-            case "oct":
-                monthString = "10";
-                break;
-            case "nov":
-                monthString = "11";
-                break;
-            case "dec":
-                monthString = "12";
-                break;
-            default:
-                monthString = "na";
-                break;
-        }
-        //Check if current year end has passed
-        String thisYearEnd = thisYearString + "-" + monthString + "-" + dayString;
-        Calendar thisYear = Calendar.getInstance();
-        Date date;
-        try {
-            date = sdf.parse(thisYearEnd);
-            thisYear.setTime(date);
-            if (Calendar.getInstance().before(thisYear)) {
-                return thisYearEnd;
-            } else {
-                return nextYearString + "-" + monthString + "-" + dayString;
-            }
-        } catch (ParseException ex) {
-            return null;
         }
     }
 }

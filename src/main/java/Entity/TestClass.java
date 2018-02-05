@@ -5,7 +5,9 @@
  */
 package Entity;
 
+import DAO.ClientDAO;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
@@ -14,6 +16,28 @@ import org.apache.commons.lang.StringUtils;
  * @author Lin
  */
 public class TestClass {
+    
+    private static void testTimeline() {
+
+        Client c = ClientDAO.getClientByCompanyName("The Oakthree Group Pte. Ltd");
+        System.out.println("===Testing timeline object===");
+        System.out.println("Client type: " + c.getBusinessType());
+        System.out.println("Client financial year end: " + c.getFinancialYearEnd());
+        System.out.println("Client gst: " + c.getGstSubmission() + "; Cliet mgt: " + c.getMgmtAcc());
+        Timeline t = new Timeline(c);
+        if (t.initAll()) {
+            HashMap<String, String> results = t.getAllTimelines();
+            results.entrySet().stream().forEach((entry) -> {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                System.out.println(key + " -> " + value);
+            });
+
+        } else {
+            System.out.println("Failed to initialize Timeline Object!");
+        }
+        System.out.println("===End of test===");
+    }
 
     public static void testPaymentObjects() {
         List<Payment> pre = SampleData.loadPrePaymentList();
@@ -50,6 +74,6 @@ public class TestClass {
     }
 
     public static void main(String[] args) {
-        testSubString();
+        testTimeline();
     }
 }
