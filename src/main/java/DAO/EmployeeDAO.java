@@ -28,6 +28,7 @@ public class EmployeeDAO {
     private static String getEmployeeStatement = "SELECT * FROM EMPLOYEE WHERE employeeID = ? ";
     private static String getEmployeeStatementwithPassword = "SELECT * FROM EMPLOYEE WHERE employeeID = ? AND password = ? ";
     private static String getAllEmployeeStatement = "SELECT * FROM EMPLOYEE order by name";
+    private static String getAllCurrentEmployeeStatement = "SELECT * FROM EMPLOYEE where position <> 'Ex-Employee' order by name";
     private static String getEmployeeFromNameStatement = "SELECT * FROM EMPLOYEE WHERE name = ?";
     private static String deleteEmployeeByNRICStatement = "DELETE FROM EMPLOYEE WHERE NRIC = ?";
     private static String insertEmployeeStatement = "INSERT INTO EMPLOYEE values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -37,7 +38,7 @@ public class EmployeeDAO {
     private static String deleteEmployeeByEmployeeNameStatement = "DELETE FROM EMPLOYEE WHERE name = ?";
     private static String updateEmployeeStatement = "UPDATE EMPLOYEE SET password=?, email=?, isAdmin=?, monthlyOverhead=?, position=?, supervisor=?, bankAccount=?, name=?, number=?, dateJoined=?, dob=?, nationality=? WHERE NRIC=?";
     private static String getEmployeeNameStatement = "SELECT name FROM EMPLOYEE WHERE supervisor = ? AND position <> 'Ex-Employee'";
-    private static String getAllSupervisorStatement = "SELECT name FROM EMPLOYEE WHERE supervisor = ? AND position <> 'Ex-Employee'";
+    private static String getAllSupervisorStatement = "SELECT name FROM EMPLOYEE WHERE supervisor = ? AND position <> 'Ex-Employee' order by name";
 
     public static Employee getEmployee(String name) {
 
@@ -230,6 +231,32 @@ public class EmployeeDAO {
             return empList;
         } catch (SQLException e) {
             System.out.println("EmployeeDAO: (getAllEmployees) = " + e.toString());
+            //Returns empty staff, so that add new job can determine that the staff does note exist and it's a database error
+            //a database error!
+            //Will be checked by .getUserId method!
+        }
+        return empList;
+    }
+    
+    public static ArrayList<Employee> getAllCurrentEmployees() {
+        ArrayList<Employee> empList = new ArrayList<>();
+
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(getAllCurrentEmployeeStatement);
+
+            ResultSet rs = stmt.executeQuery();
+
+            // returns null if no records are returned
+            if (!rs.next()) {
+                return empList;
+            }
+            empList.add(new Employee(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getDate(12), rs.getDate(13), rs.getString(14)));
+            while (rs.next()) {
+                empList.add(new Employee(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getDate(12), rs.getDate(13), rs.getString(14)));
+            }
+            return empList;
+        } catch (SQLException e) {
+            System.out.println("EmployeeDAO: (getAllCurrentEmployees) = " + e.toString());
             //Returns empty staff, so that add new job can determine that the staff does note exist and it's a database error
             //a database error!
             //Will be checked by .getUserId method!

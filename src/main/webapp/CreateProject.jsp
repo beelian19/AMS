@@ -19,7 +19,7 @@
             HashMap<String, String> alltimeLines = (HashMap<String, String>) session.getAttribute("allTimeLines");
             EmployeeDAO empDAO = new EmployeeDAO();
             ArrayList<String> supList = empDAO.getAllSupervisor();
-            ArrayList<Employee> empList = empDAO.getAllEmployees();
+            ArrayList<Employee> empList = empDAO.getAllCurrentEmployees();
             String clientName = client.getCompanyName();
             int profileId = client.getClientID();
         %>
@@ -279,7 +279,7 @@
                                                     out.println("<option value='" + empList.get(i).getName() + "'>" + empList.get(i).getName() + "</option>");
                                                 }
                                             %>
-                                            <option value="na">NA</option>
+                                            <option value="NA">NA</option>
                                         </select>
                                     </td>
                                     <td width="1%">
@@ -381,7 +381,7 @@
                         var emp2 = document.getElementById("assignedEmployee2").value;
                         var reviewer = document.getElementById("reviewer").value;
                         var assignedHours = document.getElementById("plannedHours").value;
-
+                        //console.log("Internal Deadline: "+recommendedInternal);
                         if (title === "") {
                             alert("Project Title required");
                         } else if (companyName === "") {

@@ -39,9 +39,6 @@ public class OverdueProjectPerYear extends HttpServlet {
         int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear(selectedYear);
         overdueList = ProjectDAO.getOverdueProjectPerYear(selectedYear);
         
-        //request.setAttribute("overdueList", overdueList);
-        //RequestDispatcher rd = request.getRequestDispatcher("FinalDashboard.jsp");
-        //rd.forward(request, response);
         ArrayList<Integer> overdue = new ArrayList();
 
         for (int i = 0; i < 12; i++) {

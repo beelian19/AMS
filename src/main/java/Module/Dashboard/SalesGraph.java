@@ -6,6 +6,7 @@
 package Module.Dashboard;
 
 import DAO.ProjectDAO;
+import Entity.Project;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class SalesGraph extends HttpServlet {
         ArrayList<Double> sales = new ArrayList();
         ArrayList<Double> cost = new ArrayList();
         ArrayList<Double> profit = new ArrayList();
-
+        
         DecimalFormat decimal = new DecimalFormat("#.##");
         
         for(int i = 0; i < 12; i++) {
@@ -63,9 +64,61 @@ public class SalesGraph extends HttpServlet {
             value = Double.valueOf(decimal.format(value));
             profit.add(value);
         }
+        //Overdue,Ontime, Completed Projects
+        int[] overdueList = new int[12];
+        int[] ontimeList = ProjectDAO.getOnTimeProjectPerYear(selectedYear);
+        int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear(selectedYear);
+        overdueList = ProjectDAO.getOverdueProjectPerYear(selectedYear);
+        
+        ArrayList<Integer> overdue = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = overdueList[i];
+            overdue.add(value);
+        }
+        
+         ArrayList<Integer> ontime = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = ontimeList[i];
+            ontime.add(value);
+        }
+        
+         ArrayList<Integer> completed = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = completedList[i];
+            completed.add(value);
+        }
+        
+        //CompletedProjectMonthlyProfitability
+        ArrayList<ArrayList<Integer>> profitabilityList = new ArrayList();
+
+        profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability(selectedYear);
+        int[] completedProjectsList = ProjectDAO.getTotalCompletedProjectPerYear(selectedYear);
+        
+        ArrayList<Integer> completedProjects = new ArrayList();
+
+        for (int i = 0; i < 12; i++) {
+            int value = completedProjectsList[i];
+            completedProjects.add(value);
+        }
+        
+        ArrayList<Integer> yearProfitList = profitabilityList.get(0);
+        ArrayList<Integer> yearLossList = profitabilityList.get(1);
+        
+        ArrayList<Project> projectsForTable = ProjectDAO.getProjectsWithinSelectedYear(selectedYear);
+        
         request.getSession().setAttribute("sales", sales);
         request.getSession().setAttribute("cost", cost);
         request.getSession().setAttribute("profit", profit);
+        request.getSession().setAttribute("overdueProject", overdue);
+        request.getSession().setAttribute("ontimeProject", ontime);
+        request.getSession().setAttribute("completedProject", completed);
+        request.getSession().setAttribute("yearProfit", yearProfitList);
+        request.getSession().setAttribute("yearLoss", yearLossList);
+        request.getSession().setAttribute("totalCompletedList", completedProjects);
+        request.getSession().setAttribute("projectsForTable", projectsForTable);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

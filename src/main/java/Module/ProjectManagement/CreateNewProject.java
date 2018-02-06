@@ -111,7 +111,7 @@ public class CreateNewProject extends HttpServlet {
             //this is the method to get start date....minus 1 day logic
             if (internalDeadline.length() == 0) {
                 if (externalDeadline.length() == 0) {
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
                     Date endDate = df.parse(recommendedInternalDeadline);
                     Date externalEndDate = df.parse(recommendedExternalDeadline);
                     Calendar cal = Calendar.getInstance();
@@ -123,7 +123,7 @@ public class CreateNewProject extends HttpServlet {
                     project.setStart(startDate);
                     project.setActualDeadline(externalEndDate);
                 } else {
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
                     Date endDate = df.parse(recommendedInternalDeadline);
                     Date externalEndDate = df.parse(externalDeadline);
                     Calendar cal = Calendar.getInstance();
@@ -138,7 +138,7 @@ public class CreateNewProject extends HttpServlet {
 
             } else {
                 if (externalDeadline.length() == 0) {
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
                     Date endDate = df.parse(internalDeadline);
                     Date externalEndDate = df.parse(recommendedExternalDeadline);
                     Calendar cal = Calendar.getInstance();
@@ -150,7 +150,7 @@ public class CreateNewProject extends HttpServlet {
                     project.setStart(startDate);
                     project.setActualDeadline(externalEndDate);
                 } else {
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
                     Date endDate = df.parse(internalDeadline);
                     Date externalEndDate = df.parse(externalDeadline);
                     Calendar cal = Calendar.getInstance();
@@ -163,6 +163,7 @@ public class CreateNewProject extends HttpServlet {
                     project.setActualDeadline(externalEndDate);
                 }
             }
+            System.out.println("Start Date: "+project.getStart());
             boolean check = ProjectDAO.createProject(project);
             if (check) {
                 session.setAttribute("status", "Success: Project " + title + " Created.");

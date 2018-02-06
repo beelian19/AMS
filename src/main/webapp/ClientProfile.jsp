@@ -4,6 +4,7 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="DAO.ProjectDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.ArrayList"%>
@@ -32,8 +33,7 @@
                 response.sendRedirect("EmployeeProfile.jsp");
                 return;
             }
-            ArrayList<Project> incompletedProjectList = (ArrayList<Project>) request.getAttribute("incompletedProject");
-            ArrayList<Project> completedProjectList = (ArrayList<Project>) request.getAttribute("completedProject");
+            
             String sessionID = (String) session.getAttribute("userId");
             EmployeeDAO empDAO = new EmployeeDAO();
             Employee emp = empDAO.getEmployeeByID(sessionID);
@@ -78,6 +78,9 @@
                 realmid = client.getRealmid();
                 mgmtAcc = client.getMgmtAcc();
             }
+            ArrayList<Project> incompletedProjectList = ProjectDAO.getAllIncompleteProjectsByCompanyName(clientName);
+            ArrayList<Project> completedProjectList = ProjectDAO.getAllCompleteProjectsByCompanyName(clientName);
+            //System.out.println("check incompleted Project list: "+incompletedProjectList.size());
             String profileUrl = "ProjectProfile.jsp?projectID=";
             String profileUrl2 = "";
             String assignedEmployeeURL = "EmployeeProfile.jsp?profileName=";;

@@ -65,6 +65,7 @@ public class ProjectDAO {
             + "employee2=?, projectReviewer=? WHERE projectID=?";
     private static String getAllIncompleteProjects = "SELECT * FROM project where projectStatus = 'incomplete' OR projectReviewStatus = 'incomplete'";
     private static String getAllIncompleteProjectsByCompanyName = "SELECT * FROM project where ( projectStatus = 'incomplete' OR projectReviewStatus = 'incomplete' ) AND companyName = ?";
+    private static String getAllCompletedProjectsByCompanyName = "SELECT * FROM project where ( projectStatus = 'complete' AND projectReviewStatus = 'complete' ) AND companyName = ?";
     private static String getAllIncompleteAdhocProjects = "SELECT * FROM project where ( projectStatus = 'incomplete' OR projectReviewStatus = 'incomplete'  ) AND projectType='adhoc'";
     private static String getProjectByTitleAndCompanyNameStatement = "SELECT projectID FROM project WHERE title=? AND companyName=?";
     private static String createProjectStatement = "Insert into PROJECT values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -426,6 +427,48 @@ public class ProjectDAO {
 
     }
 
+    public static ArrayList<Project> getAllCompleteProjectsByCompanyName(String companyName) {
+        ArrayList<Project> projectList = new ArrayList<>();
+        Project project;
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(getAllCompletedProjectsByCompanyName);
+            stmt.setString(1, companyName);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                project = new Project();
+                project.setProjectID(rs.getInt("projectID"));
+                project.setProjectTitle(rs.getString("title"));
+                project.setCompanyName(rs.getString("companyName"));
+                project.setBusinessType(rs.getString("businessType"));
+                project.setStart(rs.getDate("start"));
+                project.setEnd(rs.getDate("end"));
+                project.setProjectRemarks(rs.getString("projectRemarks"));
+                project.setProjectStatus(rs.getString("projectStatus"));
+                project.setActualDeadline(rs.getDate("actualDeadline"));
+                project.setFrequency(rs.getString("frequency"));
+                project.setProjectType(rs.getString("projectType"));
+                project.setEmployee1(rs.getString("employee1"));
+                project.setEmployee2(rs.getString("employee2"));
+                project.setEmployee1Hours(rs.getDouble("employee1Hours"));
+                project.setEmployee2Hours(rs.getDouble("employee2Hours"));
+                project.setProjectReviewer(rs.getString("projectReviewer"));
+                project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
+                project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
+
+                projectList.add(project);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
+        }
+        return projectList;
+
+    }
+
     /**
      * Creates a HashMap with the key being the project type and value being the
      * URL that directs to the project info
@@ -436,9 +479,9 @@ public class ProjectDAO {
     public static HashMap<String, String> getProjectTypeAsKeyAndURLAsValue(ArrayList<Project> projects) {
         HashMap<String, String> map = new HashMap<>();
         String profileUrl = "ProjectProfile.jsp?projectID=";
-        for (Project p : projects){
-            if (map.get(p.getProjectType()) == null){
-                map.put(p.getProjectType(), profileUrl+p.getProjectIDString());
+        for (Project p : projects) {
+            if (map.get(p.getProjectType()) == null) {
+                map.put(p.getProjectType(), profileUrl + p.getProjectIDString());
             }
         }
 
@@ -1877,11 +1920,11 @@ public class ProjectDAO {
         double sales = 0.0;
 
         HashMap<String, Double> costPerHourPerStaffList = EmployeeDAO.getCostPerHourPerStaff();
-
+        
         String emp1 = project.getEmployee1();
         String emp2 = project.getEmployee2();
-        //System.out.println("Employee 1 : " + emp1);
-        //System.out.println("Employee 2 : " + emp2);
+//        System.out.println("Employee 1 : " + emp1);
+//        System.out.println("Employee 2 : " + emp2);
         double plannedHours = project.getPlannedHours();
 
         double emp1CostPerHour = 0.0;
@@ -2285,4 +2328,41 @@ public class ProjectDAO {
         }
     }
 
+    public static ArrayList<Project> getProjectsWithinSelectedYear(String year) {
+        ArrayList<Project> returnList = new ArrayList();
+
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE year(end) = ? AND projectStatus='complete' AND projectReviewStatus='complete'");
+            stmt.setString(1, year);
+            ResultSet rs = stmt.executeQuery();
+            Project project = new Project();
+            while (rs.next()) {
+                //create the project object
+                project.setProjectID(rs.getInt("projectID"));
+                project.setProjectTitle(rs.getString("title"));
+                project.setCompanyName(rs.getString("companyName"));
+                project.setBusinessType(rs.getString("businessType"));
+                project.setStart(rs.getDate("start"));
+                project.setEnd(rs.getDate("end"));
+                project.setProjectRemarks(rs.getString("projectRemarks"));
+                project.setProjectStatus(rs.getString("projectStatus"));
+                project.setActualDeadline(rs.getDate("actualDeadline"));
+                project.setFrequency(rs.getString("frequency"));
+                project.setProjectType(rs.getString("projectType"));
+                project.setEmployee1(rs.getString("employee1"));
+                project.setEmployee2(rs.getString("employee2"));
+                project.setEmployee1Hours(rs.getDouble("employee1Hours"));
+                project.setEmployee2Hours(rs.getDouble("employee2Hours"));
+                project.setProjectReviewer(rs.getString("projectReviewer"));
+                project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
+                project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
+                returnList.add(project);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+        }
+        return returnList;
+    }
 }
