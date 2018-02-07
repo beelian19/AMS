@@ -494,7 +494,7 @@
                                         yearChosen = yearChosen + 1900;
                                     }
                                 }
-                                //console.log("Year Chosen: " + yearChosen);
+                                console.log("Year Chosen: " + yearChosen);
                                 $.ajax({
                                     url: 'SalesGraph',
                                     data: 'year=' + yearChosen,
@@ -920,6 +920,8 @@
                                     }
                                 });
                             }
+                            
+                            /*
                             function completedProjectProfitability(yearChosen) {
                                 //console.log("Year Chose 2nd One: "+yearChosen);
                                 $.ajax({
@@ -1281,6 +1283,7 @@
                                     }
                                 });
                             }
+                            */
                         </script>
                     </div>
 
