@@ -33,7 +33,7 @@ public class SalesGraph extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String selectedYear = request.getParameter("year");
-        System.out.println("SalesGraph servlet: "+selectedYear);
+        System.out.println("SalesGraph servlet:======================================: "+selectedYear);
         Double[] salesList = ProjectDAO.getSales(selectedYear);
         Double[] costList = ProjectDAO.getActualCost(selectedYear);
         Double[] profitList = ProjectDAO.getProfit(selectedYear);
@@ -109,6 +109,11 @@ public class SalesGraph extends HttpServlet {
         
         ArrayList<Project> projectsForTable = ProjectDAO.getProjectsWithinSelectedYear(selectedYear);
         
+        
+        System.out.println("Sales Graph - Sales: "+sales);
+        System.out.println("Sales Graph - Cost: "+cost);
+        System.out.println("Profit Graph - Profit: "+profit);
+        
         request.getSession().setAttribute("sales", sales);
         request.getSession().setAttribute("cost", cost);
         request.getSession().setAttribute("profit", profit);
@@ -119,6 +124,7 @@ public class SalesGraph extends HttpServlet {
         request.getSession().setAttribute("yearLoss", yearLossList);
         request.getSession().setAttribute("totalCompletedList", completedProjects);
         request.getSession().setAttribute("projectsForTable", projectsForTable);
+        response.sendRedirect("FinalDashboard.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

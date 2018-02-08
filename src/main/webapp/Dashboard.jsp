@@ -187,16 +187,22 @@
                     data: 'employeeName=' + empName + '&' + 'Year=' + year,
                     success: function () {
                         var employeeOverdueData = "<%=request.getSession().getAttribute("employeeOverdue")%>";
+                        var inTimeData = "<%=request.getSession().getAttribute("inTime")%>";
+                        var completedProjectsData = "<%=request.getSession().getAttribute("completedList")%>";
+
+                        if (employeeOverdueData === "null" || inTimeData === "null" || completedProjectsData === "null") {
+                            location.reload();
+                        }
                         var employeeOverdue = employeeOverdueData.split(",");
                         employeeOverdue[0] = employeeOverdue[0].substring("1");
                         employeeOverdue[11] = employeeOverdue[11].substring("0", employeeOverdue[11].length - 1);
                         //console.log(employeeOverdue);
-                        var inTimeData = "<%=request.getSession().getAttribute("inTime")%>";
+
                         var inTime = inTimeData.split(",");
                         inTime[0] = inTime[0].substring("1");
                         inTime[11] = inTime[11].substring("0", inTime[11].length - 1);
                         //console.log(employeeTimeExceed);
-                        var completedProjectsData = "<%=request.getSession().getAttribute("completedList")%>";
+
                         var completedProjects = completedProjectsData.split(",");
                         completedProjects[0] = completedProjects[0].substring("1");
                         completedProjects[11] = completedProjects[11].substring("0", completedProjects[11].length - 1);
@@ -239,20 +245,20 @@
                                         'rgba(153, 102, 255, 0.3)',
                                         'rgba(153, 102, 255, 0.3)'
                                     ],
-                                            borderColor: [
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)'
-                                            ],
+                                    borderColor: [
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)'
+                                    ],
                                     borderWidth: 1
                                 },
                                 {
@@ -288,20 +294,20 @@
                                         'rgba(255, 99, 132, 0.3)',
                                         'rgba(255, 99, 132, 0.3)'
                                     ],
-                                            borderColor: [
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)'
-                                            ],
+                                    borderColor: [
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)'
+                                    ],
                                     borderWidth: 1
                                 }, {
                                     label: '# of Projects on Time',
@@ -337,20 +343,20 @@
                                         'rgba(54, 162, 235, 0.3)',
                                         'rgba(54, 162, 235, 0.3)'
                                     ],
-                                            borderColor: [
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)'
-                                            ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)'
+                                    ],
                                     borderWidth: 1
                                 }
                             ]
@@ -380,77 +386,77 @@
                 });
             });
 
-                        function staffMonthly() {
-                            var empName = "<%=request.getSession().getAttribute("employeeName")%>";
-                            var year = "2017"; //need to change
-                            $.ajax({
-                                url: 'StaffMonthlyReport',
-                                type: 'POST',
-                                data: 'employeeName=' + empName + '&' + 'Year=' + year,
-                                success: function () {
-                                    var actualHoursData = "<%=request.getSession().getAttribute("actualHours")%>";
-                                    var actualHours = actualHoursData.split(",");
-                                    actualHours[0] = actualHours[0].substring("1");
-                                    actualHours[11] = actualHours[11].substring("0", actualHours[11].length - 1);
-                                    var plannedHoursData = "<%=request.getSession().getAttribute("plannedHours")%>";
-                                    var plannedHours = plannedHoursData.split(",");
-                                    plannedHours[0] = plannedHours[0].substring("1");
-                                    plannedHours[11] = plannedHours[11].substring("0", plannedHours[11].length - 1);
-                                    var lineChartData = {
-                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                        datasets: [
-                                            {
-                                                label: 'Planned Hours',
-                                                fillColor: 'rgba(255, 99, 132, 0.2)',
-                                                strokeColor: 'rgba(220,180,0,1)',
-                                                pointColor: 'rgba(220,180,0,1)',
-                                                data: plannedHours, //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
-                                                backgroundColor: [
-                                                    'rgba(255, 99, 132, 0.2)'
-                                                ],
-                                                borderColor: [
-                                                    'rgba(255,99,132,1)'
-                                                ],
-                                                borderWidth: 1
-                                            },
-                                            {
-                                                label: 'Actual Hours',
-                                                fillColor: 'rgba(54, 162, 235, 0.2)',
-                                                strokeColor: 'rgba(66,180,0,1)',
-                                                pointColor: 'rgba(66,180,0,1)',
-                                                data: actualHours, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60], //profit, 
-                                                backgroundColor: [
-                                                    'rgba(153, 102, 255, 0.2)'
-                                                ],
-                                                borderColor: [
-                                                    'rgba(153, 102, 255, 0.2)'
-                                                ],
-                                                borderWidth: 1
-                                            }
-                                        ]
-                                    };
-
-                                    Chart.defaults.global.tooltipYPadding = 16;
-                                    Chart.defaults.global.tooltipCornerRadius = 0;
-                                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                                    Chart.defaults.global.animationEasing = "easeInOutElastic";
-                                    Chart.defaults.global.responsive = false;
-                                    var ctx = document.getElementById("employeeProjectHoursChart").getContext("2d");
-                                    //ctx.height = 500;
-                                    var employeeProjectHoursChart = new Chart(ctx, {
-                                        type: 'line',
-                                        data: lineChartData,
-                                        pointDotRadius: 5,
-                                        bezierCurve: false,
-                                        scaleShowVerticalLines: false
-                                    });
+            function staffMonthly() {
+                var empName = "<%=request.getSession().getAttribute("employeeName")%>";
+                var year = "2017"; //need to change
+                $.ajax({
+                    url: 'StaffMonthlyReport',
+                    type: 'POST',
+                    data: 'employeeName=' + empName + '&' + 'Year=' + year,
+                    success: function () {
+                        var actualHoursData = "<%=request.getSession().getAttribute("actualHours")%>";
+                        var actualHours = actualHoursData.split(",");
+                        actualHours[0] = actualHours[0].substring("1");
+                        actualHours[11] = actualHours[11].substring("0", actualHours[11].length - 1);
+                        var plannedHoursData = "<%=request.getSession().getAttribute("plannedHours")%>";
+                        var plannedHours = plannedHoursData.split(",");
+                        plannedHours[0] = plannedHours[0].substring("1");
+                        plannedHours[11] = plannedHours[11].substring("0", plannedHours[11].length - 1);
+                        var lineChartData = {
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [
+                                {
+                                    label: 'Planned Hours',
+                                    fillColor: 'rgba(255, 99, 132, 0.2)',
+                                    strokeColor: 'rgba(220,180,0,1)',
+                                    pointColor: 'rgba(220,180,0,1)',
+                                    data: plannedHours, //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255,99,132,1)'
+                                    ],
+                                    borderWidth: 1
                                 },
-                                error: function (data) {
-                                    console.log("Error: " + data);
+                                {
+                                    label: 'Actual Hours',
+                                    fillColor: 'rgba(54, 162, 235, 0.2)',
+                                    strokeColor: 'rgba(66,180,0,1)',
+                                    pointColor: 'rgba(66,180,0,1)',
+                                    data: actualHours, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60], //profit, 
+                                    backgroundColor: [
+                                        'rgba(153, 102, 255, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(153, 102, 255, 0.2)'
+                                    ],
+                                    borderWidth: 1
                                 }
-                            });
-                        }
+                            ]
+                        };
+
+                        Chart.defaults.global.tooltipYPadding = 16;
+                        Chart.defaults.global.tooltipCornerRadius = 0;
+                        Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                        Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                        Chart.defaults.global.animationEasing = "easeInOutElastic";
+                        Chart.defaults.global.responsive = false;
+                        var ctx = document.getElementById("employeeProjectHoursChart").getContext("2d");
+                        //ctx.height = 500;
+                        var employeeProjectHoursChart = new Chart(ctx, {
+                            type: 'line',
+                            data: lineChartData,
+                            pointDotRadius: 5,
+                            bezierCurve: false,
+                            scaleShowVerticalLines: false
+                        });
+                    },
+                    error: function (data) {
+                        console.log("Error: " + data);
+                    }
+                });
+            }
                     </script>
                     <div class="row">
                         <br/><br/>
@@ -511,8 +517,8 @@
                     </div>
                 </div>
             </div>
-        <br/><br/>
-    </nav>
-</body>
-<jsp:include page="Footer.html"/>
+            <br/><br/>
+        </nav>
+    </body>
+    <jsp:include page="Footer.html"/>
 </html>

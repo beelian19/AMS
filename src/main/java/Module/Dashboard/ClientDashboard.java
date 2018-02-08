@@ -37,8 +37,8 @@ public class ClientDashboard extends HttpServlet {
         
         String clientID = request.getParameter("clientID");
         String year = request.getParameter("year");
-        System.out.println("Client ID: "+clientID);
-        System.out.println("Year: "+year);
+        System.out.println("Client Dashboard - Client ID: "+clientID);
+        System.out.println("Client Dashboard - Year: "+year);
         //take in clientID and year as parameters
         profitabilityList = ProjectDAO.getCompanyMonthlyProfitability(clientID,year);
         int[] overdueList = new int[12];
@@ -59,12 +59,13 @@ public class ClientDashboard extends HttpServlet {
             int value = ontimeList[i];
             ontime.add(value);
         }
-        
+        System.out.println("Client Dashboard - OverDue: "+overdue);
+        System.out.println("Client Dashboard - OnTime: "+ontime);
         ArrayList<Integer> yearProfitList = profitabilityList.get(0);
         ArrayList<Integer> yearLossList = profitabilityList.get(1);
         
-        System.out.println("ClientOnTime size: "+ontime.size());
-        System.out.println("ClientOverdue size: "+overdue.size());
+        System.out.println("Client Dashboard - Profit: "+yearProfitList);
+        System.out.println("Client Dashboard - Loss: "+yearLossList);
         
         request.getSession().setAttribute("clientYearProfit", yearProfitList);
         request.getSession().setAttribute("clientYearLoss", yearLossList);

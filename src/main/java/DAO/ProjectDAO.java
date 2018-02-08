@@ -107,7 +107,7 @@ public class ProjectDAO {
                 taskList.add(task);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getAllProjectTask method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -156,7 +156,7 @@ public class ProjectDAO {
                 return (rs.getInt("max(projectID)") + 1);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getTotalNumberOfProjects method: " + e.getMessage());
         }
         return 0;
     }
@@ -201,7 +201,7 @@ public class ProjectDAO {
             stmt.setDouble(20, project.getPlannedHours());
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO createProject method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -266,7 +266,7 @@ public class ProjectDAO {
 
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO createProject method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -334,7 +334,7 @@ public class ProjectDAO {
                 projectList.add(project);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getAllProjects method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -378,7 +378,7 @@ public class ProjectDAO {
                 projectList.add(project);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getAllIncompleteProjects method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -419,7 +419,7 @@ public class ProjectDAO {
                 projectList.add(project);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getAllIncompleteProjectsByCompanyName method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -461,7 +461,7 @@ public class ProjectDAO {
                 projectList.add(project);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getAllCompleteProjectsByCompanyName method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -525,7 +525,7 @@ public class ProjectDAO {
                 projectList.add(project);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getAllIncompleteAdhocProjects method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -578,7 +578,7 @@ public class ProjectDAO {
                 projectList.add(project);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getAllProjectsByEmployee method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -645,7 +645,7 @@ public class ProjectDAO {
                 projectList.add(project);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getAllProjectsByCompanyName method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -734,7 +734,7 @@ public class ProjectDAO {
                 return project;
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getProjectByID method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -781,7 +781,7 @@ public class ProjectDAO {
                 return project;
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getProjectByTitleAndCompanyName method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -829,7 +829,7 @@ public class ProjectDAO {
 
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO updateProject method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -858,7 +858,7 @@ public class ProjectDAO {
             stmt.setString(8, projectID);
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO updateProject method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -902,7 +902,7 @@ public class ProjectDAO {
             stmt.setInt(1, project.getProjectID());
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO updateProjectStatus method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -915,7 +915,7 @@ public class ProjectDAO {
             stmt.setInt(1, Integer.parseInt(projectID));
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO updateProjectStatus method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -935,7 +935,7 @@ public class ProjectDAO {
             stmt.setInt(2, project.getProjectID());
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO updateProjectRemarks method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -955,7 +955,7 @@ public class ProjectDAO {
             stmt.setInt(2, Integer.valueOf(id));
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO updateProjectRemarks method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -975,7 +975,7 @@ public class ProjectDAO {
             stmt.setInt(1, project.getProjectID());
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO deleteProject method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -993,7 +993,7 @@ public class ProjectDAO {
             stmt.setInt(1, Integer.parseInt(id));
             return (stmt.executeUpdate() == 1);
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO deleteProject method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -1218,7 +1218,7 @@ public class ProjectDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO performRecur method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -1267,7 +1267,7 @@ public class ProjectDAO {
                 projectList.add(project);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getStaffMonthlyReport method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -1422,7 +1422,7 @@ public class ProjectDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getCompletedProjectMonthlyProfitability method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -1466,7 +1466,7 @@ public class ProjectDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getOverdueProjectPerYear method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -1494,7 +1494,7 @@ public class ProjectDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getCompletedProjectPerYear method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -1503,7 +1503,7 @@ public class ProjectDAO {
 
     public static Double[] getSales(String selectedYear) {
         Double[] totalSalesList = new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-        HashMap<String, ArrayList<Project>> projectList = getCompletedProjectList();
+        HashMap<String, ArrayList<Project>> projectList = EmployeeDAO.getCompletedProjectList();
         HashMap<String, Double> costPerHourPerStaffList = EmployeeDAO.getCostPerHourPerStaff();
 
         DecimalFormat decimal = new DecimalFormat("#.##");
@@ -1656,7 +1656,7 @@ public class ProjectDAO {
 
     public static Double[] getActualCost(String selectedYear) {
         Double[] totalActualCostList = new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-        HashMap<String, ArrayList<Project>> projectList = getCompletedProjectList();
+        HashMap<String, ArrayList<Project>> projectList = EmployeeDAO.getCompletedProjectList();
         HashMap<String, Double> costPerHourPerStaffList = EmployeeDAO.getCostPerHourPerStaff();
 
         DecimalFormat decimal = new DecimalFormat("#.##");
@@ -1851,7 +1851,7 @@ public class ProjectDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getOverdueProjectPerStaff method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -1879,7 +1879,7 @@ public class ProjectDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getTimeExceededPerStaff method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -1981,7 +1981,7 @@ public class ProjectDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getOnTimeProjectPerYear method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -2008,7 +2008,7 @@ public class ProjectDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getTotalCompletedProjectPerYear method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -2155,7 +2155,7 @@ public class ProjectDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getCompanyMonthlyProfitability method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -2203,7 +2203,7 @@ public class ProjectDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getClientOverdueProjectPerYear method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -2232,7 +2232,7 @@ public class ProjectDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getClientOnTimeProjectPerYear method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -2260,7 +2260,7 @@ public class ProjectDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getOnTimeCompletedProjectEmployee method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -2309,7 +2309,7 @@ public class ProjectDAO {
                 projectList.add(project);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getSpecificStaffReport method: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Unexpected error at ProjectDAO: " + e.getMessage());
         }
@@ -2361,7 +2361,7 @@ public class ProjectDAO {
                 returnList.add(project);
             }
         } catch (SQLException e) {
-            System.out.println("SQLException at ProjectDAO: " + e.getMessage());
+            System.out.println("SQLException at ProjectDAO getProjectsWithinSelectedYear method: " + e.getMessage());
         }
         return returnList;
     }
