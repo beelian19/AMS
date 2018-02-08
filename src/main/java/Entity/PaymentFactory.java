@@ -320,13 +320,13 @@ public class PaymentFactory {
                     ? cell.getCellTypeEnum() : cell.getCachedFormulaResultTypeEnum();
             switch (ct) {
                 case STRING:
-                    return cell.getStringCellValue(); //returns String
+                    return cell.getStringCellValue(); 
                 case NUMERIC:
-                    double d = cell.getNumericCellValue(); //returns double
+                    double d = cell.getNumericCellValue();
                     return (d % 1 == 0.0)
                             ? String.format("%.0f", d) : String.valueOf(d);
                 case BOOLEAN:
-                    return String.valueOf(cell.getBooleanCellValue()); //returns boolean
+                    return String.valueOf(cell.getBooleanCellValue());
                 default:
                     return null;
             }

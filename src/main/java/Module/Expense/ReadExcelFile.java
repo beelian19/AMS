@@ -108,14 +108,17 @@ public class ReadExcelFile extends HttpServlet {
                             // Get the data service and purchase objects
                             List<Payment> prePayments = pf.getPrePayments();
                             List<Payment> reviewedPayments = new ArrayList<>();
-
+                            // Throw error if there are no present refresh token
                             String refreshToken = token.getRefreshToken();
                             if (refreshToken == null || refreshToken.isEmpty()) {
                                 throw new IllegalArgumentException("Expired Token. Please refresh token for " + client.getCompanyName());
                             }
                             String accessToken = "";
                             String realmid = pf.getRealmid();
+                            // Initialize the Factory object to generate QBO platform client
                             QBOoauth2ClientFactory factory = new QBOoauth2ClientFactory(token);
+                            
+                            
                             OAuth2PlatformClient OAuth2client = factory.getOAuth2PlatformClient();
                             try {
                                 BearerTokenResponse bearerTokenResponse = OAuth2client.refreshToken(refreshToken);

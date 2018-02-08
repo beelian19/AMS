@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -18,6 +19,15 @@ import org.apache.commons.lang.StringUtils;
  * @author Lin
  */
 public class TestClass {
+    
+    private static void testEmptyHM(){
+        HashMap<String, String> hm = new HashMap<>();
+        for (Map.Entry<String,String> entry : hm.entrySet()){
+            System.out.println("Key/Value:");
+            System.out.println(entry.getKey() + " / " + entry.getValue());
+        }
+    
+    }
     
     private static void testTimeline() {
 
@@ -94,6 +104,6 @@ public class TestClass {
     }
 
     public static void main(String[] args) {
-        testOGProjectMap();
+        testEmptyHM();
     }
 }

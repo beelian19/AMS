@@ -59,12 +59,16 @@ public class ExecuteExpenses extends HttpServlet {
                 throw new IllegalArgumentException("Purchases//Data Service not found");
             }
             List<Purchase> purchases = pf.getPurchases();
+            
+            // Init BatchOperations
             BatchOperation batchOperation = new BatchOperation();
 
+            // Add the purchase objects into BatchOperations
             for (Purchase p : purchases) {
                 batchOperation.addEntity(p, OperationEnum.CREATE, p.getDocNumber());
             }
 
+            // Execution
             pf.getDataService().executeBatch(batchOperation);
             
             // failures
