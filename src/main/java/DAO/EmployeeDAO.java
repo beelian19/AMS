@@ -405,7 +405,7 @@ public class EmployeeDAO {
         return nameList;
     }
 
-    public ArrayList<String> getAllSupervisor() {
+    public static ArrayList<String> getAllSupervisor() {
         ArrayList<String> supList = new ArrayList<>();
 
         try (Connection conn = ConnectionManager.getConnection()) {

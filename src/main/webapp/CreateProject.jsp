@@ -4,6 +4,7 @@
     Author     : Bernitatowyg
 --%>
 
+<%@page import="java.util.Map"%>
 <%@page import="Entity.Employee"%>
 <%@page import="DAO.EmployeeDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -17,9 +18,9 @@
         <title>Create Project | Abundant Accounting Management System</title>
         <%            Client client = (Client) session.getAttribute("client");
             HashMap<String, String> alltimeLines = (HashMap<String, String>) session.getAttribute("allTimeLines");
-            EmployeeDAO empDAO = new EmployeeDAO();
-            ArrayList<String> supList = empDAO.getAllSupervisor();
-            ArrayList<Employee> empList = empDAO.getAllCurrentEmployees();
+            HashMap<String, String> clientOGMap = (session.getAttribute("clientOnGoingUrlMap") != null) ? (HashMap<String, String>) session.getAttribute("clientOnGoingUrlMap") : new HashMap<String, String>();
+            ArrayList<String> supList = EmployeeDAO.getAllSupervisor();
+            ArrayList<Employee> empList = EmployeeDAO.getAllCurrentEmployees();
             String clientName = client.getCompanyName();
             int profileId = client.getClientID();
         %>
@@ -32,8 +33,24 @@
             <div class="container-fluid" width="100%" height="100%" style='padding-left: 0px; padding-right: 0px;'>
                 <jsp:include page="StatusMessage.jsp"/>
                 <div class="container-fluid" style="text-align: center; width: 100%; height: 100%; margin-top: <%=session.getAttribute("margin")%>">
+
+
                     <h1>Create Project for <%=clientName%></h1>
-                    <br/>
+                    <% if (clientOGMap != null && !clientOGMap.isEmpty()) {
+
+                    %>
+                    <strong> Ongoing Project Types:&nbsp; </strong>
+                    <%
+                    for (String s : clientOGMap.keySet()) {
+                    String url = clientOGMap.get(s);
+                    String projType = s;
+                    %>
+                    <a href="<%=url%>"><%=projType%></a> &nbsp;
+                <%
+                            }
+                        }
+                    %>
+                    <br/><br/>
                     <div class="container-fluid" align="center" style='width: 100%; display: inline-block'>
                         <form>
                             <table width="100%" height="100%" style="text-align: left">
@@ -121,35 +138,38 @@
                                     <td width="15%">
                                     </td>
                                     <td>
-                                        <label>Recommended Internal Deadline&nbsp<font color="red">*</font></label>
+                                        <label>Computed Internal Deadline&nbsp<font color="red">*</font></label>
                                     </td>
                                     <td>
                                         <select name='recommendedInternalDeadline' id="recommendedInternalDeadline" class="form-control" autofocus style='display: block; width:100%' required>
 
                                             <%
-                                                for (String key : alltimeLines.keySet()) {
+                                                for (String key
+
+                                                : alltimeLines.keySet () 
+                                                    ) {
                                                     if (key.equals("eciTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='ECI'>" + str + "</option>");
                                                     }
                                                     if (key.equals("taxTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='Tax'>" + str + "</option>");
                                                     }
                                                     if (key.equals("gstTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='GST'>" + str + "</option>");
                                                     }
                                                     if (key.equals("mgtTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='Management'>" + str + "</option>");
                                                     }
                                                     if (key.equals("finTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='Final Accounting'>" + str + "</option>");
                                                     }
                                                     if (key.equals("secTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='Secretarial'>" + str + "</option>");
                                                     }
                                                 }
@@ -177,34 +197,37 @@
                                     <td width="15%">
                                     </td>
                                     <td>
-                                        <label>Recommended External Deadline&nbsp;<font color="red">*</font></label>
+                                        <label>Computed External Deadline&nbsp;<font color="red">*</font></label>
                                     </td>
                                     <td>
                                         <select name='recommendedExternalDeadline' id="recommendedExternalDeadline" class="form-control" autofocus style='display: block; width:100%' required>
 
-                                            <%                                                for (String key : alltimeLines.keySet()) {
+                                            <%                                                for (String key
+
+                                                : alltimeLines.keySet () 
+                                                    ) {
                                                     if (key.equals("actualEciTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='ECI'>" + str + "</option>");
                                                     }
                                                     if (key.equals("actualTaxTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='Tax'>" + str + "</option>");
                                                     }
                                                     if (key.equals("actualGstTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='GST'>" + str + "</option>");
                                                     }
                                                     if (key.equals("actualMgtTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='Management'>" + str + "</option>");
                                                     }
                                                     if (key.equals("actualFinTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                       String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='Final Accounting'>" + str + "</option>");
                                                     }
                                                     if (key.equals("actualSecTimeline")) {
-                                                        String str = alltimeLines.get(key);
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='Secretarial'>" + str + "</option>");
                                                     }
                                                 }
@@ -260,7 +283,13 @@
                                     <td>
                                         <select name='assignedEmployee1' id="assignedEmployee1" class="form-control" autofocus style='display: block; width:100%' required>
                                             <option disabled selected value> — select an option — </option>
-                                            <%                                                for (int i = 0; i < empList.size(); i++) {
+                                            <%                                                for (int i = 0;
+
+                                                i< empList.size ();
+                                                i
+
+                                                
+                                                    ++) {
                                                     out.println("<option value='" + empList.get(i).getName() + "'>" + empList.get(i).getName() + "</option>");
                                                 }
                                             %>
@@ -275,7 +304,13 @@
                                         <select name='assignedEmployee2' id="assignedEmployee2" class="form-control" autofocus style='display: block; width:100%' required>
                                             <option disabled selected value> — select an option — </option>
                                             <%
-                                                for (int i = 0; i < empList.size(); i++) {
+                                                for (int i = 0;
+
+                                                i< empList.size ();
+                                                i
+
+                                                
+                                                    ++) {
                                                     out.println("<option value='" + empList.get(i).getName() + "'>" + empList.get(i).getName() + "</option>");
                                                 }
                                             %>
@@ -300,7 +335,13 @@
                                         <select name='reviewer' id="reviewer" class="form-control" autofocus style='display: block; width:100%' required>
                                             <option disabled selected value> — select an option — </option>
                                             <%
-                                                for (int j = 0; j < supList.size(); j++) {
+                                                for (int j = 0;
+
+                                                j< supList.size ();
+                                                j
+
+                                                
+                                                    ++) {
                                                     out.println("<option value='" + supList.get(j) + "'>" + supList.get(j) + "</option>");
                                                 }
                                             %>
@@ -401,7 +442,6 @@
                                 data: 'title=' + title + '&' + 'companyName=' + companyName + '&' + 'remarks=' + remarks + '&' + 'projectType=' + projectType + '&' +
                                         'recommendedInternal=' + recommendedInternal + '&' + 'internal=' + internal + '&' + 'recommendedExternal=' + recommendedExternal + '&' +
                                         'external=' + external + '&' + 'emp1=' + emp1 + '&' + 'emp2=' + emp2 + '&' + 'reviewer=' + reviewer + '&' + 'clientID=' + clientID + '&' + 'assignedHours=' + assignedHours,
-                                
                                 success: function () {
                                     //var string = "http://abundantms.site/UAT-1/ClientProfile.jsp?profileId=" + clientID;
                                     var string = "ClientProfile.jsp?profileId=" + clientID;
