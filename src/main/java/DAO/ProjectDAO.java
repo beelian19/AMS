@@ -480,7 +480,7 @@ public class ProjectDAO {
         HashMap<String, String> map = new HashMap<>();
         String profileUrl = "ProjectProfile.jsp?projectID=";
         for (Project p : projects) {
-            if (map.get(p.getProjectType()) == null) {
+            if (map.get(p.getProjectType()) == null && !map.containsKey(p.getProjectType())) {
                 map.put(p.getProjectType(), profileUrl + p.getProjectIDString());
             }
         }
