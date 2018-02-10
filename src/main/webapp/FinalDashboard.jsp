@@ -135,8 +135,32 @@
                 display:none;
                 cursor:pointer;
             }
-            .activePerformanceChart {
-                border: 2px solid blue;
+
+            .activePerformanceChartAfter {
+                box-shadow: 0px 0px 100px #000000;
+                z-index: 2;
+                -webkit-transition: all 100ms ease-in;
+                -webkit-transform: scale(1.05);
+                -ms-transition: all 100ms ease-in;
+                -ms-transform: scale(1.05);   
+                -moz-transition: all 100ms ease-in;
+                -moz-transform: scale(1.05);
+                transition: all 100ms ease-in;
+                transform: scale(1.05);
+            }
+
+            .activePerformanceChartBefore {
+                display:inline-block;
+                border:0;
+                position: relative;
+                -webkit-transition: all 100ms ease-in;
+                -webkit-transform: scale(1); 
+                -ms-transition: all 100ms ease-in;
+                -ms-transform: scale(1); 
+                -moz-transition: all 100ms ease-in;
+                -moz-transform: scale(1);
+                transition: all 100ms ease-in;
+                transform: scale(1);   
             }
             /* end of section */
 
@@ -1607,21 +1631,29 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-1">&nbsp;</div>
-                            <div class="col-xs-5 displayChartsTable" data-target="#revenueTable" style="text-align: center;" align="center;">
-                                <h2>Revenue</h2>
-                                <canvas id="RevenueChart" style="width: 500px; height: 500px; text-align: center;" align="center"></canvas>
+                            <div class="col-xs-6">
+                                <div class="row">
+                                    <div class="col-xs-10 displayChartsTable" data-target="#revenueTable" style="text-align: center;" align="center;">
+                                        <h2 align="center" style="text-align: center;">Revenue</h2>
+                                        <canvas id="RevenueChart" style="width: 550px; height: 600px; text-align: center;" align="center"></canvas>
+                                    </div>
+                                    <div class="col-xs-2">&nbsp;</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="row">
+                                    <div class="displayChartsTable" data-target="#ProfitAndLossTable" style="text-align: center;" align="center;">
+                                        <h2>Project P&L</h2>
+                                        <canvas id="ProfitAndLossChart" style="width: 475px; height: 250px; text-align: center;" align="center"></canvas>
+                                    </div>
+                                    <br/><br/>
+                                    <div class="displayChartsTable" data-target="#ProjectsOverdueChartTable" style="text-align: center;" align="center;">
+                                        <h2>Project Overdue</h2>
+                                        <canvas id="ProjectsOverdueChart" style="width: 475px; height: 250px; text-align: center;" align="center"></canvas>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-xs-1">&nbsp;</div>
-                            <div class="col-xs-5 displayChartsTable" data-target="#ProfitAndLossTable" style="text-align: center;" align="center;">
-                                <h2>Project P&L</h2>
-                                <canvas id="ProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
-                            </div>
-                            <br/><br/>
-                            <div class="col-xs-1">&nbsp;</div>
-                            <div class="col-xs-5 displayChartsTable" data-target="#ProjectsOverdueChartTable" style="text-align: center;" align="center;">
-                                <h2>Project Overdue</h2>
-                                <canvas id="ProjectsOverdueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
-                            </div>
                         </div>
                         <div class="row">
                             <br/>
@@ -2226,15 +2258,29 @@
     $(function () {
         $('.displayChartsTable').on('click', function () {
             var $this = $(this);
-            $('.displayChartsTable').removeClass("activePerformanceChart");
-            $this.addClass("activePerformanceChart");
-            // Use the id in the data-target attribute
-            $target = $($this.data('target'));
-            $(".target").not($target).fadeOut();
-            $target.toggle();
-            $('html,body').animate({
-                scrollTop: $target.offset().top},
-                    'fast');
+            if ($('.displayChartsTable').hasClass("activePerformanceChartBefore") || !$('.displayChartsTable').hasClass("activePerformanceChartAfter")) {
+                console.log("class is with zoom");
+                $('.displayChartsTable').removeClass("activePerformanceChartBefore");
+                $this.addClass("activePerformanceChartAfter");
+                // Use the id in the data-target attribute
+                $target = $($this.data('target'));
+                $(".target").not($target).fadeOut();
+                $target.toggle();
+                $('html,body').animate({
+                    scrollTop: $target.offset().top},
+                        'fast');
+            } else {
+                console.log("class is no zoom");
+                $this.removeClass("activePerformanceChartAfter");
+                $this.addClass("activePerformanceChartBefore");
+                // Use the id in the data-target attribute
+                $target = $($this.data('target'));
+                $(".target").not($target).fadeOut();
+                $target.toggle();
+                $('html,body').animate({
+                    scrollTop: $target.offset().top},
+                        'fast');
+            }
         });
     });
 </script>
@@ -2242,7 +2288,6 @@
 <script>
     //this is for when user clicks on the 3 tabs, it'll straight away force the client and employee divs back to display datatable list
     function onclickingheaders() {
-
         var clientChartDiv, employeeChartDiv, clientDatatableDiv, employeeDatatableDiv;
         clientChartDiv = document.getElementsByClassName("clientChartsDiv");
         employeeChartDiv = document.getElementsByClassName("employeeChartsDiv");
