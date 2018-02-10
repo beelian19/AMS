@@ -161,28 +161,25 @@
                 <div class="container-fluid" style="text-align: center; width: 100%; height: 100%; margin-top: <%=session.getAttribute("margin")%>">
                     <h1>Your Dashboard</h1><br/>
                 </div>
-                <!-- ############################################### START OF EMPLOYEE PERFORMANCE SECTION ###############################################-->
-                <div class="container-fluid" style="text-align: center;">
-                    <div class="row">
-                        <div class="col-xs-1">&nbsp;</div>
-                        <div class="col-xs-5" style="text-align: center;" align="right;">
-                            <h2>Project Overview</h2>
-                            <h4 style="text-align: center;" align="center;">(# of Projects)</h4>
-                            <canvas id="employeeProjectNumbersChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
-                        </div>
-                        <div class="col-xs-5" style="text-align: center;" align="center;">
-                            <h2>Project Overview</h2>
-                            <h4 style="text-align: center;" align="center;">(# of Hours)</h4>
-                            <canvas id="employeeProjectHoursChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
-                        </div>
-                        <div class="col-xs-1">&nbsp;</div>
-                    </div>
-                    <script>
+                <script>
             $(document).ready(function () {
-                var empName = "<%=request.getSession().getAttribute("employeeName")%>";
-                var year = "2017"; //need to change
-                $.ajax({
-                    url: 'StaffMonthlyReport',
+                employeePerformanceChart();
+            });
+
+
+            function employeePerformanceChart(){
+            var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
+            if (yearChosen === null || yearChosen === "") {
+                now = new Date;
+                yearChosen = now.getYear();
+                if (yearChosen < 1900) {
+                    yearChosen = yearChosen + 1900;
+                }
+            }
+            var empName = "<%=request.getSession().getAttribute("employeeName")%>";
+            var year = yearChosen;
+            $.ajax({
+            url: 'StaffMonthlyReport',
                     type: 'POST',
                     data: 'employeeName=' + empName + '&' + 'Year=' + year,
                     success: function () {
@@ -190,9 +187,6 @@
                         var inTimeData = "<%=request.getSession().getAttribute("inTime")%>";
                         var completedProjectsData = "<%=request.getSession().getAttribute("completedList")%>";
 
-                        if (employeeOverdueData === "null" || inTimeData === "null" || completedProjectsData === "null") {
-                            location.reload();
-                        }
                         var employeeOverdue = employeeOverdueData.split(",");
                         employeeOverdue[0] = employeeOverdue[0].substring("1");
                         employeeOverdue[11] = employeeOverdue[11].substring("0", employeeOverdue[11].length - 1);
@@ -216,7 +210,7 @@
                                     fillColor: 'rgba(255, 99, 132, 0.2)',
                                     strokeColor: 'rgba(220,180,0,1)',
                                     pointColor: 'rgba(220,180,0,1)',
-                                    data: completedProjects, //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
+                                    data: completedProjects,
                                     backgroundColor: [
                                         'rgba(153, 102, 255, 0.3)',
                                         'rgba(153, 102, 255, 0.3)',
@@ -245,20 +239,20 @@
                                         'rgba(153, 102, 255, 0.3)',
                                         'rgba(153, 102, 255, 0.3)'
                                     ],
-                                    borderColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
-                                    ],
+                                            borderColor: [
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)'
+                                            ],
                                     borderWidth: 1
                                 },
                                 {
@@ -294,20 +288,20 @@
                                         'rgba(255, 99, 132, 0.3)',
                                         'rgba(255, 99, 132, 0.3)'
                                     ],
-                                    borderColor: [
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)'
-                                    ],
+                                            borderColor: [
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)',
+                                                'rgba(255,99,132,0.3)'
+                                            ],
                                     borderWidth: 1
                                 }, {
                                     label: '# of Projects on Time',
@@ -343,20 +337,20 @@
                                         'rgba(54, 162, 235, 0.3)',
                                         'rgba(54, 162, 235, 0.3)'
                                     ],
-                                    borderColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
-                                    ],
+                                            borderColor: [
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)'
+                                            ],
                                     borderWidth: 1
                                 }
                             ]
@@ -383,141 +377,180 @@
                     error: function (data) {
                         console.log("Error: " + data);
                     }
-                });
             });
-
-            function staffMonthly() {
-                var empName = "<%=request.getSession().getAttribute("employeeName")%>";
-                var year = "2017"; //need to change
-                $.ajax({
-                    url: 'StaffMonthlyReport',
-                    type: 'POST',
-                    data: 'employeeName=' + empName + '&' + 'Year=' + year,
-                    success: function () {
-                        var actualHoursData = "<%=request.getSession().getAttribute("actualHours")%>";
-                        var actualHours = actualHoursData.split(",");
-                        actualHours[0] = actualHours[0].substring("1");
-                        actualHours[11] = actualHours[11].substring("0", actualHours[11].length - 1);
-                        var plannedHoursData = "<%=request.getSession().getAttribute("plannedHours")%>";
-                        var plannedHours = plannedHoursData.split(",");
-                        plannedHours[0] = plannedHours[0].substring("1");
-                        plannedHours[11] = plannedHours[11].substring("0", plannedHours[11].length - 1);
-                        var lineChartData = {
-                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                            datasets: [
-                                {
-                                    label: 'Planned Hours',
-                                    fillColor: 'rgba(255, 99, 132, 0.2)',
-                                    strokeColor: 'rgba(220,180,0,1)',
-                                    pointColor: 'rgba(220,180,0,1)',
-                                    data: plannedHours, //[80, 80, 120, 50, 120, 40, 80, 80, 120, 50, 120, 40, 80],
-                                    backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(255,99,132,1)'
-                                    ],
-                                    borderWidth: 1
-                                },
-                                {
-                                    label: 'Actual Hours',
-                                    fillColor: 'rgba(54, 162, 235, 0.2)',
-                                    strokeColor: 'rgba(66,180,0,1)',
-                                    pointColor: 'rgba(66,180,0,1)',
-                                    data: actualHours, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60], //profit, 
-                                    backgroundColor: [
-                                        'rgba(153, 102, 255, 0.2)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(153, 102, 255, 0.2)'
-                                    ],
-                                    borderWidth: 1
-                                }
-                            ]
-                        };
-
-                        Chart.defaults.global.tooltipYPadding = 16;
-                        Chart.defaults.global.tooltipCornerRadius = 0;
-                        Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                        Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                        Chart.defaults.global.animationEasing = "easeInOutElastic";
-                        Chart.defaults.global.responsive = false;
-                        var ctx = document.getElementById("employeeProjectHoursChart").getContext("2d");
-                        //ctx.height = 500;
-                        var employeeProjectHoursChart = new Chart(ctx, {
-                            type: 'line',
-                            data: lineChartData,
-                            pointDotRadius: 5,
-                            bezierCurve: false,
-                            scaleShowVerticalLines: false
-                        });
-                    },
-                    error: function (data) {
-                        console.log("Error: " + data);
-                    }
-                });
             }
-                    </script>
+                    function staffMonthly() {
+                        var empName = "<%=request.getSession().getAttribute("employeeName")%>";
+                        var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
+                        if (yearChosen === null || yearChosen === "") {
+                            now = new Date;
+                            yearChosen = now.getYear();
+                            if (yearChosen < 1900) {
+                                yearChosen = yearChosen + 1900;
+                            }
+                        }
+                        var year = yearChosen;
+                        console.log(year);
+                        $.ajax({
+                            url: 'StaffMonthlyReport',
+                            type: 'POST',
+                            data: 'employeeName=' + empName + '&' + 'Year=' + year,
+                            success: function () {
+                                var actualHoursData = "<%=request.getSession().getAttribute("actualHours")%>";
+                                var actualHours = actualHoursData.split(",");
+                                actualHours[0] = actualHours[0].substring("1");
+                                actualHours[11] = actualHours[11].substring("0", actualHours[11].length - 1);
+                                var plannedHoursData = "<%=request.getSession().getAttribute("plannedHours")%>";
+                                var plannedHours = plannedHoursData.split(",");
+                                plannedHours[0] = plannedHours[0].substring("1");
+                                plannedHours[11] = plannedHours[11].substring("0", plannedHours[11].length - 1);
+                                var lineChartData = {
+                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                    datasets: [
+                                        {
+                                            label: 'Planned Hours',
+                                            fillColor: 'rgba(255, 99, 132, 0.2)',
+                                            strokeColor: 'rgba(220,180,0,1)',
+                                            pointColor: 'rgba(220,180,0,1)',
+                                            data: plannedHours,
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(255,99,132,1)'
+                                            ],
+                                            borderWidth: 1
+                                        },
+                                        {
+                                            label: 'Actual Hours',
+                                            fillColor: 'rgba(54, 162, 235, 0.2)',
+                                            strokeColor: 'rgba(66,180,0,1)',
+                                            pointColor: 'rgba(66,180,0,1)',
+                                            data: actualHours,
+                                            backgroundColor: [
+                                                'rgba(153, 102, 255, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(153, 102, 255, 0.2)'
+                                            ],
+                                            borderWidth: 1
+                                        }
+                                    ]
+                                };
+
+                                Chart.defaults.global.tooltipYPadding = 16;
+                                Chart.defaults.global.tooltipCornerRadius = 0;
+                                Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                                Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                                Chart.defaults.global.animationEasing = "easeInOutElastic";
+                                Chart.defaults.global.responsive = false;
+                                var ctx = document.getElementById("employeeProjectHoursChart").getContext("2d");
+                                var employeeProjectHoursChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: lineChartData,
+                                    pointDotRadius: 5,
+                                    bezierCurve: false,
+                                    scaleShowVerticalLines: false
+                                });
+                            },
+                            error: function (data) {
+                                console.log("Error: " + data);
+                            }
+                        });
+                    }
+                </script>
+                <!-- ############################################### START OF EMPLOYEE PERFORMANCE SECTION ###############################################-->
+                <div class="container-fluid" style="text-align: center;">
                     <div class="row">
-                        <br/><br/>
-                        <div class="col-xs-12" id="employeeProjectOverdueTable">
-                            <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                <table id='datatable1' align="center" style="text-align: left;">
-                                    <thead>
-                                        <tr>
-                                            <th width="16.66%">Company Name</th>
-                                            <th width="16.66%">Project Name</th>
-                                            <th width="16.66%">Hours Assigned</th>
-                                            <th width="16.66%">Hours Actual</th>
-                                            <th width="16.66%">Difference</th>
-                                            <th width="16.66%">Cost</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            if (request.getSession().getAttribute("employeeProjectList") != null) {
-                                                ArrayList<Project> employeeProjectList = (ArrayList<Project>) request.getSession().getAttribute("employeeProjectList");
-                                                if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
-                                                    for (int i = 0; i < employeeProjectList.size(); i++) {
-                                                        Project p = employeeProjectList.get(i);
-                                        %>
-                                        <tr>
-                                            <td>
-                                                <%=p.getCompanyName()%>
-                                            </td>
-                                            <td>
-                                                <% profileUrl2 = profileUrl + p.getProjectID();%>
-                                                <a href=<%=profileUrl2%>>
-                                                    <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <%=p.getPlannedHours()%>
-                                            </td>
-                                            <td>
-                                                <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
-                                            </td>
-                                            <td>
-                                                <%=p.getPlannedHours() - p.getEmployee1Hours() - p.getEmployee2Hours()%>
-                                            </td>
-                                            <td>
-                                                <%=ProjectDAO.getTotalActualCost(p)%>
-                                            </td>
-                                        </tr>
-                                        <%
-                                                    }
-                                                }
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
+                        <br/>
+                        <div class="col-xs-9">
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="dashboardSelect">
+                                <select name="overallAbundantDashboardYear" class="clientDashboard" id="overallAbundantDashboardYear" onchange="employeePerformanceChart()"required>
+                                    <option class="clientDashboardOption" disabled selected value>-- Please Select Year --</option>
+                                    <option class="clientDashboardOption" value="2014">2014</option>
+                                    <option class="clientDashboardOption" value="2015">2015</option>
+                                    <option class="clientDashboardOption" value="2016">2016</option>
+                                    <option class="clientDashboardOption" value="2017">2017</option>
+                                    <option class="clientDashboardOption" value="2018">2018</option>
+                                </select>
                             </div>
                         </div>
-                        <br/><br/>
+                        <div class="row">
+                            <div class="col-xs-1">&nbsp;</div>
+                            <div class="col-xs-5" style="text-align: center;" align="right;">
+                                <h2>Project Overview</h2>
+                                <h4 style="text-align: center;" align="center;">(# of Projects)</h4>
+                                <canvas id="employeeProjectNumbersChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
+                            </div>
+                            <div class="col-xs-5" style="text-align: center;" align="center;">
+                                <h2>Project Overview</h2>
+                                <h4 style="text-align: center;" align="center;">(# of Hours)</h4>
+                                <canvas id="employeeProjectHoursChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
+                            </div>
+                            <div class="col-xs-1">&nbsp;</div>
+                        </div>
+                        <div class="row">
+                            <br/><br/>
+                            <div class="col-xs-12" id="employeeProjectOverdueTable">
+                                <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                    <table id='datatable1' align="center" style="text-align: left;">
+                                        <thead>
+                                            <tr>
+                                                <th width="16.66%">Company Name</th>
+                                                <th width="16.66%">Project Name</th>
+                                                <th width="16.66%">Hours Assigned</th>
+                                                <th width="16.66%">Hours Actual</th>
+                                                <th width="16.66%">Difference</th>
+                                                <th width="16.66%">Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                if (request.getSession().getAttribute("employeeProjectList") != null) {
+                                                    ArrayList<Project> employeeProjectList = (ArrayList<Project>) request.getSession().getAttribute("employeeProjectList");
+                                                    if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
+                                                        for (int i = 0; i < employeeProjectList.size(); i++) {
+                                                            Project p = employeeProjectList.get(i);
+                                            %>
+                                            <tr>
+                                                <td>
+                                                    <%=p.getCompanyName()%>
+                                                </td>
+                                                <td>
+                                                    <% profileUrl2 = profileUrl + p.getProjectID();%>
+                                                    <a href=<%=profileUrl2%>>
+                                                        <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <%=p.getPlannedHours()%>
+                                                </td>
+                                                <td>
+                                                    <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
+                                                </td>
+                                                <td>
+                                                    <%=p.getPlannedHours() - p.getEmployee1Hours() - p.getEmployee2Hours()%>
+                                                </td>
+                                                <td>
+                                                    <%=ProjectDAO.getTotalActualCost(p)%>
+                                                </td>
+                                            </tr>
+                                            <%
+                                                        }
+                                                    }
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <br/><br/>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <br/><br/>
+                <br/><br/>
         </nav>
     </body>
     <jsp:include page="Footer.html"/>
