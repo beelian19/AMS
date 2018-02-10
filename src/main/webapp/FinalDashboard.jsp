@@ -1594,7 +1594,7 @@
                             </div>
                             <div class="col-xs-3">
                                 <div class="dashboardSelect">
-                                    <select name="overallAbundantDashboardYear" class="clientDashboard" id="overallAbundantDashboardYear" onchange="overallAbundantDashboardYear();"required>
+                                    <select name="overallAbundantDashboardYear" class="clientDashboard" id="overallAbundantDashboardYear" onchange="overallAbundantDashboardYear()"required>
                                         <option class="clientDashboardOption" disabled selected value>-- Please Select Year --</option>
                                         <option class="clientDashboardOption" value="2014">2014</option>
                                         <option class="clientDashboardOption" value="2015">2015</option>

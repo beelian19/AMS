@@ -166,20 +166,19 @@
                 employeePerformanceChart();
             });
 
-
-            function employeePerformanceChart(){
-            var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
-            if (yearChosen === null || yearChosen === "") {
-                now = new Date;
-                yearChosen = now.getYear();
-                if (yearChosen < 1900) {
-                    yearChosen = yearChosen + 1900;
+            function employeePerformanceChart() {
+                var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
+                if (yearChosen === null || yearChosen === "") {
+                    now = new Date;
+                    yearChosen = now.getYear();
+                    if (yearChosen < 1900) {
+                        yearChosen = yearChosen + 1900;
+                    }
                 }
-            }
-            var empName = "<%=request.getSession().getAttribute("employeeName")%>";
-            var year = yearChosen;
-            $.ajax({
-            url: 'StaffMonthlyReport',
+                var empName = "<%=request.getSession().getAttribute("employeeName")%>";
+                var year = yearChosen;
+                $.ajax({
+                    url: 'StaffMonthlyReport',
                     type: 'POST',
                     data: 'employeeName=' + empName + '&' + 'Year=' + year,
                     success: function () {
@@ -377,87 +376,87 @@
                     error: function (data) {
                         console.log("Error: " + data);
                     }
-            });
+                });
             }
-                    function staffMonthly() {
-                        var empName = "<%=request.getSession().getAttribute("employeeName")%>";
-                        var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
-                        if (yearChosen === null || yearChosen === "") {
-                            now = new Date;
-                            yearChosen = now.getYear();
-                            if (yearChosen < 1900) {
-                                yearChosen = yearChosen + 1900;
-                            }
-                        }
-                        var year = yearChosen;
-                        console.log(year);
-                        $.ajax({
-                            url: 'StaffMonthlyReport',
-                            type: 'POST',
-                            data: 'employeeName=' + empName + '&' + 'Year=' + year,
-                            success: function () {
-                                var actualHoursData = "<%=request.getSession().getAttribute("actualHours")%>";
-                                var actualHours = actualHoursData.split(",");
-                                actualHours[0] = actualHours[0].substring("1");
-                                actualHours[11] = actualHours[11].substring("0", actualHours[11].length - 1);
-                                var plannedHoursData = "<%=request.getSession().getAttribute("plannedHours")%>";
-                                var plannedHours = plannedHoursData.split(",");
-                                plannedHours[0] = plannedHours[0].substring("1");
-                                plannedHours[11] = plannedHours[11].substring("0", plannedHours[11].length - 1);
-                                var lineChartData = {
-                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                    datasets: [
-                                        {
-                                            label: 'Planned Hours',
-                                            fillColor: 'rgba(255, 99, 132, 0.2)',
-                                            strokeColor: 'rgba(220,180,0,1)',
-                                            pointColor: 'rgba(220,180,0,1)',
-                                            data: plannedHours,
-                                            backgroundColor: [
-                                                'rgba(255, 99, 132, 0.2)'
-                                            ],
-                                            borderColor: [
-                                                'rgba(255,99,132,1)'
-                                            ],
-                                            borderWidth: 1
-                                        },
-                                        {
-                                            label: 'Actual Hours',
-                                            fillColor: 'rgba(54, 162, 235, 0.2)',
-                                            strokeColor: 'rgba(66,180,0,1)',
-                                            pointColor: 'rgba(66,180,0,1)',
-                                            data: actualHours,
-                                            backgroundColor: [
-                                                'rgba(153, 102, 255, 0.2)'
-                                            ],
-                                            borderColor: [
-                                                'rgba(153, 102, 255, 0.2)'
-                                            ],
-                                            borderWidth: 1
-                                        }
-                                    ]
-                                };
-
-                                Chart.defaults.global.tooltipYPadding = 16;
-                                Chart.defaults.global.tooltipCornerRadius = 0;
-                                Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                                Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                                Chart.defaults.global.animationEasing = "easeInOutElastic";
-                                Chart.defaults.global.responsive = false;
-                                var ctx = document.getElementById("employeeProjectHoursChart").getContext("2d");
-                                var employeeProjectHoursChart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: lineChartData,
-                                    pointDotRadius: 5,
-                                    bezierCurve: false,
-                                    scaleShowVerticalLines: false
-                                });
-                            },
-                            error: function (data) {
-                                console.log("Error: " + data);
-                            }
-                        });
+            function staffMonthly() {
+                var empName = "<%=request.getSession().getAttribute("employeeName")%>";
+                var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
+                if (yearChosen === null || yearChosen === "") {
+                    now = new Date;
+                    yearChosen = now.getYear();
+                    if (yearChosen < 1900) {
+                        yearChosen = yearChosen + 1900;
                     }
+                }
+                var year = yearChosen;
+                console.log(year);
+                $.ajax({
+                    url: 'StaffMonthlyReport',
+                    type: 'POST',
+                    data: 'employeeName=' + empName + '&' + 'Year=' + year,
+                    success: function () {
+                        var actualHoursData = "<%=request.getSession().getAttribute("actualHours")%>";
+                        var actualHours = actualHoursData.split(",");
+                        actualHours[0] = actualHours[0].substring("1");
+                        actualHours[11] = actualHours[11].substring("0", actualHours[11].length - 1);
+                        var plannedHoursData = "<%=request.getSession().getAttribute("plannedHours")%>";
+                        var plannedHours = plannedHoursData.split(",");
+                        plannedHours[0] = plannedHours[0].substring("1");
+                        plannedHours[11] = plannedHours[11].substring("0", plannedHours[11].length - 1);
+                        var lineChartData = {
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [
+                                {
+                                    label: 'Planned Hours',
+                                    fillColor: 'rgba(255, 99, 132, 0.2)',
+                                    strokeColor: 'rgba(220,180,0,1)',
+                                    pointColor: 'rgba(220,180,0,1)',
+                                    data: plannedHours,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255,99,132,1)'
+                                    ],
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Actual Hours',
+                                    fillColor: 'rgba(54, 162, 235, 0.2)',
+                                    strokeColor: 'rgba(66,180,0,1)',
+                                    pointColor: 'rgba(66,180,0,1)',
+                                    data: actualHours,
+                                    backgroundColor: [
+                                        'rgba(153, 102, 255, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(153, 102, 255, 0.2)'
+                                    ],
+                                    borderWidth: 1
+                                }
+                            ]
+                        };
+
+                        Chart.defaults.global.tooltipYPadding = 16;
+                        Chart.defaults.global.tooltipCornerRadius = 0;
+                        Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                        Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                        Chart.defaults.global.animationEasing = "easeInOutElastic";
+                        Chart.defaults.global.responsive = false;
+                        var ctx = document.getElementById("employeeProjectHoursChart").getContext("2d");
+                        var employeeProjectHoursChart = new Chart(ctx, {
+                            type: 'line',
+                            data: lineChartData,
+                            pointDotRadius: 5,
+                            bezierCurve: false,
+                            scaleShowVerticalLines: false
+                        });
+                    },
+                    error: function (data) {
+                        console.log("Error: " + data);
+                    }
+                });
+            }
                 </script>
                 <!-- ############################################### START OF EMPLOYEE PERFORMANCE SECTION ###############################################-->
                 <div class="container-fluid" style="text-align: center;">
