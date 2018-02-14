@@ -528,22 +528,27 @@
                                         <select name='gstSubmissionEdit' id="gstSubmissionEdit" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                             <%
                                                 String gstSubmission = client.getGstSubmission().toLowerCase();
+                                                String value = "";
                                                 switch (gstSubmission) {
                                                     case "na":
                                                         gstSubmission = "NA";
+                                                        value = "na";
                                                         break;
                                                     case "m":
                                                         gstSubmission = "Monthly";
+                                                        value = "m";
                                                         break;
                                                     case "q":
                                                         gstSubmission = "Quarterly";
+                                                        value = "q";
                                                         break;
                                                     case "s":
                                                         gstSubmission = "Semi Annual";
+                                                        value = "s";
                                                         break;
                                                 }
                                             %>
-                                            <option value= '<%=gstSubmission%>' disabled selected hidden><%=gstSubmission%></option>
+                                            <option value= '<%=value%>'><%=gstSubmission%></option>
                                             <option value="m">Monthly</option>
                                             <option value="q">Quarterly</option>
                                             <option value="s">Semi Annual</option>
@@ -570,20 +575,23 @@
                                                 if (!mgmtAcct.contains("na")) {
                                                     mgmtAcct = mgmtAcct.substring(0, mgmtAcct.length() - 2);
                                                 }
-
+                                                String value1 = "";
                                                 switch (mgmtAcct) {
                                                     case "na":
                                                         mgmtAcct = "NA";
+                                                        value1 = "na";
                                                         break;
                                                     case "m":
                                                         mgmtAcct = "Monthly";
+                                                        value1 = "m";
                                                         break;
                                                     case "q":
                                                         mgmtAcct = "Quarterly";
+                                                        value1 = "q";
                                                         break;
                                                 }
                                             %>
-                                            <option value= '<%=mgmtAcct%>' disabled selected hidden><%=mgmtAcct%></option>
+                                            <option value= '<%=value1%>'><%=mgmtAcct%></option>
                                             <option value="na">NA</option>
                                             <option value="m">Monthly</option>
                                             <option value="q">Quarterly</option>
@@ -604,8 +612,8 @@
                                     </td>
                                     <td>
                                         <select name='mgmtNumberEdit' id="mgmtNumberEdit" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
-                                            <option disabled selected value> -- select an option --  </option>
-                                            <option value="<%=client.getMgmtAcc().substring(client.getMgmtAcc().length() - 2, client.getMgmtAcc().length())%>" disabled selected hidden><%=client.getMgmtAcc().substring(client.getMgmtAcc().length() - 2, client.getMgmtAcc().length())%></option>
+                                            
+                                            <option value="<%=client.getMgmtAcc().substring(client.getMgmtAcc().length() - 2, client.getMgmtAcc().length())%>"><%=client.getMgmtAcc().substring(client.getMgmtAcc().length() - 2, client.getMgmtAcc().length())%></option>
                                             <option value="na">NA</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>

@@ -51,7 +51,7 @@ public class StaffMonthlyReport extends HttpServlet {
             String year = (String) request.getParameter("Year");
             request.getSession().setAttribute("empName", employeeName);
             //System.out.println("Employee Name: "+employeeName);
-            //System.out.println("Year: "+year);
+            System.out.println("Year: "+year);
             projectList = ProjectDAO.getStaffMonthlyReport(employeeName, year);
             overdueList = ProjectDAO.getOverdueProjectPerStaff(year, employeeName);
             exceededList = ProjectDAO.getTimeExceededPerStaff(year, employeeName);
@@ -96,9 +96,9 @@ public class StaffMonthlyReport extends HttpServlet {
             inTime.add(value);
         }
         
-        //System.out.println("Overdue List: "+overdue);
+        System.out.println("Overdue List: "+overdue);
 
-        request.getSession().setAttribute("employeeProjectList", projectList);
+        request.getSession().setAttribute("staffProjectList", projectList);
         request.getSession().setAttribute("employeeOverdue", overdue);
         request.getSession().setAttribute("employeeTimeExceed", exceed);
         request.getSession().setAttribute("completedList", completed);

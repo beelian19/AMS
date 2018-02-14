@@ -54,6 +54,9 @@ public class UpdateClientServlet extends HttpServlet {
             String mgmtNumber = request.getParameter("mgmtNumber");
             
             String mgmtAcc = mgmtFrequency + mgmtNumber;
+            if(mgmtFrequency.equals("na")) {
+                mgmtAcc = "NA";
+            }
           
             ClientDAO clientDAO = new ClientDAO();
 
