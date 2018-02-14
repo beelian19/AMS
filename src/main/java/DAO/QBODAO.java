@@ -589,7 +589,7 @@ public class QBODAO {
                 }
 
                 //AccountRef (required)
-                if (pl.getAccountNumber() == 0 || pl.getAccountNumber() == null) {
+                if (pl.getAccountNumber() == null) {
                     paymentLineStatus += "-!Missing expense account-";
                     process = false;
                 } else {
