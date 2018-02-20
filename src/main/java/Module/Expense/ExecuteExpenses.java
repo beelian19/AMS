@@ -17,6 +17,7 @@ import com.intuit.ipp.exception.FMSException;
 import com.intuit.ipp.services.BatchOperation;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -59,27 +60,44 @@ public class ExecuteExpenses extends HttpServlet {
                 throw new IllegalArgumentException("Purchases//Data Service not found");
             }
             List<Purchase> purchases = pf.getPurchases();
-            
+            List<Purchase> batchPurchases;
             // Init BatchOperations
-            BatchOperation batchOperation = new BatchOperation();
-
-            // Add the purchase objects into BatchOperations
-            for (Purchase p : purchases) {
-                batchOperation.addEntity(p, OperationEnum.CREATE, p.getDocNumber());
+            BatchOperation batchOperation;
+            Map<String, Fault> faults = new HashMap<>();
+            Map<String, IEntity> entities = new HashMap<>();
+            int times = purchases.size() / 30;
+            if (purchases.size() % 30 > 0) {
+                times = times + 1;
             }
-
-            // Execution
-            pf.getDataService().executeBatch(batchOperation);
-            
-            // failures
-            Map<String, Fault> faults = batchOperation.getFaultResult();
-            // success
-            Map<String, IEntity> entities = batchOperation.getEntityResult();
+            // Add the purchase objects into BatchOperations
+            int start = 0;
+            int end = 30;
+            for (int i = 1; i <= times; i++) {
+                batchOperation = new BatchOperation();
+                
+                if (i == times) {
+                    batchPurchases = purchases.subList(start, purchases.size());
+                } else {
+                    batchPurchases = purchases.subList(start, end);
+                }
+                
+                for (Purchase p : batchPurchases) {
+                    batchOperation.addEntity(p, OperationEnum.CREATE, p.getDocNumber());
+                }
+                
+                pf.getDataService().executeBatch(batchOperation);
+                // Add to map
+                batchOperation.getFaultResult().forEach(faults::putIfAbsent);
+                batchOperation.getEntityResult().forEach(entities::putIfAbsent);
+                // Set next iteration 
+                start = end;
+                end = end + 30;
+            }
 
             List<Payment> prePayments = pf.getPrePayments();
             List<Payment> resultPayments = new ArrayList<>();
-            
-            for (Payment pre : prePayments){
+
+            for (Payment pre : prePayments) {
                 String ref = pre.getReferenceNumber();
                 if (ref == null) {
                     pre.setStatus("error: not processed with no reference");
@@ -87,15 +105,15 @@ public class ExecuteExpenses extends HttpServlet {
                     String purError = "error: processed with fault: ";
                     Fault fault = faults.get(ref);
                     List<com.intuit.ipp.data.Error> errors = fault.getError();
-                    for (com.intuit.ipp.data.Error e : errors){
+                    for (com.intuit.ipp.data.Error e : errors) {
                         purError += "-" + e.getMessage() + "-";
                     }
                     pre.setStatus(purError);
-                } else if (entities.containsKey(ref)){
+                } else if (entities.containsKey(ref)) {
                     pre.setStatus("success");
                 } else {
                     String notProcessedReason = "error: not processed ";
-                    for (PaymentLine pl : pre.getLines()){
+                    for (PaymentLine pl : pre.getLines()) {
                         notProcessedReason += pl.getInitStatus();
                     }
                     pre.setStatus(notProcessedReason);

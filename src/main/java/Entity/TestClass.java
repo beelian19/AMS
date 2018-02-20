@@ -104,6 +104,10 @@ public class TestClass {
     }
 
     public static void main(String[] args) {
-        testEmptyHM();
+        System.out.println( 180 / 30 );
+        System.out.println(180 %30);
+        System.out.println(77 / 30);
+        System.out.println( 149 / 30);
+        System.out.println(77 % 30);
     }
 }

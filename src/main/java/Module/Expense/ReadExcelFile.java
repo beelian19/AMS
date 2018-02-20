@@ -61,7 +61,7 @@ public class ReadExcelFile extends HttpServlet {
 
                 // Get the excel file
                 FileItem excelFileItem = fileItems.get(0);
-                if (!excelFileItem.getName().endsWith("xlsx")) {
+                if (!excelFileItem.getName().toLowerCase().endsWith("xlsx")) {
                     throw new IllegalArgumentException("Only xlsx file type is accepted. " + excelFileItem.getName() + " uploaded");
                 }
 
