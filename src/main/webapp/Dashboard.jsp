@@ -186,13 +186,11 @@
                         <div class="row">
                             <div class="col-xs-1">&nbsp;</div>
                             <div class="col-xs-5" style="text-align: center;" align="right;">
-                                <h2>Project Overview</h2>
-                                <h4 style="text-align: center;" align="center;">(# of Projects)</h4>
+                                <h2>Projects Undertaken</h2>
                                 <canvas id="employeeProjectNumbersChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-5" style="text-align: center;" align="center;">
-                                <h2>Project Overview</h2>
-                                <h4 style="text-align: center;" align="center;">(# of Hours)</h4>
+                                <h2>Project Hours</h2>
                                 <canvas id="employeeProjectHoursChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-1">&nbsp;</div>

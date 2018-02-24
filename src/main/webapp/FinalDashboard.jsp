@@ -256,12 +256,12 @@
                             <div class="col-xs-4">
                                 <div class="row">
                                     <div class="displayChartsTable" data-target="#ProfitAndLossTable" style="text-align: center;" align="center;">
-                                        <h2>Project P&L</h2>
+                                        <h2>Profit & Loss</h2>
                                         <canvas id="ProfitAndLossChart" style="width: 475px; height: 250px; text-align: center;" align="center"></canvas>
                                     </div>
                                     <br/><br/>
                                     <div class="displayChartsTable" data-target="#ProjectsOverdueChartTable" style="text-align: center;" align="center;">
-                                        <h2>Project Overdue</h2>
+                                        <h2>Project Efficiency</h2>
                                         <canvas id="ProjectsOverdueChart" style="width: 475px; height: 250px; text-align: center;" align="center"></canvas>
                                     </div>
                                 </div>
@@ -360,7 +360,7 @@
                             </div>
                             <div class="col-xs-12 target" id="ProfitAndLossTable" style="display:none">
                                 <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                    <h3>Profit and Loss</h3>
+                                    <h3>Profit & Loss</h3>
                                     <table id='datatable5' align="center" style="text-align: left;">
                                         <thead>
                                             <tr>
@@ -445,7 +445,7 @@
                             </div>
                             <div class="col-xs-12 target" id="ProjectsOverdueChartTable" style="display:none">
                                 <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                    <h3>Project Overdue</h3>
+                                    <h3>Projects Undertaken</h3>
                                     <table id='datatable6' align="center" style="text-align: left;">
                                         <thead>
                                             <tr>
@@ -602,12 +602,12 @@
                             <div class="row">
                                 <div class="col-xs-1">&nbsp;</div>
                                 <div class="col-xs-5" style="text-align: center;" align="center;">
-                                    <h2>Project P&L</h2>
+                                    <h2>Profit & Loss</h2>
                                     <canvas id="clientProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                                 </div>
                                 <div class="col-xs-1">&nbsp;</div>
                                 <div class="col-xs-5" style="text-align: center;" align="center;">
-                                    <h2>Project Overdue</h2>
+                                    <h2>Project Overview</h2>
                                     <canvas id="clientOverdueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                                 </div>
                             </div>
@@ -754,12 +754,12 @@
                             <div class="row">
                                 <div class="col-xs-1">&nbsp;</div>
                                 <div class="col-xs-5" style="text-align: center;" align="center;">
-                                    <h2>Project Overdue</h2>
+                                    <h2>Projects Undertaken</h2>
                                     <canvas id="employeeRevenueChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                                 </div>
                                 <div class="col-xs-1">&nbsp;</div>
                                 <div class="col-xs-5" style="text-align: center;" align="center;">
-                                    <h2>Project Time</h2>
+                                    <h2>Hours Spent</h2>
                                     <canvas id="employeeProfitAndLossChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                                 </div>
                             </div>
@@ -880,28 +880,42 @@
             $(function () {
                 $('.displayChartsTable').on('click', function () {
                     var $this = $(this);
-                    if ($('.displayChartsTable').hasClass("activePerformanceChartBefore") || !$('.displayChartsTable').hasClass("activePerformanceChartAfter")) {
-                        //console.log("class is with zoom");
-                        $('.displayChartsTable').removeClass("activePerformanceChartBefore");
-                        $this.addClass("activePerformanceChartAfter");
-                        // Use the id in the data-target attribute
-                        $target = $($this.data('target'));
-                        $(".target").not($target).fadeOut();
-                        $target.toggle();
-                        $('html,body').animate({
-                            scrollTop: $target.offset().top},
-                                'fast');
-                    } else {
-                        console.log("class is no zoom");
-                        $this.removeClass("activePerformanceChartAfter");
-                        $this.addClass("activePerformanceChartBefore");
-                        // Use the id in the data-target attribute
-                        $target = $($this.data('target'));
-                        $(".target").not($target).fadeOut();
-                        $target.toggle();
-                        $('html,body').animate({
-                            scrollTop: $target.offset().top},
-                                'fast');
+                    var thisDataTarget = $this.attr("data-target");
+                    var chartsDiv = document.getElementsByClassName("displayChartsTable");
+                    var dataTargetOfAllChart;
+                    for (var i = 0; i < chartsDiv.length; i++) {
+                        currChart = document.getElementsByClassName("displayChartsTable")[i]
+                        currDataTarget = currChart.getAttribute("data-target");
+                        console.log(currDataTarget);
+                        if (thisDataTarget === currDataTarget) {
+                            if ($('.displayChartsTable').hasClass("activePerformanceChartBefore") || !$('.displayChartsTable').hasClass("activePerformanceChartAfter")) {
+                                $('.displayChartsTable').removeClass("activePerformanceChartBefore");
+                                $this.addClass("activePerformanceChartAfter");
+                                // Use the id in the data-target attribute
+                                $target = $($this.data('target'));
+                                $(".target").not($target).fadeOut();
+                                $target.toggle();
+                                $('html,body').animate({
+                                    scrollTop: $target.offset().top},
+                                        'fast');
+                            } else {
+                                $this.removeClass("activePerformanceChartAfter");
+                                $this.addClass("activePerformanceChartBefore");
+                                // Use the id in the data-target attribute
+                                $target = $($this.data('target'));
+                                $(".target").not($target).fadeOut();
+                                $target.toggle();
+                                $('html,body').animate({
+                                    scrollTop: $target.offset().top},
+                                        'fast');
+                            }
+                        }else{
+                            $currentElement = $(currChart)
+                            if($currentElement.hasClass("activePerformanceChartAfter") || $currentElement.hasClass("activePerformanceChartBefore")){
+                                $currentElement.removeClass("activePerformanceChartAfter");
+                                $currentElement.addClass("activePerformanceChartBefore");
+                            }
+                        }
                     }
                 });
             });
