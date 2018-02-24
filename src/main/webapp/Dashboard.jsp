@@ -513,7 +513,15 @@
                                                     <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
                                                 </td>
                                                 <td>
+                                                    <% if (p.getPlannedHours() - p.getEmployee1Hours() - p.getEmployee2Hours() < 0) {
+                                                    %>
+                                                    <font color ="red"><%=p.getPlannedHours() - p.getEmployee1Hours() - p.getEmployee2Hours()%></font>
+                                                    <%} else {
+                                                    %>
                                                     <%=p.getPlannedHours() - p.getEmployee1Hours() - p.getEmployee2Hours()%>
+                                                    <%
+                                                        }
+                                                    %>
                                                 </td>
                                                 <td>
                                                     <%=ProjectDAO.getTotalActualCost(p)%>

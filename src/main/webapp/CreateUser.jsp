@@ -97,9 +97,9 @@
                                     <td>
                                         <Select name='nationality' id="nationality" class="text ui-widget-content ui-corner-all" required autofocus style='display: block; width:100%; height: 30px'>
                                             <option disabled selected value> -- select an option -- </option>
-                                            <option value="foreigner">FOREIGNER</option>
+                                            <option value="foreigner">Foreigner</option>
                                             <option value="pr">PR</option>
-                                            <option value="singaporean">SINGAPOREAN</option>
+                                            <option value="singaporean">Singaporean</option>
                                         </Select>
                                     </td>
                                     <td width="15%">
