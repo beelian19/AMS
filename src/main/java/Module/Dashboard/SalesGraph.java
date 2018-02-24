@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -112,24 +113,8 @@ public class SalesGraph extends HttpServlet {
             outputRequest8.add(""+i, convertObjectToElement(yearLossList.get(i)));
         }
         events.add(outputRequest8);
-        
-        
-
-//        ArrayList<Project> projectsForTable = ProjectDAO.getProjectsWithinSelectedYear(selectedYear);
-//        System.out.println("Sales Graph - Sales: "+sales);
-//        System.out.println("Sales Graph - Cost: "+cost);
-//        System.out.println("Profit Graph - Profit: "+profit);
-//        request.getSession().setAttribute("sales", sales);
-//        request.getSession().setAttribute("cost", cost);
-//        request.getSession().setAttribute("profit", profit);
-//        request.getSession().setAttribute("overdueProject", overdue);
-//        request.getSession().setAttribute("ontimeProject", ontime);
-//        request.getSession().setAttribute("completedProject", completed);
-//        request.getSession().setAttribute("yearProfit", yearProfitList);
-//        request.getSession().setAttribute("yearLoss", yearLossList);
-//        request.getSession().setAttribute("totalCompletedList", completedProjects);
-//        request.getSession().setAttribute("projectsForTable", projectsForTable);
         out.print(events);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

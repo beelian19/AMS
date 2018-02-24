@@ -6,6 +6,9 @@
 package Module.Dashboard;
 
 import DAO.ProjectDAO;
+import static Utility.JsonFormatter.convertObjectToElement;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -32,48 +35,54 @@ public class ClientDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        ArrayList<ArrayList<Integer>> profitabilityList = new ArrayList();
-        
         String clientID = request.getParameter("clientID");
         String year = request.getParameter("year");
-        System.out.println("Client Dashboard - Client ID: "+clientID);
-        System.out.println("Client Dashboard - Year: "+year);
+//        System.out.println("Client Dashboard - Client ID: "+clientID);
+//        System.out.println("Client Dashboard - Year: "+year);
+
         //take in clientID and year as parameters
-        profitabilityList = ProjectDAO.getCompanyMonthlyProfitability(clientID,year);
+        
         int[] overdueList = new int[12];
         overdueList = ProjectDAO.getClientOverdueProjectPerYear(clientID,year);
         int[] ontimeList = new int[12];
         ontimeList = ProjectDAO.getClientOnTimeProjectPerYear(clientID,year);
         
-        ArrayList<Integer> overdue = new ArrayList();
-
-        for (int i = 0; i < 12; i++) {
-            int value = overdueList[i];
-            overdue.add(value);
-        }
-        
-        ArrayList<Integer> ontime = new ArrayList();
-
-        for (int i = 0; i < 12; i++) {
-            int value = ontimeList[i];
-            ontime.add(value);
-        }
-        System.out.println("Client Dashboard - OverDue: "+overdue);
-        System.out.println("Client Dashboard - OnTime: "+ontime);
+        ArrayList<ArrayList<Integer>> profitabilityList = profitabilityList = ProjectDAO.getCompanyMonthlyProfitability(clientID,year);
         ArrayList<Integer> yearProfitList = profitabilityList.get(0);
         ArrayList<Integer> yearLossList = profitabilityList.get(1);
         
-        System.out.println("Client Dashboard - Profit: "+yearProfitList);
-        System.out.println("Client Dashboard - Loss: "+yearLossList);
+        JsonArray events = new JsonArray();
+        PrintWriter out = response.getWriter();
+        //overdueList
+        JsonObject outputRequest = new JsonObject();
+        for (int i = 0; i < overdueList.length; i++) {
+            outputRequest.add(""+i, convertObjectToElement(overdueList[i]));
+        }
+        events.add(outputRequest);
         
-        request.getSession().setAttribute("clientYearProfit", yearProfitList);
-        request.getSession().setAttribute("clientYearLoss", yearLossList);
+        //ontimeList
+        JsonObject outputRequest1 = new JsonObject();
+        for (int i = 0; i < ontimeList.length; i++) {
+            outputRequest1.add(""+i, convertObjectToElement(ontimeList[i]));
+        }
+        events.add(outputRequest1);
         
-        request.getSession().setAttribute("clientOverdueProject", overdue);
-        request.getSession().setAttribute("clientOnTimeProject", ontime);
+        //yearProfitList
+        JsonObject outputRequest2 = new JsonObject();
+        for (int i = 0; i < yearProfitList.size(); i++) {
+            outputRequest2.add(""+i, convertObjectToElement(yearProfitList.get(i)));
+        }
+        events.add(outputRequest2);
+        
+        //yearLossList
+        JsonObject outputRequest3 = new JsonObject();
+        for (int i = 0; i < yearLossList.size(); i++) {
+            outputRequest3.add(""+i, convertObjectToElement(yearLossList.get(i)));
+        }
+        events.add(outputRequest3);
         
         request.getSession().setAttribute("clientID", clientID);
+        out.print(events);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
