@@ -1524,9 +1524,9 @@ public class ProjectDAO {
 
                     switch (month) {
                         case "01":
-                            if (!p.getEmployee2().equals("NA")) {
+                            if (!p.getEmployee2().equals("NA")) { //there are two employees
                                 value = (p.getPlannedHours() / 2) * costPerHourPerStaffList.get(empName);
-                            } else {
+                            } else { // there is one employee which is employee1
                                 value = p.getPlannedHours() * costPerHourPerStaffList.get(empName);
                             }
 
@@ -1650,7 +1650,7 @@ public class ProjectDAO {
                 }
             }
         }
-
+        System.out.println("ProjectDAO: sales: "+totalSalesList[0]);
         return totalSalesList;
     }
 
@@ -1660,7 +1660,7 @@ public class ProjectDAO {
         HashMap<String, Double> costPerHourPerStaffList = EmployeeDAO.getCostPerHourPerStaff();
 
         DecimalFormat decimal = new DecimalFormat("#.##");
-
+        System.out.println("Year: "+selectedYear);
         for (String empName : projectList.keySet()) {
             ArrayList<Project> list = projectList.get(empName);
 
@@ -1815,7 +1815,7 @@ public class ProjectDAO {
                 }
             }
         }
-
+        System.out.println("ProjectDAO: cost: "+totalActualCostList[0]);
         return totalActualCostList;
     }
 
@@ -2330,14 +2330,13 @@ public class ProjectDAO {
 
     public static ArrayList<Project> getProjectsWithinSelectedYear(String year) {
         ArrayList<Project> returnList = new ArrayList();
-
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE year(end) = ? AND projectStatus='complete' AND projectReviewStatus='complete'");
             stmt.setString(1, year);
             ResultSet rs = stmt.executeQuery();
-            Project project = new Project();
             while (rs.next()) {
                 //create the project object
+                Project project = new Project();
                 project.setProjectID(rs.getInt("projectID"));
                 project.setProjectTitle(rs.getString("title"));
                 project.setCompanyName(rs.getString("companyName"));
