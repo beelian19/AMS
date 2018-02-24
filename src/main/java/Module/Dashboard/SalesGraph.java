@@ -7,9 +7,15 @@ package Module.Dashboard;
 
 import DAO.ProjectDAO;
 import Entity.Project;
+import static Utility.JsonFormatter.convertObjectToElement;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,97 +39,97 @@ public class SalesGraph extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String selectedYear = request.getParameter("year");
-//        System.out.println("SalesGraph servlet:======================================: "+selectedYear);
         Double[] salesList = ProjectDAO.getSales(selectedYear);
         Double[] costList = ProjectDAO.getActualCost(selectedYear);
         Double[] profitList = ProjectDAO.getProfit(selectedYear);
         
-        ArrayList<Double> sales = new ArrayList();
-        ArrayList<Double> cost = new ArrayList();
-        ArrayList<Double> profit = new ArrayList();
-        
-        DecimalFormat decimal = new DecimalFormat("#.##");
-        
-        for(int i = 0; i < 12; i++) {
-            double value = salesList[i];
-            
-            value = Double.valueOf(decimal.format(value));
-            sales.add(value);
-        }
-        
-        for(int i = 0; i < 12; i++) {
-            double value = costList[i];
-            
-            value = Double.valueOf(decimal.format(value));
-            cost.add(value);
-        }
-        
-        for(int i = 0; i < 12; i++) {
-            double value = profitList[i];
-            
-            value = Double.valueOf(decimal.format(value));
-            profit.add(value);
-        }
-        //Overdue,Ontime, Completed Projects
-        int[] overdueList = new int[12];
+        int[] overdueList = ProjectDAO.getOverdueProjectPerYear(selectedYear);;
         int[] ontimeList = ProjectDAO.getOnTimeProjectPerYear(selectedYear);
         int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear(selectedYear);
-        overdueList = ProjectDAO.getOverdueProjectPerYear(selectedYear);
         
-        ArrayList<Integer> overdue = new ArrayList();
-
-        for (int i = 0; i < 12; i++) {
-            int value = overdueList[i];
-            overdue.add(value);
-        }
-        
-         ArrayList<Integer> ontime = new ArrayList();
-
-        for (int i = 0; i < 12; i++) {
-            int value = ontimeList[i];
-            ontime.add(value);
-        }
-        
-         ArrayList<Integer> completed = new ArrayList();
-
-        for (int i = 0; i < 12; i++) {
-            int value = completedList[i];
-            completed.add(value);
-        }
-        
-        //CompletedProjectMonthlyProfitability
-        ArrayList<ArrayList<Integer>> profitabilityList = new ArrayList();
-
-        profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability(selectedYear);
+        ArrayList<ArrayList<Integer>> profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability(selectedYear);
         int[] completedProjectsList = ProjectDAO.getTotalCompletedProjectPerYear(selectedYear);
-        
-        ArrayList<Integer> completedProjects = new ArrayList();
-
-        for (int i = 0; i < 12; i++) {
-            int value = completedProjectsList[i];
-            completedProjects.add(value);
-        }
-        
         ArrayList<Integer> yearProfitList = profitabilityList.get(0);
         ArrayList<Integer> yearLossList = profitabilityList.get(1);
+
+        DecimalFormat decimal = new DecimalFormat("#.##");
+        JsonArray events = new JsonArray();
+        PrintWriter out = response.getWriter();
         
-        ArrayList<Project> projectsForTable = ProjectDAO.getProjectsWithinSelectedYear(selectedYear);
+        JsonObject outputRequest = new JsonObject();
+        for (int i = 0; i < salesList.length; i++) {
+            outputRequest.add(""+i, convertObjectToElement(decimal.format(salesList[i])));
+        }
+        //outputRequest.add("sales", convertObjectToElement(salesMap));
+        events.add(outputRequest);
+        
+        JsonObject outputRequest1 = new JsonObject();
+        for (int i = 0; i < costList.length; i++) {
+            outputRequest1.add(""+i, convertObjectToElement(decimal.format(costList[i])));
+        }
+        events.add(outputRequest1);
+        
+        JsonObject outputRequest2 = new JsonObject();
+        for (int i = 0; i < profitList.length; i++) {
+            outputRequest2.add(""+i, convertObjectToElement(decimal.format(profitList[i])));
+        }
+        events.add(outputRequest2);
+        
+        //Overdue,Ontime, Completed Projects
+        JsonObject outputRequest3 = new JsonObject();
+        for (int i = 0; i < profitList.length; i++) {
+            outputRequest3.add(""+i, convertObjectToElement(overdueList[i]));
+        }
+        events.add(outputRequest3);
+        
+        JsonObject outputRequest4 = new JsonObject();
+        for (int i = 0; i < profitList.length; i++) {
+            outputRequest4.add(""+i, convertObjectToElement(ontimeList[i]));
+        }
+        events.add(outputRequest4);
+        
+        JsonObject outputRequest5 = new JsonObject();
+        for (int i = 0; i < profitList.length; i++) {
+            outputRequest5.add(""+i, convertObjectToElement(completedList[i]));
+        }
+        events.add(outputRequest5);
+        
+        //CompletedProjectMonthlyProfitability
+        JsonObject outputRequest6 = new JsonObject();
+        for (int i = 0; i < profitList.length; i++) {
+            outputRequest6.add(""+i, convertObjectToElement(completedProjectsList[i]));
+        }
+        events.add(outputRequest6);
+        
+        JsonObject outputRequest7 = new JsonObject();
+        for (int i = 0; i < profitList.length; i++) {
+            outputRequest7.add(""+i, convertObjectToElement(yearProfitList.get(i)));
+        }
+        events.add(outputRequest7);
+        
+        JsonObject outputRequest8 = new JsonObject();
+        for (int i = 0; i < profitList.length; i++) {
+            outputRequest8.add(""+i, convertObjectToElement(yearLossList.get(i)));
+        }
+        events.add(outputRequest8);
         
         
+
+//        ArrayList<Project> projectsForTable = ProjectDAO.getProjectsWithinSelectedYear(selectedYear);
 //        System.out.println("Sales Graph - Sales: "+sales);
 //        System.out.println("Sales Graph - Cost: "+cost);
 //        System.out.println("Profit Graph - Profit: "+profit);
-        
-        request.getSession().setAttribute("sales", sales);
-        request.getSession().setAttribute("cost", cost);
-        request.getSession().setAttribute("profit", profit);
-        request.getSession().setAttribute("overdueProject", overdue);
-        request.getSession().setAttribute("ontimeProject", ontime);
-        request.getSession().setAttribute("completedProject", completed);
-        request.getSession().setAttribute("yearProfit", yearProfitList);
-        request.getSession().setAttribute("yearLoss", yearLossList);
-        request.getSession().setAttribute("totalCompletedList", completedProjects);
-        request.getSession().setAttribute("projectsForTable", projectsForTable);
+//        request.getSession().setAttribute("sales", sales);
+//        request.getSession().setAttribute("cost", cost);
+//        request.getSession().setAttribute("profit", profit);
+//        request.getSession().setAttribute("overdueProject", overdue);
+//        request.getSession().setAttribute("ontimeProject", ontime);
+//        request.getSession().setAttribute("completedProject", completed);
+//        request.getSession().setAttribute("yearProfit", yearProfitList);
+//        request.getSession().setAttribute("yearLoss", yearLossList);
+//        request.getSession().setAttribute("totalCompletedList", completedProjects);
+//        request.getSession().setAttribute("projectsForTable", projectsForTable);
+        out.print(events);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

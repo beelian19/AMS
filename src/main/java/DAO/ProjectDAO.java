@@ -1650,7 +1650,6 @@ public class ProjectDAO {
                 }
             }
         }
-        System.out.println("ProjectDAO: sales: "+totalSalesList[0]);
         return totalSalesList;
     }
 
@@ -1660,7 +1659,6 @@ public class ProjectDAO {
         HashMap<String, Double> costPerHourPerStaffList = EmployeeDAO.getCostPerHourPerStaff();
 
         DecimalFormat decimal = new DecimalFormat("#.##");
-        System.out.println("Year: "+selectedYear);
         for (String empName : projectList.keySet()) {
             ArrayList<Project> list = projectList.get(empName);
 
@@ -1815,7 +1813,6 @@ public class ProjectDAO {
                 }
             }
         }
-        System.out.println("ProjectDAO: cost: "+totalActualCostList[0]);
         return totalActualCostList;
     }
 
