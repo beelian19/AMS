@@ -248,7 +248,7 @@
                                 <div class="row">
                                     <div class="col-xs-10 displayChartsTable" data-target="#revenueTable" style="text-align: center;" align="center;">
                                         <h2 align="center" style="text-align: center;">Revenue</h2>
-                                        <canvas id="RevenueChart" style="width: 550px; height: 600px; text-align: center;" align="center"></canvas>
+                                        <canvas id="RevenueChart" width="550px" height="600px" style="text-align: center;" align="center"></canvas>
                                     </div>
                                     <div class="col-xs-2">&nbsp;</div>
                                 </div>
@@ -257,12 +257,12 @@
                                 <div class="row">
                                     <div class="displayChartsTable" data-target="#ProfitAndLossTable" style="text-align: center;" align="center;">
                                         <h2>Profit & Loss</h2>
-                                        <canvas id="ProfitAndLossChart" style="width: 475px; height: 250px; text-align: center;" align="center"></canvas>
+                                        <canvas id="ProfitAndLossChart" width="475px" height="250px" style="text-align: center;" align="center"></canvas>
                                     </div>
                                     <br/><br/>
                                     <div class="displayChartsTable" data-target="#ProjectsOverdueChartTable" style="text-align: center;" align="center;">
                                         <h2>Project Undertaken</h2>
-                                        <canvas id="ProjectsOverdueChart" style="width: 475px; height: 250px; text-align: center;" align="center"></canvas>
+                                        <canvas id="ProjectsOverdueChart" width="475px" height="250px" style="text-align: center;" align="center"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -1937,7 +1937,7 @@
             chart.data.labels.push(label);
             for (var i = 0; i < chart.data.datasets.length; i++) {
                 dataset.data.push(data);
-            }
+            } 
                     chart.update();
         }
         // end of this section
