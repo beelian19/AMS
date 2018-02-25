@@ -1233,7 +1233,7 @@ public class ProjectDAO {
 
         Project project;
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE YEAR(end)= ? and (employee1 = ? OR employee2 = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE YEAR(end)= ? and (employee1 = ? OR employee2 = ?)");
             stmt.setString(1, year);
             stmt.setString(2, employeeName);
             stmt.setString(3, employeeName);
@@ -1479,7 +1479,7 @@ public class ProjectDAO {
         int[] numList = new int[12];
 
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (employee1=? or employee2=?) and (`projectReviewStatus` = 'completed') GROUP BY MONTH(end)");
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (employee1=? or employee2=?) and (`projectReviewStatus` = 'complete') GROUP BY MONTH(end)");
             stmt.setString(1, year);
             stmt.setString(2, empName);
             stmt.setString(3, empName);

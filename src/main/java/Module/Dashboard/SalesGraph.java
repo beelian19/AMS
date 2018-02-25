@@ -6,7 +6,6 @@
 package Module.Dashboard;
 
 import DAO.ProjectDAO;
-import Entity.Project;
 import static Utility.JsonFormatter.convertObjectToElement;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -14,9 +13,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -113,6 +109,7 @@ public class SalesGraph extends HttpServlet {
             outputRequest8.add(""+i, convertObjectToElement(yearLossList.get(i)));
         }
         events.add(outputRequest8);
+        request.getSession().setAttribute("test","FK THIS SHIT");
         out.print(events);
         
     }

@@ -7,7 +7,11 @@ package Module.Dashboard;
 
 import DAO.ProjectDAO;
 import Entity.Project;
+import static Utility.JsonFormatter.convertObjectToElement;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,11 +36,22 @@ public class GetOverAllAbundantProjectsTable extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String selectedYear = request.getParameter("year");
-        ArrayList<Project> projectsForTable = ProjectDAO.getProjectsWithinSelectedYear(selectedYear);
-        request.setAttribute("projectsForTable", projectsForTable);
+        JsonArray events = new JsonArray();
+        PrintWriter out = response.getWriter();
         
-        request.getRequestDispatcher("FinalDashboard.jsp").forward(request,response);
+        JsonObject outputRequest = new JsonObject();
+        
+        String selectedYear = "2018";//request.getParameter("year");
+        ArrayList<Project> projectsForTable = ProjectDAO.getProjectsWithinSelectedYear(selectedYear);
+        //request.setAttribute("projectsForTable", projectsForTable);
+        
+        //request.getRequestDispatcher("FinalDashboard.jsp").forward(request,response);
+        
+        for(Project p : projectsForTable) {
+            outputRequest.add(p.getProjectIDString(),convertObjectToElement(p));
+        }
+        events.add(outputRequest);
+        out.print(events);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

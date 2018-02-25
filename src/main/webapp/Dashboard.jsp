@@ -192,342 +192,6 @@
                             </div>
                             <div class="col-xs-1">&nbsp;</div>
                         </div>
-                        <script>
-                            $(document).ready(function () {
-                                employeePerformanceChart();
-                            });
-                            function employeePerformanceChart() {
-                                //$("canvas#employeeProjectNumbersChart").remove();
-                                //$("canvas#employeeProjectHoursChart").remove();
-                                //$("div.chartreport").append('<canvas id="chartreport" class="animated fadeIn" height="150"></canvas>');
-                                var yearChosen = document.getElementById('employeePerformanceChart').value;
-                                if (yearChosen === null || yearChosen === "") {
-                                    now = new Date;
-                                    yearChosen = now.getYear();
-                                    if (yearChosen < 1900) {
-                                        yearChosen = yearChosen + 1900;
-                                    }
-                                }
-                                var empName = "<%=request.getSession().getAttribute("employeeName")%>";
-                                
-                                console.log("Name: "+empName);
-                                console.log("Year: "+yearChosen);
-                                var employeeOverdue = new Array(12);
-                                var inTime = new Array(12);
-                                var completedProjects = new Array(12);
-                                var actualHours = new Array(12);
-                                var plannedHours = new Array(12);
-                                $.ajax({
-                                    url: 'StaffMonthlyReport',
-                                    type: 'POST',
-                                    data: 'employeeName=' + empName + '&' + 'Year=' + yearChosen,
-                                    success: function (data) {
-                                        var jsonData = $.parseJSON(data);
-
-                                        for (var i = 0; i < 12; i++) {
-                                            var data = jsonData[0][i];
-                                            employeeOverdue[i] = data;
-                                        }
-
-                                        for (var i = 0; i < 12; i++) {
-                                            var data = jsonData[2][i];
-                                            completedProjects[i] = data;
-                                        }
-
-                                        for (var i = 0; i < 12; i++) {
-                                            var data = jsonData[3][i];
-                                            actualHours[i] = data;
-                                        }
-
-                                        for (var i = 0; i < 12; i++) {
-                                            var data = jsonData[4][i];
-                                            plannedHours[i] = data;
-                                        }
-
-                                        for (var i = 0; i < 12; i++) {
-                                            var data = jsonData[5][i];
-                                            inTime[i] = data;
-                                        }
-                                        var barChartData = {
-                                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                            datasets: [
-                                                {
-                                                    label: '# of Completed Projects',
-                                                    fillColor: 'rgba(255, 99, 132, 0.2)',
-                                                    strokeColor: 'rgba(220,180,0,1)',
-                                                    pointColor: 'rgba(220,180,0,1)',
-                                                    data: completedProjects,
-                                                    backgroundColor: [
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)'
-                                                    ],
-                                                    fillColor: [
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)'
-                                                    ],
-                                                    borderColor: [
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)'
-                                                    ],
-                                                    borderWidth: 1
-                                                },
-                                                {
-                                                    label: '# of Overdue Projects',
-                                                    fillColor: 'rgba(54, 162, 235, 0.2)',
-                                                    strokeColor: 'rgba(66,180,0,1)',
-                                                    pointColor: 'rgba(66,180,0,1)',
-                                                    data: employeeOverdue, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
-                                                    backgroundColor: [
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)'
-                                                    ], fillColor: [
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)'
-                                                    ],
-                                                    borderColor: [
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)'
-                                                    ],
-                                                    borderWidth: 1
-                                                }, {
-                                                    label: '# of Projects on Time',
-                                                    fillColor: 'rgba(54, 162, 235, 0.2)',
-                                                    strokeColor: 'rgba(54, 162, 235, 0.2)',
-                                                    pointColor: 'rgba(54, 162, 235, 0.2)',
-                                                    data: inTime, //[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
-                                                    backgroundColor: [
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)'
-                                                    ],
-                                                    fillColor: [
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)'
-                                                    ],
-                                                    borderColor: [
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)',
-                                                        'rgba(54, 162, 235, 0.3)'
-                                                    ],
-                                                    borderWidth: 1
-                                                }
-                                            ]
-                                        };
-                                        var barChartData1 = {
-                                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                            datasets: [{
-                                                    label: 'Planned Hours',
-                                                    data: plannedHours,
-                                                    backgroundColor: [
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)'
-                                                    ],
-                                                    fillColor: [
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)'
-                                                    ],
-                                                    borderColor: [
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)',
-                                                        'rgba(153, 102, 255, 0.3)'
-                                                    ],
-                                                    borderWidth: 1
-                                                },
-                                                {
-                                                    label: 'Acutal Hours',
-                                                    data: actualHours,
-                                                    backgroundColor: [
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)'
-                                                    ], fillColor: [
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)',
-                                                        'rgba(255, 99, 132, 0.3)'
-                                                    ],
-                                                    borderColor: [
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)',
-                                                        'rgba(255,99,132,0.3)'
-                                                    ],
-                                                    borderWidth: 1
-                                                }
-                                            ]
-                                        }
-                                        Chart.defaults.global.tooltipYPadding = 16;
-                                        Chart.defaults.global.tooltipCornerRadius = 0;
-                                        Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                                        Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                                        Chart.defaults.global.animationEasing = "easeInOutElastic";
-                                        Chart.defaults.global.responsive = false;
-                                        var ctx = document.getElementById("employeeProjectNumbersChart").getContext("2d");
-                                        var ctx1 = document.getElementById("employeeProjectHoursChart").getContext("2d");
-                                        //ctx.height = 500;
-                                        var employeeProjectNumbersChart = new Chart(ctx, {
-                                            type: 'bar',
-                                            data: barChartData,
-                                            pointDotRadius: 5,
-                                            bezierCurve: false,
-                                            scaleShowVerticalLines: false
-                                        });
-                                        var employeeProjectHoursChart = new Chart(ctx1, {
-                                            type: 'bar',
-                                            data: barChartData1,
-                                            pointDotRadius: 5,
-                                            bezierCurve: false,
-                                            scaleShowVerticalLines: false
-                                        });
-                                    },
-                                    error: function (data) {
-                                        console.log("Error: " + data);
-                                    }
-                                });
-                            }
-                        </script>
                         <div class="row">
                             <br/><br/>
                             <div class="col-xs-12" id="employeeProjectOverdueTable">
@@ -597,6 +261,342 @@
                 </div>
                 <br/><br/>
         </nav>
+        <script>
+            $(document).ready(function () {
+                employeePerformanceChart();
+            });
+            function employeePerformanceChart() {
+//$("canvas#employeeProjectNumbersChart").remove();
+//$("canvas#employeeProjectHoursChart").remove();
+//$("div.chartreport").append('<canvas id="chartreport" class="animated fadeIn" height="150"></canvas>');
+                var yearChosen = document.getElementById('employeePerformanceChart').value;
+                if (yearChosen === null || yearChosen === "") {
+                    now = new Date;
+                    yearChosen = now.getYear();
+                    if (yearChosen < 1900) {
+                        yearChosen = yearChosen + 1900;
+                    }
+                }
+                var empName = "<%=request.getSession().getAttribute("employeeName")%>";
+
+                console.log("Name: " + empName);
+                console.log("Year: " + yearChosen);
+                var employeeOverdue = new Array(12);
+                var inTime = new Array(12);
+                var completedProjects = new Array(12);
+                var actualHours = new Array(12);
+                var plannedHours = new Array(12);
+                $.ajax({
+                    url: 'StaffMonthlyReport',
+                    type: 'POST',
+                    data: 'employeeName=' + empName + '&' + 'Year=' + yearChosen,
+                    success: function (data) {
+                        var jsonData = $.parseJSON(data);
+
+                        for (var i = 0; i < 12; i++) {
+                            var data = jsonData[0][i];
+                            employeeOverdue[i] = data;
+                        }
+
+                        for (var i = 0; i < 12; i++) {
+                            var data = jsonData[2][i];
+                            completedProjects[i] = data;
+                        }
+
+                        for (var i = 0; i < 12; i++) {
+                            var data = jsonData[3][i];
+                            actualHours[i] = data;
+                        }
+
+                        for (var i = 0; i < 12; i++) {
+                            var data = jsonData[4][i];
+                            plannedHours[i] = data;
+                        }
+
+                        for (var i = 0; i < 12; i++) {
+                            var data = jsonData[5][i];
+                            inTime[i] = data;
+                        }
+                        var barChartData = {
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [
+                                {
+                                    label: '# of Completed Projects',
+                                    fillColor: 'rgba(255, 99, 132, 0.2)',
+                                    strokeColor: 'rgba(220,180,0,1)',
+                                    pointColor: 'rgba(220,180,0,1)',
+                                    data: completedProjects,
+                                    backgroundColor: [
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)'
+                                    ],
+                                    fillColor: [
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)'
+                                    ],
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: '# of Overdue Projects',
+                                    fillColor: 'rgba(54, 162, 235, 0.2)',
+                                    strokeColor: 'rgba(66,180,0,1)',
+                                    pointColor: 'rgba(66,180,0,1)',
+                                    data: employeeOverdue, //[20, -30, 80, 20, 40, 10, 60, -30, 80, 20, 40, 10, 60],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)'
+                                    ], fillColor: [
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)'
+                                    ],
+                                    borderWidth: 1
+                                }, {
+                                    label: '# of Projects on Time',
+                                    fillColor: 'rgba(54, 162, 235, 0.2)',
+                                    strokeColor: 'rgba(54, 162, 235, 0.2)',
+                                    pointColor: 'rgba(54, 162, 235, 0.2)',
+                                    data: inTime, //[60, 110, 40, 30, 80, 30, 20, 110, 40, 30, 80, 30, 20],
+                                    backgroundColor: [
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)'
+                                    ],
+                                    fillColor: [
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)'
+                                    ],
+                                    borderWidth: 1
+                                }
+                            ]
+                        };
+                        var barChartData1 = {
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [{
+                                    label: 'Planned Hours',
+                                    data: plannedHours,
+                                    backgroundColor: [
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)'
+                                    ],
+                                    fillColor: [
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)'
+                                    ],
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Acutal Hours',
+                                    data: actualHours,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)'
+                                    ], fillColor: [
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)',
+                                        'rgba(255, 99, 132, 0.3)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)'
+                                    ],
+                                    borderWidth: 1
+                                }
+                            ]
+                        }
+                        Chart.defaults.global.tooltipYPadding = 16;
+                        Chart.defaults.global.tooltipCornerRadius = 0;
+                        Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                        Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                        Chart.defaults.global.animationEasing = "easeInOutElastic";
+                        Chart.defaults.global.responsive = false;
+                        var ctx = document.getElementById("employeeProjectNumbersChart").getContext("2d");
+                        var ctx1 = document.getElementById("employeeProjectHoursChart").getContext("2d");
+                        //ctx.height = 500;
+                        var employeeProjectNumbersChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: barChartData,
+                            pointDotRadius: 5,
+                            bezierCurve: false,
+                            scaleShowVerticalLines: false
+                        });
+                        var employeeProjectHoursChart = new Chart(ctx1, {
+                            type: 'bar',
+                            data: barChartData1,
+                            pointDotRadius: 5,
+                            bezierCurve: false,
+                            scaleShowVerticalLines: false
+                        });
+                    },
+                    error: function (data) {
+                        console.log("Error: " + data);
+                    }
+                });
+            }
+        </script>
     </body>
     <jsp:include page="Footer.html"/>
 </html>

@@ -14,7 +14,8 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
+import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,8 +45,8 @@ public class StaffMonthlyReport extends HttpServlet {
         int[] exceededList = new int[12];
         int[] completedList = new int[12];
         int[] inTimeList = new int[12];
-        ArrayList<Double> actualHours = new ArrayList();
-        ArrayList<Double> plannedHours = new ArrayList();
+        double[] actualHours = new double[12];
+        double[] plannedHours = new double[12];
 
         if (request.getParameter("employeeName") == null || request.getParameter("Year") == null) {
             request.setAttribute("employee", employee);
@@ -60,74 +61,242 @@ public class StaffMonthlyReport extends HttpServlet {
             completedList = ProjectDAO.getCompletedProjectPerYear(year, employeeName);
             inTimeList = ProjectDAO.getOnTimeCompletedProjectEmployee(employeeName, year);
             for (Project p : projectList) {
+                Date end = p.getEnd();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(end);
+                int month = cal.get(Calendar.MONTH);
+//                System.out.println(month);
+//                Jan = 0; Feb = 1; Mar = 2; ..... Dec = 11
+                switch (month) {
+                    case 0:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[0] = p.getPlannedHours();
+                            }
+                            actualHours[0] = p.getPlannedHours() / 2.0;
+                        }
 
-                if (p.getEmployee1().equals(employeeName)) {
-                    if (p.getEmployee2().equals("NA")) {
-                        actualHours.add(p.getPlannedHours());
-                    }
-                    actualHours.add(p.getPlannedHours() / 2.0);
-                }
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[0] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[0] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 1:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[1] = p.getPlannedHours();
+                            }
+                            actualHours[1] = p.getPlannedHours() / 2.0;
+                        }
 
-                if (p.getEmployee1().equals(employeeName)) {
-                    plannedHours.add(p.getEmployee1Hours());
-                }
-                if (p.getEmployee2().equals(employeeName)) {
-                    plannedHours.add(p.getEmployee2Hours());
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[1] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[1] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 2:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[2] = p.getPlannedHours();
+                            }
+                            actualHours[2] = p.getPlannedHours() / 2.0;
+                        }
+
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[2] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[2] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 3:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[3] = p.getPlannedHours();
+                            }
+                            actualHours[3] = p.getPlannedHours() / 2.0;
+                        }
+
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[3] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[3] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 4:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[4] = p.getPlannedHours();
+                            }
+                            actualHours[4] = p.getPlannedHours() / 2.0;
+                        }
+
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[4] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[4] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 5:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[5] = p.getPlannedHours();
+                            }
+                            actualHours[5] = p.getPlannedHours() / 2.0;
+                        }
+
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[5] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[5] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 6:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[6] = p.getPlannedHours();
+                            }
+                            actualHours[6] = p.getPlannedHours() / 2.0;
+                        }
+
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[6] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[6] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 7:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[7] = p.getPlannedHours();
+                            }
+                            actualHours[7] = p.getPlannedHours() / 2.0;
+                        }
+
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[7] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[7] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 8:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[8] = p.getPlannedHours();
+                            }
+                            actualHours[8] = p.getPlannedHours() / 2.0;
+                        }
+
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[8] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[8] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 9:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[9] = p.getPlannedHours();
+                            }
+                            actualHours[9] = p.getPlannedHours() / 2.0;
+                        }
+
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[9] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[9] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 10:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[10] = p.getPlannedHours();
+                            }
+                            actualHours[10] = p.getPlannedHours() / 2.0;
+                        }
+
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[10] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[10] = p.getEmployee2Hours();
+                        }
+                        break;
+                    case 11:
+                        if (p.getEmployee1().equals(employeeName)) {
+                            if (p.getEmployee2().equals("NA")) {
+                                actualHours[11] = p.getPlannedHours();
+                            }
+                            actualHours[11] = p.getPlannedHours() / 2.0;
+                        }
+
+                        if (p.getEmployee1().equals(employeeName)) {
+                            plannedHours[11] = p.getEmployee1Hours();
+                        }
+                        if (p.getEmployee2().equals(employeeName)) {
+                            plannedHours[11] = p.getEmployee2Hours();
+                        }
+                        break;
                 }
             }
         }
-        
+
         JsonArray events = new JsonArray();
         PrintWriter out = response.getWriter();
         //overdue
         JsonObject outputRequest = new JsonObject();
         for (int i = 0; i < overdueList.length; i++) {
-            outputRequest.add(""+i, convertObjectToElement(overdueList[i]));
+            outputRequest.add("" + i, convertObjectToElement(overdueList[i]));
         }
         events.add(outputRequest);
-        
+
         //exceed
         JsonObject outputRequest1 = new JsonObject();
         for (int i = 0; i < exceededList.length; i++) {
-            outputRequest1.add(""+i, convertObjectToElement(exceededList[i]));
+            outputRequest1.add("" + i, convertObjectToElement(exceededList[i]));
         }
         events.add(outputRequest1);
-        
+
         //completed
         JsonObject outputRequest2 = new JsonObject();
         for (int i = 0; i < completedList.length; i++) {
-            outputRequest2.add(""+i, convertObjectToElement(completedList[i]));
+            outputRequest2.add("" + i, convertObjectToElement(completedList[i]));
         }
         events.add(outputRequest2);
-        
+
         //actualHours
         JsonObject outputRequest3 = new JsonObject();
-        for (int i = 0; i < actualHours.size(); i++) {
-            outputRequest3.add(""+i, convertObjectToElement(actualHours.get(i)));
+        for (int i = 0; i < actualHours.length; i++) {
+            outputRequest3.add("" + i, convertObjectToElement(actualHours[i]));
         }
         events.add(outputRequest3);
-        
+
         //plannedHours
         JsonObject outputRequest4 = new JsonObject();
-        for (int i = 0; i < plannedHours.size(); i++) {
-            outputRequest4.add(""+i, convertObjectToElement(plannedHours.get(i)));
+        for (int i = 0; i < plannedHours.length; i++) {
+            outputRequest4.add("" + i, convertObjectToElement(plannedHours[i]));
         }
         events.add(outputRequest4);
-        
+
         //inTime
         JsonObject outputRequest5 = new JsonObject();
         for (int i = 0; i < inTimeList.length; i++) {
-            outputRequest5.add(""+i, convertObjectToElement(inTimeList[i]));
+            outputRequest5.add("" + i, convertObjectToElement(inTimeList[i]));
         }
         events.add(outputRequest5);
         out.print(events);
         request.getSession().setAttribute("staffProjectList", projectList);
-//        request.getSession().setAttribute("employeeOverdue", overdue);
-//        request.getSession().setAttribute("employeeTimeExceed", exceed);
-//        request.getSession().setAttribute("completedList", completed);
-//        request.getSession().setAttribute("actualHours", actualHours);
-//        request.getSession().setAttribute("plannedHours", plannedHours);
-//        request.getSession().setAttribute("inTime", inTime);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
