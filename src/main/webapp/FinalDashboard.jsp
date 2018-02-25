@@ -28,6 +28,7 @@
         <style>
             body {font-family: Arial;}
 
+
             /* Style the tab */
             .tab {
                 overflow: hidden;
@@ -248,7 +249,7 @@
                                 <div class="row">
                                     <div class="col-xs-10 displayChartsTable" data-target="#revenueTable" style="text-align: center;" align="center;">
                                         <h2 align="center" style="text-align: center;">Revenue</h2>
-                                        <canvas id="RevenueChart" width="550px" height="600px" style="text-align: center;" align="center"></canvas>
+                                        <canvas id="RevenueChart" align="center"></canvas>
                                     </div>
                                     <div class="col-xs-2">&nbsp;</div>
                                 </div>
@@ -257,12 +258,12 @@
                                 <div class="row">
                                     <div class="displayChartsTable" data-target="#ProfitAndLossTable" style="text-align: center;" align="center;">
                                         <h2>Profit & Loss</h2>
-                                        <canvas id="ProfitAndLossChart" width="475px" height="250px" style="text-align: center;" align="center"></canvas>
+                                        <canvas id="ProfitAndLossChart" align="center"></canvas>
                                     </div>
                                     <br/><br/>
                                     <div class="displayChartsTable" data-target="#ProjectsOverdueChartTable" style="text-align: center;" align="center;">
                                         <h2>Project Undertaken</h2>
-                                        <canvas id="ProjectsOverdueChart" width="475px" height="250px" style="text-align: center;" align="center"></canvas>
+                                        <canvas id="ProjectsOverdueChart" align="center"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -931,6 +932,16 @@
                     yearChosen = yearChosen + 1900;
                 }
             }
+
+            var canvas = document.getElementsByTagName('canvas')[0];
+            canvas.width = 550;
+            canvas.height = 600;
+            var canvas = document.getElementsByTagName('canvas')[1];
+            canvas.width = 475;
+            canvas.height = 250;
+            var canvas = document.getElementsByTagName('canvas')[2];
+            canvas.width = 475;
+            canvas.height = 250;
             //console.log("Year Chosen: " + yearChosen);
             var sales = new Array(12);
             var cost = new Array(12);
@@ -1327,7 +1338,6 @@
                     var ctx = document.getElementById("RevenueChart").getContext("2d");
                     var ctx1 = document.getElementById("ProfitAndLossChart").getContext("2d");
                     var ctx2 = document.getElementById("ProjectsOverdueChart").getContext("2d");
-                    //ctx.height = 500;
 
                     if (RevenueChart)
                         window.myChart.destroy();
@@ -1366,6 +1376,12 @@
             var clientYearLoss = new Array(12);
             var clientOverdueProject = new Array(12);
             var clientOnTimeProject = new Array(12);
+            var canvas = document.getElementsByTagName('canvas')[0];
+            canvas.width = 500;
+            canvas.height = 250;
+            var canvas = document.getElementsByTagName('canvas')[1];
+            canvas.width = 500;
+            canvas.height = 250;
             $.ajax({
                 url: 'ClientDashboard',
                 data: 'clientID=' + clientID + '&' + 'year=' + year,
@@ -1575,7 +1591,13 @@
             var empName = $('input[name=empName]:checked').val();
             var employeeOverdue = new Array(12);
             var employeeTimeExceed = new Array(12);
-            var completedProjects = new Array(12);
+            var completedProjects = new Array(12);            
+            var canvas = document.getElementsByTagName('canvas')[0];
+            canvas.width = 500;
+            canvas.height = 250;
+            var canvas = document.getElementsByTagName('canvas')[1];
+            canvas.width = 500;
+            canvas.height = 250;
             $.ajax({
                 url: 'StaffMonthlyReport',
                 data: 'employeeName=' + empName + '&' + 'Year=' + employeeDashboardYear,
@@ -1930,15 +1952,15 @@
             for (var i = 0; i < chart.data.datasets.length; i++) {
                 dataset.data.pop();
             }
-                    chart.update();
+            chart.update();
         }
 
         function addData(chart, label, data) {
             chart.data.labels.push(label);
             for (var i = 0; i < chart.data.datasets.length; i++) {
                 dataset.data.push(data);
-            } 
-                    chart.update();
+            }
+            chart.update();
         }
         // end of this section
 
