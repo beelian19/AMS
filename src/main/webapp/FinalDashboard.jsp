@@ -321,7 +321,7 @@
                                                         //console.log(data);
                                                     },
                                                     error: function () {
-                                                        alert('Failed');
+                                                        //alert('Failed');
                                                     }
                                                 });
                                             }
@@ -1327,7 +1327,6 @@
                     var ctx = document.getElementById("RevenueChart").getContext("2d");
                     var ctx1 = document.getElementById("ProfitAndLossChart").getContext("2d");
                     var ctx2 = document.getElementById("ProjectsOverdueChart").getContext("2d");
-                    //ctx.height = 500;
 
                     if (RevenueChart)
                         window.myChart.destroy();
