@@ -322,7 +322,7 @@
                                                         //console.log(data);
                                                     },
                                                     error: function () {
-                                                        alert('Failed');
+                                                        //alert('Failed');
                                                     }
                                                 });
                                             }
