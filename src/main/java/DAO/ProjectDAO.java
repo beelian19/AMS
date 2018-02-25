@@ -1233,10 +1233,11 @@ public class ProjectDAO {
 
         Project project;
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE employee1 = ? OR employee2 = ? and YEAR(end)=?");
-            stmt.setString(1, employeeName);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE YEAR(end)= ? and (employee1 = ? OR employee2 = ?");
+            stmt.setString(1, year);
             stmt.setString(2, employeeName);
-            stmt.setString(3, year);
+            stmt.setString(3, employeeName);
+           
             //date for start
             //date for end 
             ResultSet rs = stmt.executeQuery();
@@ -1478,7 +1479,7 @@ public class ProjectDAO {
         int[] numList = new int[12];
 
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and employee1=? or employee2=? and `projectReviewStatus` = 'completed' GROUP BY MONTH(end)");
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (employee1=? or employee2=?) and (`projectReviewStatus` = 'completed') GROUP BY MONTH(end)");
             stmt.setString(1, year);
             stmt.setString(2, empName);
             stmt.setString(3, empName);
@@ -1832,7 +1833,7 @@ public class ProjectDAO {
 
         int[] numList = new int[12];
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted > end) and employee1=? or employee2= ? GROUP BY MONTH(end)");
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted > end) and (employee1=? or employee2= ?) GROUP BY MONTH(end)");
             stmt.setString(1, year);
             stmt.setString(2, name);
             stmt.setString(3, name);
@@ -1860,7 +1861,7 @@ public class ProjectDAO {
 
         int[] numList = new int[12];
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (employee1Hours > (plannedHours)/2) and employee1=? or employee2 =? GROUP BY MONTH(end)");
+            PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (employee1Hours > (plannedHours)/2) and (employee1=? or employee2 =?) GROUP BY MONTH(end)");
             stmt.setString(1, year);
             stmt.setString(2, name);
             stmt.setString(3, name);
@@ -2241,7 +2242,7 @@ public class ProjectDAO {
         int[] numList = new int[12];
 
         try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT month(end) month,count(*) count from project where employee1=? or employee2=? and year(end) =? and (end <= dateCompleted) GROUP by month(end)");
+            PreparedStatement stmt = conn.prepareStatement("SELECT month(end) month,count(*) count from project where (employee1=? or employee2=?) and (year(end) =?) and (end <= dateCompleted) GROUP by month(end)");
             stmt.setString(1, empName);
             stmt.setString(2, empName);
             stmt.setString(3, year);
