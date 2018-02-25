@@ -270,16 +270,16 @@
                         </div>
                         <script>
                             $(document).ready(function () {
-                            $('#datatable').DataTable();
-                            $('#datatable2').DataTable();
-                            $('#datatable3').DataTable();
-                            $('#datatable4').DataTable();
-                            $('#datatable5').DataTable();
-                            $('#datatable6').DataTable();
-                            $('#datatable7').DataTable();
-                            $('#datatable8').DataTable();
-                            overallAbundantDashboard();
-                            showProjectTable();
+                                $('#datatable').DataTable();
+                                $('#datatable2').DataTable();
+                                $('#datatable3').DataTable();
+                                $('#datatable4').DataTable();
+                                $('#datatable5').DataTable();
+                                $('#datatable6').DataTable();
+                                $('#datatable7').DataTable();
+                                $('#datatable8').DataTable();
+                                overallAbundantDashboard();
+                                showProjectTable();
                             });
                         </script>
                         <div class="row">
@@ -305,25 +305,25 @@
                                         <tbody>
                                         <script>
                                             function showProjectTable() {
-                                            var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
-                                            if (yearChosen === null || yearChosen === "") {
-                                            now = new Date;
-                                            yearChosen = now.getYear();
-                                            if (yearChosen < 1900) {
-                                            yearChosen = yearChosen + 1900;
-                                            }
-                                            }
-                                            $.ajax({
-                                            url: 'GetOverAllAbundantProjectsTable',
+                                                var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
+                                                if (yearChosen === null || yearChosen === "") {
+                                                    now = new Date;
+                                                    yearChosen = now.getYear();
+                                                    if (yearChosen < 1900) {
+                                                        yearChosen = yearChosen + 1900;
+                                                    }
+                                                }
+                                                $.ajax({
+                                                    url: 'GetOverAllAbundantProjectsTable',
                                                     data: 'year=' + yearChosen,
                                                     type: 'POST',
                                                     success: function (data) {
-                                                    //console.log(data);
+                                                        //console.log(data);
                                                     },
                                                     error: function () {
-                                                    alert('Failed');
+                                                        alert('Failed');
                                                     }
-                                            });
+                                                });
                                             }
                                         </script>
                                         <%
@@ -923,1112 +923,1115 @@
         Chart.defaults.global.animationEasing = "easeInOutElastic";
         Chart.defaults.global.responsive = false;
         function overallAbundantDashboard() {
-        var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
-        if (yearChosen === null || yearChosen === "") {
-        now = new Date;
-        yearChosen = now.getYear();
-        if (yearChosen < 1900) {
-        yearChosen = yearChosen + 1900;
-        }
-        }
-        //console.log("Year Chosen: " + yearChosen);
-        var sales = new Array(12);
-        var cost = new Array(12);
-        var profit = new Array(12);
-        var overdue = new Array(12);
-        var ontime = new Array(12);
-        var completed = new Array(12);
-        var totalCompletedProjects = new Array(12);
-        var profitableProjects = new Array(12);
-        var lossProjects = new Array(12);
-        $.ajax({
-        url: 'SalesGraph',
+            var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
+            if (yearChosen === null || yearChosen === "") {
+                now = new Date;
+                yearChosen = now.getYear();
+                if (yearChosen < 1900) {
+                    yearChosen = yearChosen + 1900;
+                }
+            }
+            //console.log("Year Chosen: " + yearChosen);
+            var sales = new Array(12);
+            var cost = new Array(12);
+            var profit = new Array(12);
+            var overdue = new Array(12);
+            var ontime = new Array(12);
+            var completed = new Array(12);
+            var totalCompletedProjects = new Array(12);
+            var profitableProjects = new Array(12);
+            var lossProjects = new Array(12);
+            $.ajax({
+                url: 'SalesGraph',
                 data: 'year=' + yearChosen,
                 type: 'POST',
                 success: function (data) {
-                var jsonData = $.parseJSON(data);
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[0][i];
-                sales[i] = data;
-                }
+                    var jsonData = $.parseJSON(data);
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[0][i];
+                        sales[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[1][i];
-                cost[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[1][i];
+                        cost[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[2][i];
-                profit[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[2][i];
+                        profit[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[3][i];
-                overdue[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[3][i];
+                        overdue[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[4][i];
-                ontime[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[4][i];
+                        ontime[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[5][i];
-                completed[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[5][i];
+                        completed[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[6][i];
-                totalCompletedProjects[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[6][i];
+                        totalCompletedProjects[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[7][i];
-                profitableProjects[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[7][i];
+                        profitableProjects[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[8][i];
-                lossProjects[i] = data;
-                }
-                var lineChartData = {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[8][i];
+                        lossProjects[i] = data;
+                    }
+                    var lineChartData = {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                         datasets: [
-                        {
-                        label: 'Revenue',
+                            {
+                                label: 'Revenue',
                                 fillColor: 'rgba(153, 102, 255, 0.3)',
                                 strokeColor: 'rgba(153, 102, 255, 1)',
                                 pointColor: 'rgba(153, 102, 255, 1)',
                                 data: sales,
                                 backgroundColor: [
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: 'Profit',
+                            },
+                            {
+                                label: 'Profit',
                                 fillColor: 'rgba(255, 99, 132, 0.3)',
                                 strokeColor: 'rgba(220,180,0,1)',
                                 pointColor: 'rgba(220,180,0,1)',
                                 data: profit,
                                 backgroundColor: [
-                                        'rgba(255, 99, 132, 0.3)'
+                                    'rgba(255, 99, 132, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(255,99,132,0.3)'
+                                    'rgba(255,99,132,0.3)'
                                 ],
                                 borderWidth: 1
-                        }, {
-                        label: 'Cost',
+                            }, {
+                                label: 'Cost',
                                 fillColor: 'rgba(54, 162, 235, 0.3)',
                                 strokeColor: 'rgba(54, 162, 235, 1)',
                                 pointColor: 'rgba(54, 162, 235, 1)',
                                 data: cost,
                                 backgroundColor: [
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
-                        }
+                            }
                         ]
-                }
-                var barChartData = {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    }
+                    var barChartData = {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                         datasets: [{
-                        label: '# of Projects',
+                                label: '# of Projects',
                                 data: totalCompletedProjects,
                                 backgroundColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 fillColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: '# of Profits',
+                            },
+                            {
+                                label: '# of Profits',
                                 data: profitableProjects,
                                 backgroundColor: [
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)'
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)'
                                 ], fillColor: [
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)'
-                        ],
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)'
+                                ],
                                 borderColor: [
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)'
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: '# of Losses',
+                            },
+                            {
+                                label: '# of Losses',
                                 data: lossProjects,
                                 backgroundColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 fillColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderWidth: 1
-                        }
+                            }
                         ]
-                }
-                var barChartData1 = {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    }
+                    var barChartData1 = {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                         datasets: [{
-                        label: '# of Projects',
+                                label: '# of Projects',
                                 data: completed, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                 backgroundColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 fillColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: '# of Projects On Time',
+                            },
+                            {
+                                label: '# of Projects On Time',
                                 data: ontime, //[1, 3, 4, 5, 2, 3, 1, 3, 4, 5, 2, 3],
                                 backgroundColor: [
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)'
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)'
                                 ], fillColor: [
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)'
-                        ],
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)'
+                                ],
                                 borderColor: [
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)'
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: '# of Overdue Projects',
+                            },
+                            {
+                                label: '# of Overdue Projects',
                                 data: overdue, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                 backgroundColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 fillColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderWidth: 1
-                        }
+                            }
                         ]
-                }
-                var ctx = document.getElementById("RevenueChart").getContext("2d");
-                var ctx1 = document.getElementById("ProfitAndLossChart").getContext("2d");
-                var ctx2 = document.getElementById("ProjectsOverdueChart").getContext("2d");
-                //ctx.height = 500;
+                    }
+                    var ctx = document.getElementById("RevenueChart").getContext("2d");
+                    var ctx1 = document.getElementById("ProfitAndLossChart").getContext("2d");
+                    var ctx2 = document.getElementById("ProjectsOverdueChart").getContext("2d");
+                    //ctx.height = 500;
 
-                if (RevenueChart) window.myChart.destroy();
-                if (ProfitAndLossChart) window.myChart.destroy();
-                if (ProjectsOverdueChart) window.myChart.destroy();
-                
-                var RevenueChart = new Chart(ctx, {
-                type: 'line',
+                    if (RevenueChart)
+                        window.myChart.destroy();
+                    if (ProfitAndLossChart)
+                        window.myChart.destroy();
+                    if (ProjectsOverdueChart)
+                        window.myChart.destroy();
+
+                    var RevenueChart = new Chart(ctx, {
+                        type: 'line',
                         data: lineChartData,
                         pointDotRadius: 5,
                         bezierCurve: false,
                         scaleShowVerticalLines: false
-                });
-                var ProfitAndLossChart = new Chart(ctx1, {
-                type: 'bar',
+                    });
+                    var ProfitAndLossChart = new Chart(ctx1, {
+                        type: 'bar',
                         data: barChartData,
                         scaleShowVerticalLines: false
-                });
-                var ProjectsOverdueChart = new Chart(ctx2, {
-                type: 'bar',
+                    });
+                    var ProjectsOverdueChart = new Chart(ctx2, {
+                        type: 'bar',
                         data: barChartData1,
                         scaleShowVerticalLines: false
-                });
+                    });
                 },
                 error: function (data) {
-                console.log("Error: " + data);
+                    console.log("Error: " + data);
                 }
-        });
+            });
         }
         $('#btnViewClientPerformance').click(function () {
-        var year = document.getElementById('clientDashboardYear').value;
-        var clientID = $('input[name=client]:checked').val();
-        var clientYearProfit = new Array(12);
-        var clientYearLoss = new Array(12);
-        var clientOverdueProject = new Array(12);
-        var clientOnTimeProject = new Array(12);
-        $.ajax({
-        url: 'ClientDashboard',
+            var year = document.getElementById('clientDashboardYear').value;
+            var clientID = $('input[name=client]:checked').val();
+            var clientYearProfit = new Array(12);
+            var clientYearLoss = new Array(12);
+            var clientOverdueProject = new Array(12);
+            var clientOnTimeProject = new Array(12);
+            $.ajax({
+                url: 'ClientDashboard',
                 data: 'clientID=' + clientID + '&' + 'year=' + year,
                 type: 'POST',
                 success: function (data) {
-                var jsonData = $.parseJSON(data);
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[0][i];
-                clientOverdueProject[i] = data;
-                }
+                    var jsonData = $.parseJSON(data);
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[0][i];
+                        clientOverdueProject[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[1][i];
-                clientOnTimeProject[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[1][i];
+                        clientOnTimeProject[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[2][i];
-                clientYearProfit[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[2][i];
+                        clientYearProfit[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[3][i];
-                clientYearLoss[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[3][i];
+                        clientYearLoss[i] = data;
+                    }
 
-                //this is to tell if we should display the charts!!
-                var displayClientCharts = true;
-                var clientDatatable;
-                clientDatatable = document.getElementsByClassName("clientDatatableDiv");
-                clientDatatable[0].style.display = "none";
-                clientDatatable = document.getElementsByClassName("clientChartsDiv");
-                clientDatatable[0].style.display = "block";
-                var barChartData = {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    //this is to tell if we should display the charts!!
+                    var displayClientCharts = true;
+                    var clientDatatable;
+                    clientDatatable = document.getElementsByClassName("clientDatatableDiv");
+                    clientDatatable[0].style.display = "none";
+                    clientDatatable = document.getElementsByClassName("clientChartsDiv");
+                    clientDatatable[0].style.display = "block";
+                    var barChartData = {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                         datasets: [{
-                        label: '# of Profits',
+                                label: '# of Profits',
                                 data: clientYearProfit, //[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
                                 backgroundColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: '# of Losses',
+                            },
+                            {
+                                label: '# of Losses',
                                 data: clientYearLoss, //[1, 13, 5, 2, 9, 1, 1, 13, 5, 2, 9, 1],
                                 backgroundColor: [
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)'
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)'
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)'
                                 ],
                                 borderWidth: 1
-                        }
+                            }
                         ]
-                }
+                    }
 
-                Chart.defaults.global.tooltipCornerRadius = 0;
-                Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                Chart.defaults.global.animationEasing = "easeInOutElastic";
-                Chart.defaults.global.responsive = false;
-                var ctx = document.getElementById("clientProfitAndLossChart").getContext("2d");
-                var clientProfitAndLossChart = new Chart(ctx, {
-                type: 'bar',
+                    Chart.defaults.global.tooltipCornerRadius = 0;
+                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                    Chart.defaults.global.animationEasing = "easeInOutElastic";
+                    Chart.defaults.global.responsive = false;
+                    var ctx = document.getElementById("clientProfitAndLossChart").getContext("2d");
+                    var clientProfitAndLossChart = new Chart(ctx, {
+                        type: 'bar',
                         data: barChartData,
                         scaleShowVerticalLines: false
-                });
-                var barChartData = {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    });
+                    var barChartData = {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                         datasets: [{
-                        label: '# of Punctual Projects',
+                                label: '# of Punctual Projects',
                                 data: clientOnTimeProject,
                                 backgroundColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: '# of Overdue Projects',
+                            },
+                            {
+                                label: '# of Overdue Projects',
                                 data: clientOverdueProject,
                                 backgroundColor: [
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)'
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)',
-                                        'rgba(255, 206, 86, 0.3)'
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)',
+                                    'rgba(255, 206, 86, 0.3)'
                                 ],
                                 borderWidth: 1
-                        }
+                            }
                         ]
-                }
+                    }
 
-                Chart.defaults.global.tooltipCornerRadius = 0;
-                Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                Chart.defaults.global.animationEasing = "easeInOutElastic";
-                Chart.defaults.global.responsive = false;
-                var ctx = document.getElementById("clientOverdueChart").getContext("2d");
-                var clientProfitAndLossChart = new Chart(ctx, {
-                type: 'bar',
+                    Chart.defaults.global.tooltipCornerRadius = 0;
+                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                    Chart.defaults.global.animationEasing = "easeInOutElastic";
+                    Chart.defaults.global.responsive = false;
+                    var ctx = document.getElementById("clientOverdueChart").getContext("2d");
+                    var clientProfitAndLossChart = new Chart(ctx, {
+                        type: 'bar',
                         data: barChartData,
                         scaleShowVerticalLines: false
-                });
+                    });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.status);
-                alert(thrownError);
+                    alert(xhr.status);
+                    alert(thrownError);
                 }
-        });
+            });
         });
         $('#btnViewEmpPerformance').click(function () {
-        var employeeDashboardYear = document.getElementById('employeeDashboardYear').value;
-        var empName = $('input[name=empName]:checked').val();
-        var employeeOverdue = new Array(12);
-        var employeeTimeExceed = new Array(12);
-        var completedProjects = new Array(12);
-        $.ajax({
-        url: 'StaffMonthlyReport',
+            var employeeDashboardYear = document.getElementById('employeeDashboardYear').value;
+            var empName = $('input[name=empName]:checked').val();
+            var employeeOverdue = new Array(12);
+            var employeeTimeExceed = new Array(12);
+            var completedProjects = new Array(12);
+            $.ajax({
+                url: 'StaffMonthlyReport',
                 data: 'employeeName=' + empName + '&' + 'Year=' + employeeDashboardYear,
                 type: 'POST',
                 success: function (data) {
-                var jsonData = $.parseJSON(data);
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[0][i];
-                employeeOverdue[i] = data;
-                }
+                    var jsonData = $.parseJSON(data);
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[0][i];
+                        employeeOverdue[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[1][i];
-                employeeTimeExceed[i] = data;
-                }
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[1][i];
+                        employeeTimeExceed[i] = data;
+                    }
 
-                for (var i = 0; i < 12; i++) {
-                var data = jsonData[2][i];
-                completedProjects[i] = data;
-                }
-                var displayEmployeeCharts = true;
-                var employeeDatatable;
-                employeeDatatable = document.getElementsByClassName("employeeDatatableDiv");
-                employeeDatatable[0].style.display = "none";
-                employeeDatatable = document.getElementsByClassName("employeeChartsDiv");
-                employeeDatatable[0].style.display = "block";
-                var barChartData = {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    for (var i = 0; i < 12; i++) {
+                        var data = jsonData[2][i];
+                        completedProjects[i] = data;
+                    }
+                    var displayEmployeeCharts = true;
+                    var employeeDatatable;
+                    employeeDatatable = document.getElementsByClassName("employeeDatatableDiv");
+                    employeeDatatable[0].style.display = "none";
+                    employeeDatatable = document.getElementsByClassName("employeeChartsDiv");
+                    employeeDatatable[0].style.display = "block";
+                    var barChartData = {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                         datasets: [{
-                        label: '# of Projects',
+                                label: '# of Projects',
                                 data: completedProjects,
                                 backgroundColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 fillColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: '# of Projects on TIme',
+                            },
+                            {
+                                label: '# of Projects on TIme',
                                 data: employeeTimeExceed,
                                 backgroundColor: [
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)'
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)'
                                 ], fillColor: [
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)'
-                        ],
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)'
+                                ],
                                 borderColor: [
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)'
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: '# of projects Overdue',
+                            },
+                            {
+                                label: '# of projects Overdue',
                                 data: employeeOverdue,
                                 backgroundColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 fillColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderWidth: 1
-                        }
+                            }
                         ]
-                };
-                Chart.defaults.global.tooltipYPadding = 16;
-                Chart.defaults.global.tooltipCornerRadius = 0;
-                Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                Chart.defaults.global.animationEasing = "easeInOutElastic";
-                Chart.defaults.global.responsive = false;
-                var ctx = document.getElementById("employeeRevenueChart").getContext("2d");
-                var RevenueChart = new Chart(ctx, {
-                type: 'bar',
+                    };
+                    Chart.defaults.global.tooltipYPadding = 16;
+                    Chart.defaults.global.tooltipCornerRadius = 0;
+                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                    Chart.defaults.global.animationEasing = "easeInOutElastic";
+                    Chart.defaults.global.responsive = false;
+                    var ctx = document.getElementById("employeeRevenueChart").getContext("2d");
+                    var RevenueChart = new Chart(ctx, {
+                        type: 'bar',
                         data: barChartData,
                         pointDotRadius: 5,
                         bezierCurve: false,
                         scaleShowVerticalLines: false
-                });
-                var barChartData2 = {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    });
+                    var barChartData2 = {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                         datasets: [{
-                        label: '# of Projects',
+                                label: '# of Projects',
                                 data: completedProjects,
                                 backgroundColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 fillColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)',
-                                        'rgba(153, 102, 255, 0.3)'
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)',
+                                    'rgba(153, 102, 255, 0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: '# of Projects on TIme',
+                            },
+                            {
+                                label: '# of Projects on TIme',
                                 data: employeeTimeExceed,
                                 backgroundColor: [
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)',
-                                        'rgba(255, 99, 132, 0.3)'
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)'
                                 ], fillColor: [
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)',
-                                'rgba(255, 99, 132, 0.3)'
-                        ],
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)',
+                                    'rgba(255, 99, 132, 0.3)'
+                                ],
                                 borderColor: [
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)',
-                                        'rgba(255,99,132,0.3)'
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)',
+                                    'rgba(255,99,132,0.3)'
                                 ],
                                 borderWidth: 1
-                        },
-                        {
-                        label: '# of projects Overdue',
+                            },
+                            {
+                                label: '# of projects Overdue',
                                 data: employeeOverdue,
                                 backgroundColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 fillColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderColor: [
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)',
-                                        'rgba(54, 162, 235, 0.3)'
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)',
+                                    'rgba(54, 162, 235, 0.3)'
                                 ],
                                 borderWidth: 1
-                        }
+                            }
                         ]
-                };
-                Chart.defaults.global.tooltipYPadding = 16;
-                Chart.defaults.global.tooltipCornerRadius = 0;
-                Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                Chart.defaults.global.animationEasing = "easeInOutElastic";
-                Chart.defaults.global.responsive = false;
-                var ctx = document.getElementById("employeeProfitAndLossChart").getContext("2d");
-                var employeeProfitAndLossChart = new Chart(ctx, {
-                type: 'line',
+                    };
+                    Chart.defaults.global.tooltipYPadding = 16;
+                    Chart.defaults.global.tooltipCornerRadius = 0;
+                    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                    Chart.defaults.global.animationEasing = "easeInOutElastic";
+                    Chart.defaults.global.responsive = false;
+                    var ctx = document.getElementById("employeeProfitAndLossChart").getContext("2d");
+                    var employeeProfitAndLossChart = new Chart(ctx, {
+                        type: 'line',
                         data: barChartData2,
                         pointDotRadius: 5,
                         bezierCurve: false,
                         scaleShowVerticalLines: false
-                });
+                    });
                 },
                 error: function () {
-                alert("Employee Error");
+                    alert("Employee Error");
                 }
-        });
+            });
         });
         // this area is to remove and add data for each charts
         function removeData(chart) {
-        chart.data.labels.pop();
-        chart.data.datasets.forEach((dataset) = > {
-        dataset.data.pop();
-        });
-        chart.update();
+            chart.data.labels.pop();
+            for (var i = 0; i < chart.data.datasets.length; i++) {
+                dataset.data.pop();
+            }
+                    chart.update();
         }
 
         function addData(chart, label, data) {
-        chart.data.labels.push(label);
-        chart.data.datasets.forEach((dataset) = > {
-        dataset.data.push(data);
-        });
-        chart.update();
+            chart.data.labels.push(label);
+            for (var i = 0; i < chart.data.datasets.length; i++) {
+                dataset.data.push(data);
+            }
+                    chart.update();
         }
         // end of this section
 
 
         // this is for collapsing and hiding the tables
         $(function () {
-        $('.displayChartsTable').on('click', function () {
-        var $this = $(this);
-        var thisDataTarget = $this.attr("data-target");
-        var chartsDiv = document.getElementsByClassName("displayChartsTable");
-        var dataTargetOfAllChart;
-        for (var i = 0; i < chartsDiv.length; i++) {
-        currChart = document.getElementsByClassName("displayChartsTable")[i]
-                currDataTarget = currChart.getAttribute("data-target");
-        console.log(currDataTarget);
-        if (thisDataTarget === currDataTarget) {
-        if ($('.displayChartsTable').hasClass("activePerformanceChartBefore") || !$('.displayChartsTable').hasClass("activePerformanceChartAfter")) {
-        $('.displayChartsTable').removeClass("activePerformanceChartBefore");
-        $this.addClass("activePerformanceChartAfter");
-        // Use the id in the data-target attribute
-        $target = $($this.data('target'));
-        $(".target").not($target).fadeOut();
-        $target.toggle();
-        $('html,body').animate({
-        scrollTop: $target.offset().top},
-                'fast');
-        } else {
-        $this.removeClass("activePerformanceChartAfter");
-        $this.addClass("activePerformanceChartBefore");
-        // Use the id in the data-target attribute
-        $target = $($this.data('target'));
-        $(".target").not($target).fadeOut();
-        $target.toggle();
-        $('html,body').animate({
-        scrollTop: $target.offset().top},
-                'fast');
-        }
-        } else {
-        $currentElement = $(currChart)
-                if ($currentElement.hasClass("activePerformanceChartAfter") || $currentElement.hasClass("activePerformanceChartBefore")) {
-        $currentElement.removeClass("activePerformanceChartAfter");
-        $currentElement.addClass("activePerformanceChartBefore");
-        }
-        }
-        }
-        });
+            $('.displayChartsTable').on('click', function () {
+                var $this = $(this);
+                var thisDataTarget = $this.attr("data-target");
+                var chartsDiv = document.getElementsByClassName("displayChartsTable");
+                var dataTargetOfAllChart;
+                for (var i = 0; i < chartsDiv.length; i++) {
+                    currChart = document.getElementsByClassName("displayChartsTable")[i]
+                    currDataTarget = currChart.getAttribute("data-target");
+                    console.log(currDataTarget);
+                    if (thisDataTarget === currDataTarget) {
+                        if ($('.displayChartsTable').hasClass("activePerformanceChartBefore") || !$('.displayChartsTable').hasClass("activePerformanceChartAfter")) {
+                            $('.displayChartsTable').removeClass("activePerformanceChartBefore");
+                            $this.addClass("activePerformanceChartAfter");
+                            // Use the id in the data-target attribute
+                            $target = $($this.data('target'));
+                            $(".target").not($target).fadeOut();
+                            $target.toggle();
+                            $('html,body').animate({
+                                scrollTop: $target.offset().top},
+                                    'fast');
+                        } else {
+                            $this.removeClass("activePerformanceChartAfter");
+                            $this.addClass("activePerformanceChartBefore");
+                            // Use the id in the data-target attribute
+                            $target = $($this.data('target'));
+                            $(".target").not($target).fadeOut();
+                            $target.toggle();
+                            $('html,body').animate({
+                                scrollTop: $target.offset().top},
+                                    'fast');
+                        }
+                    } else {
+                        $currentElement = $(currChart)
+                        if ($currentElement.hasClass("activePerformanceChartAfter") || $currentElement.hasClass("activePerformanceChartBefore")) {
+                            $currentElement.removeClass("activePerformanceChartAfter");
+                            $currentElement.addClass("activePerformanceChartBefore");
+                        }
+                    }
+                }
+            });
         });
         //this is for when user clicks on the 3 tabs, it'll straight away force the client and employee divs back to display datatable list
         function onclickingheaders() {
-        var clientChartDiv, employeeChartDiv, clientDatatableDiv, employeeDatatableDiv;
-        clientChartDiv = document.getElementsByClassName("clientChartsDiv");
-        employeeChartDiv = document.getElementsByClassName("employeeChartsDiv");
-        clientDatatableDiv = document.getElementsByClassName("clientDatatableDiv");
-        employeeDatatableDiv = document.getElementsByClassName("employeeDatatableDiv");
-        clientChartDiv[0].style.display = "none";
-        employeeChartDiv[0].style.display = "none";
-        clientDatatableDiv[0].style.display = "block";
-        employeeDatatableDiv[0].style.display = "block";
+            var clientChartDiv, employeeChartDiv, clientDatatableDiv, employeeDatatableDiv;
+            clientChartDiv = document.getElementsByClassName("clientChartsDiv");
+            employeeChartDiv = document.getElementsByClassName("employeeChartsDiv");
+            clientDatatableDiv = document.getElementsByClassName("clientDatatableDiv");
+            employeeDatatableDiv = document.getElementsByClassName("employeeDatatableDiv");
+            clientChartDiv[0].style.display = "none";
+            employeeChartDiv[0].style.display = "none";
+            clientDatatableDiv[0].style.display = "block";
+            employeeDatatableDiv[0].style.display = "block";
         }
         //this is for hiding chart table and displaying datatable list when user clicks back button
         function backToClientDatatable() {
-        var clientChartDiv, employeeChartDiv, clientDatatableDiv, employeeDatatableDiv;
-        clientChartDiv = document.getElementsByClassName("clientChartsDiv");
-        employeeChartDiv = document.getElementsByClassName("employeeChartsDiv");
-        clientDatatableDiv = document.getElementsByClassName("clientDatatableDiv");
-        employeeDatatableDiv = document.getElementsByClassName("employeeDatatableDiv");
-        clientChartDiv[0].style.display = "none";
-        employeeChartDiv[0].style.display = "none";
-        clientDatatableDiv[0].style.display = "block";
-        employeeDatatableDiv[0].style.display = "block";
+            var clientChartDiv, employeeChartDiv, clientDatatableDiv, employeeDatatableDiv;
+            clientChartDiv = document.getElementsByClassName("clientChartsDiv");
+            employeeChartDiv = document.getElementsByClassName("employeeChartsDiv");
+            clientDatatableDiv = document.getElementsByClassName("clientDatatableDiv");
+            employeeDatatableDiv = document.getElementsByClassName("employeeDatatableDiv");
+            clientChartDiv[0].style.display = "none";
+            employeeChartDiv[0].style.display = "none";
+            clientDatatableDiv[0].style.display = "block";
+            employeeDatatableDiv[0].style.display = "block";
         }
         //this is for hiding chart table and displaying datatable list when user clicks back button
         function backToEmployeeDatatable() {
-        var clientChartDiv, employeeChartDiv, clientDatatableDiv, employeeDatatableDiv;
-        clientChartDiv = document.getElementsByClassName("clientChartsDiv");
-        employeeChartDiv = document.getElementsByClassName("employeeChartsDiv");
-        clientDatatableDiv = document.getElementsByClassName("clientDatatableDiv");
-        employeeDatatableDiv = document.getElementsByClassName("employeeDatatableDiv");
-        clientChartDiv[0].style.display = "none";
-        employeeChartDiv[0].style.display = "none";
-        clientDatatableDiv[0].style.display = "block";
-        employeeDatatableDiv[0].style.display = "block";
+            var clientChartDiv, employeeChartDiv, clientDatatableDiv, employeeDatatableDiv;
+            clientChartDiv = document.getElementsByClassName("clientChartsDiv");
+            employeeChartDiv = document.getElementsByClassName("employeeChartsDiv");
+            clientDatatableDiv = document.getElementsByClassName("clientDatatableDiv");
+            employeeDatatableDiv = document.getElementsByClassName("employeeDatatableDiv");
+            clientChartDiv[0].style.display = "none";
+            employeeChartDiv[0].style.display = "none";
+            clientDatatableDiv[0].style.display = "block";
+            employeeDatatableDiv[0].style.display = "block";
         }
         //this is for opening the tab that was opened before the page refreshed
         $(function () {
-        $('a[data-toggle="tab"]').on("click", function (e) {
-        window.localStorage.setItem("activeTab", $(e.target).attr("href"));
-        });
-        var activeTab = window.localStorage.getItem("activeTab");
-        if (activeTab) {
-        $('#myTab a[href="' + activeTab + '"]').tab("show");
-        window.localStorage.removeItem("activeTab");
-        }
+            $('a[data-toggle="tab"]').on("click", function (e) {
+                window.localStorage.setItem("activeTab", $(e.target).attr("href"));
+            });
+            var activeTab = window.localStorage.getItem("activeTab");
+            if (activeTab) {
+                $('#myTab a[href="' + activeTab + '"]').tab("show");
+                window.localStorage.removeItem("activeTab");
+            }
         });
     </script>
 </body>

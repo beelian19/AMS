@@ -176,7 +176,7 @@
                                     <option class="clientDashboardOption" value="2015">2015</option>
                                     <option class="clientDashboardOption" value="2016">2016</option>
                                     <option class="clientDashboardOption" value="2017">2017</option>
-                                    <option class="clientDashboardOption" value="2018">2018</option>
+                                    <option class="clientDashboardOption" selected="selected" value="2018">2018</option>
                                 </select>
                             </div>
                         </div>
