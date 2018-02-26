@@ -6,6 +6,7 @@
 package Module.Dashboard;
 
 import DAO.ProjectDAO;
+import Entity.Project;
 import static Utility.JsonFormatter.convertObjectToElement;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -39,11 +40,11 @@ public class SalesGraph extends HttpServlet {
         Double[] salesList = ProjectDAO.getSales(selectedYear);
         Double[] costList = ProjectDAO.getActualCost(selectedYear);
         Double[] profitList = ProjectDAO.getProfit(selectedYear);
-        
+
         int[] overdueList = ProjectDAO.getOverdueProjectPerYear(selectedYear);;
         int[] ontimeList = ProjectDAO.getOnTimeProjectPerYear(selectedYear);
         int[] completedList = ProjectDAO.getTotalCompletedProjectPerYear(selectedYear);
-        
+
         ArrayList<ArrayList<Integer>> profitabilityList = ProjectDAO.getCompletedProjectMonthlyProfitability(selectedYear);
         int[] completedProjectsList = ProjectDAO.getTotalCompletedProjectPerYear(selectedYear);
         ArrayList<Integer> yearProfitList = profitabilityList.get(0);
@@ -52,66 +53,65 @@ public class SalesGraph extends HttpServlet {
         DecimalFormat decimal = new DecimalFormat("#.##");
         JsonArray events = new JsonArray();
         PrintWriter out = response.getWriter();
-        
+
         JsonObject outputRequest = new JsonObject();
         for (int i = 0; i < salesList.length; i++) {
-            outputRequest.add(""+i, convertObjectToElement(decimal.format(salesList[i])));
+            outputRequest.add("" + i, convertObjectToElement(decimal.format(salesList[i])));
         }
         //outputRequest.add("sales", convertObjectToElement(salesMap));
         events.add(outputRequest);
-        
+
         JsonObject outputRequest1 = new JsonObject();
         for (int i = 0; i < costList.length; i++) {
-            outputRequest1.add(""+i, convertObjectToElement(decimal.format(costList[i])));
+            outputRequest1.add("" + i, convertObjectToElement(decimal.format(costList[i])));
         }
         events.add(outputRequest1);
-        
+
         JsonObject outputRequest2 = new JsonObject();
         for (int i = 0; i < profitList.length; i++) {
-            outputRequest2.add(""+i, convertObjectToElement(decimal.format(profitList[i])));
+            outputRequest2.add("" + i, convertObjectToElement(decimal.format(profitList[i])));
         }
         events.add(outputRequest2);
-        
+
         //Overdue,Ontime, Completed Projects
         JsonObject outputRequest3 = new JsonObject();
         for (int i = 0; i < profitList.length; i++) {
-            outputRequest3.add(""+i, convertObjectToElement(overdueList[i]));
+            outputRequest3.add("" + i, convertObjectToElement(overdueList[i]));
         }
         events.add(outputRequest3);
-        
+
         JsonObject outputRequest4 = new JsonObject();
         for (int i = 0; i < profitList.length; i++) {
-            outputRequest4.add(""+i, convertObjectToElement(ontimeList[i]));
+            outputRequest4.add("" + i, convertObjectToElement(ontimeList[i]));
         }
         events.add(outputRequest4);
-        
+
         JsonObject outputRequest5 = new JsonObject();
         for (int i = 0; i < profitList.length; i++) {
-            outputRequest5.add(""+i, convertObjectToElement(completedList[i]));
+            outputRequest5.add("" + i, convertObjectToElement(completedList[i]));
         }
         events.add(outputRequest5);
-        
+
         //CompletedProjectMonthlyProfitability
         JsonObject outputRequest6 = new JsonObject();
         for (int i = 0; i < profitList.length; i++) {
-            outputRequest6.add(""+i, convertObjectToElement(completedProjectsList[i]));
+            outputRequest6.add("" + i, convertObjectToElement(completedProjectsList[i]));
         }
         events.add(outputRequest6);
-        
+
         JsonObject outputRequest7 = new JsonObject();
         for (int i = 0; i < profitList.length; i++) {
-            outputRequest7.add(""+i, convertObjectToElement(yearProfitList.get(i)));
+            outputRequest7.add("" + i, convertObjectToElement(yearProfitList.get(i)));
         }
         events.add(outputRequest7);
-        
+
         JsonObject outputRequest8 = new JsonObject();
         for (int i = 0; i < profitList.length; i++) {
-            outputRequest8.add(""+i, convertObjectToElement(yearLossList.get(i)));
+            outputRequest8.add("" + i, convertObjectToElement(yearLossList.get(i)));
         }
         events.add(outputRequest8);
-        request.getSession().setAttribute("test","FK THIS SHIT");
         out.print(events);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

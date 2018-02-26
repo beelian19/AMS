@@ -179,6 +179,9 @@
                                     <option class="clientDashboardOption" selected="selected" value="2018">2018</option>
                                 </select>
                             </div>
+                            <div>
+                                <button id='btnViewEmpInsights' class="btn btn-lg btn-primary btn-block" type="button">More Insights</button>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-1">&nbsp;</div>
@@ -191,71 +194,6 @@
                                 <canvas id="employeeProjectHoursChart" style="width: 500px; height: 250px; text-align: center;" align="center"></canvas>
                             </div>
                             <div class="col-xs-1">&nbsp;</div>
-                        </div>
-                        <div class="row">
-                            <br/><br/>
-                            <div class="col-xs-12" id="employeeProjectOverdueTable">
-                                <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                    <table id='datatable1' align="center" style="text-align: left;">
-                                        <thead>
-                                            <tr>
-                                                <th width="16.66%">Company Name</th>
-                                                <th width="16.66%">Project Name</th>
-                                                <th width="16.66%">Hours Assigned</th>
-                                                <th width="16.66%">Hours Actual</th>
-                                                <th width="16.66%">Difference</th>
-                                                <th width="16.66%">Cost</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%
-                                                if (request.getSession().getAttribute("staffProjectList") != null) {
-                                                    ArrayList<Project> employeeProjectList = (ArrayList<Project>) request.getSession().getAttribute("staffProjectList");
-                                                    if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
-                                                        for (int i = 0; i < employeeProjectList.size(); i++) {
-                                                            Project p = employeeProjectList.get(i);
-                                            %>
-                                            <tr>
-                                                <td>
-                                                    <%=p.getCompanyName()%>
-                                                </td>
-                                                <td>
-                                                    <% profileUrl2 = profileUrl + p.getProjectID();%>
-                                                    <a href=<%=profileUrl2%>>
-                                                        <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <%=p.getPlannedHours()%>
-                                                </td>
-                                                <td>
-                                                    <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
-                                                </td>
-                                                <td>
-                                                    <% if (p.getPlannedHours() - p.getEmployee1Hours() - p.getEmployee2Hours() < 0) {
-                                                    %>
-                                                    <font color ="red"><%=p.getPlannedHours() - p.getEmployee1Hours() - p.getEmployee2Hours()%></font>
-                                                    <%} else {
-                                                    %>
-                                                    <%=p.getPlannedHours() - p.getEmployee1Hours() - p.getEmployee2Hours()%>
-                                                    <%
-                                                        }
-                                                    %>
-                                                </td>
-                                                <td>
-                                                    <%=ProjectDAO.getTotalActualCost(p)%>
-                                                </td>
-                                            </tr>
-                                            <%
-                                                        }
-                                                    }
-                                                }
-                                            %>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <br/><br/>
                         </div>
                     </div>
                 </div>
@@ -270,6 +208,9 @@
                 var canvas = document.getElementsByTagName('canvas')[1];
                 canvas.width = 500;
                 canvas.height = 250;
+            });
+            $('#btnViewEmpInsights').click(function () {
+                viewEmployeeInsights();
             });
             function employeePerformanceChart() {
 //$("canvas#employeeProjectNumbersChart").remove();
@@ -360,20 +301,20 @@
                                         'rgba(153, 102, 255, 0.3)',
                                         'rgba(153, 102, 255, 0.3)'
                                     ],
-                                            borderColor: [
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)',
-                                                'rgba(153, 102, 255, 0.3)'
-                                            ],
+                                    borderColor: [
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)',
+                                        'rgba(153, 102, 255, 0.3)'
+                                    ],
                                     borderWidth: 1
                                 },
                                 {
@@ -409,20 +350,20 @@
                                         'rgba(255, 99, 132, 0.3)',
                                         'rgba(255, 99, 132, 0.3)'
                                     ],
-                                            borderColor: [
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)',
-                                                'rgba(255,99,132,0.3)'
-                                            ],
+                                    borderColor: [
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)',
+                                        'rgba(255,99,132,0.3)'
+                                    ],
                                     borderWidth: 1
                                 }, {
                                     label: '# of Projects on Time',
@@ -458,20 +399,20 @@
                                         'rgba(54, 162, 235, 0.3)',
                                         'rgba(54, 162, 235, 0.3)'
                                     ],
-                                            borderColor: [
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)',
-                                                'rgba(54, 162, 235, 0.3)'
-                                            ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)',
+                                        'rgba(54, 162, 235, 0.3)'
+                                    ],
                                     borderWidth: 1
                                 }
                             ]
@@ -599,6 +540,23 @@
                     },
                     error: function (data) {
                         console.log("Error: " + data);
+                    }
+                });
+            }
+
+            //go to Insights for Employee page with project data 
+            function viewEmployeeInsights() {
+                var employeeDashboardYear = document.getElementById('employeePerformanceChart').value;
+                var empName = "<%=request.getSession().getAttribute("employeeName")%>";
+                //console.log("This was called and the year is " + yearChosen);
+                console.log(employeeDashboardYear);
+                console.log(empName);
+                $.ajax({
+                    url: 'GetEmployeeDataforTable',
+                    data: 'employeeName=' + empName + '&' + 'year=' + employeeDashboardYear,
+                    type: 'POST',
+                    success: function () {
+                        window.location.assign("EmployeeInsights.jsp");
                     }
                 });
             }

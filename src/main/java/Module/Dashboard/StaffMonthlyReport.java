@@ -296,7 +296,6 @@ public class StaffMonthlyReport extends HttpServlet {
         }
         events.add(outputRequest5);
         out.print(events);
-        request.getSession().setAttribute("staffProjectList", projectList);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

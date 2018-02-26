@@ -7,16 +7,9 @@ package Module.Dashboard;
 
 import DAO.ProjectDAO;
 import Entity.Project;
-import static Utility.JsonFormatter.convertObjectToElement;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author yemin
  */
-public class GetOverAllAbundantProjectsTable extends HttpServlet {
+public class GetEmployeeDataforTable extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,12 +33,15 @@ public class GetOverAllAbundantProjectsTable extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String selectedYear = request.getParameter("year");
-        ArrayList<Project> projectsForTable = ProjectDAO.getProjectsWithinSelectedYear(selectedYear);
-//        System.out.println("Servlet was called");
-//        System.out.println("This is the size of Arraylist of projects: " + projectsForTable.size());
-        request.getSession().setAttribute("projectData", projectsForTable);
-        request.getSession().setAttribute("yearAbundant", selectedYear);
+        String employeeName = (String) request.getParameter("employeeName");
+        String year = (String) request.getParameter("year");
+        System.out.println("GetEmployeeDataforTable: "+employeeName);
+        System.out.println("GetEmployeeDataforTable: "+year);
+        System.out.println("It was here");
+        ArrayList<Project> projectList = ProjectDAO.getStaffMonthlyReport(employeeName, year);
+        request.getSession().setAttribute("staffProjectList", projectList);
+        request.getSession().setAttribute("empNameSelected",employeeName);
+        request.getSession().setAttribute("yearEmployee", year);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

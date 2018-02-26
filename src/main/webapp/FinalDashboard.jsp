@@ -274,286 +274,82 @@
                                 $('#datatable').DataTable();
                                 $('#datatable2').DataTable();
                                 $('#datatable3').DataTable();
-                                $('#datatable4').DataTable();
                                 $('#datatable5').DataTable();
                                 $('#datatable6').DataTable();
                                 $('#datatable7').DataTable();
                                 $('#datatable8').DataTable();
                                 overallAbundantDashboard();
-                                showProjectTable();
                             });
                         </script>
-                        <div class="row">
+                        <!--div class="row">
                             <br/>
-                            <div class="col-xs-12 target" id="revenueTable" style="display:none">
-                                <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                    <h3>Revenue</h3>
-                                    <table id='datatable4' align="center" style="text-align: left;">
-                                        <thead>
-                                            <tr>
-                                                <th width="10.00%">Completion Date</th>
-                                                <th width="10.00%">Company Name</th>
-                                                <th width="10.00%">Project Name</th>
-                                                <th width="10.00%">Hours Assigned</th>
-                                                <th width="10.00%">Hours Actual</th>
-                                                <th width="10.00%">Difference (%)</th>
-                                                <th width="10.00%">Sales</th>
-                                                <th width="10.00%">Total Actual Cost</th>
-                                                <th width="10.00%">Profit/Loss</th>
-                                                <th width="10.00%">Staff</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <script>
-                                            function showProjectTable() {
-                                                var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
-                                                if (yearChosen === null || yearChosen === "") {
-                                                    now = new Date;
-                                                    yearChosen = now.getYear();
-                                                    if (yearChosen < 1900) {
-                                                        yearChosen = yearChosen + 1900;
-                                                    }
-                                                }
-                                                $.ajax({
-                                                    url: 'GetOverAllAbundantProjectsTable',
-                                                    data: 'year=' + yearChosen,
-                                                    type: 'POST',
-                                                    success: function (data) {
-                                                        //console.log(data);
-                                                    },
-                                                    error: function () {
-                                                        //alert('Failed');
-                                                    }
-                                                });
-                                            }
-                                        </script>
-                                        <%
-                                            String test = "";
-                                            if (request.getSession().getAttribute("test") == null) {
-                                                test = "Hello";
-                                            } else {
-                                                test = (String) request.getSession().getAttribute("test");
-                                            }
-
-                                            System.out.println("Final Dashboard.jsp: " + test);
-
-                                            ArrayList<Project> projectList = new ArrayList();
-                                            if (request.getAttribute("projectsForTable") != null) {
-                                                projectList = (ArrayList<Project>) request.getAttribute("projectsForTable");
-                                            }
-                                            if (projectList != null && !projectList.isEmpty()) {
-                                                for (int i = 0; i < projectList.size(); i++) {
-                                                    Project p = projectList.get(i);
-                                                    double sales = ProjectDAO.getSales(p);
-                                                    double totalActualCost = ProjectDAO.getTotalActualCost(p);
-                                                    double profit = ProjectDAO.getProfit(p);
-                                        %>
+                        <!--div class="col-xs-12 target" id="revenueTable" style="display:none">
+                            <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                <h3>Revenue</h3>
+                                <table id='datatable4' align="center" style="text-align: left;">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <%=sdf.format(p.getDateCompleted())%>
-                                            </td>
-                                            <td>
-                                                <%=p.getCompanyName()%>
-                                            </td>
-                                            <td>
-                                                <% profileUrl2 = profileUrl + p.getProjectID();%>
-                                                <a href=<%=profileUrl2%>>
-                                                    <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <%=p.getPlannedHours()%>
-                                            </td>
-                                            <td>
-                                                <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
-                                            </td>
-                                            <td>
-                                                <%
-                                                    out.println(df.format(((p.getEmployee1Hours() + p.getEmployee2Hours() - p.getPlannedHours()) / (p.getEmployee1Hours() + p.getEmployee2Hours())) * 100.00));
-                                                %>  
-                                            </td>
-                                            <td>
-                                                <%=sales%>
-                                            </td>
-                                            <td>
-                                                <%=totalActualCost%>
-                                            </td>
-                                            <td>
-                                                <% if (profit < 0) {
-                                                %>
-                                                <font color ="red"><%=profit%></font>
-                                                <%} else {
-                                                %>
-                                                <%=profit%>
-                                                <%
-                                                    }
-                                                %>
-                                            </td>
-                                            <td>
-                                                <%=p.getEmployee1()%>
-                                                <% if (!p.getEmployee2().toLowerCase().equals("na")) {
-                                                        out.println(" and ");
-                                                %>
-                                                <%=p.getEmployee2()%>
-                                                <%
-                                                    }
-                                                %>
-                                            </td>
+                                            <th width="10.00%">Completion Date</th>
+                                            <th width="10.00%">Company Name</th>
+                                            <th width="10.00%">Project Name</th>
+                                            <th width="10.00%">Hours Assigned</th>
+                                            <th width="10.00%">Hours Actual</th>
+                                            <th width="10.00%">Difference (%)</th>
+                                            <th width="10.00%">Sales</th>
+                                            <th width="10.00%">Total Actual Cost</th>
+                                            <th width="10.00%">Profit/Loss</th>
+                                            <th width="10.00%">Staff</th>
                                         </tr>
-                                        <%
-                                                }
-                                            }
-                                        %>
-                                        </tbody>
-                                    </table>
-                                    <br/>
-                                </div>
+                                    </thead>
+                        <!--tbody>
+                        
+                        </tbody>
+                    </table>
+                    <br/>
+                </div>
+            </div>-->
+                        <!--div class="col-xs-12 target" id="ProfitAndLossTable" style="display:none">
+                            <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                <h3>Profit & Loss</h3>
+                                <table id='datatable5' align="center" style="text-align: left;">
+                                    <thead>
+                                        <tr>
+                                            <th width="10.00%">Completion Date</th>
+                                            <th width="10.00%">Company Name</th>
+                                            <th width="10.00%">Project Name</th>
+                                            <th width="10.00%">Hours Assigned</th>
+                                            <th width="10.00%">Hours Actual</th>
+                                            <th width="10.00%">Difference (%)</th>
+                                            <th width="10.00%">Sales</th>
+                                            <th width="10.00%">Total Actual Cost</th>
+                                            <th width="10.00%">Profit/Loss</th>
+                                            <th width="10.00%">Staff</th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+                                <br/>
                             </div>
-                            <div class="col-xs-12 target" id="ProfitAndLossTable" style="display:none">
-                                <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                    <h3>Profit & Loss</h3>
-                                    <table id='datatable5' align="center" style="text-align: left;">
-                                        <thead>
-                                            <tr>
-                                                <th width="10.00%">Completion Date</th>
-                                                <th width="10.00%">Company Name</th>
-                                                <th width="10.00%">Project Name</th>
-                                                <th width="10.00%">Hours Assigned</th>
-                                                <th width="10.00%">Hours Actual</th>
-                                                <th width="10.00%">Difference (%)</th>
-                                                <th width="10.00%">Sales</th>
-                                                <th width="10.00%">Total Actual Cost</th>
-                                                <th width="10.00%">Profit/Loss</th>
-                                                <th width="10.00%">Staff</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%
-                                                if (projectList != null && !projectList.isEmpty()) {
-                                                    for (int i = 0; i < projectList.size(); i++) {
-                                                        Project p = projectList.get(i);
-                                            %>
-                                            <tr>
-                                                <td>
-                                                    <%=sdf.format(p.getDateCompleted())%>
-                                                </td>
-                                                <td>
-                                                    <%=p.getCompanyName()%>
-                                                </td>
-                                                <td>
-                                                    <% profileUrl2 = profileUrl + p.getProjectID();%>
-                                                    <a href=<%=profileUrl2%>>
-                                                        <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <%=p.getPlannedHours()%>
-                                                </td>
-                                                <td>
-                                                    <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
-                                                </td>
-                                                <td>
-                                                    <%
-                                                        out.println(df.format(((p.getEmployee1Hours() + p.getEmployee2Hours() - p.getPlannedHours()) / (p.getEmployee1Hours() + p.getEmployee2Hours())) * 100.00));
-                                                    %>  
-                                                </td>
-                                                <td>
-                                                    <%=ProjectDAO.getSales(p)%>
-                                                </td>
-                                                <td>
-                                                    <%=ProjectDAO.getTotalActualCost(p)%>
-                                                </td>
-                                                <td>
-                                                    <% if (ProjectDAO.getProfit(p) < 0) {
-                                                    %>
-                                                    <font color ="red"><%=ProjectDAO.getProfit(p)%></font>
-                                                    <%} else {
-                                                    %>
-                                                    <%=ProjectDAO.getProfit(p)%>
-                                                    <%
-                                                        }
-                                                    %>
-                                                </td>
-                                                <td>
-                                                    <%=p.getEmployee1()%>
-                                                    <% if (!p.getEmployee2().toLowerCase().equals("na")) {
-                                                            out.println(" and ");
-                                                    %>
-                                                    <%=p.getEmployee2()%>
-                                                    <%
-                                                        }
-                                                    %>
-                                                </td>
-                                            </tr>
-                                            <%
-                                                    }
-                                                }
-                                            %>
-                                        </tbody>
-                                    </table>
-                                    <br/>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 target" id="ProjectsOverdueChartTable" style="display:none">
-                                <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                    <h3>Projects Undertaken</h3>
-                                    <table id='datatable6' align="center" style="text-align: left;">
-                                        <thead>
-                                            <tr>
-                                                <th width="16.67%">Completion Date</th>
-                                                <th width="16.67%">Company Name</th>
-                                                <th width="16.67%">Project Name</th>
-                                                <th width="16.67%">Hours Assigned</th>
-                                                <th width="16.67%">Hours Actual</th>
-                                                <th width="16.67%">Staff </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%
-                                                if (projectList != null && !projectList.isEmpty()) {
-                                                    for (int i = 0; i < projectList.size(); i++) {
-                                                        Project p = projectList.get(i);
-                                            %>
-                                            <tr>
-                                                <td>
-                                                    <%=sdf.format(p.getDateCompleted())%>
-                                                </td>
-                                                <td>
-                                                    <%=p.getCompanyName()%>
-                                                </td>
-                                                <td>
-                                                    <% profileUrl2 = profileUrl + p.getProjectID();%>
-                                                    <a href=<%=profileUrl2%>>
-                                                        <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <%=p.getPlannedHours()%>
-                                                </td>
-                                                <td>
-                                                    <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
-                                                </td>
-                                                <td>
-                                                    <%=p.getEmployee1()%>
-                                                    <% if (!p.getEmployee2().toLowerCase().equals("na")) {
-                                                            out.println(" and ");
-                                                    %>
-                                                    <%=p.getEmployee2()%>
-                                                    <%
-                                                        }
-                                                    %>
-                                                </td>
-                                            </tr>
-                                            <%
-                                                    }
-                                                }
-                                            %>
-                                        </tbody>
-                                    </table>
-                                    <br/>
-                                </div>
+                        </div-->
+                        <!--div class="col-xs-12 target" id="ProjectsOverdueChartTable" style="display:none">
+                            <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
+                                <h3>Projects Undertaken</h3>
+                                <table id='datatable6' align="center" style="text-align: left;">
+                                    <thead>
+                                        <tr>
+                                            <th width="16.67%">Completion Date</th>
+                                            <th width="16.67%">Company Name</th>
+                                            <th width="16.67%">Project Name</th>
+                                            <th width="16.67%">Hours Assigned</th>
+                                            <th width="16.67%">Hours Actual</th>
+                                            <th width="16.67%">Staff </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <br/>
                             </div>
                         </div>
+                    </div-->
                     </div>
 
                     <!-- ############################################### THIS PORTION IS FOR CLIENT PERFORMANCE ######################################################################-->
@@ -726,6 +522,7 @@
                                                 <option class="employeeDashboardOption" value="2018">2018</option>
                                             </select>
                                         </div>
+
                                     </div>
                                 </div>
                                 <table id='datatable2' align="center">
@@ -815,88 +612,32 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <br/><br/>
-                                <div class="col-xs-12" id="employeeProjectOverdueTable">
-                                    <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
-                                        <table id='datatable8' align="center" style="text-align: left;">
-                                            <thead>
-                                                <tr>
-                                                    <th width="16.66%">Company Name</th>
-                                                    <th width="16.66%">Project Name</th>
-                                                    <th width="16.66%">Hours Assigned</th>
-                                                    <th width="16.66%">Hours Actual</th>
-                                                    <th width="16.66%">Difference</th>
-                                                    <th width="16.66%">Cost</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <%
-                                                    ArrayList<Project> employeeProjectList = (ArrayList<Project>) request.getSession().getAttribute("staffProjectList");
-                                                    //ArrayList<Project> employeeProjectList = new ArrayList();
-                                                    if (employeeProjectList != null && !employeeProjectList.isEmpty()) {
-                                                        for (int i = 0; i < employeeProjectList.size(); i++) {
-                                                            Project p = employeeProjectList.get(i);
-                                                %>
-                                                <tr>
-                                                    <td>
-                                                        <%=p.getCompanyName()%>
-                                                    </td>
-                                                    <td>
-                                                        <% profileUrl2 = profileUrl + p.getProjectID();%>
-                                                        <a href=<%=profileUrl2%>>
-                                                            <%= p.getProjectTitle().trim().equals("") ? "*No Title" : p.getProjectTitle()%>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <%=p.getPlannedHours()%>
-                                                    </td>
-                                                    <td>
-                                                        <%=p.getEmployee1Hours() + p.getEmployee2Hours()%>
-                                                    </td>
-                                                    <td>
-                                                        <%=p.getPlannedHours() - p.getEmployee1Hours() - p.getEmployee2Hours()%>
-                                                    </td>
-                                                    <td>
-                                                        <%=ProjectDAO.getTotalActualCost(p)%>
-                                                    </td>
-                                                </tr>
-                                                <%
-                                                    }
-                                                %>
-                                            </tbody>
-                                        </table>
-                                        <br/>
-                                    </div>
-                                </div>
-                                <br/><br/>
-                            </div>
-                            <div class="row">
                                 <table style="width: 100%; position: relative; bottom: 0px;">
                                     <tr>
                                         <td style="width: 61%">
                                             <br/>
                                         </td>
                                         <td style="width: 16.167%">
-                                            <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="backToEmployeeDatatable()">Back</button>
+                                            <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="backToClientDatatable()">Back</button>
                                         </td>
                                         <td style="width: 1%">
                                             &nbsp;
                                         </td>
                                         <td style="width: 16.167%">
-                                            <%
+                                            <button id='btnViewEmpInsights' class="btn btn-lg btn-primary btn-block" type="button">More Insights</button>
+                                        </td>
+                                        <!--td style="width: 16.167%">
+                                            <
                                                 if (request.getSession().getAttribute("empName") != null) {
                                                     String employeeName = (String) request.getSession().getAttribute("empName");
                                                     String employeeProfileUrl = "EmployeeProfile.jsp?profileName=" + employeeName.toLowerCase();
 
                                             %>
-                                            <button class="btn btn-lg btn-primary btn-block" onclick="window.location = '<%=employeeProfileUrl%>';">Go to Profile</button>
-                                            <%
+                                            <button class="btn btn-lg btn-primary btn-block" onclick="window.location = '<=employeeProfileUrl%>';">Go to Profile</button>
+                                            <
                                                 }
                                             %>
-                                        </td>
-                                        <td style="width: 5.666%">
-                                            &nbsp;
-                                        </td>
+                                        </td-->
                                     </tr>
                                     <tr>
                                         <td colspan="4">
@@ -906,9 +647,6 @@
                                 </table>
                             </div>
                         </div>
-                        <%
-                            }
-                        %>
                     </div>
 
                     <!-- ############################################### END OF EMPLOYEE PERFORMANCE SECTION ###############################################-->
@@ -1591,13 +1329,14 @@
             var empName = $('input[name=empName]:checked').val();
             var employeeOverdue = new Array(12);
             var employeeTimeExceed = new Array(12);
-            var completedProjects = new Array(12);            
+            var completedProjects = new Array(12);
             var canvas = document.getElementsByTagName('canvas')[0];
             canvas.width = 500;
             canvas.height = 250;
             var canvas = document.getElementsByTagName('canvas')[1];
             canvas.width = 500;
             canvas.height = 250;
+            //console.log(employeeDashboardYear);
             $.ajax({
                 url: 'StaffMonthlyReport',
                 data: 'employeeName=' + empName + '&' + 'Year=' + employeeDashboardYear,
@@ -1946,6 +1685,9 @@
                 }
             });
         });
+        $('#btnViewEmpInsights').click(function() {
+           viewEmployeeInsights(); 
+        });
         // this area is to remove and add data for each charts
         function removeData(chart) {
             chart.data.labels.pop();
@@ -1963,8 +1705,7 @@
             chart.update();
         }
         // end of this section
-
-
+        // 
         // this is for collapsing and hiding the tables
         $(function () {
             $('.displayChartsTable').on('click', function () {
@@ -1978,6 +1719,7 @@
                     console.log(currDataTarget);
                     if (thisDataTarget === currDataTarget) {
                         if ($('.displayChartsTable').hasClass("activePerformanceChartBefore") || !$('.displayChartsTable').hasClass("activePerformanceChartAfter")) {
+                            viewInsights();
                             $('.displayChartsTable').removeClass("activePerformanceChartBefore");
                             $this.addClass("activePerformanceChartAfter");
                             // Use the id in the data-target attribute
@@ -2055,6 +1797,42 @@
                 window.localStorage.removeItem("activeTab");
             }
         });
+        //go to Insights page with project data 
+        function viewInsights() {
+            var yearChosen = document.getElementById('overallAbundantDashboardYear').value;
+            if (yearChosen === null || yearChosen === "") {
+                now = new Date;
+                yearChosen = now.getYear();
+                if (yearChosen < 1900) {
+                    yearChosen = yearChosen + 1900;
+                }
+            }
+            //console.log("This was called and the year is " + yearChosen);
+            $.ajax({
+                url: 'GetOverAllAbundantProjectsTable',
+                data: 'year=' + yearChosen,
+                type: 'POST',
+                success: function () {
+                    window.location.assign("AbundantInsights.jsp");
+                }
+            });
+        }
+        //go to Insights for Employee page with project data 
+        function viewEmployeeInsights() {
+            var employeeDashboardYear = document.getElementById('employeeDashboardYear').value;
+            var empName = $('input[name=empName]:checked').val();
+            //console.log("This was called and the year is " + yearChosen);
+            console.log(employeeDashboardYear);
+            
+            $.ajax({
+                url: 'GetEmployeeDataforTable',
+                data: 'employeeName=' + empName + '&' + 'year=' + employeeDashboardYear,
+                type: 'POST',
+                success: function () {
+                    window.location.assign("EmployeeInsights.jsp");
+                }
+            });
+        }
     </script>
 </body>
 <jsp:include page="Footer.html"/>

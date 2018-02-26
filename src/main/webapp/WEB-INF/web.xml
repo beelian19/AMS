@@ -176,6 +176,10 @@
         <servlet-name>GetOverAllAbundantProjectsTable</servlet-name>
         <servlet-class>Module.Dashboard.GetOverAllAbundantProjectsTable</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetEmployeeDataforTable</servlet-name>
+        <servlet-class>Module.Dashboard.GetEmployeeDataforTable</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
@@ -351,6 +355,10 @@
     <servlet-mapping>
         <servlet-name>GetOverAllAbundantProjectsTable</servlet-name>
         <url-pattern>/GetOverAllAbundantProjectsTable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetEmployeeDataforTable</servlet-name>
+        <url-pattern>/GetEmployeeDataforTable</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
