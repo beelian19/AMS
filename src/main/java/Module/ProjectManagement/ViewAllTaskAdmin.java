@@ -46,8 +46,7 @@ public class ViewAllTaskAdmin extends HttpServlet {
             deadline.setTime(t.getEnd());
             if(t.getReviewStatus().equals("complete")){
                 completeTaskList.add(t);
-            }
-            if(Calendar.getInstance().before(deadline)) {
+            } else if(Calendar.getInstance().before(deadline)) {
                 incomTaskList.add(t);
             } else {
                 overdueTaskList.add(t);
