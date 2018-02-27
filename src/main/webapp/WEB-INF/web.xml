@@ -185,7 +185,6 @@
         <servlet-class>Module.Dashboard.GetCompanyProjectDataforTable</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< HEAD
         <servlet-name>AbundantOverallWriteToCSV</servlet-name>
         <servlet-class>Module.Dashboard.AbundantOverallWriteToCSV</servlet-class>
     </servlet>
@@ -196,10 +195,10 @@
     <servlet>
         <servlet-name>ClientWriteToCSV</servlet-name>
         <servlet-class>Module.Dashboard.ClientWriteToCSV</servlet-class>
-=======
+    </servlet>
+    <servlet>
         <servlet-name>ViewAllTaskAdmin</servlet-name>
         <servlet-class>Module.ProjectManagement.ViewAllTaskAdmin</servlet-class>
->>>>>>> 1608dc6848c7198d24a1bfaa1c4ad7c66617ba39
     </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
@@ -386,7 +385,6 @@
         <url-pattern>/GetCompanyProjectDataforTable</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< HEAD
         <servlet-name>AbundantOverallWriteToCSV</servlet-name>
         <url-pattern>/AbundantOverallWriteToCSV</url-pattern>
     </servlet-mapping>
@@ -397,10 +395,10 @@
     <servlet-mapping>
         <servlet-name>ClientWriteToCSV</servlet-name>
         <url-pattern>/ClientWriteToCSV</url-pattern>
-=======
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewAllTaskAdmin</servlet-name>
         <url-pattern>/ViewAllTaskAdmin</url-pattern>
->>>>>>> 1608dc6848c7198d24a1bfaa1c4ad7c66617ba39
     </servlet-mapping>
     <session-config>
         <session-timeout>
