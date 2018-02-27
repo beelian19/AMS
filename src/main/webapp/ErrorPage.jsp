@@ -17,7 +17,7 @@
                 <jsp:include page="Header-Plain.jsp"/>
             </div>
             <div style="padding-top: 2%; text-align: center">
-                <h1><font color="red"> Error 404: Page Not Found </font></h1>
+                <h1><font color="red"> Not Available for Testing Environment as it involves live data to process expenses.</font></h1>
                 <br/>
                 <div align="center" style="width: 30%; display: inline-block">
                     <input action="action" onclick="window.history.go(-1); return false;" type="button" value="Return to profile" class="btn btn-lg btn-primary btn-block"/>
