@@ -184,6 +184,10 @@
         <servlet-name>GetCompanyProjectDataforTable</servlet-name>
         <servlet-class>Module.Dashboard.GetCompanyProjectDataforTable</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewAllTaskAdmin</servlet-name>
+        <servlet-class>Module.ProjectManagement.ViewAllTaskAdmin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
@@ -367,6 +371,10 @@
     <servlet-mapping>
         <servlet-name>GetCompanyProjectDataforTable</servlet-name>
         <url-pattern>/GetCompanyProjectDataforTable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllTaskAdmin</servlet-name>
+        <url-pattern>/ViewAllTaskAdmin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
