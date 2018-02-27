@@ -268,6 +268,22 @@
                                 </div>
                             </div>
                             <div class="col-xs-1">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-xs-9">
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="col-xs-3"></div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <button id='btnViewAbundantInsights' class="btn btn-lg btn-primary btn-block" type="button">More Insights</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <script>
                             $(document).ready(function () {
@@ -627,7 +643,7 @@
                                             &nbsp;
                                         </td>
                                         <td style="width: 16.167%">
-                                            <button id='btnViewEmpInsights' class="btn btn-lg btn-primary btn-block" type="button">More Insights</button>
+                                            <button id='btnViewEmpInsights' class="btn btn-lg btn-primary btn-block btn-success" type="button">More Insights</button>
                                         </td>
                                         <!--td style="width: 16.167%">
                                             <
@@ -1688,6 +1704,9 @@
                 }
             });
         });
+        $('#btnViewAbundantInsights').click(function () {
+            viewInsights();
+        });
         $('#btnViewEmpInsights').click(function () {
             viewEmployeeInsights();
         });
@@ -1725,7 +1744,7 @@
                     console.log(currDataTarget);
                     if (thisDataTarget === currDataTarget) {
                         if ($('.displayChartsTable').hasClass("activePerformanceChartBefore") || !$('.displayChartsTable').hasClass("activePerformanceChartAfter")) {
-                            viewInsights();
+
                             $('.displayChartsTable').removeClass("activePerformanceChartBefore");
                             $this.addClass("activePerformanceChartAfter");
                             // Use the id in the data-target attribute
@@ -1839,7 +1858,7 @@
                 }
             });
         }
-        
+
         //go to Insights for Client page with project data 
         function viewClientInsights() {
             var year = document.getElementById('clientDashboardYear').value;

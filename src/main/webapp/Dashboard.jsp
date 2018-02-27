@@ -179,9 +179,6 @@
                                     <option class="clientDashboardOption" selected="selected" value="2018">2018</option>
                                 </select>
                             </div>
-                            <div>
-                                <button id='btnViewEmpInsights' class="btn btn-lg btn-primary btn-block" type="button">More Insights</button>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-1">&nbsp;</div>
@@ -195,6 +192,22 @@
                             </div>
                             <div class="col-xs-1">&nbsp;</div>
                         </div>
+                        <div class="row">
+                                <div class="col-xs-9">
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="col-xs-3"></div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <button id='btnViewEmpInsights' class="btn btn-lg btn-primary btn-block" type="button">More Insights</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
                 <br/><br/>
