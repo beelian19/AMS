@@ -1237,7 +1237,7 @@ public class ProjectDAO {
             stmt.setString(1, year);
             stmt.setString(2, employeeName);
             stmt.setString(3, employeeName);
-           
+
             //date for start
             //date for end 
             ResultSet rs = stmt.executeQuery();
@@ -1918,7 +1918,7 @@ public class ProjectDAO {
         double sales = 0.0;
 
         HashMap<String, Double> costPerHourPerStaffList = EmployeeDAO.getCostPerHourPerStaff();
-        
+
         String emp1 = project.getEmployee1();
         String emp2 = project.getEmployee2();
 //        System.out.println("Employee 1 : " + emp1);
@@ -2178,6 +2178,49 @@ public class ProjectDAO {
         return complete;
     }
 
+    public static ArrayList<Project> getCompanyProjects(String clientId, String year) {
+        ArrayList<Project> companyProjects = new ArrayList();
+        Client client = ClientDAO.getClientById(clientId);
+        String companyName = client.getCompanyName();
+
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project WHERE projectReviewStatus = ? and companyName=? and year(end)=?");
+            stmt.setString(1, "complete");
+            stmt.setString(2, companyName);
+            stmt.setString(3, year);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                //create the project object
+                Project project = new Project();
+                project.setProjectID(rs.getInt("projectID"));
+                project.setProjectTitle(rs.getString("title"));
+                project.setCompanyName(rs.getString("companyName"));
+                project.setBusinessType(rs.getString("businessType"));
+                project.setStart(rs.getDate("start"));
+                project.setEnd(rs.getDate("end"));
+                project.setProjectRemarks(rs.getString("projectRemarks"));
+                project.setProjectStatus(rs.getString("projectStatus"));
+                project.setActualDeadline(rs.getDate("actualDeadline"));
+                project.setFrequency(rs.getString("frequency"));
+                project.setProjectType(rs.getString("projectType"));
+                project.setEmployee1(rs.getString("employee1"));
+                project.setEmployee2(rs.getString("employee2"));
+                project.setEmployee1Hours(rs.getDouble("employee1Hours"));
+                project.setEmployee2Hours(rs.getDouble("employee2Hours"));
+                project.setProjectReviewer(rs.getString("projectReviewer"));
+                project.setProjectReviewStatus(rs.getString("projectReviewStatus"));
+                project.setDateCompleted(rs.getDate("dateCompleted"));
+                project.setMonthlyHours(rs.getString("monthlyHours"));
+                project.setPlannedHours(rs.getDouble("plannedHours"));
+                companyProjects.add(project);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQLException at ProjectDAO getCompanyProjects method: " + e.getMessage());
+        }
+        return companyProjects;
+    }
+
     public static int[] getClientOverdueProjectPerYear(String clientid, String year) {
 
         Client client = ClientDAO.getClientById(clientid);
@@ -2188,7 +2231,7 @@ public class ProjectDAO {
             PreparedStatement stmt = conn.prepareStatement("SELECT MONTH(end) MONTH, COUNT(*) COUNT FROM project WHERE YEAR(end)=? and (dateCompleted > end) and companyName = ? GROUP BY MONTH(end)");
             stmt.setString(1, year);
             stmt.setString(2, companyName);
-
+            
             //date for start
             //date for end 
             ResultSet rs = stmt.executeQuery();

@@ -472,16 +472,19 @@
                                             &nbsp;
                                         </td>
                                         <td style="width: 16.167%">
-                                            <%
+                                            <button id='btnViewClientInsights' class="btn btn-lg btn-primary btn-block" type="button">More Insights</button>
+                                        </td>
+                                        <!--td style="width: 16.167%">
+                                            <
                                                 if (request.getSession().getAttribute("clientID") != null) {
 
                                                     String clientProfileUrl = "ClientProfile.jsp?profileId=" + (String) request.getSession().getAttribute("clientID");
                                             %>
-                                            <button class="btn btn-lg btn-primary btn-block" onclick="window.location = '<%=clientProfileUrl%>';">Go to Profile</button>
-                                            <%
+                                            <button class="btn btn-lg btn-primary btn-block" onclick="window.location = '<=clientProfileUrl%>';">Go to Profile</button>
+                                            <
                                                 }
                                             %>
-                                        </td>
+                                        </td-->
                                         <td style="width: 5.666%">
                                             &nbsp;
                                         </td>
@@ -1685,8 +1688,11 @@
                 }
             });
         });
-        $('#btnViewEmpInsights').click(function() {
-           viewEmployeeInsights(); 
+        $('#btnViewEmpInsights').click(function () {
+            viewEmployeeInsights();
+        });
+        $('#btnViewClientInsights').click(function () {
+            viewClientInsights();
         });
         // this area is to remove and add data for each charts
         function removeData(chart) {
@@ -1822,14 +1828,29 @@
             var employeeDashboardYear = document.getElementById('employeeDashboardYear').value;
             var empName = $('input[name=empName]:checked').val();
             //console.log("This was called and the year is " + yearChosen);
-            console.log(employeeDashboardYear);
-            
+            //console.log(employeeDashboardYear);
+
             $.ajax({
                 url: 'GetEmployeeDataforTable',
                 data: 'employeeName=' + empName + '&' + 'year=' + employeeDashboardYear,
                 type: 'POST',
                 success: function () {
                     window.location.assign("EmployeeInsights.jsp");
+                }
+            });
+        }
+        
+        //go to Insights for Client page with project data 
+        function viewClientInsights() {
+            var year = document.getElementById('clientDashboardYear').value;
+            var clientID = $('input[name=client]:checked').val();
+
+            $.ajax({
+                url: 'GetCompanyProjectDataforTable',
+                data: 'clientID=' + clientID + '&' + 'year=' + year,
+                type: 'POST',
+                success: function () {
+                    window.location.assign("ClientInsights.jsp");
                 }
             });
         }

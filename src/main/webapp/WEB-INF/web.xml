@@ -180,6 +180,10 @@
         <servlet-name>GetEmployeeDataforTable</servlet-name>
         <servlet-class>Module.Dashboard.GetEmployeeDataforTable</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetCompanyProjectDataforTable</servlet-name>
+        <servlet-class>Module.Dashboard.GetCompanyProjectDataforTable</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessExcelFile</servlet-name>
         <url-pattern>/ProcessExcelFile</url-pattern>
@@ -359,6 +363,10 @@
     <servlet-mapping>
         <servlet-name>GetEmployeeDataforTable</servlet-name>
         <url-pattern>/GetEmployeeDataforTable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetCompanyProjectDataforTable</servlet-name>
+        <url-pattern>/GetCompanyProjectDataforTable</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
