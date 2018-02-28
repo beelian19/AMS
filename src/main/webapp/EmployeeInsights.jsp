@@ -146,8 +146,7 @@
                             </h4>
                         </div>
                         <div class="modal-body" align='left'>
-                            CSV file is downloaded and ready for viewing.
-                            <br>Location - <b>Desktop</b>
+                            xls file is sent to abundantms2017@gmail.com
                         </div>
                     </div>
                 </div>
