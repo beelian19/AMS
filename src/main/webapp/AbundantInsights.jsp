@@ -155,78 +155,95 @@
                         <br/>
                     </div>
                     <div class="row">
-                        <div class="col-xs-9">
-                        </div>
-                        <div class="col-xs-3">
-                            <div class="col-xs-3"></div>
-                            <div>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <button id='btnAbundantCSV' class="btn btn-lg btn-primary btn-block" type="button">Download as CSV</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+                        <table style="width: 100%; position: relative; bottom: 0px;">
+                            <tr>
+                                <td colspan="4">
+                                    <br/><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 61%">
+                                    &nbsp;
+                                </td>
+                                <td style="width: 16.167%">
+                                    &nbsp;
+                                </td>
+                                <td style="width: 1%">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <button id='btnAbundantCSV' class="btn btn-lg btn-primary btn-block" type="button">Download as CSV</button>
+                                </td>
+                                <td style="width: 11.167%">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <br/><br/>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-                <!-- The Modal -->
-                <div id="myModal" class="modal">
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <span class="close">&times;</span>
-                            <h4 class="modal-title">
-                                Message from AMS
-                            </h4>
-                        </div>
-                        <div class="modal-body" align='left'>
-                            xls file is sent to abundantms2017@gmail.com
-                        </div>
-                    </div>
+            </div>
+        </div>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h4 class="modal-title">
+                        Message from AMS
+                    </h4>
                 </div>
-        </nav>         
-        <script>
-            $('#btnAbundantCSV').click(function () {
-                downloadAbundantCSV();
-            });
-            // Get the modal
-            var modal = document.getElementById('myModal');
+                <div class="modal-body" align='left'>
+                    xls file is sent to abundantms2017@gmail.com
+                </div>
+            </div>
+        </div>
+    </nav>         
+    <script>
+        $('#btnAbundantCSV').click(function () {
+            downloadAbundantCSV();
+        });
+        // Get the modal
+        var modal = document.getElementById('myModal');
 
-            // Get the button that opens the modal
-            var btn = document.getElementById("myBtn");
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
 
-            // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
 
-            // When the user clicks on the button, open the modal 
-            function openModal() {
-                modal.style.display = "block";
-            }
-            ;
+        // When the user clicks on the button, open the modal 
+        function openModal() {
+            modal.style.display = "block";
+        }
+        ;
 
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function () {
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
                 modal.style.display = "none";
-            };
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            };
-            function downloadAbundantCSV() {
-                $.ajax({
-                    url: 'AbundantOverallWriteToCSV',
-                    type: 'GET',
-                    success: function () {
-                        openModal();
-                    }
-                });
             }
-        </script>
-    </body>
-    <jsp:include page="Footer.html"/>
+        };
+        function downloadAbundantCSV() {
+            $.ajax({
+                url: 'AbundantOverallWriteToCSV',
+                type: 'GET',
+                success: function () {
+                    openModal();
+                }
+            });
+        }
+    </script>
+</body>
+<jsp:include page="Footer.html"/>
 </html>

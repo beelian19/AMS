@@ -65,7 +65,7 @@
                         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                         DecimalFormat df = new DecimalFormat("#.00");
                         //System.out.println("Insights: " + projectList.size());
-%>
+                    %>
                     <div class="container-fluid" style="text-align: center; width:80%; height:80%;">
                         <h3><b><%=request.getSession().getAttribute("clientIDSelected")%> Projects for the year <%=request.getSession().getAttribute("yearClient")%></b></h3>
                         <table id='datatable4' align="center" style="text-align: left;">
@@ -157,8 +157,30 @@
                             <div>
                                 <table>
                                     <tr>
+                                        <td colspan="4">
+                                            <br/><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 61%">
+                                            &nbsp;
+                                        </td>
+                                        <td style="width: 16.167%">
+                                            &nbsp;
+                                        </td>
+                                        <td style="width: 1%">
+                                            &nbsp;
+                                        </td>
                                         <td>
                                             <button id='btnClientCSV' class="btn btn-lg btn-primary btn-block" type="button">Download as CSV</button>
+                                        </td>
+                                        <td style="width: 11.167%">
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <br/><br/>
                                         </td>
                                     </tr>
                                 </table>
