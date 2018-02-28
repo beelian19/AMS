@@ -1,7 +1,7 @@
 <%-- 
-    Document   : FinalDashboard
-    Created on : Jan 3, 2018, 3:02:57 PM
-    Author     : Bernitatowyg
+Document   : FinalDashboard
+Created on : Jan 3, 2018, 3:02:57 PM
+Author     : Bernitatowyg
 --%>
 
 <%@page import="java.text.SimpleDateFormat"%>
@@ -274,10 +274,20 @@
                                 <div class="col-xs-3">
                                     <div class="col-xs-3"></div>
                                     <div>
-                                        <table>
+                                        <table
                                             <tr>
                                                 <td>
-                                                    <button id='btnViewAbundantInsights' class="btn btn-lg btn-primary btn-block" type="button">More Insights</button>
+                                                    <br/><br/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <button id='btnViewAbundantInsights' class="btn btn-lg btn-primary btn-block btn-success" type="button">More Insights</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <br/><br/>
                                                 </td>
                                             </tr>
                                         </table>
@@ -478,6 +488,11 @@
                                 <br/><br/>
                                 <table style="width: 100%; position: relative; bottom: 0px;">
                                     <tr>
+                                        <td colspan="4">
+                                            <br/><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td style="width: 61%">
                                             <br/>
                                         </td>
@@ -488,7 +503,7 @@
                                             &nbsp;
                                         </td>
                                         <td style="width: 16.167%">
-                                            <button id='btnViewClientInsights' class="btn btn-lg btn-primary btn-block" type="button">More Insights</button>
+                                            <button id='btnViewClientInsights' class="btn btn-lg btn-primary btn-block btn-success" type="button">More Insights</button>
                                         </td>
                                         <!--td style="width: 16.167%">
                                             <
@@ -633,6 +648,11 @@
                             <div class="row">
                                 <table style="width: 100%; position: relative; bottom: 0px;">
                                     <tr>
+                                        <td colspan="4">
+                                            <br/><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td style="width: 61%">
                                             <br/>
                                         </td>
@@ -657,10 +677,13 @@
                                                 }
                                             %>
                                         </td-->
+                                        <td style="width: 5.666%">
+                                            &nbsp;
+                                        </td>
                                     </tr>
-                                    <tr>
+                                   <tr>
                                         <td colspan="4">
-                                            <br/>
+                                            <br/><br/>
                                         </td>
                                     </tr>
                                 </table>

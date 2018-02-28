@@ -378,13 +378,8 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="ProjectAdminOverview.jsp">View All Projects</a></li>
-                                    <%
-                                        if (sessionUserIsAdmin.equals("yes")) {
-                                    %> 
                                 <li><a href="CreateAdHocProject.jsp">Create Ad Hoc Project</a></li>
-                                    <%
-                                        }
-                                    %>
+                                <li><a href="TaskAdminOverview.jsp">View All Tasks</a></li>
                             </ul>
                         </div>
                     </td>
