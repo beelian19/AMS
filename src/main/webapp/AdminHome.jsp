@@ -230,6 +230,7 @@
                                 $description.append($('<p/>').html('<b>Title: </b><a href=ProjectProfile.jsp?projectID=' + calEvent.projectID + '>' + calEvent.title + '</a>'));
                                 $description.append($('<p/>').html('<b>Company Name: </b>' + calEvent.companyName));
                                 $description.append($('<p/>').html('<b>Assigned Employees: </b>' + calEvent.employee1 + ' & ' + calEvent.employee2));
+                                console.log(calEvent.employee1);
                                 if (projectType === 'tax') {
                                     $description.append($('<p/>').html('<b>Project Type: </b>Tax'));
                                 } else if (projectType === 'eci') {

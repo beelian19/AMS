@@ -219,7 +219,7 @@
                                 var $description = $('<div/>');
                                 $description.append($('<p/>').html('<b>Title: </b><a href=ProjectProfile.jsp?projectID=' + calEvent.projectID + '>' + calEvent.title + '</a>'));
                                 $description.append($('<p/>').html('<b>Company Name: </b>' + calEvent.companyName));
-                                $description.append($('<p/>').html('<b>Assigned Employees: </b>' + calEvent.assignedEmployee1 + ' & ' + calEvent.assignedEmployee2));
+                                $description.append($('<p/>').html('<b>Assigned Employees: </b>' + calEvent.employee1 + ' & ' + calEvent.employee2));
 
                                 $description.append($('<p/>').html('<b>Project Reviewer: </b>' + calEvent.projectReviewer));
                                 $description.append($('<p/>').html('<b>Task Reviewer: </b>' + calEvent.reviewer));
@@ -233,7 +233,7 @@
                                 var $description = $('<div/>');
                                 $description.append($('<p/>').html('<b>Title: </b><a href=ProjectProfile.jsp?projectID=' + calEvent.projectID + '>' + calEvent.title + '</a>'));
                                 $description.append($('<p/>').html('<b>Company Name: </b>' + calEvent.companyName));
-                                $description.append($('<p/>').html('<b>Assigned Employees: </b>' + calEvent.assignedEmployee1 + ' & ' + calEvent.assignedEmployee2));
+                                $description.append($('<p/>').html('<b>Assigned Employees: </b>' + calEvent.employee1 + ' & ' + calEvent.employee2));
                                 if (projectType === 'tax') {
                                     $description.append($('<p/>').html('<b>Project Type: </b>Tax'));
                                 } else if (projectType === 'eci') {
@@ -260,55 +260,12 @@
                             var projectType = calEvent.projectType;
                             var taskStatus = calEvent.taskStatus;
                             if (taskStatus === 'NA') {
-                                if (projectType === 'tax') {
-                                    tooltip = '<div class="tooltipevent" style="width:400px;height:200px;background:#FFEFD5;position:absolute;z-index:10001;">' +
-                                            "<b>Project Title: </b> " + calEvent.title + "<br>" + "<b>Company Name: </b> " + calEvent.companyName + "<br>" +
-                                            "<b>Project Type: </b> Tax<br>" + "<b>Employees Assigned: </b>" + calEvent.assignedEmployee1 + " & " + calEvent.assignedEmployee2 +
-                                            "<br>" + "<b>Project Reviewer: </b>" + calEvent.projectReviewer + "<br>" + "<b>External Deadline: </b>" + calEvent.actualDeadline + "<br>" +
-                                            "<b>Project Remarks: </b> " + calEvent.projectRemarks + "<br>" +
-                                            '</div>';
-                                } else if (projectType === 'eci') {
-                                    tooltip = '<div class="tooltipevent" style="width:400px;height:200px;background:#FFEFD5;position:absolute;z-index:10001;">' +
-                                            "<b>Project Title: </b> " + calEvent.title + "<br>" + "<b>Company Name: </b> " + calEvent.companyName + "<br>" +
-                                            "<b>Project Type: </b> ECI<br>" + "<b>Employees Assigned: </b>" + calEvent.assignedEmployee1 + " & " + calEvent.assignedEmployee2 +
-                                            "<br>" + "<b>Project Reviewer: </b>" + calEvent.projectReviewer + "<br>" + "<b>External Deadline: </b>" + calEvent.actualDeadline + "<br>" +
-                                            "<b>Project Remarks: </b> " + calEvent.projectRemarks + "<br>" +
-                                            '</div>';
-                                } else if (projectType === 'gst') {
-                                    tooltip = '<div class="tooltipevent" style="width:400px;height:200px;background:#FFEFD5;position:absolute;z-index:10001;">' +
-                                            "<b>Project Title: </b> " + calEvent.title + "<br>" + "<b>Company Name: </b> " + calEvent.companyName + "<br>" +
-                                            "<b>Project Type: </b> GST<br>" + "<b>Employees Assigned: </b>" + calEvent.assignedEmployee1 + " & " + calEvent.assignedEmployee2 +
-                                            "<br>" + "<b>Project Reviewer: </b>" + calEvent.projectReviewer + "<br>" + "<b>External Deadline: </b>" + calEvent.actualDeadline + "<br>" +
-                                            "<b>Project Remarks: </b> " + calEvent.projectRemarks + "<br>" +
-                                            '</div>';
-                                } else if (projectType === 'management') {
-                                    tooltip = '<div class="tooltipevent" style="width:400px;height:200px;background:#FFEFD5;position:absolute;z-index:10001;">' +
-                                            "<b>Project Title: </b> " + calEvent.title + "<br>" + "<b>Company Name: </b> " + calEvent.companyName + "<br>" +
-                                            "<b>Project Type: </b> Management<br>" + "<b>Employees Assigned: </b>" + calEvent.assignedEmployee1 + " & " + calEvent.assignedEmployee2 +
-                                            "<br>" + "<b>Project Reviewer: </b>" + calEvent.projectReviewer + "<br>" + "<b>External Deadline: </b>" + calEvent.actualDeadline + "<br>" +
-                                            "<b>Project Remarks: </b> " + calEvent.projectRemarks + "<br>" +
-                                            '</div>';
-                                } else if (projectType === 'final') {
-                                    tooltip = '<div class="tooltipevent" style="width:400px;height:200px;background:#FFEFD5;position:absolute;z-index:10001;">' +
-                                            "<b>Project Title: </b> " + calEvent.title + "<br>" + "<b>Company Name: </b> " + calEvent.companyName + "<br>" +
-                                            "<b>Project Type: </b> Final Accounting<br>" + "<b>Employees Assigned: </b>" + calEvent.assignedEmployee1 + " & " + calEvent.assignedEmployee2 +
-                                            "<br>" + "<b>Project Reviewer: </b>" + calEvent.projectReviewer + "<br>" + "<b>External Deadline: </b>" + calEvent.actualDeadline + "<br>" +
-                                            "<b>Project Remarks: </b> " + calEvent.projectRemarks + "<br>" +
-                                            '</div>';
-                                } else if (projectType === 'secretarial') {
-                                    tooltip = '<div class="tooltipevent" style="width:400px;height:200px;background:#FFEFD5;position:absolute;z-index:10001;">' +
-                                            "<b>Project Title: </b> " + calEvent.title + "<br>" + "<b>Company Name: </b> " + calEvent.companyName + "<br>" +
-                                            "<b>Project Type: </b> Secretarial<br>" + "<b>Employees Assigned: </b>" + calEvent.assignedEmployee1 + " & " + calEvent.assignedEmployee2 +
-                                            "<br>" + "<b>Project Reviewer: </b>" + calEvent.projectReviewer + "<br>" + "<b>External Deadline: </b>" + calEvent.actualDeadline + "<br>" +
-                                            "<b>Project Remarks: </b> " + calEvent.projectRemarks + "<br>" +
-                                            '</div>';
-                                }
+                                tooltip = '<div class="tooltipevent" style="width:400px;height:50px;background:#FFEFD5;position:absolute;z-index:10001;">' +
+                                        "The external deadline for this project is <b>" + calEvent.actualDeadline + "</b>." + "</br><b>Click</b> on it for more information." +
+                                        '</div>';
                             } else {
-                                tooltip = '<div class="tooltipevent" style="width:400px;height:180px;background:#FFEFD5;position:absolute;z-index:10001;">' +
-                                        "<b>Task Title: </b> " + calEvent.title + "<br>" + "<b>Company Name: </b> " + calEvent.companyName + "<br>" +
-                                        "<b>Project Type: </b> Ad Hoc<br>" + "<b>Project Reviewer: </b>" + calEvent.projectReviewer + "<br>" +
-                                        "<b>Employees Assigned: </b>" + calEvent.assignedEmployee1 + " & " + calEvent.assignedEmployee2 + "<br>" +
-                                        "<b>Task Reviewer: </b> " + calEvent.reviewer + "<br>" + "<b>Task Remarks: </b> " + calEvent.taskRemarks + "<br>" +
+                                tooltip = '<div class="tooltipevent" style="width:400px;height:50px;background:#FFEFD5;position:absolute;z-index:10001;">' +
+                                        "There are <b>no</b> external deadline for this." + "</br><b>Click</b> on it for more information." +
                                         '</div>';
                             }
 
