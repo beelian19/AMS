@@ -98,7 +98,6 @@ public class QBODAO {
     // Queries
     private final String ACCOUNT_TYPE_QUERY = "select * from account where accounttype = '%s'";
     private final String ACCOUNT_ALL = "SELECT * FROM account MAXRESULTS 1000";
-    
 
     /**
      * Type-generic query method which returns the whole list from a query and
@@ -167,8 +166,8 @@ public class QBODAO {
         return (List<Account>) executeQueryList(dataService,
                 query, com.intuit.ipp.data.Account.class);
     }
-    
-    private List<Account> findAllAccounts2(){
+
+    private List<Account> findAllAccounts2() {
         try {
             List<Account> accounts = (List<Account>) dataService.findAll(new Account());
             return accounts;
@@ -865,12 +864,16 @@ public class QBODAO {
         initError = "";
 
         // Initialize all vendors
-        allAccounts = findAllAccounts();
-        vendors = findAllVendors();
-        paymentMethods = findAllPaymentMethods();
-        departments = findAllDepartments();
-        classes = findAllClasses();
-        customers = findAllCustomers();
+        try {
+            allAccounts = findAllAccounts();
+            vendors = findAllVendors();
+            paymentMethods = findAllPaymentMethods();
+            departments = findAllDepartments();
+            classes = findAllClasses();
+            customers = findAllCustomers();
+        } catch (Exception e) {
+            initError = e.getMessage();
+        }
 
         if (taxEnabled) {
             taxCodes = findAllTaxCodes();
@@ -882,8 +885,7 @@ public class QBODAO {
             taxCodes = null;
         }
 
-        
-        for (Account a: allAccounts) {
+        for (Account a : allAccounts) {
             System.out.println("Name" + a.getName());
             System.out.println("fullyqualifiedname" + a.getFullyQualifiedName());
             System.out.println("finame" + a.getFIName());
