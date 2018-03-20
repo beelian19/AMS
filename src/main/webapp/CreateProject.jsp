@@ -40,13 +40,12 @@
 
                     %>
                     <strong> Ongoing Project Types:&nbsp; </strong>
-                    <%
-                    for (String s : clientOGMap.keySet()) {
-                    String url = clientOGMap.get(s);
-                    String projType = s;
+                    <%                        for (String s : clientOGMap.keySet()) {
+                            String url = clientOGMap.get(s);
+                            String projType = s;
                     %>
                     <a href="<%=url%>"><%=projType%></a> &nbsp;
-                <%
+                    <%
                             }
                         }
                     %>
@@ -145,9 +144,7 @@
 
                                             <%
                                                 for (String key
-
-                                                : alltimeLines.keySet () 
-                                                    ) {
+                                                        : alltimeLines.keySet()) {
                                                     if (key.equals("eciTimeline")) {
                                                         String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='ECI'>" + str + "</option>");
@@ -203,9 +200,7 @@
                                         <select name='recommendedExternalDeadline' id="recommendedExternalDeadline" class="form-control" autofocus style='display: block; width:100%' required>
 
                                             <%                                                for (String key
-
-                                                : alltimeLines.keySet () 
-                                                    ) {
+                                                        : alltimeLines.keySet()) {
                                                     if (key.equals("actualEciTimeline")) {
                                                         String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='ECI'>" + str + "</option>");
@@ -223,7 +218,7 @@
                                                         out.print("<option value='Management'>" + str + "</option>");
                                                     }
                                                     if (key.equals("actualFinTimeline")) {
-                                                       String str = alltimeLines.get(key).toUpperCase();
+                                                        String str = alltimeLines.get(key).toUpperCase();
                                                         out.print("<option value='Final Accounting'>" + str + "</option>");
                                                     }
                                                     if (key.equals("actualSecTimeline")) {
@@ -283,13 +278,8 @@
                                     <td>
                                         <select name='assignedEmployee1' id="assignedEmployee1" class="form-control" autofocus style='display: block; width:100%' required>
                                             <option disabled selected value> — select an option — </option>
-                                            <%                                                for (int i = 0;
-
-                                                i< empList.size ();
-                                                i
-
-                                                
-                                                    ++) {
+                                            <%                                                
+                                                for (int i = 0; i < empList.size();i++) {
                                                     out.println("<option value='" + empList.get(i).getName() + "'>" + empList.get(i).getName() + "</option>");
                                                 }
                                             %>
@@ -305,12 +295,8 @@
                                             <option disabled selected value> — select an option — </option>
                                             <%
                                                 for (int i = 0;
-
-                                                i< empList.size ();
-                                                i
-
-                                                
-                                                    ++) {
+                                                        i < empList.size();
+                                                        i++) {
                                                     out.println("<option value='" + empList.get(i).getName() + "'>" + empList.get(i).getName() + "</option>");
                                                 }
                                             %>
@@ -336,12 +322,8 @@
                                             <option disabled selected value> — select an option — </option>
                                             <%
                                                 for (int j = 0;
-
-                                                j< supList.size ();
-                                                j
-
-                                                
-                                                    ++) {
+                                                        j < supList.size();
+                                                        j++) {
                                                     out.println("<option value='" + supList.get(j) + "'>" + supList.get(j) + "</option>");
                                                 }
                                             %>
