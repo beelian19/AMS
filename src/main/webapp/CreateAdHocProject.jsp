@@ -3,6 +3,7 @@
     Created on : Jan 2, 2018, 3:16:42 PM
     Author     : yemin
 --%>
+<%@page import="Entity.Employee"%>
 <%@page import="DAO.EmployeeDAO"%>
 <%@page import="Entity.Client"%>
 <%@page import="DAO.ClientDAO"%>
@@ -17,6 +18,7 @@
             Client client = (Client) request.getAttribute("client");
             ArrayList<Client> clientList = ClientDAO.getAllClient();
             ArrayList<String> supList = empDAO.getAllSupervisor();
+            ArrayList<Employee> empList = EmployeeDAO.getAllCurrentEmployees();
         %>
     </head>
     <body width="100%" style='background-color: #F0F8FF;'>
@@ -150,8 +152,8 @@
                                         <select name='assignEmployeeProjectCreate' id="assignEmployeeProjectCreate" style="width: 100%; max-width: 300px;" class="form-control" required autofocus>
                                             <option disabled selected value> — select an option — </option>
                                             <%
-                                                for (int i = 0; i < supList.size(); i++) {
-                                                    out.println("<option value='" + supList.get(i) + "'>" + supList.get(i) + "</option>");
+                                                for (int i = 0; i < empList.size();i++) {
+                                                    out.println("<option value='" + empList.get(i).getName() + "'>" + empList.get(i).getName() + "</option>");
                                                 }
                                             %>
 
@@ -166,8 +168,8 @@
                                         <select name='assignEmployee1ProjectCreate' id="assignEmployee1ProjectCreate" class="form-control" style="width: 100%; max-width: 300px;" required autofocus>
                                             <option disabled selected value> — select an option — </option>
                                             <%
-                                                for (int i = 0; i < supList.size(); i++) {
-                                                    out.println("<option value='" + supList.get(i) + "'>" + supList.get(i) + "</option>");
+                                                for (int i = 0; i < empList.size();i++) {
+                                                    out.println("<option value='" + empList.get(i).getName() + "'>" + empList.get(i).getName() + "</option>");
                                                 }
                                             %>
                                             <option value="na">NA</option>
