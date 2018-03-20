@@ -64,6 +64,8 @@ public class CreateNewProject extends HttpServlet {
             String frequency = "";
             HttpSession session = request.getSession();
 
+            System.out.println("Internal : " + internalDeadline);
+            System.out.println("External : " + externalDeadline);
             if (recommendedInternalDeadline.equals("na") || recommendedExternalDeadline.equals("na")) {
                 session.setAttribute("status", "Error: Incorrect project type selected.");
                 return;
@@ -122,6 +124,7 @@ public class CreateNewProject extends HttpServlet {
                     project.setEnd(endDate);
                     project.setStart(startDate);
                     project.setActualDeadline(externalEndDate);
+                    System.out.println("Check1");
                 } else {
                     DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
                     Date endDate = df.parse(recommendedInternalDeadline);
@@ -134,6 +137,7 @@ public class CreateNewProject extends HttpServlet {
                     project.setEnd(endDate);
                     project.setStart(startDate);
                     project.setActualDeadline(externalEndDate);
+                    System.out.println("Check2");
                 }
 
             } else {
@@ -149,9 +153,11 @@ public class CreateNewProject extends HttpServlet {
                     project.setEnd(endDate);
                     project.setStart(startDate);
                     project.setActualDeadline(externalEndDate);
+                    System.out.println("Check3");
                 } else {
-                    DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     Date endDate = df.parse(internalDeadline);
+                    System.out.println("Check4: "+endDate);
                     Date externalEndDate = df.parse(externalDeadline);
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(endDate);
@@ -161,9 +167,11 @@ public class CreateNewProject extends HttpServlet {
                     project.setEnd(endDate);
                     project.setStart(startDate);
                     project.setActualDeadline(externalEndDate);
+                    System.out.println("Check4");
                 }
             }
-            System.out.println("Start Date: "+project.getStart());
+            System.out.println("Start Date: " + project.getStart());
+            System.out.println("End Date: " + project.getEnd());
             boolean check = ProjectDAO.createProject(project);
             if (check) {
                 session.setAttribute("status", "Success: Project " + title + " Created.");
